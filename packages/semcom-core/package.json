@@ -1,0 +1,39 @@
+{
+  "name": "@digita-ai/semcom-core",
+  "version": "0.0.1",
+  "description": "> TODO: description",
+  "author": "Wouter Janssens <wouter@digita.ai>",
+  "homepage": "https://github.com/digita-ai/semcom-sdk/tree/master/packages/semcom-core#readme",
+  "license": "ISC",
+  "main": "lib/semcom-core.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digita-ai/semcom-sdk.git"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc --build tsconfig.build.json",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/digita-ai/semcom-sdk/issues"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "eslint": "^7.16.0",
+    "jest": "^26.6.3",
+    "typescript": "^4.1.3"
+  }
+}
