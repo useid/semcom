@@ -6,10 +6,10 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build --parallel",
-    "test": "lerna run test --parallel",
     "lint": "lerna run lint --parallel",
     "setup": "npm install && npm run bootstrap",
-    "start": "lerna run start --parallel"
+    "start": "lerna run start --parallel",
+    "test": "lerna run test --parallel"
   },
   "repository": {
     "type": "git",
