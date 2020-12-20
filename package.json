@@ -1,0 +1,23 @@
+{
+  "name": "semcom-sdk",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digita-ai/semcom-sdk.git"
+  },
+  "author": "Wouter Janssens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digita-ai/semcom-sdk/issues"
+  },
+  "homepage": "https://github.com/digita-ai/semcom-sdk#readme",
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "lerna": "^3.22.1"
+  }
+}
