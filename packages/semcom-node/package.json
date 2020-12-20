@@ -21,9 +21,9 @@
     "url": "git+https://github.com/digita-ai/semcom-sdk.git"
   },
   "scripts": {
-    "build": "rm -rf ./dist && tsc --build tsconfig.build.json",
-    "lint": "eslint .",
-    "test": "jest"
+    "build": "rm -rf ./dist && ./node_modules/.bin/tsc --build tsconfig.build.json",
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/jest"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom-sdk/issues"
