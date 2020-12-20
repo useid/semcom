@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "./node_modules/.bin/lerna bootstrap",
+    "bootstrap": "npm ci && ./node_modules/.bin/lerna bootstrap",
     "build": "./node_modules/.bin/lerna run build --parallel",
     "lint": "./node_modules/.bin/lerna run lint --parallel",
-    "setup": "npm install && npm run bootstrap",
     "start": "./node_modules/.bin/lerna run start --parallel",
     "test": "./node_modules/.bin/lerna run test --parallel"
   },
