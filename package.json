@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build --parallel",
-    "lint": "lerna run lint --parallel",
+    "bootstrap": "./node_modules/.bin/lerna bootstrap",
+    "build": "./node_modules/.bin/lerna run build --parallel",
+    "lint": "./node_modules/.bin/lerna run lint --parallel",
     "setup": "npm install && npm run bootstrap",
-    "start": "lerna run start --parallel",
-    "test": "lerna run test --parallel"
+    "start": "./node_modules/.bin/lerna run start --parallel",
+    "test": "./node_modules/.bin/lerna run test --parallel"
   },
   "repository": {
     "type": "git",
