@@ -1,12 +1,12 @@
 import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
-import { MetadataController } from './metadata.controller';
+import { MetadataControllerService } from './metadata-controller.service';
 import { createMockContext } from '@shopify/jest-koa-mocks';
 
-describe('MetadataController', () => {
-    let metadata: MetadataController = null;
+describe('MetadataControllerService', () => {
+    let metadata: MetadataControllerService = null;
 
     beforeEach(() => {
-        metadata = new MetadataController();
+        metadata = new MetadataControllerService();
     });
 
     it('should be correctly instantiated', (() => {

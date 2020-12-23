@@ -1,0 +1,24 @@
+{
+    "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/components/context.jsonld",
+    "@graph": [
+        {
+            "@id": "urn:semcom-node:default:LauncherService",
+            "@type": "LauncherService",
+            "LauncherService:_logger": {
+                "@id": "urn:semcom-node:default:LoggerService"
+            },
+            "LauncherService:_server": {
+                "@id": "urn:semcom-node:default:ServerService"
+            },
+            "LauncherService:_options": {
+                "@id": "urn:semcom-node:default:ServerOptions",
+                "@type": "ServerOptions",
+                "ServerOptions:_controllers": [
+                    {
+                        "@id": "urn:semcom-node:default:MetadataControllerService"
+                    }
+                ]
+            }
+        }
+    ]
+}
