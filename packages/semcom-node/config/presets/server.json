@@ -1,0 +1,9 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/components/context.jsonld",
+  "@graph": [
+    {
+      "@id": "urn:semcom-node:default:ServerService",
+      "@type": "ServerKoaService"
+    }
+  ]
+}

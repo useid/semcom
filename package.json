@@ -1,34 +1,34 @@
 {
-  "name": "@digita-ai/semcom-sdk",
+  "name": "@digita-ai/semcom",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "bootstrap": "npm ci && ./node_modules/.bin/lerna bootstrap",
-    "build": "./node_modules/.bin/lerna run build --parallel",
+    "build": "./node_modules/.bin/lerna run build",
     "lint": "./node_modules/.bin/lerna run lint --parallel",
     "start": "./node_modules/.bin/lerna run start --parallel",
     "test": "./node_modules/.bin/lerna run test --parallel"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digita-ai/semcom-sdk.git"
+    "url": "git+https://github.com/digita-ai/semcom.git"
   },
   "author": "Wouter Janssens",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/digita-ai/semcom-sdk/issues"
+    "url": "https://github.com/digita-ai/semcom/issues"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm test && npm build",
+      "pre-commit": "npm run lint && npm test && npm run build",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "homepage": "https://github.com/digita-ai/semcom-sdk#readme",
+  "homepage": "https://github.com/digita-ai/semcom#readme",
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",

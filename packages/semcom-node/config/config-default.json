@@ -1,0 +1,13 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/components/context.jsonld"
+  ],
+  "import": [
+    "files-dasn:config/presets/logger.json",
+    "files-dasn:config/presets/metadata.json",
+    "files-dasn:config/presets/server.json",
+    "files-dasn:config/presets/launcher.json"
+  ],
+  "@graph": [
+  ]
+}
