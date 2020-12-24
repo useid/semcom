@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app/
 COPY package-lock.json /usr/src/app/
 COPY .npmrc /usr/src/app/
-RUN npm ci
+RUN npm install
 
 # Bundle app source
 COPY . /usr/src/app
