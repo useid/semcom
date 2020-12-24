@@ -47,7 +47,7 @@ jobs:
         run: echo "${{ secrets.GA_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build image
-        run: docker build --tag $IMAGE_NAME packages/semcom-node/
+        run: docker build --tag $IMAGE_NAME --build-arg NPM_TOKEN=${{secrets.GA_TOKEN}} packages/semcom-node/
 
       - name: Push image
         run: |

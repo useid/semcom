@@ -7,6 +7,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
+ARG NPM_TOKEN
 COPY package.json /usr/src/app/
 COPY package-lock.json /usr/src/app/
 COPY .npmrc /usr/src/app/
