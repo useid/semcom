@@ -11,7 +11,7 @@ ARG NPM_TOKEN
 COPY package.json /usr/src/app/
 COPY package-lock.json /usr/src/app/
 COPY .npmrc /usr/src/app/
-RUN npm insdtall
+RUN npm install
 
 # Bundle app source
 COPY . /usr/src/app
