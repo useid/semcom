@@ -30,7 +30,7 @@ jobs:
 
   push:
     # Ensure test job passes before pushing image.
-    # needs: test
+    needs: test
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -47,7 +47,7 @@ jobs:
         run: echo "${{ secrets.GA_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build image
-        run: docker build --file packages/semcom-node/Dockerfile --tag $IMAGE_NAME .
+        run: docker build --file Dockerfile --tag $IMAGE_NAME packages/semcom-node/
 
       - name: Push image
         run: |
