@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-core",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-core#readme",
@@ -11,8 +11,7 @@
     "test": "__tests__"
   },
   "files": [
-    "dist",
-    "config"
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -40,7 +39,6 @@
   },
   "lsd:importPaths": {
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/config/": "config/",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/dist/": "dist/"
   },
   "engines": {

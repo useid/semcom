@@ -10,6 +10,7 @@ on:
 
 env:
   NPM_TOKEN: ${{secrets.GA_TOKEN}}
+  IMAGE_NAME: semcom-node
 
 jobs:
   # Run tests.
@@ -26,3 +27,67 @@ jobs:
       - run: npm build
       - run: npm run lint
       - run: npm test
+
+  publish-npm:
+    needs: test
+
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm run bootstrap
+      - run: npm run build
+      - run: npm publish packages/semcom-core
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npm publish packages/semcom-node
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  publish-docker:
+    # Ensure test job passes before pushing image.
+    needs: publish-npm
+
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Log into registry
+        run: echo "${{ secrets.GA_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: docker build --tag $IMAGE_NAME --build-arg NPM_TOKEN=${{secrets.GA_TOKEN}} packages/semcom-node/
+
+      - name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/digita-ai/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          VERSION=${{steps.package-version.outputs.current-version}}
+
+          # Strip "v" prefix from tag name
+          # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          # [ "$VERSION" == "master" ] && VERSION=latest
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
