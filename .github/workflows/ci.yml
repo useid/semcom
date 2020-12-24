@@ -28,9 +28,28 @@ jobs:
       - run: npm run lint
       - run: npm test
 
-  push:
-    # Ensure test job passes before pushing image.
+  publish-npm:
     needs: test
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm run bootstrap
+      - run: npm run build
+      - run: npm publish packages/semcom-core
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npm publish packages/semcom-node
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  publish-docker:
+    # Ensure test job passes before pushing image.
+    needs: publish-npm
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
