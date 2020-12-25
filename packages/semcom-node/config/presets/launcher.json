@@ -15,7 +15,7 @@
                 "@type": "ServerOptions",
                 "ServerOptions:_controllers": [
                     {
-                        "@id": "urn:semcom-node:default:MetadataControllerService"
+                        "@id": "urn:semcom-node:default:ComponentControllerService"
                     }
                 ]
             }

@@ -1,5 +1,6 @@
 import * as request from 'supertest';
-import { MetadataControllerService } from '../../metadata/services/metadata-controller.service';
+import { ComponentMockService, LoggerConsoleService } from '@digita-ai/semcom-core';
+import { ComponentControllerService } from '../../component/services/component-controller.service';
 import { ServerKoaService } from './server-koa.service';
 
 describe('Server', () => {
@@ -11,19 +12,19 @@ describe('Server', () => {
     });
 
     it('should be correctly instantiated without options', (() => {
-        server = new ServerKoaService();
+        server = new ServerKoaService(new LoggerConsoleService());
 
         expect(server).toBeTruthy();
     }));
 
     it('should be correctly instantiated with options', (() => {
-        server = new ServerKoaService();
+        server = new ServerKoaService(new LoggerConsoleService());
 
         expect(server).toBeTruthy();
     }));
 
     it('should be start on port 3000 by default', (() => {
-        server = new ServerKoaService();
+        server = new ServerKoaService(new LoggerConsoleService());
         server.app.listen = mockListen;
 
         server.start({ controllers: [] });
@@ -33,7 +34,7 @@ describe('Server', () => {
     }));
 
     it('should be start on port specified in options', (() => {
-        server = new ServerKoaService();
+        server = new ServerKoaService(new LoggerConsoleService());
         server.app.listen = mockListen;
 
         server.start({ port: 666, controllers: [] });
@@ -44,15 +45,15 @@ describe('Server', () => {
 
 
     it('should return 200 on registered routes', (async () => {
-        server.start({ controllers: [new MetadataControllerService()] });
+        server.start({ controllers: [new ComponentControllerService(new ComponentMockService(new LoggerConsoleService(), [{ uri: 'test' }]), new LoggerConsoleService())] });
 
-        const response = await request(server.app.callback()).get('/metadata');
+        const response = await request(server.app.callback()).get('/component');
         expect(response.status).toBe(200);
-        expect(response.text).toBe('Hello world');
+        expect(response.body).toStrictEqual([{ uri: 'test' }]);
     }));
 
     it('should return 404 on unknow routes', (async () => {
-        server.start({ controllers: [new MetadataControllerService()] });
+        server.start({ controllers: [new ComponentControllerService(new ComponentMockService(new LoggerConsoleService(), []), new LoggerConsoleService())] });
 
         const response = await request(server.app.callback()).get('/foo-bar');
         expect(response.status).toBe(404);

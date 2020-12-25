@@ -2,15 +2,7 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "declaration": true,
-        "outDir": "dist",
-        "paths": {
-            "@digita-ai/semcom-core": [
-              "./node_modules/@digita-ai/semcom-core"
-            ],
-            "@digita-ai/semcom-core/*": [
-              "./node_modules/@digita-ai/semcom-core/*"
-            ],
-        },
+        "outDir": "dist"
     },
     "include": [
         "lib"

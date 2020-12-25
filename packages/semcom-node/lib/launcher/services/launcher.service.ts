@@ -6,7 +6,8 @@ export class LauncherService {
     constructor(private logger: LoggerService, private server: ServerService, private options: ServerOptions) { }
 
     public async launch(): Promise<void> {
-        this.logger.log('debug', 'Starting server');
+        this.logger.log('debug', 'Launching application');
+
         this.server.start(this.options);
     }
 }

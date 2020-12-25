@@ -6,6 +6,14 @@
         "typeRoots": [
             "node_modules/@types",
         ],
+        "paths": {
+            "@digita-ai/semcom-core": [
+                "./node_modules/@digita-ai/semcom-core"
+            ],
+            "@digita-ai/semcom-core/*": [
+                "./node_modules/@digita-ai/semcom-core/*"
+            ],
+        },
     },
     "exclude": [
         "node_modules",
