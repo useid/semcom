@@ -1,4 +1,4 @@
-export * from './metadata/services/metadata-controller.service';
+export * from './component/services/component-controller.service';
 export * from './server/models/server-options.model';
 export * from './server/models/server-route.model';
 export * from './server/models/server-controller.model';

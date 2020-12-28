@@ -3,7 +3,10 @@
   "@graph": [
     {
       "@id": "urn:semcom-node:default:ServerService",
-      "@type": "ServerKoaService"
+      "@type": "ServerKoaService",
+      "ServerKoaService:_logger": {
+        "@id": "urn:semcom-node:default:LoggerService"
+      }
     }
   ]
 }

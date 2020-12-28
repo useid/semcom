@@ -4,7 +4,7 @@
   ],
   "import": [
     "files-dasn:config/presets/logger.json",
-    "files-dasn:config/presets/metadata.json",
+    "files-dasn:config/presets/component.json",
     "files-dasn:config/presets/server.json",
     "files-dasn:config/presets/launcher.json"
   ],

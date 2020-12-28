@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-core#readme",
@@ -24,9 +24,10 @@
   "types": "./dist/public-api.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && npm run build:ts && npm run build:components",
-    "build:ts": "./node_modules/.bin/tsc --build tsconfig.build.json",
+    "build:ts": "./node_modules/.bin/tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components",
     "lint": "./node_modules/.bin/eslint .",
+    "prepare": "npm run build",
     "test": "./node_modules/.bin/jest"
   },
   "bugs": {

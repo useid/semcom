@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/components/context.jsonld"
+  ],
+  "@graph": [
+    {
+      "@id": "urn:semcom-node:default:ComponentService",
+      "@type": "ComponentMockService",
+      "ComponentMockService:_logger": {
+        "@id": "urn:semcom-node:default:LoggerService"
+      },
+      "ComponentMockService:_resources": [
+        {
+          "@type": "Component",
+          "Component:_uri": "test"
+        }
+      ]
+    },
+    {
+      "@id": "urn:semcom-node:default:ComponentControllerService",
+      "@type": "ComponentControllerService",
+      "ComponentControllerService:_components": {
+        "@id": "urn:semcom-node:default:ComponentService"
+      },
+      "ComponentControllerService:_logger": {
+        "@id": "urn:semcom-node:default:LoggerService"
+      }
+    }
+  ]
+}
