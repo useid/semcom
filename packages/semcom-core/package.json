@@ -24,7 +24,7 @@
   "types": "./dist/public-api.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && npm run build:ts && npm run build:components",
-    "build:ts": "./node_modules/.bin/tsc --build tsconfig.build.json",
+    "build:ts": "./node_modules/.bin/tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components",
     "lint": "./node_modules/.bin/eslint .",
     "test": "./node_modules/.bin/jest"

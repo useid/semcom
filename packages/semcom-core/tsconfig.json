@@ -3,12 +3,18 @@
         "module": "commonjs",
         "target": "es5",
         "sourceMap": true,
+        "declaration": true,
+        "outDir": "dist",
         "typeRoots": [
             "node_modules/@types"
         ],
     },
+    "include": [
+        "lib"
+    ],
     "exclude": [
         "node_modules",
+        "**/*.spec.ts",
         "dist"
     ]
 }

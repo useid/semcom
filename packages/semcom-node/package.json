@@ -28,7 +28,7 @@
   },
   "scripts": {
     "build": "rm -rf ./dist && npm run build:ts && npm run build:components",
-    "build:ts": "./node_modules/.bin/tsc --build tsconfig.build.json",
+    "build:ts": "./node_modules/.bin/tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
     "lint": "./node_modules/.bin/eslint .",
     "start": "node dist/main.js",
