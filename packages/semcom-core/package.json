@@ -27,6 +27,7 @@
     "build:ts": "./node_modules/.bin/tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components",
     "lint": "./node_modules/.bin/eslint .",
+    "prepare": "npm run build",
     "test": "./node_modules/.bin/jest"
   },
   "bugs": {

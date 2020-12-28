@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "npm ci && ./node_modules/.bin/lerna bootstrap",
+    "bootstrap": "npm ci && ./node_modules/.bin/lerna bootstrap --ignore-prepublish",
     "build": "./node_modules/.bin/lerna run build",
     "lint": "./node_modules/.bin/lerna run lint --parallel",
     "start": "./node_modules/.bin/lerna run start --parallel",
@@ -21,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm test && npm run build",
+      "pre-commit": "npm run lint && npm run bootstrap && npm test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
