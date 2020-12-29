@@ -1,0 +1,12 @@
+= Page Title
+:description: A description of the page stored in an HTML meta tag.
+:sectanchors:
+:url-repo: https://github.com/digita-ai/semcom
+:page-tags: name of a tag, name of a tag
+
+This is the first line of the page body. 
+
+== Section heading
+
+This is a paragraph in a section.
+Hello world 2

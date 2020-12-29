@@ -1,0 +1,15 @@
+= Data model
+:description: A description of the data model.
+:sectanchors:
+:url-repo: https://github.com/digita-ai/semcom
+:page-tags: engineering
+
+== Component
+
+
+.Attributes
+[options="header"]
+|=======================
+|Term|Description      |Cardinality
+|http://digita.ai/voc/semcom/component#shape    |Item 1     |1..1
+|=======================

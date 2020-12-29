@@ -1,0 +1,26 @@
+= Components
+:description: A description of Components on a node's REST API.
+:sectanchors:
+:url-repo: https://github.com/digita-ai/semcom
+:page-tags: engineering
+
+== Get all components
+Retrieve all components.
+
+[source,http]
+----
+GET /component/ HTTP/1.1
+Host: [SEMCOM_HOST]
+----
+
+[source,json]
+----
+[
+    {
+        "uri": "foo"
+    },
+    {
+        "uri": "bar"
+    }
+]
+----
