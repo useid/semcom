@@ -113,6 +113,6 @@ export class ServerKoaService extends ServerService {
       throw new Error('Argument ctx should be set.');
     }
 
-    return { method: ctx.req.method };
+    return { method: ctx.req.method, headers: ctx.req.headers as { [key: string]: string } };
   }
 }
