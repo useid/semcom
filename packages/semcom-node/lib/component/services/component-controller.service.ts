@@ -1,8 +1,8 @@
 import { ComponentService, LoggerService } from '@digita-ai/semcom-core';
 import { ServerController } from '../../server/models/server-controller.model';
-import { ServerRoute } from '../../server/models/server-route.model';
-import { ServerResponse } from '../../server/models/server-response.model';
 import { ServerRequest } from '../../server/models/server-request.model';
+import { ServerResponse } from '../../server/models/server-response.model';
+import { ServerRoute } from '../../server/models/server-route.model';
 
 export class ComponentControllerService implements ServerController {
   routes: ServerRoute[] = [

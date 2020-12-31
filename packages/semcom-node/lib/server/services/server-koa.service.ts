@@ -1,12 +1,12 @@
 import * as Koa from 'koa';
 import * as Router from '@koa/router';
+import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
 import { LoggerService } from '@digita-ai/semcom-core';
 import { Server } from 'http';
 import { ServerOptions } from '../models/server-options.model';
-import { ServerService } from './server.service';
-import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
-import { ServerRoute } from '../models/server-route.model';
 import { ServerRequest } from '../models/server-request.model';
+import { ServerRoute } from '../models/server-route.model';
+import { ServerService } from './server.service';
 
 export class ServerKoaService extends ServerService {
   public app: Koa = new Koa();
@@ -41,7 +41,7 @@ export class ServerKoaService extends ServerService {
 
   private async executeAndTransform(route: ServerRoute, ctx: ParameterizedContext<DefaultState, DefaultContext>): Promise<void> {
     // return async (context: ParameterizedContext<DefaultState, DefaultContext>) => {
-    const request: ServerRequest = {};
+    const request: ServerRequest = { method: ctx.req.method };
     const response = await route.execute(request);
     ctx.body = response.body;
     ctx.status = response.status;
