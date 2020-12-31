@@ -17,6 +17,15 @@
                     {
                         "@id": "urn:semcom-node:default:ComponentControllerService"
                     }
+                ],
+                "ServerOptions:_handlers": [
+                    {
+                        "@id": "urn:semcom-node:default:ServerHandlerContentNegotiationService",
+                        "@type": "ServerHandlerContentNegotiationService",
+                        "ServerHandlerContentNegotiationService:_logger": {
+                            "@id": "urn:semcom-node:default:LoggerService"
+                        }
+                    }
                 ]
             }
         }
