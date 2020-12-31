@@ -14,7 +14,7 @@ describe('ComponentControllerService', () => {
     }));
 
     it('should return Hello World', (async () => {
-        const request: ServerRequest = { method: 'GET' };
+        const request: ServerRequest = { method: 'GET', headers: { 'accept': '*/*' } };
 
         const response = await components.all(request);
 
