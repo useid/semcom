@@ -31,6 +31,7 @@
     "build:ts": "./node_modules/.bin/tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
     "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint --fix .",
     "prepare": "npm run build",
     "start": "node dist/main.js",
     "test": "./node_modules/.bin/jest"
@@ -57,7 +58,8 @@
     "@digita-ai/semcom-core": "0.0.7",
     "@koa/router": "^10.0.0",
     "componentsjs": "^3.6.1",
-    "koa": "^2.13.0"
+    "koa": "^2.13.0",
+    "rdf-serialize": "^1.0.1"
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^2.2.4",
