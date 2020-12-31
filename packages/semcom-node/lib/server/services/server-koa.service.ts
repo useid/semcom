@@ -4,6 +4,9 @@ import { LoggerService } from '@digita-ai/semcom-core';
 import { Server } from 'http';
 import { ServerOptions } from '../models/server-options.model';
 import { ServerService } from './server.service';
+import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
+import { ServerRoute } from '../models/server-route.model';
+import { ServerRequest } from '../models/server-request.model';
 
 export class ServerKoaService extends ServerService {
   public app: Koa = new Koa();
@@ -23,7 +26,7 @@ export class ServerKoaService extends ServerService {
 
     this.logger.log('debug', 'Determined routes', routes);
 
-    routes.forEach(route => this.router.register(route.path, [route.method], route.execute));
+    routes.forEach(route => this.router.register(route.path, [route.method], (ctx) => this.executeAndTransform(route, ctx)));
 
     this.logger.log('debug', 'Registered controllers');
 
@@ -34,5 +37,14 @@ export class ServerKoaService extends ServerService {
     this.server = this.app.listen(port);
 
     this.logger.log('debug', `Server listening on port ${port}`);
+  }
+
+  private async executeAndTransform(route: ServerRoute, ctx: ParameterizedContext<DefaultState, DefaultContext>): Promise<void> {
+    // return async (context: ParameterizedContext<DefaultState, DefaultContext>) => {
+    const request: ServerRequest = {};
+    const response = await route.execute(request);
+    ctx.body = response.body;
+    ctx.status = response.status;
+    // }
   }
 }
