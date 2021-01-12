@@ -1,8 +1,43 @@
-= Data model
+= Concepts
 :description: A description of the data model.
 :sectanchors:
 :url-repo: https://github.com/digita-ai/semcom
 :page-tags: engineering
 
+== Specification and ecosystem
+
+. Semcom is a specification
+. A reference implementation of an SDK and repository
+. Repository contains metadata, does not host files
+. SDK for querying and rendering components in an app
+. A files can be downloaded from a host; like a cdn
+
 image::ecosystem.svg[Ecosystem]
-image::sequence.svg[Ecosystem]
+
+== Semantic Components, files and metadata
+
+. Component consists of files and metadata
+. Files can be executed by runtime to render data
+. Metadata describes the nature of a component
+. Metadata can include inputs, outputs, purposes, runtime, license, version
+
+image::component.svg[Component]
+
+. Lifecycle?
+
+== Reference implementations
+
+. Repository and SDK built with web technologies
+. Support for web components
+. Trusted repositories
+
+== Example
+
+. Apps render a user's data
+. Data is retrieved from the user's Solid pod
+. The app queries the Semcom repository for components
+. The app decides which component to use, and fetches the component's files
+. The app initializes the component and renders the data
+
+image::sequence.svg[Example]
+
