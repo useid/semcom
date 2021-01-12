@@ -1,4 +1,4 @@
-<mxfile host="65bd71144e" modified="2021-01-12T13:02:16.197Z" agent="5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="sSpmIf2NB41Asq-rQvBL" version="13.10.0" type="embed">
+<mxfile host="65bd71144e" modified="2021-01-12T13:11:36.169Z" agent="5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="gbvcLiFHmuL5xF0d2gaY" version="13.10.0" type="embed">
     <diagram id="ETuqZOJ1dYJBmNjdok6E" name="Page-1">
         <mxGraphModel dx="580" dy="505" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
@@ -25,7 +25,7 @@
                 <mxCell id="53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#001029;strokeColor=none;rotation=0;" vertex="1" parent="1">
                     <mxGeometry x="104.31" y="138" width="25.69" height="4" as="geometry"/>
                 </mxCell>
-                <mxCell id="54" value="Component" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#001029;verticalAlign=top;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;strokeColor=#001029;dashed=1;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="54" value="Component" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#001029;verticalAlign=top;fontFamily=Helvetica;strokeColor=#001029;dashed=1;fillColor=none;" vertex="1" parent="1">
                     <mxGeometry x="281" y="40" width="279" height="190" as="geometry"/>
                 </mxCell>
                 <mxCell id="55" value="" style="endArrow=classic;html=1;fontColor=#001029;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#001029;" edge="1" parent="1" source="50" target="54">
@@ -34,10 +34,10 @@
                         <mxPoint x="320" y="120" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="57" value="Files" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;fontColor=#001029;fillColor=#EEEEEE;strokeColor=none;verticalAlign=top;fontSize=8;" vertex="1" parent="1">
+                <mxCell id="57" value="Files" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontFamily=Helvetica;fontColor=#001029;fillColor=#EEEEEE;strokeColor=none;verticalAlign=top;fontSize=8;" vertex="1" parent="1">
                     <mxGeometry x="300" y="80" width="110" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="58" value="Metadata" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;fontColor=#001029;fillColor=#EEEEEE;strokeColor=none;verticalAlign=top;fontSize=8;" vertex="1" parent="1">
+                <mxCell id="58" value="Metadata" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontFamily=Helvetica;fontColor=#001029;fillColor=#EEEEEE;strokeColor=none;verticalAlign=top;fontSize=8;" vertex="1" parent="1">
                     <mxGeometry x="430" y="80" width="110" height="120" as="geometry"/>
                 </mxCell>
             </root>
