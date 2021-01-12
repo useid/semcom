@@ -1,0 +1,71 @@
+<mxfile host="65bd71144e" modified="2021-01-12T08:24:09.361Z" agent="5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="vcu58-Q9oyiFgThPHNBy" version="13.10.0" type="embed">
+    <diagram id="ETuqZOJ1dYJBmNjdok6E" name="Page-1">
+        <mxGraphModel dx="864" dy="861" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="App" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;fontColor=#001029;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="280" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Host" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;fontColor=#001029;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="400" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Repository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;fontColor=#001029;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="280" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Pod" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;fontColor=#001029;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="160" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;rounded=0;fontFamily=Fira Sans;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DFira%2BSans;fontColor=#001029;fillColor=#001029;strokeColor=#001029;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="270" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="endArrow=block;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#001029;labelBackgroundColor=#ffffff;fontColor=#001029;rounded=0;endFill=1;" edge="1" parent="1" source="9" target="2">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="330" y="380" as="sourcePoint"/>
+                        <mxPoint x="430" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="1. Browse data" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;fontColor=#001029;labelBackgroundColor=#FFFFFF;" connectable="0" vertex="1" parent="11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="endArrow=block;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#001029;labelBackgroundColor=#FFFFFF;fontColor=#001029;entryX=0;entryY=0.5;entryDx=0;entryDy=0;rounded=0;endFill=1;" edge="1" parent="1" source="2" target="5">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="235" y="310" as="sourcePoint"/>
+                        <mxPoint x="330" y="310" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="480" y="300"/>
+                            <mxPoint x="480" y="180"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="2. Fetch data" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;fontColor=#001029;labelBackgroundColor=#FFFFFF;" connectable="0" vertex="1" parent="13">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="endArrow=block;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#001029;labelBackgroundColor=#FFFFFF;fontColor=#001029;rounded=0;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="235" y="310" as="sourcePoint"/>
+                        <mxPoint x="330" y="310" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="480" y="300"/>
+                            <mxPoint x="480" y="420"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="4. Fetch components" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;fontColor=#001029;labelBackgroundColor=#FFFFFF;" connectable="0" vertex="1" parent="17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="" style="endArrow=block;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#001029;labelBackgroundColor=#FFFFFF;fontColor=#001029;rounded=0;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="245" y="320" as="sourcePoint"/>
+                        <mxPoint x="340" y="320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="3. Query components" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;fontColor=#001029;labelBackgroundColor=#FFFFFF;" connectable="0" vertex="1" parent="19">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="20" y="20" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
