@@ -15,7 +15,7 @@ export class ServerKoaService extends ServerService {
   }
 
   public async start(options: ServerOptions): Promise<void> {
-    this.logger.log('debug', 'Starting server with options', options);
+    this.logger.log('debug', 'Starting server');
 
     const routes = options.controllers
       .map(controller => controller.routes)
