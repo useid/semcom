@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-node",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
@@ -31,9 +31,10 @@
     "build:ts": "./node_modules/.bin/tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
     "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint --fix .",
     "prepare": "npm run build",
     "start": "node dist/main.js",
-    "test": "./node_modules/.bin/jest"
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
@@ -54,10 +55,13 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.0.7",
+    "@digita-ai/semcom-core": "^0.0.8",
     "@koa/router": "^10.0.0",
     "componentsjs": "^3.6.1",
-    "koa": "^2.13.0"
+    "koa": "^2.13.0",
+    "rdf-quad": "^1.5.0",
+    "rdf-serialize": "^1.0.1",
+    "streamify-array": "^1.0.1"
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^2.2.4",

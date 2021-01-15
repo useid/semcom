@@ -15,6 +15,6 @@ const start = async () => {
     const launcher: LauncherService = await loader.instantiateFromUrl('urn:semcom-node:default:LauncherService', configPath);
 
     launcher.launch();
-}
+};
 
 start();

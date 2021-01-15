@@ -1,13 +1,12 @@
 import { ComponentMockService, LoggerConsoleService } from '@digita-ai/semcom-core';
-import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
 import { ComponentControllerService } from './component-controller.service';
-import { createMockContext } from '@shopify/jest-koa-mocks';
+import { ServerRequest } from '../../server/models/server-request.model';
 
 describe('ComponentControllerService', () => {
     let components: ComponentControllerService = null;
 
     beforeEach(() => {
-        components = new ComponentControllerService(new ComponentMockService(new LoggerConsoleService(), [{ uri: 'test' }]), new LoggerConsoleService());
+        components = new ComponentControllerService(new ComponentMockService(new LoggerConsoleService(), [{ uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },]), new LoggerConsoleService());
     });
 
     it('should be correctly instantiated', (() => {
@@ -15,11 +14,11 @@ describe('ComponentControllerService', () => {
     }));
 
     it('should return Hello World', (async () => {
-        const ctx: ParameterizedContext<DefaultState, DefaultContext> = createMockContext();
+        const request: ServerRequest = { method: 'GET', headers: { 'accept': '*/*' } };
 
-        await components.all(ctx);
+        const response = await components.all(request);
 
-        expect(ctx.status).toBe(200);
-        expect(ctx.body).toStrictEqual([{ uri: 'test' }]);
+        expect(response.status).toBe(200);
+        expect(response.body).toStrictEqual([{ uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },]);
     }));
 });

@@ -1,0 +1,12 @@
+{
+	"Test arguments": {
+		"scope": "typescript",
+		"prefix": "dta",
+		"body": [
+			"if (!${2:element}) {",
+			"\tthrow new Error('Argument ${2:element} should be set.');",
+			"}"
+		],
+		"description": "Test if arguments are set, and throw error if not"
+	},
+}
