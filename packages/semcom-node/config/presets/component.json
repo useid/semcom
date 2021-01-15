@@ -13,7 +13,15 @@
       "ComponentMockService:_resources": [
         {
           "@type": "Component",
-          "Component:_uri": "test"
+          "Component:_label": "Foo 1",
+          "Component:_id": "001",
+          "Component:_uri": "https://node.semcom.digita.ai/c/001"
+        },
+        {
+          "@type": "Component",
+          "Component:_label": "Foo 2",
+          "Component:_id": "002",
+          "Component:_uri": "https://node.semcom.digita.ai/c/002"
         }
       ]
     },

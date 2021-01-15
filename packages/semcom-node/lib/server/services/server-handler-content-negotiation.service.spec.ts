@@ -4,36 +4,66 @@ import { ServerRequest } from '../models/server-request.model';
 import { ServerResponse } from '../models/server-response.model';
 
 describe('ServerHandlerContentNegotiationService', () => {
-    it('should be correctly instantiated', (() => {
-        const server = new ServerHandlerContentNegotiationService(new LoggerConsoleService());
+  it('should be correctly instantiated', () => {
+    const server = new ServerHandlerContentNegotiationService(
+      new LoggerConsoleService(),
+      'application/ld+json'
+    );
 
-        expect(server).toBeTruthy();
-    }));
+    expect(server).toBeTruthy();
+  });
 
-    it('should support accept */*', (async () => {
-        const server = new ServerHandlerContentNegotiationService(new LoggerConsoleService());
-        const request: ServerRequest = { method: 'GET', headers: { accept: '*/*' } };
-        const response: ServerResponse = { status: 200, body: 'foo' };
-        const canHandle = await server.canHandle(request, response);
+  it('should support accept */*', async () => {
+    const server = new ServerHandlerContentNegotiationService(
+      new LoggerConsoleService(),
+      'application/ld+json'
+    );
+    const request: ServerRequest = { method: 'GET', headers: { accept: '*/*' } };
+    const response: ServerResponse = {
+      status: 200,
+      body: 'foo',
+      headers: { 'content-type': 'application/json' },
+    };
+    const canHandle = await server.canHandle(request, response);
 
-        expect(canHandle).toBe(true);
-    }));
+    expect(canHandle).toBe(true);
+  });
 
-    it('should support accept text/turtle', (async () => {
-        const server = new ServerHandlerContentNegotiationService(new LoggerConsoleService());
-        const request: ServerRequest = { method: 'GET', headers: { accept: 'text/turtle' } };
-        const response: ServerResponse = { status: 200, body: 'foo' };
-        const canHandle = await server.canHandle(request, response);
+  it('should support accept text/turtle', async () => {
+    const server = new ServerHandlerContentNegotiationService(
+      new LoggerConsoleService(),
+      'application/ld+json'
+    );
+    const request: ServerRequest = {
+      method: 'GET',
+      headers: { accept: 'text/turtle' },
+    };
+    const response: ServerResponse = {
+      status: 200,
+      body: 'foo',
+      headers: { 'content-type': 'application/json' },
+    };
+    const canHandle = await server.canHandle(request, response);
 
-        expect(canHandle).toBe(true);
-    }));
+    expect(canHandle).toBe(true);
+  });
 
-    it('should not support accept foo/bar', (async () => {
-        const server = new ServerHandlerContentNegotiationService(new LoggerConsoleService());
-        const request: ServerRequest = { method: 'GET', headers: { accept: 'foo/bar' } };
-        const response: ServerResponse = { status: 200, body: 'foo' };
-        const canHandle = await server.canHandle(request, response);
+  it('should not support accept foo/bar', async () => {
+    const server = new ServerHandlerContentNegotiationService(
+      new LoggerConsoleService(),
+      'application/ld+json'
+    );
+    const request: ServerRequest = {
+      method: 'GET',
+      headers: { accept: 'foo/bar' },
+    };
+    const response: ServerResponse = {
+      status: 200,
+      body: 'foo',
+      headers: { 'content-type': 'application/json' },
+    };
+    const canHandle = await server.canHandle(request, response);
 
-        expect(canHandle).toBe(false);
-    }));
+    expect(canHandle).toBe(false);
+  });
 });

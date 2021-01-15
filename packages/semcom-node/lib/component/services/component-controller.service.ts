@@ -26,6 +26,9 @@ export class ComponentControllerService implements ServerController {
 
     res = {
       body: components,
+      headers: {
+        'content-type': 'application/json'
+      },
       status: 200
     };
 

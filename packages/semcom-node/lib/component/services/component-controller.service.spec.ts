@@ -6,7 +6,7 @@ describe('ComponentControllerService', () => {
     let components: ComponentControllerService = null;
 
     beforeEach(() => {
-        components = new ComponentControllerService(new ComponentMockService(new LoggerConsoleService(), [{ uri: 'test' }]), new LoggerConsoleService());
+        components = new ComponentControllerService(new ComponentMockService(new LoggerConsoleService(), [{ uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },]), new LoggerConsoleService());
     });
 
     it('should be correctly instantiated', (() => {
@@ -19,6 +19,6 @@ describe('ComponentControllerService', () => {
         const response = await components.all(request);
 
         expect(response.status).toBe(200);
-        expect(response.body).toStrictEqual([{ uri: 'test' }]);
+        expect(response.body).toStrictEqual([{ uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },]);
     }));
 });

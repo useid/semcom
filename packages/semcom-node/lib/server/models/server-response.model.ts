@@ -1,4 +1,5 @@
 export interface ServerResponse {
-    status: number;
     body: any;
+    headers: { [key: string]: string };
+    status: number;
 }

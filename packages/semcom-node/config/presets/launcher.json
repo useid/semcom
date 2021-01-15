@@ -24,7 +24,8 @@
                         "@type": "ServerHandlerContentNegotiationService",
                         "ServerHandlerContentNegotiationService:_logger": {
                             "@id": "urn:semcom-node:default:LoggerService"
-                        }
+                        },
+                        "ServerHandlerContentNegotiationService:_defaultContentType": "application/ld+json"
                     }
                 ]
             }

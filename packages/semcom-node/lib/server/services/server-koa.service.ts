@@ -32,7 +32,7 @@ export class ServerKoaService extends ServerService {
 
     this.logger.log('debug', 'Determined routes', routes);
 
-    routes.forEach(route => this.router.register(route.path, [route.method], (ctx) => this.executeAndTransform(route, ctx, options.handlers)));
+    routes.forEach(route => this.router.register(route.path, [route.method], async (ctx) => await this.executeAndTransform(route, ctx, options.handlers)));
 
     this.logger.log('debug', 'Registered controllers');
 
@@ -60,9 +60,9 @@ export class ServerKoaService extends ServerService {
 
     let handledResponse = { ...response };
 
-    handlers.forEach(async (handler) => {
+    for (const handler of handlers) {
       handledResponse = await this.executeHandler(handler, request, response);
-    })
+    }
 
     return handledResponse;
   }
@@ -102,10 +102,17 @@ export class ServerKoaService extends ServerService {
 
     const request = this.generateRequest(ctx);
     const originalResponse = await route.execute(request);
+
+    this.logger.log('debug', 'Executed route', { originalResponse });
+
     const handledResponse = await this.executeHandlers(handlers, request, originalResponse);
+
+    this.logger.log('debug', 'Handled response', { originalResponse, handledResponse });
 
     ctx.body = handledResponse.body;
     ctx.status = handledResponse.status;
+
+    Object.keys(handledResponse.headers).forEach(headerKey => ctx.response.headers[headerKey] = handledResponse.headers[headerKey]);
   }
 
   private generateRequest(ctx: ParameterizedContext<DefaultState, DefaultContext>): ServerRequest {
