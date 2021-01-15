@@ -28,8 +28,6 @@
 
 == Functional requirements
 
-=== Granting access to personal data
-
 . As a `Developer`, I can register a new Component , so that I can make it available to Apps.
 . As a `Developer`, I can register a new Shape , so that I can make it available to Apps.
 . As a `App`, I can query Components based on their Metadata, so I can get a list suitable Components.
