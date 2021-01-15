@@ -1,9 +1,0 @@
-= Services
-:description: A description of the services.
-:sectanchors:
-:url-repo: https://github.com/digita-ai/semcom
-:page-tags: engineering
-
-== Component
-
-
