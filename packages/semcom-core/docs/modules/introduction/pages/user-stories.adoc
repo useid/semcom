@@ -4,28 +4,6 @@
 :url-repo: https://github.com/digita-ai/semcom
 :page-tags: engineering
 
-== Definitions
-
-[width="100%",cols="<50%,<50%",options="header",]
-
-
-|===
-|Term |Definition
-
-|`app` |An application which renders data by for example a Data browser.
-|`repository` |for example a Data browser.
-|`developer` |for example a Data browser.
-|`system administrator` |for example a Data browser.
-|`metadata` |for example a Data browser.
-|`filter` |for example a Data browser.
-|`component` |for example a Data browser.
-|`shape` |for example a Data browser.
-|`render` |for example a Data browser.
-
-|===
-
-== Assumptions
-
 == Functional requirements
 
 . As a `Developer`, I can register a new Component , so that I can make it available to Apps.
@@ -38,8 +16,6 @@
 . As a `App`, I can render a Component based on an instance of a Shape , so that I can show data in the user interface.
 . As a Repository, I can query Components in other Repositories  based on their Metadata , so that I can serve Components I don’t know yet.
 . As a `System Administrator`, I can configure other Repositories which can be queried, so that I can choose which Repositories I trust.
-
-== Non-functional requirements
 
 == Out of scope
 
