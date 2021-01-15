@@ -1,5 +1,5 @@
 import { ServerRoute } from './server-route.model';
 
-export class ServerController {
+export abstract class ServerController {
     constructor(public routes: ServerRoute[]) { }
 }

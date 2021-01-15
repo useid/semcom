@@ -1,7 +1,8 @@
-import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
+import { ServerRequest } from './server-request.model';
+import { ServerResponse } from './server-response.model';
 
 export interface ServerRoute {
     method: string;
     path: string;
-    execute: (context: ParameterizedContext<DefaultState, DefaultContext>) => void;
+    execute: (request: ServerRequest) => Promise<ServerResponse>;
 }
