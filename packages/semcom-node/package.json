@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-node",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
@@ -34,7 +34,7 @@
     "lint:fix": "./node_modules/.bin/eslint --fix .",
     "prepare": "npm run build",
     "start": "node dist/main.js",
-    "test": "jest --detectOpenHandles --forceExit"
+    "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
@@ -55,7 +55,7 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "^0.0.8",
+    "@digita-ai/semcom-core": "0.0.9",
     "@koa/router": "^10.0.0",
     "componentsjs": "^3.6.1",
     "koa": "^2.13.0",

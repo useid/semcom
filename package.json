@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -40,9 +40,5 @@
     "husky": "^4.3.6",
     "lerna": "^3.22.1",
     "typescript": "^4.1.3"
-  },
-  "dependencies": {
-    "rdf-parse": "^1.6.1",
-    "streamify-string": "^1.0.1"
   }
 }

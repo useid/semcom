@@ -20,7 +20,7 @@ export class ServerKoaService extends ServerService {
   }
 
   public async start(options: ServerOptions): Promise<void> {
-    this.logger.log('debug', 'Starting server with options', options);
+    this.logger.log('debug', 'Starting server');
 
     if (!options) {
       throw new Error('Attribute options should be set');
