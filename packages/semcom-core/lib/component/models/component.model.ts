@@ -1,3 +1,5 @@
 export class Component {
-    constructor(public uri: string) { }
+    public readonly shape: string = 'component';
+    
+    constructor(public uri: string, public id: string, public label: string) { }
 }
