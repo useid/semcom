@@ -1,4 +1,3 @@
-.Introduction
-* xref:introduction.adoc[]
+.Getting started
 * xref:concepts.adoc[]
 * xref:user-stories.adoc[]

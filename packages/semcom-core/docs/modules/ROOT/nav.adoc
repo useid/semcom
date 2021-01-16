@@ -1,1 +1,1 @@
-include:concepts:nav.adoc[]
+* xref:index.adoc[]

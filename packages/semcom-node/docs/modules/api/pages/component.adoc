@@ -16,11 +16,27 @@ Host: [SEMCOM_HOST]
 [source,json]
 ----
 [
-    {
-        "uri": "foo"
-    },
-    {
-        "uri": "bar"
-    }
+  {
+    "@id": "https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/001",
+    "@type": [
+      "http://semcom.digita.ai/voc#component"
+    ],
+    "http://semcom.digita.ai/voc#label": [
+      {
+        "@id": "Foo 1"
+      }
+    ]
+  },
+  {
+    "@id": "https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/002",
+    "@type": [
+      "http://semcom.digita.ai/voc#component"
+    ],
+    "http://semcom.digita.ai/voc#label": [
+      {
+        "@id": "Foo 2"
+      }
+    ]
+  }
 ]
 ----
