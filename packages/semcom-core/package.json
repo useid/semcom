@@ -37,11 +37,11 @@
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core",
   "lsd:components": "dist/components/components.jsonld",
   "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/components/context.jsonld": "dist/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
   },
   "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/dist/": "dist/"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/dist/": "dist/"
   },
   "engines": {
     "node": ">=12.17 <15"
@@ -51,8 +51,8 @@
     "@types/node": "^14.14.14",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
-    "componentsjs": "^3.6.1",
-    "componentsjs-generator": "^1.6.0",
+    "componentsjs": "4.0.5",
+    "componentsjs-generator": "2.1.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.4.4",
