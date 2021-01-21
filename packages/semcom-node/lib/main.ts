@@ -1,20 +1,22 @@
 import * as path from 'path';
+import { ComponentsManager } from 'componentsjs';
 import { LauncherService } from './launcher/services/launcher.service';
-import { Loader } from 'componentsjs';
 
 const start = async () => {
-    const mainModulePath = path.join(__dirname, '../');
-    console.log('mainModulePath', mainModulePath);
-    const loader = new Loader({
-        mainModulePath
-    });
+  const mainModulePath = path.join(__dirname, '../');
+  const configPath = path.join(__dirname, '../config/config-default.json');
 
-    await loader.registerAvailableModuleResources();
-    
-    const configPath = path.join(__dirname, '../config/config-default.json');
-    const launcher: LauncherService = await loader.instantiateFromUrl('urn:semcom-node:default:LauncherService', configPath);
+  const manager = await ComponentsManager.build({
+    mainModulePath,
+  });
+  
+  await manager.configRegistry.register(configPath);
 
-    launcher.launch();
+  const launcher: LauncherService = await manager.instantiate(
+    'urn:semcom-node:default:LauncherService',
+  );
+
+  launcher.launch();
 };
 
 start();

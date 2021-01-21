@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-node",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
@@ -42,22 +42,22 @@
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node",
   "lsd:components": "dist/components/components.jsonld",
   "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/components/context.jsonld": "node_modules/@digita-ai/semcom-core/dist/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/components/context.jsonld": "dist/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld": "node_modules/@digita-ai/semcom-core/dist/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
   },
   "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^1.0.0/components/": "node_modules/@digita-ai/semcom-core/dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/config/": "config/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^1.0.0/dist/": "dist/"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/": "node_modules/@digita-ai/semcom-core/dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/config/": "config/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/dist/": "dist/"
   },
   "engines": {
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.0.11",
+    "@digita-ai/semcom-core": "0.0.12",
     "@koa/router": "^10.0.0",
-    "componentsjs": "^3.6.1",
+    "componentsjs": "4.0.5",
     "koa": "^2.13.0",
     "rdf-quad": "^1.5.0",
     "rdf-serialize": "^1.0.1",
@@ -72,7 +72,7 @@
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
-    "componentsjs-generator": "^1.6.0",
+    "componentsjs-generator": "2.1.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "supertest": "^6.0.1",
