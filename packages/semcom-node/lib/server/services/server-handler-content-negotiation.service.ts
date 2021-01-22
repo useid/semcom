@@ -1,6 +1,6 @@
-import * as quad from 'rdf-quad';
-import * as streamify from 'streamify-array';
 import { Component, LoggerService } from '@digita-ai/semcom-core';
+import { ComponentTransformerService } from '../../component/services/component-transformer.service';
+import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
 import { ServerHandlerService } from './server-handler.service';
 import { ServerRequest } from '../models/server-request.model';
 import { ServerResponse } from '../models/server-response.model';
@@ -10,6 +10,8 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
   constructor(
     private logger: LoggerService,
     private defaultContentType: string,
+    private transformer: ComponentTransformerService,
+    private serializer: QuadSerializationService,
   ) {
     super();
   }
@@ -55,29 +57,14 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
 
     const components: Component[] = response.body;
 
-    const quads = components
-      .map((component) => [
-        quad(
-          `https://node.semcom.digita.ai/c/${component.uri}`,
-          'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-          'http://semcom.digita.ai/voc#component',
-        ),
-        quad(
-          `https://node.semcom.digita.ai/c/${component.uri}`,
-          'http://semcom.digita.ai/voc#label',
-          component.label,
-        ),
-      ])
-      .reduce((acc, val) => acc.concat(val), []);
-
-    const parseStream = streamify(quads);
+    const quads = this.transformer.toQuads(components);
 
     const contentType =
       request.headers['accept'] === '*/*'
         ? this.defaultContentType
         : request.headers['accept'];
 
-    const resultStream = serialize.serialize(parseStream, { contentType });
+    const resultStream = this.serializer.serialize(quads, contentType);
 
     this.logger.log('debug', 'Mapped to rdf', { request, response });
 

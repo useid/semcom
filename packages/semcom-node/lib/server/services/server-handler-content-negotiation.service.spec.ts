@@ -1,13 +1,19 @@
+import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { LoggerConsoleService } from '@digita-ai/semcom-core';
+import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
 import { ServerHandlerContentNegotiationService } from './server-handler-content-negotiation.service';
 import { ServerRequest } from '../models/server-request.model';
 import { ServerResponse } from '../models/server-response.model';
 
+const logger = new LoggerConsoleService();
+
 describe('ServerHandlerContentNegotiationService', () => {
   it('should be correctly instantiated', () => {
     const server = new ServerHandlerContentNegotiationService(
-      new LoggerConsoleService(),
-      'application/ld+json'
+      logger,
+      'application/ld+json',
+      new ComponentTransformerService(logger), 
+      new QuadSerializationService(logger)
     );
 
     expect(server).toBeTruthy();
@@ -15,8 +21,10 @@ describe('ServerHandlerContentNegotiationService', () => {
 
   it('should support accept */*', async () => {
     const server = new ServerHandlerContentNegotiationService(
-      new LoggerConsoleService(),
-      'application/ld+json'
+      logger,
+      'application/ld+json',
+      new ComponentTransformerService(logger), 
+      new QuadSerializationService(logger)
     );
     const request: ServerRequest = { method: 'GET', headers: { accept: '*/*' } };
     const response: ServerResponse = {
@@ -31,8 +39,10 @@ describe('ServerHandlerContentNegotiationService', () => {
 
   it('should support accept text/turtle', async () => {
     const server = new ServerHandlerContentNegotiationService(
-      new LoggerConsoleService(),
-      'application/ld+json'
+      logger,
+      'application/ld+json',
+      new ComponentTransformerService(logger), 
+      new QuadSerializationService(logger)
     );
     const request: ServerRequest = {
       method: 'GET',
@@ -50,8 +60,10 @@ describe('ServerHandlerContentNegotiationService', () => {
 
   it('should not support accept foo/bar', async () => {
     const server = new ServerHandlerContentNegotiationService(
-      new LoggerConsoleService(),
-      'application/ld+json'
+      logger,
+      'application/ld+json',
+      new ComponentTransformerService(logger), 
+      new QuadSerializationService(logger)
     );
     const request: ServerRequest = {
       method: 'GET',
