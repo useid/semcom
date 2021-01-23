@@ -7,6 +7,12 @@ GET {{baseUrl}}/component HTTP/1.1
 
 ########
 
+# @name GetAllComponentsAsAny
+GET {{baseUrl}}/component HTTP/1.1
+Accept: */*
+
+########
+
 # @name GetAllComponentsAsTurtle
 GET {{baseUrl}}/component HTTP/1.1
 Accept: text/turtle
@@ -16,3 +22,9 @@ Accept: text/turtle
 # @name GetAllComponentsAsJSONLD
 GET {{baseUrl}}/component HTTP/1.1
 Accept: application/ld+json
+
+########
+
+# @name GetAllComponentsAsUnacceptable
+GET {{baseUrl}}/component HTTP/1.1
+Accept: bla

@@ -19,7 +19,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     expect(server).toBeTruthy();
   });
 
-  it('should support accept */*', async () => {
+  it('should not support accept */*', async () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
@@ -34,7 +34,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     };
     const canHandle = await server.canHandle(request, response);
 
-    expect(canHandle).toBe(true);
+    expect(canHandle).toBe(false);
   });
 
   it('should support accept text/turtle', async () => {
@@ -58,7 +58,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     expect(canHandle).toBe(true);
   });
 
-  it('should not support accept foo/bar', async () => {
+  it('should support accept unknown content types', async () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
@@ -76,6 +76,6 @@ describe('ServerHandlerContentNegotiationService', () => {
     };
     const canHandle = await server.canHandle(request, response);
 
-    expect(canHandle).toBe(false);
+    expect(canHandle).toBe(true);
   });
 });

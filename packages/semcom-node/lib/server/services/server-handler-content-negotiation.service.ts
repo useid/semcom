@@ -25,55 +25,60 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
       response,
     });
 
-    const contentTypes = await serialize.getContentTypes();
+    const contentType = request.headers['accept'];
 
-    const accept = request.headers['accept'];
-
-    this.logger.log('debug', 'Checking supported content types', {
-      contentTypes,
-      accept,
-      included: contentTypes.some((contentType) => accept === contentType),
-      accepted: accept === '*/*',
-      canHandle:
-        accept === '*/*' ||
-        contentTypes.some((contentType) => accept === contentType),
-    });
-
-    return (
-      (accept === '*/*' ||
-        contentTypes.some((contentType) => accept === contentType)) &&
-      response.headers['content-type'] === 'application/json'
-    );
+    return contentType !== 'application/json' && contentType !== '*/*';
   }
 
   public async handle(
     request: ServerRequest,
     response: ServerResponse,
   ): Promise<ServerResponse> {
+    let res: ServerResponse = { ...response, status: 406, body: null };
+
     this.logger.log('debug', 'Running content negotiation handler', {
       request,
       response,
     });
 
-    const components: Component[] = response.body;
+    const contentType = request.headers['accept'];
 
-    const quads = this.transformer.toQuads(components);
+    const isContentTypeSupported = await this.isContentTypeSupported(
+      contentType,
+    );
 
-    const contentType =
-      request.headers['accept'] === '*/*'
-        ? this.defaultContentType
-        : request.headers['accept'];
+    if (isContentTypeSupported) {
+      const components: Component[] = response.body;
 
-    const resultStream = this.serializer.serialize(quads, contentType);
+      const quads = this.transformer.toQuads(components);
 
-    this.logger.log('debug', 'Mapped to rdf', { request, response });
+      const contentType =
+        request.headers['accept'] === '*/*'
+          ? this.defaultContentType
+          : request.headers['accept'];
 
-    return {
-      ...response,
-      body: resultStream,
-      headers: { ...response.headers, 'content-type': contentType },
-    };
+      const resultStream = this.serializer.serialize(quads, contentType);
 
-    return null;
+      this.logger.log('debug', 'Mapped to rdf', { request, response });
+
+      res = {
+        ...response,
+        body: resultStream,
+        headers: { ...response.headers, 'content-type': contentType },
+      };
+    }
+
+    return res;
+  }
+
+  private async isContentTypeSupported(contentType: string): Promise<boolean> {
+    const contentTypes = await serialize.getContentTypes();
+
+    this.logger.log('debug', 'Checking supported content types', {
+      contentTypes,
+      contentType,
+    });
+
+    return contentTypes.some((c) => c === contentType);
   }
 }
