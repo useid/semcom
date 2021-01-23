@@ -9,7 +9,7 @@
     "lint": "./node_modules/.bin/lerna run lint --parallel",
     "lint:fix": "./node_modules/.bin/lerna run lint:fix --parallel",
     "start": "./node_modules/.bin/lerna run start --parallel",
-    "release": "./node_modules/.bin/lerna version --no-git-tag-version --exact --conventional-commits",
+    "release": "./node_modules/.bin/lerna version --exact --conventional-commits",
     "test": "./node_modules/.bin/lerna run test --parallel"
   },
   "repository": {
