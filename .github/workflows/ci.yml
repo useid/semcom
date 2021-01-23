@@ -2,65 +2,94 @@ name: CI
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
     branches:
+      - release/*
       - feature/*
       - develop
       - master
+
+  create:
+    tags:
+      - v*
 
 env:
   NPM_TOKEN: ${{secrets.GA_TOKEN}}
   IMAGE_NAME: semcom-node
 
 jobs:
-  # Run tests.
-  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
           node-version: 14
+
       - run: npm run bootstrap
+      
       - run: npm run lint
+
       - run: npm test
 
-  publish-npm:
+  release:
+    name: Create release
     needs: test
-
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref_type == 'tag'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+
+  publish-npm:
+    name: Publish NPM package
+    needs: release
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
     
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
+
       - run: npm run bootstrap
+
       - run: npm run build
+
       - run: npm publish packages/semcom-core
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
       - run: npm publish packages/semcom-node
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   publish-docker:
-    # Ensure test job passes before pushing image.
+    name: Publish Docker image
     needs: publish-npm
-
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref_type == 'tag'
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
 
       - name: Log into registry
         run: echo "${{ secrets.GA_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -71,38 +100,19 @@ jobs:
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/digita-ai/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version
-          # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          VERSION=${{steps.package-version.outputs.current-version}}
-
-          # Strip "v" prefix from tag name
-          # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          # [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+          VERSION=${{github.ref}}
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
 
   deploy-develop:
+    name: Deploy to develop
     needs: publish-docker
-
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref_type == 'tag'
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
 
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
@@ -117,7 +127,7 @@ jobs:
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           dns-name-label: semcom-node-develop
-          image: ghcr.io/digita-ai/semcom-node:${{steps.package-version.outputs.current-version}}
+          image: ghcr.io/digita-ai/semcom-node:${{github.ref}}
           registry-login-server: ghcr.io
           registry-username: ${{ secrets.GA_USERNAME }}
           registry-password: ${{ secrets.GA_TOKEN }}
