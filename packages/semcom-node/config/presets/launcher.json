@@ -25,7 +25,13 @@
                         "ServerHandlerContentNegotiationService:_logger": {
                             "@id": "urn:semcom-node:default:LoggerService"
                         },
-                        "ServerHandlerContentNegotiationService:_defaultContentType": "application/ld+json"
+                        "ServerHandlerContentNegotiationService:_defaultContentType": "application/ld+json",
+                        "ServerHandlerContentNegotiationService:_transformer": {
+                            "@id": "urn:semcom-node:default:ComponentTransformerService"
+                        },
+                        "ServerHandlerContentNegotiationService:_serializer": {
+                            "@id": "urn:semcom-node:default:QuadSerializationService"
+                        }
                     }
                 ]
             }

@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:3000
+
+########
+
+# @name GetAllComponents
+GET {{baseUrl}}/component HTTP/1.1
+
+########
+
+# @name GetAllComponentsAsTurtle
+GET {{baseUrl}}/component HTTP/1.1
+Accept: text/turtle
+
+########
+
+# @name GetAllComponentsAsJSONLD
+GET {{baseUrl}}/component HTTP/1.1
+Accept: application/ld+json

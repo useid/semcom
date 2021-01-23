@@ -17,26 +17,34 @@ Host: [SEMCOM_HOST]
 ----
 [
   {
-    "@id": "https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/001",
-    "@type": [
-      "http://semcom.digita.ai/voc#component"
-    ],
-    "http://semcom.digita.ai/voc#label": [
-      {
-        "@id": "Foo 1"
-      }
-    ]
+    "uri": "https://node.semcom.digita.ai/c/001",
+    "id": "001",
+    "label": "Foo 1",
+    "shape": "component"
   },
   {
-    "@id": "https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/002",
-    "@type": [
-      "http://semcom.digita.ai/voc#component"
-    ],
-    "http://semcom.digita.ai/voc#label": [
-      {
-        "@id": "Foo 2"
-      }
-    ]
+    "uri": "https://node.semcom.digita.ai/c/002",
+    "id": "002",
+    "label": "Foo 2",
+    "shape": "component"
   }
 ]
+----
+
+== Get all components with content negotiation
+Retrieve all components as Turtle.
+
+[source,http]
+----
+GET /component/ HTTP/1.1
+Host: [SEMCOM_HOST]
+Accept: text/turtle
+----
+
+[source,json]
+----
+<https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/001> a <http://semcom.digita.ai/voc#component>;
+    <http://semcom.digita.ai/voc#label> <Foo 1>.
+<https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/002> a <http://semcom.digita.ai/voc#component>;
+    <http://semcom.digita.ai/voc#label> <Foo 2>.
 ----
