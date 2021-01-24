@@ -12,19 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
-## [0.1.2](https://github.com/digita-ai/semcom/compare/v0.1.1...v0.1.2) (2021-01-23)
-
-
-### Bug Fixes
-
-* return 406 when accept header not supported ([#17](https://github.com/digita-ai/semcom/issues/17)) ([1e6c147](https://github.com/digita-ai/semcom/commit/1e6c147991d7e21a2c7783d05da0fb60d666658d))
-
-
-
-
-
 ## 0.1.1 (2021-01-23)
 
 

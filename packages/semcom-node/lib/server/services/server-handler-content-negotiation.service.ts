@@ -25,6 +25,14 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
       response,
     });
 
+    if (!request) {
+      throw new Error('Argument request should be set.');
+    }
+
+    if (!response) {
+      throw new Error('Argument response should be set.');
+    }
+
     const contentType = request.headers['accept'];
 
     return contentType !== 'application/json' && contentType !== '*/*';
@@ -34,12 +42,20 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
     request: ServerRequest,
     response: ServerResponse,
   ): Promise<ServerResponse> {
-    let res: ServerResponse = { ...response, status: 406, body: null };
-
     this.logger.log('debug', 'Running content negotiation handler', {
       request,
       response,
     });
+
+    if (!request) {
+      throw new Error('Argument request should be set.');
+    }
+
+    if (!response) {
+      throw new Error('Argument response should be set.');
+    }
+
+    let res: ServerResponse = { ...response, status: 406, body: null };
 
     const contentType = request.headers['accept'];
 
@@ -72,12 +88,20 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
   }
 
   private async isContentTypeSupported(contentType: string): Promise<boolean> {
+    if (!contentType) {
+      throw new Error('Argument contentType should be set.');
+    }
+
     const contentTypes = await serialize.getContentTypes();
 
     this.logger.log('debug', 'Checking supported content types', {
       contentTypes,
       contentType,
     });
+
+    if (!contentTypes) {
+      throw new Error('contentTypes should be set.');
+    }
 
     return contentTypes.some((c) => c === contentType);
   }

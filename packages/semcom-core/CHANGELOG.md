@@ -11,14 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.1.2](https://github.com/digita-ai/semcom/compare/v0.1.1...v0.1.2) (2021-01-23)
-
-**Note:** Version bump only for package @digita-ai/semcom-core
-
-
-
-
-
 ## 0.1.1 (2021-01-23)
 
 

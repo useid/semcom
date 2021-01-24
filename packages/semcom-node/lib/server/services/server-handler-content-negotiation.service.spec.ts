@@ -19,7 +19,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     expect(server).toBeTruthy();
   });
 
-  it('should not support accept */*', async () => {
+  it('should not handle accept */*', async () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
@@ -37,7 +37,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     expect(canHandle).toBe(false);
   });
 
-  it('should support accept text/turtle', async () => {
+  it('should handle accept text/turtle', async () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
@@ -58,7 +58,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     expect(canHandle).toBe(true);
   });
 
-  it('should support accept unknown content types', async () => {
+  it('should handle accept unknown content types', async () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
@@ -77,5 +77,27 @@ describe('ServerHandlerContentNegotiationService', () => {
     const canHandle = await server.canHandle(request, response);
 
     expect(canHandle).toBe(true);
+  });
+
+  it('should return 406 for unknown content types', async () => {
+    const server = new ServerHandlerContentNegotiationService(
+      logger,
+      'application/ld+json',
+      new ComponentTransformerService(logger), 
+      new QuadSerializationService(logger)
+    );
+    const request: ServerRequest = {
+      method: 'GET',
+      headers: { accept: 'foo/bar' },
+    };
+    const response: ServerResponse = {
+      status: 200,
+      body: 'foo',
+      headers: { 'content-type': 'application/json' },
+    };
+    const updatedResponse = await server.handle(request, response);
+
+    expect(updatedResponse.body).toBe(null);
+    expect(updatedResponse.status).toBe(406);
   });
 });
