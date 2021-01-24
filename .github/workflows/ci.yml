@@ -99,7 +99,7 @@ jobs:
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/digita-ai/$IMAGE_NAME
-          VERSION=${{github.ref}}
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
@@ -126,7 +126,7 @@ jobs:
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           dns-name-label: semcom-node-develop
-          image: ghcr.io/digita-ai/semcom-node:${{github.ref}}
+          image: ghcr.io/digita-ai/semcom-node:$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           registry-login-server: ghcr.io
           registry-username: ${{ secrets.GA_USERNAME }}
           registry-password: ${{ secrets.GA_TOKEN }}
