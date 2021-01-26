@@ -28,3 +28,9 @@ Accept: application/ld+json
 # @name GetAllComponentsAsUnacceptable
 GET {{baseUrl}}/component HTTP/1.1
 Accept: bla
+
+########
+
+# @name GetAllComponentsAsJSON
+GET {{baseUrl}}/component HTTP/1.1
+Accept: application/json

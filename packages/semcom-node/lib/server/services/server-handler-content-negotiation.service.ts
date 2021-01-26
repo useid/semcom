@@ -35,7 +35,7 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
 
     const contentType = request.headers['accept'];
 
-    return contentType !== 'application/json' && contentType !== '*/*';
+    return contentType !== 'application/json';
   }
 
   public async handle(
@@ -57,7 +57,10 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
 
     let res: ServerResponse = { ...response, status: 406, body: null };
 
-    const contentType = request.headers['accept'];
+    const contentType =
+      !request.headers['accept'] || request.headers['accept'] === '*/*'
+        ? this.defaultContentType
+        : request.headers['accept'];
 
     const isContentTypeSupported = await this.isContentTypeSupported(
       contentType,
@@ -67,11 +70,6 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
       const components: Component[] = response.body;
 
       const quads = this.transformer.toQuads(components);
-
-      const contentType =
-        request.headers['accept'] === '*/*'
-          ? this.defaultContentType
-          : request.headers['accept'];
 
       const resultStream = this.serializer.serialize(quads, contentType);
 
