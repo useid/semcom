@@ -24,12 +24,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Extract Git Tag
-        id: vars
-        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
+      - name: Extract tag
+        id: extract-tag
+        run: echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
 
-      - name: Check outputs
-        run: echo ${{ steps.vars.outputs.version }}
+      - name: Check tag
+        run: echo ${{ steps.extract-tag.outputs.tag }}
+
+      - name: Extract branch
+        id: extract-branch
+        run: echo "::set-output name=branch::${GITHUB_REF/refs\/head\//}"
+
+      - name: Check branch
+        run: echo ${{ steps.extract-branch.outputs.branch }}
 
       - uses: actions/setup-node@v1
         with:
