@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches:
+      - release
       - release/*
       - feature/*
       - develop
@@ -22,6 +23,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Extract Git Tag
+        run: echo ::set-output name=GIT_TAG::${GITHUB_REF/refs\/tags\//}
 
       - uses: actions/setup-node@v1
         with:
