@@ -1,6 +1,6 @@
 name: semcom
 title: Semantic Components
-version: 0.2.1
+version: master
 nav:
   - modules/ROOT/nav.adoc
   - modules/getting-started/nav.adoc
