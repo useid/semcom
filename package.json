@@ -9,7 +9,7 @@
     "lint": "./node_modules/.bin/lerna run lint --parallel",
     "lint:fix": "./node_modules/.bin/lerna run lint:fix --parallel",
     "start": "./node_modules/.bin/lerna run start --parallel",
-    "release": "./node_modules/.bin/lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix=''",
+    "release": "./node_modules/.bin/lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix='' --no-granular-pathspec",
     "test": "./node_modules/.bin/lerna run test --parallel"
   },
   "repository": {
