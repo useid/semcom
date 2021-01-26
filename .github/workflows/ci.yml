@@ -33,7 +33,7 @@ jobs:
 
       - name: Extract branch
         id: extract-branch
-        run: echo "::set-output name=branch::${GITHUB_REF/refs\/head\//}"
+        run: echo "::set-output name=branch::${GITHUB_REF/refs\/heads\//}"
 
       - name: Check branch
         run: echo ${{ steps.extract-branch.outputs.branch }}
