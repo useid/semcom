@@ -145,7 +145,7 @@ jobs:
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           dns-name-label: semcom-node-develop
-          image: ghcr.io/digita-ai/semcom-node:{{ steps.extract-tag.outputs.tag }}
+          image: ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
           registry-login-server: ghcr.io
           registry-username: ${{ secrets.GA_USERNAME }}
           registry-password: ${{ secrets.GA_TOKEN }}
