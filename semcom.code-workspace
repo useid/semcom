@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "name": "SemCom (root)",
+      "path": "."
+    },
+    {
+      "name": "SemCom Core",
+      "path": "packages/semcom-core"
+    },
+    {
+      "name": "SemCom Node",
+      "path": "packages/semcom-node"
+    }
+  ],
+  "settings": {
+  },
+  "extensions": {
+    "recommendations": [
+      "editorconfig.editorconfig",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "rvest.vs-code-prettier-eslint",
+      "folke.vscode-monorepo-workspace",
+      "humao.rest-client"
+    ]
+  }
+}
