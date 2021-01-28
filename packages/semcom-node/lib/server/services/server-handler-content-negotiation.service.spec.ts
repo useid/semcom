@@ -34,7 +34,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     };
     const canHandle = await server.canHandle(request, response);
 
-    expect(canHandle).toBe(false);
+    expect(canHandle).toBe(true);
   });
 
   it('should handle accept text/turtle', async () => {

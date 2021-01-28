@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches:
+      - release
       - release/*
       - feature/*
       - develop
@@ -22,6 +23,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Extract tag
+        id: extract-tag
+        run: echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
+
+      - name: Check tag
+        run: echo ${{ steps.extract-tag.outputs.tag }}
+
+      - name: Extract branch
+        id: extract-branch
+        run: echo "::set-output name=branch::${GITHUB_REF/refs\/heads\//}"
+
+      - name: Check branch
+        run: echo ${{ steps.extract-branch.outputs.branch }}
 
       - uses: actions/setup-node@v1
         with:
@@ -113,6 +128,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Extract tag
+        id: extract-tag
+        run: echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
+
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
@@ -126,7 +145,7 @@ jobs:
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           dns-name-label: semcom-node-develop
-          image: ghcr.io/digita-ai/semcom-node:$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          image: ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
           registry-login-server: ghcr.io
           registry-username: ${{ secrets.GA_USERNAME }}
           registry-password: ${{ secrets.GA_TOKEN }}
