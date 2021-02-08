@@ -21,7 +21,7 @@ This specification is about the initial setup and configuration of the Angular p
 
 ===== Components
 
-For the SDK demo project we will generate a new Angular project using the latest version of Angular v10. Generate this new Angular project using the latest version of theangular CLI. To achieve this follow the instructions onhttps://angular.io/cli/new[Generate a new Angular project].
+For the SDK demo project we will generate a new Angular project using the latest version of Angular v11. Generate this new Angular project using the latest version of the angular CLI. To achieve this follow the instructions on https://angular.io/cli/new[Generate a new Angular project].
 
 Install `ngx-translate` according to the https://github.com/ngx-translate/core[tutorial on Github].
 
