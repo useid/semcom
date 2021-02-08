@@ -1,0 +1,44 @@
+== Setup project
+
+*Author(s)*
+
+* Stijn Taelemans
+
+*References*
+
+* Branch: `feature/589151527-setup-angular-project`
+* https://www.wrike.com/open.htm?id=637326648[Wrike task]
+
+=== Introduction
+
+==== Overview
+
+This specification is about the initial setup and configuration of the Angular project.
+
+=== Solution
+
+==== Suggested or proposed solution
+
+===== Components
+
+For the SDK demo project we will generate a new Angular project using the latest version of Angular v10. Generate this new Angular project using the latest version of theangular CLI. To achieve this follow the instructions onhttps://angular.io/cli/new[Generate a new Angular project].
+
+Install `ngx-translate` according to the https://github.com/ngx-translate/core[tutorial on Github].
+
+Add NgRx to the project with `ng add @ngrx/store@latest` and follow the tutorial on https://ngrx.io/guide/store/install[NgRx]. Also configure `StoreModule` and `DevtoolsModule`, register these two in AppModule's `imports`. Create necessary effect, reducer and action files (following https://ngrx.io/docs[NgRx documentation]). Add Angular material to the project using `ng add @angular/material` and follow the tutorial on https://material.angular.io/guide/getting-started[angular.io]. Choose custom theme, set up global https://material.angular.io/guide/typography[Angular Material typography styles] and set up browser animations for Angular Material. Most of our component layout is done with https://www.npmjs.com/package/@angular/flex-layout[Flex-Layout]. (https://tburleson-layouts-demos.firebaseapp.com/#/docs[demos])
+
+Create the custom theme using the instructions on https://material.angular.io/guide/theming[angular.io]. Below are the most important colors in Inox, but make sure to check the colors in Figma when creating components. 
+
+[source,text]
+----
+$color-primary-light: #F7F9FA;
+$color-primary-normal: #70808F;
+$color-primary-dark: #2F363C;
+$color-accent-normal: #FF796E;
+----
+
+The remaining 2 tasks are adding a custom webpack builder and connecting the
+router store.
+Follow the tutorials on https://www.npmjs.com/package/@angular-builders/custom-webpack[Custom webpack builder] and https://ngrx.io/guide/router-store/install[Router store].
+
+This list might not cover all necessary steps to get the project up and running. It contains the things that I think we will need later, but I probably did not think of everything.
