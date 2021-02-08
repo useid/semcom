@@ -11,6 +11,10 @@
     {
       "name": "SemCom Node",
       "path": "packages/semcom-node"
+    },
+    {
+      "name": "SemCom Demo",
+      "path": "packages/semcom-demo"
     }
   ],
   "settings": {
