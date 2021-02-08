@@ -22,9 +22,9 @@ Angular project.
 
 ===== Components
 
-For the Dapsi project we will generate a new Angular project using the
+For the SDK demo project we will generate a new Angular project using the
 latest version of Angular v10. Generate this new Angular project using
-the latest version of the angular CLI (command line interface). To
+the latest version of the angular CLI. To
 achieve this follow the instructions on
 https://angular.io/cli/new[Generate a new Angular project].
 
