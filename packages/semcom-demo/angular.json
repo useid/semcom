@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "semcom-demo"
+  "defaultProject": "semcom-demo",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

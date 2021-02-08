@@ -5,14 +5,21 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
 import { NgModule } from '@angular/core';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { environment } from '../environments/environment';
 
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
 
+export const declarations = [AppComponent];
+export const providers = [AppComponent];
 export const imports = [
   BrowserModule,
   HttpClientModule,
@@ -24,17 +31,19 @@ export const imports = [
       useFactory: HttpLoaderFactory,
       deps: [HttpClient]
     }
-  })
+  }),
+  StoreModule.forRoot({}, {}),
+  StoreDevtoolsModule.instrument({
+    maxAge: 25,
+    logOnly: environment.production
+  }),
+  EffectsModule.forRoot([])
 ];
-
-export const providers = [AppComponent];
-
-export const declarations = [AppComponent];
 
 @NgModule({
   declarations,
-  imports,
   providers,
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  imports
 })
 export class AppModule { }
