@@ -1,0 +1,100 @@
+== Technical Specification: Create models and services
+
+=== Author(s)
+
+* Stijn Taelemans
+
+=== References
+
+* Functional analysis: see semcom-core docs
+* https://www.wrike.com/open.htm?id=637357186[Wrike task]
+
+* Branch: `feature/637357186-create-models-services`
+* Projects:
+** https://github.com/digita-ai/semcom[semcom]
+
+=== Introduction
+
+==== Overview
+
+This specification is about the creation of the SemCom models and
+services
+
+==== Terminology
+
+Node: a place where SemCom metadata is stored
+
+SemCom: Semantic Component
+
+==== Out of scope
+
+`SemComInput` and its implementations are described in the class
+diagram, but should not be created yet.
+
+=== Solution
+
+_This is a proposed solution and is open to change. If you feel some
+things can be done better, please discuss with this document's
+link:###authors[author(s)]._
+
+==== semcom-core
+
+===== Models
+
+====== SemComMetadata
+
+Create 'semcom-metadata.model.ts' under lib/semcom/models
+
+This model describes a `SemCom`.
+
+The attributes of this model can be found in the class diagram.
+
+====== SemCom
+
+Create 'semcom.model.ts' under lib/semcom/models
+
+In it's current state, this model only has one attribute: `metadata`. The idea is that when a developer wants to create a `SemCom`, he or she extends both `SemCom` and `HTMLElement`, the result being a Web Component with an extra attribute `metadata`.
+
+The attributes of this model can be found in the class diagram. The `render` method is included in the diagram, but should not be implemented for now.
+
+===== Services
+
+====== SemComService
+
+Create 'semcom.service.ts' under lib/semcom/services and remove existing
+
+This service combines other services and will be the main one used by users of the SDK to retrieve components. It will also include a way of registering a retrieved `SemCom` so that it can be used in a web application.
+
+The attributes and methods of this service are described in the class diagram.
+The `query` method should call the query method of `this.queryService`, described later.
+
+Don't include the `register` method for now, as this will be implemented in a later spec.
+
+====== SemComQueryService
+
+Create 'semcom-query.service.ts' under lib/semcom/services
+
+The purpose of this service is to fetch the `SemComMetadata`. It is not guaranteed we will always retrieve these components from a `Node`, so a layer of abstraction is needed to allow for multiple implementations of this fetching mechanism.
+
+A user can enter a partial `SemComMetada` to the `query` which will be used to filter. For example, if a user wants a `SemCom` from `author` 'digita', they pass `{ author: 'digita' }` to the `query` method.
+
+The attributes and methods of this service are described in the class diagram.
+
+====== SemComQueryMockService
+
+Create 'semcom-query-mock.service.ts' under lib/semcom/services
+
+Extends SemComQueryService
+
+This is the simplest implementation of a `SemComQueryService`, mainly used for testing. It should not actually fetch anything. The query method should simply use a list of mock `SemCom`s to filter.
+Feel free to create a seperate file for these mock object like we do in `dgt-platform`.
+
+====== SemComQueryNodesService
+
+Create 'semcom-query-nodes.service.ts' under lib/semcom/services
+
+==== semcom-node
+
+By removing/renaming the `Component` models and services, many imports have broken in this project. Replace these with the new `SemCom` models and services. The config should also be
+
+_Should anything be unclear, do not hesitate to discuss this specification with it's link:###authors[author(s)]._
