@@ -1,0 +1,70 @@
+{
+  "name": "@digita-ai/semcom-sdk",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Wouter Janssens <wouter@digita.ai>",
+  "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-sdk#readme",
+  "license": "ISC",
+  "main": "./dist/public-api.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digita-ai/semcom.git",
+    "directory": "packages/semcom-sdk"
+  },
+  "types": "./dist/public-api.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && npm run build:ts && npm run build:components",
+    "build:ts": "./node_modules/.bin/tsc",
+    "build:components": "componentsjs-generator -s lib -c dist/components",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint --fix .",
+    "prepare": "npm run build",
+    "release:antora": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
+    "test": "jest",
+    "version": "npm run release:antora"
+  },
+  "bugs": {
+    "url": "https://github.com/digita-ai/semcom/issues"
+  },
+  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk",
+  "lsd:components": "dist/components/components.jsonld",
+  "lsd:contexts": {
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
+  },
+  "lsd:importPaths": {
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/dist/": "dist/"
+  },
+  "engines": {
+    "node": ">=12.17 <15"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.14",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "componentsjs": "4.0.5",
+    "componentsjs-generator": "2.1.0",
+    "dot-json": "^1.2.1",
+    "eslint": "^7.16.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3",
+    "yaml-cli": "^1.1.8"
+  },
+  "dependencies": {
+    "@digita-ai/semcom-core": "0.2.1",
+    "winston": "^3.3.3"
+  }
+}
