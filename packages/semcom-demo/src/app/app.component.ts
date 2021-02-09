@@ -1,22 +1,28 @@
 import { Component } from '@angular/core';
-// import {TranslateService} from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
-  // templateUrl: './app.component.html',
-  template: `
-    <div>{{ 'HELLO' | translate:param }}</div>
-  `,
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
-  title = 'semcom-demo';
-  param = {value: 'world'};
+  translator: TranslateService;
+  name: string | undefined;
 
-  constructor(/* translator: TranslateService */) {
-    // translator.setDefaultLang('en');
-    // translator.use('nl');
+  constructor(translator: TranslateService) {
+    this.translator = translator;
+    this.translator.setDefaultLang('en');
+    this.translator.use('en');
+  }
+
+  setLang(lang: string): void {
+    this.translator.use(lang);
+  }
+
+  sayHi(name: string): void {
+    this.name = name;
   }
 
 }
