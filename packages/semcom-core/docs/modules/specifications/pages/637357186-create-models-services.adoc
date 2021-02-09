@@ -55,6 +55,32 @@ In it's current state, this model only has one attribute: `metadata`. The idea i
 
 The attributes of this model can be found in the class diagram. The `render` method is included in the diagram, but should not be implemented for now.
 
+Some example `SemComMetadata` objects: 
+
+[source, json]
+----
+{
+    "uri": "https://components.digita.ai/album",
+    "name": "Image Album Component",
+    "label": : "Component that renders images",
+    "author": : "digita.ai",
+    "version": : "1.0.0",
+    "latest": : "true",
+}
+----
+
+[source, json]
+----
+{
+    "uri": "https://components.digita.ai/payslip",
+    "name": "Payslip Component",
+    "label": : "Component that renders a payslip",
+    "author": : "digita.ai",
+    "version": : "1.0.0",
+    "latest": : "true",
+}
+----
+
 ===== Services
 
 ====== SemComService
