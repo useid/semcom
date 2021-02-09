@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+@charset "utf-8";
+
+// DGT colors
+$color-primary-light: #F7F9FA;
+$color-primary-normal: #70808F;
+$color-primary-dark: #2F363C;
+$color-accent-normal: #FF796E;
+
+// Override Bulma variables
+$primary: $color-primary-normal;
+$link: $color-accent-normal;
+
+@import './node_modules/bulma/bulma.sass';

@@ -1,15 +1,23 @@
 
 
-<div>
-  <div>
-    <button type="button" (click)="setLang('en')" [disabled]="translator.currentLang === 'en'">EN</button>
-    <button type="button" (click)="setLang('nl')" [disabled]="translator.currentLang === 'nl'">NL</button>
+<div class="modal is-active">
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-small" (click)="setLang('en')" [disabled]="translator.currentLang === 'en'">EN</button>
+    </div>
+    <div class="control">
+      <button class="button is-small" (click)="setLang('nl')" [disabled]="translator.currentLang === 'nl'">NL</button>
+    </div>
   </div>
-  <div>
-    <input #nameInput type="text" placeholder="{{ 'INPUT_NAME_PLACEHOLDER' | translate }}" />
-    <button type="button" (click)="sayHi(nameInput.value)">{{ 'SAY_HI' | translate }}</button>
+  <div class="field is-expanded">
+    <div class="control">
+      <input #nameInput class="input is-primary" type="text" placeholder="{{ 'INPUT_NAME_PLACEHOLDER' | translate }}" />
+    </div>
   </div>
-  <div *ngIf="name">
-    <p>{{ 'HELLO_MSG' | translate:{ name: name } }}</p>
+  <div class="field is-grouped is-grouped-right">
+    <div class="control">
+      <button class="button is-primary" (click)="sayHi(nameInput.value)" [disabled]="name">{{ 'SAY_HI' | translate }}</button>
+    </div>
   </div>
+  <p *ngIf="name" class="content">{{ 'HELLO_MSG' | translate:{ name: name } }}</p>
 </div>
