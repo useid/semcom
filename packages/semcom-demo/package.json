@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "serve": "ng serve",
+    "start": "http-server -p 80 --gzip --brotli --proxy 'http://localhost:80?' dist/",
     "build": "ng build",
+    "prepare": "npm run build",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
+    "lint:fix": "ng lint --fix",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -41,6 +44,7 @@
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
+    "http-server": "^0.12.3",
     "karma": "~5.2.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
