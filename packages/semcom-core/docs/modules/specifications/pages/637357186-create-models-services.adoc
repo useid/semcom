@@ -62,10 +62,10 @@ Some example `SemComMetadata` objects:
 {
     "uri": "https://components.digita.ai/album",
     "name": "Image Album Component",
-    "label": : "Component that renders images",
-    "author": : "digita.ai",
-    "version": : "1.0.0",
-    "latest": : "true",
+    "label":  "Component that renders images",
+    "author":  "digita.ai",
+    "version":  "1.0.0",
+    "latest":  "true",
 }
 ----
 
@@ -74,10 +74,10 @@ Some example `SemComMetadata` objects:
 {
     "uri": "https://components.digita.ai/payslip",
     "name": "Payslip Component",
-    "label": : "Component that renders a payslip",
-    "author": : "digita.ai",
-    "version": : "1.0.0",
-    "latest": : "true",
+    "label":  "Component that renders a payslip",
+    "author":  "digita.ai",
+    "version":  "1.0.0",
+    "latest":  "true",
 }
 ----
 
