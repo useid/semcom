@@ -51,7 +51,7 @@ The attributes of this model can be found in the class diagram.
 
 Create 'semcom.model.ts' under lib/semcom/models.
 
-In it's current state, this model only has one attribute: `metadata`. The idea is that when a developer wants to create a `SemCom`, he or she extends both `SemCom` and `HTMLElement`, the result being a Web Component with an extra attribute `metadata`.
+In it's current state, this model only has one attribute: `metadata`. The idea is that when a developer wants to create a `SemCom`, they extend both `SemCom` and `HTMLElement`, the result being a Web Component with an extra attribute `metadata`.
 
 The attributes of this model can be found in the class diagram. The `render` method is included in the diagram, but should not be implemented for now.
 
