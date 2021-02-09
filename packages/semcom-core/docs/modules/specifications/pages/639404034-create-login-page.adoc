@@ -1,0 +1,30 @@
+== Technical Specification: Create models and services
+
+=== Author(s)
+
+* Stijn Taelemans
+
+=== References
+
+* Functional analysis: see semcom-core docs
+* https://www.wrike.com/open.htm?id=639404034[Wrike task]
+
+* Branch: `feature/639404034-create-login-page`
+* Projects:
+** https://github.com/digita-ai/semcom[semcom-demo]
+
+=== Introduction
+
+==== Overview
+
+This specification is about the first page in the SemCom demo project which allows a user to login to their Solid pod so that data can be retrieved from it.
+
+=== Solution
+
+_This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
+
+==== semcom-core
+
+===== Models
+
+====== SemComMetadata
