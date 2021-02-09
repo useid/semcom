@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~11.1.2",
     "@angular/router": "~11.1.2",
     "@ngrx/effects": "^10.1.2",
+    "@ngrx/router-store": "^10.1.2",
     "@ngrx/store": "^10.1.2",
     "@ngrx/store-devtools": "^10.1.2",
     "@ngx-translate/core": "^13.0.0",
@@ -30,6 +31,7 @@
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^11.0.0",
     "@angular-devkit/build-angular": "~0.1101.4",
     "@angular/cli": "~11.1.4",
     "@angular/compiler-cli": "~11.1.2",

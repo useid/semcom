@@ -1,4 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
@@ -32,11 +33,14 @@ export const imports = [
       deps: [HttpClient]
     }
   }),
-  StoreModule.forRoot({}, {}),
+  StoreModule.forRoot({
+    router: routerReducer
+  }),
   StoreDevtoolsModule.instrument({
     maxAge: 25,
     logOnly: environment.production
   }),
+  StoreRouterConnectingModule.forRoot(),
   EffectsModule.forRoot([])
 ];
 
