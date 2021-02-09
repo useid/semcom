@@ -47,14 +47,6 @@ This model describes the metadata of a `SemCom`.
 
 The attributes of this model can be found in the class diagram.
 
-====== SemCom
-
-Create 'semcom.model.ts' under lib/semcom/models.
-
-In it's current state, this model only has one attribute: `metadata`. The idea is that when a developer wants to create a `SemCom`, he or she extends both `SemCom` and `HTMLElement`, the result being a Web Component with an extra attribute `metadata`.
-
-The attributes of this model can be found in the class diagram. The `render` method is included in the diagram, but should not be implemented for now.
-
 Some example `SemComMetadata` objects: 
 
 [source, json]
@@ -81,6 +73,14 @@ Some example `SemComMetadata` objects:
 }
 ----
 
+====== SemCom
+
+Create 'semcom.model.ts' under lib/semcom/models.
+
+In it's current state, this model only has one attribute: `metadata`. The idea is that when a developer wants to create a `SemCom`, he or she extends both `SemCom` and `HTMLElement`, the result being a Web Component with an extra attribute `metadata`.
+
+The attributes of this model can be found in the class diagram. The `render` method is included in the diagram, but should not be implemented for now.
+
 ===== Services
 
 ====== SemComService
@@ -89,7 +89,7 @@ Create 'semcom-abstract.service.ts' under lib/semcom/services.
 
 A user can enter a partial `SemComMetadata` to the `query` which will be used to filter. For example, if a user wants a `SemCom` from `author` 'digita', they pass `{ author: 'digita' }` to the `query` method.
 
-====== SemComNodeService
+====== SemComNodeInMemoryService
 
 Extends `SemComService`.
 
@@ -97,31 +97,13 @@ Create 'semcom-node.service.ts' under lib/semcom/services. Replaces `ComponentSe
 
 This service extends `SemComService`. The service already exists under `ComponentService`, simply rename it and change `all()` to comply with the class diagram. You also need to change the signature of `semcom-node`'s controller to return `SemComMetadata`.
 
-====== SemComQueryService
+====== SemComNodeClientService
 
-Create 'semcom-query-abstract.service.ts' under lib/semcom/services.
+Extends `SemComService`.
 
-The purpose of this service is to fetch the `SemComMetadata`.  
-It is not guaranteed we will always retrieve these components from a `Node`, so a layer of abstraction is needed to allow for multiple implementations of this fetching mechanism.
+Create 'semcom-node.service.ts' under lib/semcom/services. Replaces `ComponentService`.
 
-The attributes and methods of this service are described in the class diagram.
-
-====== SemComQueryMockService
-
-Create 'semcom-query-mock.service.ts' under lib/semcom/services.
-
-Extends `SemComQueryService`.
-
-This is the simplest implementation of a `SemComQueryService`, mainly used for testing. It should not actually fetch anything. The query method should simply return a filtered list of mock `SemCom`s.
-Feel free to create a seperate file for these mock objects like we do in `dgt-platform`.
-
-====== SemComQueryNodesService
-
-Create 'semcom-query-nodes.service.ts' under lib/semcom/services.
-
-Extends `SemComQueryService`.
-
-This service should query `this.repository` for its `SemComMetadata` with a given filter. The enpoint should be set by the app developer in their application.
+This service is the one used by an app developer to retrieve one (or more) SemCom(s). Its `query` method retrieves components from `this.repository` that match a `filter`. The `get` method retrieves a single component based on the component's `uri`. (Call the `query` method with a simple uri filter)
 
 ==== semcom-node
 
