@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "outputPath": "dist/semcom-demo",
+            "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -129,6 +129,7 @@
   },
   "defaultProject": "semcom-demo",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@ngrx/schematics"
   }
 }
