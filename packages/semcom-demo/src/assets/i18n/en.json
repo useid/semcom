@@ -1,0 +1,5 @@
+{
+  "INPUT_NAME_PLACEHOLDER": "enter your name ...",
+  "HELLO_MSG": "Hello {{name}}!",
+  "SAY_HI": "Say hi."
+}
