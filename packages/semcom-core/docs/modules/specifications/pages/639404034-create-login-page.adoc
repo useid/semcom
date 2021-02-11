@@ -6,7 +6,7 @@
 
 === References
 
-* Functional analysis: see semcom-core docs
+* Functional analysis: https://www.figma.com/file/pPdyUg0GbiH36wyxcnLsW6/Demo---SemCom?node-id=4%3A385[Figma]
 * https://www.wrike.com/open.htm?id=639404034[Wrike task]
 
 * Branch: `feature/639404034-create-login-page`
