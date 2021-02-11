@@ -1,7 +1,28 @@
 import { RouterModule, Routes } from '@angular/router';
+import { ConnectComponent } from './connect/connect.component';
+import { ConnectGuard } from './connect/connect.guard';
+import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  }, {
+    path: 'home',
+    canActivate: [ConnectGuard],
+    component: HomeComponent
+  }, {
+    path: 'connect',
+    component: ConnectComponent
+  }, {
+    path: 'callback',
+    resolve: [ConnectGuard],
+    redirectTo: '/home',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
