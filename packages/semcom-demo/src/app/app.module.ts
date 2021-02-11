@@ -6,7 +6,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { ConnectComponent } from './connect/connect.component';
 import { EffectsModule } from '@ngrx/effects';
+import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
@@ -14,12 +16,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { environment } from '../environments/environment';
 
-
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
 
-export const declarations = [AppComponent];
+export const declarations = [AppComponent, HomeComponent, ConnectComponent];
 export const providers = [AppComponent];
 export const imports = [
   BrowserModule,
@@ -48,6 +49,8 @@ export const imports = [
   declarations,
   providers,
   bootstrap: [AppComponent],
-  imports
+  imports,
+  exports: [TranslateModule]
 })
+
 export class AppModule { }
