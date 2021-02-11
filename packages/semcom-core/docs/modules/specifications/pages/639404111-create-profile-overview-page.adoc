@@ -1,0 +1,63 @@
+== Technical Specification: Create profile overview page
+
+=== Author(s)
+
+* Stijn Taelemans
+
+=== References
+
+* Branch: `feature/639404111-create-profile-overview-page`
+* Projects:
+** https://github.com/digita-ai/semcom[semcom-demo]
+
+=== Introduction
+
+==== Overview
+
+This specification is about the main page in the SemCom demo project which displays a user's information using Semantic Components.
+
+=== Solution
+
+_This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
+
+==== semcom-demo
+
+===== Components
+
+https://angular.io/guide/feature-modules[Generate new 'profile' module] for this feature. 
+
+====== DemoProfileOverviewPageComponent
+
+This component should be the same as the login page, without the logo, title and buttons. Just the header and blank page should be shown for now.
+
+Later, when the Semantic Components are made, we'll use the data retrieved from a user's profile to query `semcom-node`. We can then use the retrieved `ComponentMetadata` to retrieve the actual `Component` that will be inserted and rendered in the `DemoProfileOverviewPageComponent`.
+
+The finished component (with Semantic Components) should look like this:
+
+image::../images/639404111-create-profile-overview-page/profile-overview-page.svg[DemoProfileOverviewPageComponent]
+
+Generate under app/features/profile/pages/profile-overview-page.component.ts (selector: <demo-connect-page>)
+
+====== Sematic Components
+
+Everything that is displayed in this 
+
+===== Routing 
+
+
+===== Models
+
+
+===== Services
+
+
+===== Actions
+
+
+===== Effects
+
+
+===== Reducers
+
+
+===== Translations
