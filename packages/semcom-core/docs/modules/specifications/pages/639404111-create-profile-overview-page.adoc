@@ -24,40 +24,132 @@ _This is a proposed solution and is open to change. If you feel some things can 
 
 ===== Components
 
-https://angular.io/guide/feature-modules[Generate new 'profile' module] for this feature. 
+https://angular.io/guide/feature-modules[Generate new `profile` module] for this feature. 
 
 ====== DemoProfileOverviewPageComponent
 
-This component should be the same as the login page, without the logo, title and buttons. Just the header and blank page should be shown for now.
+This component should be the same as the login page, without the logo, title and buttons. Just the header and blank page should be shown for now. The header should be edited so that it contains a logout button.
 
 Later, when the Semantic Components are made, we'll use the data retrieved from a user's profile to query `semcom-node`. We can then use the retrieved `ComponentMetadata` to retrieve the actual `Component` that will be inserted and rendered in the `DemoProfileOverviewPageComponent`.
+
+The `DemoProfileOverviewPageComponent` will contain Semantic Components that visualize a part of a user's profile (described in this document) and their payslips. (to be implemented later)
 
 The finished component (with Semantic Components) should look like this:
 
 image::../images/639404111-create-profile-overview-page/profile-overview-page.svg[DemoProfileOverviewPageComponent]
 
-Generate under app/features/profile/pages/profile-overview-page.component.ts (selector: <demo-connect-page>)
+Generate under app/features/profile/pages/profile-overview-page.component.ts (selector: <demo-profile-overview-page>)
 
 ====== Sematic Components
 
-Everything that is displayed in this 
+To fill in the `DemoProfileOverviewPageComponent`, you'll need some Semantic Components.
+
+I'm not sure how these can be easily developed. Normally, in Angular, you instantly know how your component is coming along, which elements need more styling, etc... I suppose you could create a very basic Semantic Component to start with, try to retrieve it using our SDK, add it to the `DemoProfileOverviewPageComponent` and then continue developing it until it looks and works as it should.
 
 ===== Routing 
-
+* Path '' should load 
+** Path 'connect' should load `ConnectPageComponent`.
+** Path 'connect/callback' should load `ConnectCallback`.
+** Path '' should load `ConnectPageComponent`.
+** Any other path should also load `ConnectPageComponent`.
 
 ===== Models
 
 
 ===== Services
 
+====== ProfileService
+
+
+
 
 ===== Actions
+
+Create in app/features/profile/profile.actions.ts
+
+[cols="1,1",options="header"]
+
+|======================================
+| Action 	| Effect 	| Reducer 	
+| `LoadProfile` | Use the Inrupt SDK to fetch user's profile. | None 
+
+| `LoadProfileFinished` | None | Add profile information to state. 
+|======================================
+
+
+Add following to app/features/connect/connect.actions.ts
+
+[cols="1,1",options="header"]
+
+|======================================
+| Action 	| Effect 	| Reducer 	
+| `Logout` | Use the Inrupt SDK to log out. | None 
+
+| `LogoutFinished` | None | Reset state to initial values. 
+|======================================
 
 
 ===== Effects
 
+https://ngrx.io/guide/effects
 
-===== Reducers
+====== ConnectEffects
+
+Add to connect.effects.ts file:
+
+
+[cols="1,1",options="header"]
+
+|================
+| Effect | Description
+| `logout$` | This effect should call the `logout()` function of the Inrupt SDK. (See: https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/functions.html#logout[solid-client-authn-browser functions])
+|================
+
+====== AppEffects
+
+Add to app/app.actions.ts:
+
+
+[cols="1,1",options="header"]
+
+|================
+| Effect | Description
+| `loadProfile$` | 
+|================
+
+
+===== Reducer
+
+`GeneralState` shape: 
+
+[source, js]
+----
+{
+    "profile": Thing,
+}
+----
+
+
+`AppState` shape: 
+
+[source, js]
+----
+{
+    "general": GeneralState,
+    "connect": ConnectState
+}
+----
+
+
+[cols="1,1",options="header"]
+
+|================
+| Reducer | Description
+| `on LoadProfileFinished` | TODO
+| `on LogoutFinished` | The whole state should be reset to its https://ngrx.io/guide/store/reducers#setting-the-initial-state[initial values]. 
+|================
 
 
 ===== Translations
+
+* `common.header.logout` (Log out)
