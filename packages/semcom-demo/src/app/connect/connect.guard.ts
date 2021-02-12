@@ -1,12 +1,15 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { ConnectService } from './connect.service';
 import { Injectable } from '@angular/core';
+import { handleIncomingRedirect } from '@inrupt/solid-client-authn-browser';
+
+// handleIncomingRedirect(url?: string): Promise<undefined | ISessionInfo>
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConnectGuard implements CanActivate {
-  constructor(private connectService: ConnectService, private router: Router) {}
+  constructor(private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -17,12 +20,6 @@ export class ConnectGuard implements CanActivate {
   }
 
   checkLogin(url: string): true|UrlTree {
-    if (this.connectService.isLoggedIn) { return true; }
-
-    // Store the attempted URL for redirecting
-    this.connectService.redirectUrl = url;
-
-    // Redirect to the login page
     return this.router.parseUrl('/connect');
   }
 
