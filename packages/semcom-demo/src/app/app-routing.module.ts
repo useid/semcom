@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'connect',
     component: ConnectComponent
   }, {
-    path: 'callback',
+    path: 'connect/callback',
     resolve: [ConnectGuard],
     redirectTo: '/home',
     pathMatch: 'full'

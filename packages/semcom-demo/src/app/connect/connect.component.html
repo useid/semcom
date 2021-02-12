@@ -11,12 +11,10 @@
 
 <div class="providers">
 
-  <div class="provider-button">
-    <button (click)="setLang('en')">Solid Community</button>
-  </div>
-
-  <div class="provider-button">
-    <button (click)="setLang('nl')">Inrupt</button>
+  <div *ngFor="let provider of providers$ | async">
+    <div class="provider-button">
+      <button (click)="connect(provider)">{{ provider.name }}</button>
+    </div>
   </div>
 
 </div>
