@@ -164,7 +164,10 @@ Create effects file: app/features/connect/connect.effects.ts
 
 https://ngrx.io/guide/store/reducers
 
-State shape: 
+`ConnectState` shape: 
+
+Create `ConnectState` file: app/features/connect/connect.state.ts
+Register as https://ngrx.io/guide/store/reducers#register-feature-state[feature state]
 
 [source, js]
 ----
@@ -176,11 +179,25 @@ State shape:
 
 Initial values for these attributes is `null`.
 
+`AppState` shape: 
+
+Create `AppState` file: app/app.state.ts
+
+[source, js]
+----
+{
+    "connect": ConnectState
+}
+----
+
+Initial values for `AppState.connect` should be initialConnectState. (See https://ngrx.io/guide/store/reducers#setting-the-initial-state[setting the initial state])
+
+Create `ConnectState` reducer in app/features/connect/connect.reducer.ts
 
 [cols="1,1",options="header"]
 
 |================
-| Reducer | Description
+| Reducer Function | Description
 | `on ConnectFinished` | Set the connect state's `sessionInfo` to the `ConnectFinished` action's attribute `sessionInfo`. (See: https://ngrx.io/guide/store/reducers#creating-the-reducer-function[setScores action and reducer] for an example of a reducer that uses an action's payload)
 
 | `on LoadProvidersFinished` | Use `ProviderService.all()` to retrieve a list of `Provider`s. When retrieved, pass the list of providers to a `LoadProvidersFinished` action dispatch.
