@@ -13,6 +13,14 @@ export class QueryComponentRemoteService extends AbstractQueryComponentService {
   public query(
     filter: Partial<ComponentMetadata>,
   ): Promise<ComponentMetadata[]> {
-    return new Promise(null);
+    return fetch(`${this.repository}/component`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(filter),
+    })
+      .then((response) => response.json())
+      .then((json: ComponentMetadata[]) => json);
   }
 }
