@@ -1,14 +1,14 @@
-<mxfile host="65bd71144e" modified="2021-02-11T12:39:47.421Z" agent="5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.1 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="gSuILKLc2L9RZRE63Emg" version="14.2.4" type="embed">
+<mxfile host="65bd71144e" modified="2021-02-12T08:53:56.970Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.53.1 Chrome/87.0.4280.141 Electron/11.2.1 Safari/537.36" etag="6tuKDd7Joi-UA4sodP-i" version="14.2.4" type="embed">
     <diagram id="BmUuakXQ_GV8tHtZ7MqW" name="Page-1">
-        <mxGraphModel dx="2187" dy="2082" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="3913" dy="3135" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="115" value="semcom-node" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="1920" y="-620" width="840" height="460" as="geometry"/>
+                    <mxGeometry x="1920" y="-620" width="1350" height="460" as="geometry"/>
                 </mxCell>
                 <mxCell id="101" value="semcom-core" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="1920" y="-130" width="840" height="690" as="geometry"/>
+                    <mxGeometry x="1920" y="-130" width="1360" height="690" as="geometry"/>
                 </mxCell>
                 <mxCell id="11" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ComponentMetadata&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ uri: string&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ label: string&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ author: string&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ inputs: ComponentIdentifier&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ version: string&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ latest: boolean&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="1" vertex="1">
                     <mxGeometry x="10" y="240" width="270" height="160" as="geometry"/>
@@ -193,7 +193,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="118" value="semcom-sdk" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="1920" y="585" width="840" height="215" as="geometry"/>
+                    <mxGeometry x="1920" y="585" width="1360" height="495" as="geometry"/>
                 </mxCell>
                 <mxCell id="120" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Class&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;QueryComponentRemoteService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&amp;nbsp;- repository: string&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&amp;nbsp; + constructor(repository: string)&lt;br&gt;&amp;nbsp; + query(filter: Partial&amp;lt;ComponentMetadata&amp;gt;): Promise&amp;lt;ComponentMetadata[]&amp;gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1960" y="640" width="320" height="120" as="geometry"/>
@@ -208,6 +208,18 @@
                             <mxPoint x="1840" y="340"/>
                             <mxPoint x="2120" y="340"/>
                         </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="122" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Abstract Class&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;AbstractRegisterComponentService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&amp;nbsp;+ abstract isRegistered(component: ComponentMetadata): Promise&amp;lt;boolean&amp;gt;&lt;br&gt;&amp;nbsp;+ abstract register(component: ComponentMetadata): Promise&amp;lt;Type&amp;gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="2880" y="160" width="320" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Class&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;RegisterComponentRemoteService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&amp;nbsp;- registered: Map&amp;lt;string, string&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&amp;nbsp;+ isRegistered(component: ComponentMetadata): Promise&amp;lt;boolean&amp;gt;&lt;br&gt;&amp;nbsp;+ register(component: ComponentMetadata): Promise&amp;lt;Type extends Component&amp;gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="2880" y="640" width="320" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="123" target="122">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="2570" y="410" as="sourcePoint"/>
+                        <mxPoint x="2570" y="290" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
             </root>
