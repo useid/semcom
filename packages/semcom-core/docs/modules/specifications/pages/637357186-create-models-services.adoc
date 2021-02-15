@@ -86,7 +86,7 @@ The attributes of this model can be found in the class diagram. The `render` met
 
 ===== Services
 
-====== IQueryService<T>
+====== QueryService<T>
 
 Create 'component.model.ts' under lib/component/services/query.
 
@@ -94,7 +94,7 @@ An interface that defines
 
 The attributes and functions of this model can be found in the class diagram. 
 
-====== IManageService<T>
+====== ManageService<T>
 
 Create 'component.model.ts' under lib/component/services/manage.
 
@@ -102,13 +102,47 @@ The attributes and functions of this model can be found in the class diagram.
 
 
 
+====== AbstractQueryComponentService
+
+Create 'query-component-abstract.service.ts' under lib/component/services/query.
+
+Implements `QueryService<ComponentMetadata>`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+
+====== QueryComponentInMemoryService
+
+Create 'query-component-in-memory.service.ts' under lib/component/services/query.
+
+Extends `AbstractQueryComponentService`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+
+====== AbstractManageComponentService
+
+Create 'manage-component-abstract.service.ts' under lib/component/services/manage.
+
+Implements `ManageService<ComponentMetadata>`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+
+====== ManageComponentInMemoryService
+
+Create 'manage-component-in-memory.service.ts' under lib/component/services/manage.
+
+Extends `AbstractManageComponentService`.
+
+The attributes and functions of this model can be found in the class diagram. 
 
 
 ==== semcom-node
 
 ===== Services
 
-====== IComponentService
+====== BaseComponentService
 
 Create 'component.service.ts' under lib/component/services.
 
@@ -116,10 +150,28 @@ This is the interface for the `Component` service to be used in the back-end.
 
 The attributes and functions of this model can be found in the class diagram. 
 
+
 ====== ComponentService
 
 Create 'component.service.ts' under lib/component/services.
 
-Implements `IComponentService`.
+Implements `ComponentService`.
 
 The attributes and functions of this model can be found in the class diagram. 
+
+
+==== semcom-sdk
+
+===== Services
+
+====== QueryComponentRemoteService
+
+Create 'query-component-remote.service.ts' under lib/services. Remove current SemComService.
+
+Extends `AbstractQueryComponentService`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+This service is the one used by a developer to retrieve `Component` s. `this.repository` is the URI of the repository. `this.query` send an HTTP GET request to the correct `semcom-node` endpoint with the `filter` in its body. (I believe it is `/all` at the moment)  
+
+The backend should handle the filtering logic and returns a list of `ComponentMetadata`.
