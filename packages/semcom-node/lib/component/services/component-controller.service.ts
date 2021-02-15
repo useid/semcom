@@ -1,4 +1,5 @@
-import { ComponentService, LoggerService } from '@digita-ai/semcom-core';
+import { BaseComponentService } from './base-component.service';
+import { LoggerService } from '@digita-ai/semcom-core';
 import { ServerController } from '../../server/models/server-controller.model';
 import { ServerRequest } from '../../server/models/server-request.model';
 import { ServerResponse } from '../../server/models/server-response.model';
@@ -10,26 +11,29 @@ export class ComponentControllerService implements ServerController {
       path: '/component',
       method: 'get',
       execute: (request) => this.all(request),
-    }
+    },
   ];
 
-  constructor(private components: ComponentService, private logger: LoggerService) { }
+  constructor(
+    private components: BaseComponentService,
+    private logger: LoggerService,
+  ) {}
 
   public async all(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Getting all components', request);
 
     let res = null;
 
-    const components = await this.components.all();
+    const components = await this.components.query({});
 
     this.logger.log('debug', 'Retrieved all components', components);
 
     res = {
       body: components,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       },
-      status: 200
+      status: 200,
     };
 
     return res;

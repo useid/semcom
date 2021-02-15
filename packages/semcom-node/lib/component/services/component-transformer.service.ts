@@ -1,5 +1,5 @@
 import * as Quad from 'rdf-quad';
-import { Component, LoggerService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 
 /** Service that transforms Components */
 export class ComponentTransformerService {
@@ -9,7 +9,7 @@ export class ComponentTransformerService {
    * Transforms a Component to quads
    * @param component The component to transform
    */
-  private toQuadsOne(component: Component): Quad[] {
+  private toQuadsOne(component: ComponentMetadata): Quad[] {
     this.logger.log('debug', 'Transforming component to quads', { component });
 
     if (!component) {
@@ -34,7 +34,7 @@ export class ComponentTransformerService {
    * Transforms multiple Components to quads
    * @param components The components to transform
    */
-  public toQuads(components: Component[]): Quad[] {
+  public toQuads(components: ComponentMetadata[]): Quad[] {
     if (!components) {
       throw new Error('Argument components should be set.');
     }
@@ -48,7 +48,7 @@ export class ComponentTransformerService {
    * Transforms quads to a Component
    * @param quads The quads to transform
    */
-  public fromQuads(quads: Quad[]): Component {
+  public fromQuads(quads: Quad[]): ComponentMetadata {
     throw new Error('Not implemented');
   }
 }

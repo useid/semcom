@@ -1,5 +1,5 @@
-export class Component {
-    public readonly shape: string = 'component';
-    
-    constructor(public uri: string, public id: string, public label: string) { }
+import { ComponentMetadata } from './component-metadata.model';
+
+export interface Component {
+  metadata: ComponentMetadata;
 }
