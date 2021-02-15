@@ -1,19 +1,25 @@
 import * as request from 'supertest';
 import {
-  ComponentMockService,
+  ComponentMetadata,
   LoggerConsoleService,
+  ManageComponentInMemoryService,
+  QueryComponentInMemoryService,
 } from '@digita-ai/semcom-core';
+import { BaseComponentService } from '../../component/services/base-component.service';
 import { ComponentControllerService } from '../../component/services/component-controller.service';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
 import { ServerHandlerContentNegotiationService } from './server-handler-content-negotiation.service';
 import { ServerKoaService } from './server-koa.service';
+import { initialComponents } from '../../mock/initial-components';
+
 
 const logger = new LoggerConsoleService();
 
 describe('Server', () => {
   let server: ServerKoaService = null;
   const mockListen = jest.fn();
+  const components: ComponentMetadata[] = initialComponents;
 
   afterEach(() => {
     mockListen.mockReset();
@@ -55,10 +61,11 @@ describe('Server', () => {
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, [
-            { uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },
-          ]),
-          logger
+          new BaseComponentService(
+            new QueryComponentInMemoryService(components),
+            new ManageComponentInMemoryService(components),
+          ),
+          logger,
         ),
       ],
       handlers: [],
@@ -66,25 +73,26 @@ describe('Server', () => {
 
     const response = await request(server.app.callback()).get('/component');
     expect(response.status).toBe(200);
-    expect(response.body).toStrictEqual([{ uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' }]);
+    expect(response.body).toStrictEqual(initialComponents);
   });
 
   it('should call a handlers canHandle', async () => {
     const handler = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
-      new QuadSerializationService(logger)
+      new ComponentTransformerService(logger),
+      new QuadSerializationService(logger),
     );
     handler.canHandle = mockListen;
 
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, [
-            { uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },
-          ]),
-          logger
+          new BaseComponentService(
+            new QueryComponentInMemoryService(components),
+            new ManageComponentInMemoryService(components),
+          ),
+          logger,
         ),
       ],
       handlers: [handler],
@@ -99,18 +107,19 @@ describe('Server', () => {
     const handler = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
-      new QuadSerializationService(logger)
+      new ComponentTransformerService(logger),
+      new QuadSerializationService(logger),
     );
     handler.handle = mockListen;
 
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, [
-            { uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },
-          ]),
-          logger
+          new BaseComponentService(
+            new QueryComponentInMemoryService(components),
+            new ManageComponentInMemoryService(components),
+          ),
+          logger,
         ),
       ],
       handlers: [handler],
@@ -125,8 +134,11 @@ describe('Server', () => {
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, []),
-          logger
+          new BaseComponentService(
+            new QueryComponentInMemoryService(components),
+            new ManageComponentInMemoryService(components),
+          ),
+          logger,
         ),
       ],
       handlers: [],
