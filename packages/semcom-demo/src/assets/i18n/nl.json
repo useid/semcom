@@ -1,5 +1,5 @@
 {
-  "INPUT_NAME_PLACEHOLDER": "vul je naam in ...",
-  "HELLO_MSG": "Hallo {{name}}!",
-  "SAY_HI": "Zeg hallo."
+  "app.header.title": "SemCom Demo",
+  "connect.title": "Verbind met je pod",
+  "home.title": "Welkom"
 }
