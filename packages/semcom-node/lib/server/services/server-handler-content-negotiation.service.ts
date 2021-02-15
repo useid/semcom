@@ -1,4 +1,4 @@
-import { Component, LoggerService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
 import { ServerHandlerService } from './server-handler.service';
@@ -67,7 +67,7 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
     );
 
     if (isContentTypeSupported) {
-      const components: Component[] = response.body;
+      const components: ComponentMetadata[] = response.body;
 
       const quads = this.transformer.toQuads(components);
 
