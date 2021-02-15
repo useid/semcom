@@ -15,12 +15,14 @@ const routes: Routes = [
     component: HomeComponent
   }, {
     path: 'connect',
-    component: ConnectComponent
-  }, {
-    path: 'connect/callback',
-    resolve: [ConnectGuard],
-    redirectTo: '/home',
-    pathMatch: 'full'
+    component: ConnectComponent,
+    children: [
+      {
+        path: 'callback',
+        resolve: [ConnectGuard],
+        children: []
+      }
+    ]
   }
 ];
 

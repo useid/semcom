@@ -1,5 +1,4 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
@@ -10,11 +9,14 @@ import { ConnectComponent } from './connect/connect.component';
 import { EffectsModule } from '@ngrx/effects';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
+import { ProviderEffects } from './connect/services/provider.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { environment } from '../environments/environment';
+import { reducers } from './app.reducers';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -34,15 +36,13 @@ export const imports = [
       deps: [HttpClient]
     }
   }),
-  StoreModule.forRoot({
-    router: routerReducer
-  }),
+  StoreModule.forRoot(reducers),
   StoreDevtoolsModule.instrument({
     maxAge: 25,
     logOnly: environment.production
   }),
   StoreRouterConnectingModule.forRoot(),
-  EffectsModule.forRoot([])
+  EffectsModule.forRoot([ProviderEffects])
 ];
 
 @NgModule({
