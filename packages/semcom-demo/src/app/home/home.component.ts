@@ -7,10 +7,4 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  name: string | undefined;
-
-  sayHi(name: string): void {
-    this.name = name;
-  }
-
 }
