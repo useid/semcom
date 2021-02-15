@@ -69,7 +69,7 @@ This service registers the component to the web page. Take a look at MDN's https
 
 The `register(component: ComponentMetadata)` first imports the `Component` using its 'uri'. After that, it registers the component to the page using the `CustomElementRegistry`. (See examples) `this.registered` is a `Map` with keys: `component.uri` and values: `component.tag`.
 
-When defining the component, we must guarantee a unique HTML tag. It could be that two Semantic Components share the same tag, which is why we must keep track of the Components we already registered in this page. (`this.registered`) When registering a Component with a tag that is already used, append a hash of its `uri` to the tag, and register it in `this.registered` and using `define()` with this new tag. (See: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest[`digest`]) Try not to use an external library for this if not necessary.
+When defining the component, we must guarantee a unique HTML tag. It could be that two Semantic Components share the same tag, which is why we must keep track of the Components we already registered in this page. (`this.registered`) When registering a Component with a tag that is already used, append a hash of its `uri` to the tag, then register it in `this.registered` and using `define()` with this new tag. (See: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest[`digest`]) Try not to use an external library for this if not necessary.
 
 When the component is registered, it should now be usable in an HTML page.
 
