@@ -1,10 +1,10 @@
-== Technical Specification: Support registering of components
+= Technical Specification: Support registering of components
 
-=== Author(s)
+== Author(s)
 
 * Stijn Taelemans
 
-=== References
+== References
 
 * Functional analysis: see semcom-core docs
 
@@ -12,21 +12,21 @@
 * Projects:
 ** https://github.com/digita-ai/semcom[semcom]
 
-=== Introduction
+== Introduction
 
-==== Overview
+=== Overview
 
 This specification is about part of the SDK that registers the Components on the web page using the `CustomElementRegistry`.
 
-=== Solution
+== Solution
 
 _This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
 
-==== semcom-core
+=== semcom-core
 
-===== Models
+==== Models
 
-====== ComponentMetadata
+===== ComponentMetadata
 
 Add the `tag: string` attribute to the existing `ComponentMetadata` model. We'll need it later for registering the component.
 
@@ -45,19 +45,19 @@ Example:
 }
 ----
 
-===== Services
+==== Services
 
-====== AbstractRegisterComponentService
+===== AbstractRegisterComponentService
 
 Create 'register-component-abstract.service.ts' under lib/component/services/register.
 
 The attributes and functions of this model can be found in the class diagram. 
 
-==== semcom-sdk
+=== semcom-sdk
 
-===== Services
+==== Services
 
-====== RegisterComponentRemoteService
+===== RegisterComponentRemoteService
 
 Create 'register-component-remote.service.ts' under lib/services.
 
