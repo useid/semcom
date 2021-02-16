@@ -1,7 +1,7 @@
 export interface ComponentMetadata {
   uri: string;
-  name: string;
   label: string;
+  description: string;
   author: string;
   version: string;
   latest: boolean;
