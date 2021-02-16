@@ -5,8 +5,8 @@ import { AppState } from '../app.reducers';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
-import { ProviderConnected } from './connect.actions';
 import { Store } from '@ngrx/store';
+import { providerConnected } from './connect.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class ConnectGuard implements CanActivate, Resolve<void> {
   resolve(): void {
     handleIncomingRedirect(window.location.href).then( ( sessionInfo: ISessionInfo | undefined ) => {
       if (sessionInfo) {
-        this.store.dispatch(ProviderConnected({ sessionInfo }));
+        this.store.dispatch(providerConnected({ sessionInfo }));
         this.router.navigateByUrl('/home');
       } else {
         this.router.navigateByUrl('/connect');

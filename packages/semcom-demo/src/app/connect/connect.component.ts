@@ -1,6 +1,6 @@
-import { AppState, ConnectState } from '../app.reducers';
 import { Component, OnInit } from '@angular/core';
-import { ConnectPageInit, ProviderSelected } from './connect.actions';
+import { connectPageInit, providerSelected } from './connect.actions';
+import { AppState } from '../app.reducers';
 import { Observable } from 'rxjs';
 import { Provider } from './models/provider.model';
 import { Store } from '@ngrx/store';
@@ -17,11 +17,11 @@ export class ConnectComponent implements OnInit{
     constructor(private store: Store<AppState>) {}
 
     ngOnInit(): void {
-      this.store.dispatch(ConnectPageInit());
+      this.store.dispatch(connectPageInit());
     }
 
     connect(provider: Provider): void {
-      this.store.dispatch(ProviderSelected({ provider }));
+      this.store.dispatch(providerSelected({ provider }));
     }
 
 }

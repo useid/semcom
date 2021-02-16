@@ -18,9 +18,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 import { reducers } from './app.reducers';
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}
+export const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
 
 export const declarations = [AppComponent, HomeComponent, ConnectComponent];
 export const providers = [AppComponent];
@@ -32,7 +30,7 @@ export const imports = [
     defaultLanguage: 'en',
     loader: {
       provide: TranslateLoader,
-      useFactory: HttpLoaderFactory,
+      useFactory: httpLoaderFactory,
       deps: [HttpClient]
     }
   }),
