@@ -34,8 +34,8 @@ Example:
 ----
 {
     "uri": "https://components.digita.ai/album",
-    "name": "Image Album Component",
-    "label":  "Component that renders images",
+    "label": "Image Album Component",
+    "description":  "Component that renders images",
     "author":  "digita.ai",
     "tag": "dgt-album",
     "version":  "1.0.0",
