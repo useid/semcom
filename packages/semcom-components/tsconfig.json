@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "module": "es2020",
+        "target": "es2015",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "dist",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "baseUrl": "./",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "lib": [
+          "dom"
+        ]
+    },
+    "include": [
+        "./"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
