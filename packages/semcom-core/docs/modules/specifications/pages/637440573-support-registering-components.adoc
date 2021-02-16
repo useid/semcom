@@ -20,8 +20,6 @@ This specification is about part of the SDK that registers the Components on the
 
 == Solution
 
-_This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
-
 === semcom-core
 
 ==== Models
