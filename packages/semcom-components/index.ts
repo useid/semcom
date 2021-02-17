@@ -1,18 +1,23 @@
-import { Component } from '../semcom-core/dist/public-api';
+import { ProfileComponent } from './components/profile';
 
-export class ProfileComponent implements Component {
+// register service
+customElements.define('profile-component', ProfileComponent);
 
-  metadata = {
-    uri: 'string',
-    name: 'SemCom Profile Component',
-    label: 'Digita SemCom component for profile information',
-    author: 'Digita',
-    version: '0.2.1',
-    latest: true
+declare global {
+  interface HTMLElementTagNameMap {
+    'profile-component': ProfileComponent;
   }
-
-  setData(data: any) {
-    console.log(data);
-  }
-
 }
+
+// client app
+
+const profile = document.createElement('profile-component');
+
+profile.setData('Stijn');
+
+document.body.appendChild(profile);
+
+
+
+
+export * from './components/profile';

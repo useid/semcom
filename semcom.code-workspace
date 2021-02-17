@@ -41,7 +41,11 @@
       "esbenp.prettier-vscode",
       "rvest.vs-code-prettier-eslint",
       "folke.vscode-monorepo-workspace",
-      "humao.rest-client"
+      "humao.rest-client",
+      "bierner.lit-html",
+      "runem.lit-plugin",
+      "zjcompt.es6-string-javascript",
+      "bashmish.es6-string-css"
     ]
   }
 }
