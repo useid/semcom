@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '../../models/component-metadata.model';
+import { ComponentMetadata } from '../models/component-metadata.model';
 import { ManageService } from './manage.service';
 
 export abstract class AbstractManageComponentService

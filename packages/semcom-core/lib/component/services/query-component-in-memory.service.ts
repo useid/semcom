@@ -1,5 +1,5 @@
 import { AbstractQueryComponentService } from './abstract-query-component.service';
-import { ComponentMetadata } from '../../models/component-metadata.model';
+import { ComponentMetadata } from '../models/component-metadata.model';
 import { _ } from 'lodash';
 
 export class QueryComponentInMemoryService extends AbstractQueryComponentService {
@@ -10,9 +10,9 @@ export class QueryComponentInMemoryService extends AbstractQueryComponentService
     this.components = components;
   }
 
-  public query(
+  public async query(
     filter: Partial<ComponentMetadata>,
   ): Promise<ComponentMetadata[]> {
-    return Promise.resolve(_.filter(this.components, filter));
+    return _.filter(this.components, filter);
   }
 }

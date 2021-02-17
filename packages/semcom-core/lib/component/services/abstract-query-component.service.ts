@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '../../models/component-metadata.model';
+import { ComponentMetadata } from '../models/component-metadata.model';
 import { QueryService } from './query.service';
 
 export abstract class AbstractQueryComponentService
