@@ -1,5 +1,5 @@
+import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 import { BaseComponentService } from './base-component.service';
-import { LoggerService } from '@digita-ai/semcom-core';
 import { ServerController } from '../../server/models/server-controller.model';
 import { ServerRequest } from '../../server/models/server-request.model';
 import { ServerResponse } from '../../server/models/server-response.model';
@@ -74,7 +74,19 @@ export class ComponentControllerService implements ServerController {
 
     let res = null;
 
-    const components = await this.components.save(request.body);
+    const data: ComponentMetadata[] = request.body.map(
+      (component: ComponentMetadata) =>
+        new ComponentMetadata(
+          component.uri,
+          component.label,
+          component.description,
+          component.author,
+          component.version,
+          component.latest,
+        ),
+    );
+
+    const components = await this.components.save(data);
 
     this.logger.log('debug', 'Saved components', components);
 

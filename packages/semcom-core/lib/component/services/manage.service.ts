@@ -1,3 +1,3 @@
 export interface ManageService<T> {
-  save(resources: T[]): Promise<T[]>;
+  save(components: T[]): Promise<T[]>;
 }
