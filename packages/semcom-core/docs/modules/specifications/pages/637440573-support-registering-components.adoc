@@ -89,14 +89,14 @@ The `isRegistered()` method checks `this.registered` for an entry with key `comp
 
 The list of test cases is non-exhaustive and serves as a guideline for writing tests.
 
-Note: an example of an existing Web Component: https://unpkg.com/x-notification@2.1.1/dist/index.js. Contains a default export of a class which extends HTMLElement. You can use this as `ComponentMetadata.uri` in tests.
+Note: an example of an existing Web Component: https://unpkg.com/x-notification@2.1.1/dist/index.js. Contains a default export of a class which extends HTMLElement. 
 
 [options="header"]
 
 |======================================
 | Test case 	| Test data 	| Expected 	
 | `register(componentMetadata)` should import and define correctly 
-| `componentMetadata` is a `ComponentMetadata` object with valid `tag`, `uri` has valid Web Component 
+| `componentMetadata` is a `ComponentMetadata` object with valid `tag`, `uri` has valid Web Component. (use an example Web Component in a local js file for testing)
 | The `Component` is registered in `CustomElementsRegistry` and returned.
 
 | `register(componentMetadata)` should throw error when `componentMetadata` is null or undefined, or when `tag`/`uri` attributes are `null` or `undefined`. 
