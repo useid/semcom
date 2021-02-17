@@ -6,10 +6,8 @@ import {
 export class RegisterComponentService extends AbstractRegisterComponentService {
   private registered: Map<string, string>;
 
-  public isRegistered(component: ComponentMetadata): Promise<boolean> {
-    return new Promise((resolve) =>
-      resolve(this.registered.has(component.uri)),
-    );
+  public async isRegistered(component: ComponentMetadata): Promise<boolean> {
+    return this.registered.has(component.uri);
   }
 
   public register(component: ComponentMetadata): Promise<ComponentMetadata> {
