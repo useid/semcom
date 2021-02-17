@@ -18,10 +18,10 @@ describe('QueryComponentRemoteService', () => {
     window.fetch = mockFetch;
 
     service.query({});
-    expect(fetch).toBeCalledWith('test/component', {
+    expect(fetch).toBeCalledWith('test/component/query', {
       body: '{}',
       headers: { Accept: 'application/json' },
-      method: 'GET',
+      method: 'POST',
     });
   });
 });

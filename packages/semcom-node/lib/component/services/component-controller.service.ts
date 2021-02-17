@@ -12,6 +12,16 @@ export class ComponentControllerService implements ServerController {
       method: 'get',
       execute: (request) => this.all(request),
     },
+    {
+      path: '/component/query',
+      method: 'post',
+      execute: (request) => this.query(request),
+    },
+    {
+      path: '/component/save',
+      method: 'post',
+      execute: (request) => this.save(request),
+    },
   ];
 
   constructor(
@@ -20,13 +30,53 @@ export class ComponentControllerService implements ServerController {
   ) {}
 
   public async all(request: ServerRequest): Promise<ServerResponse> {
+    this.logger.log('debug', 'Getting filtered components', request);
+
+    let res = null;
+
+    const components = await this.components.query();
+
+    this.logger.log('debug', 'Retrieved filtered components', components);
+
+    res = {
+      body: components,
+      headers: {
+        'content-type': 'application/json',
+      },
+      status: 200,
+    };
+
+    return res;
+  }
+
+  public async query(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Getting all components', request);
 
     let res = null;
 
-    const components = await this.components.query({});
+    const components = await this.components.query(request.body);
 
     this.logger.log('debug', 'Retrieved all components', components);
+
+    res = {
+      body: components,
+      headers: {
+        'content-type': 'application/json',
+      },
+      status: 200,
+    };
+
+    return res;
+  }
+
+  public async save(request: ServerRequest): Promise<ServerResponse> {
+    this.logger.log('debug', 'Saving components', request);
+
+    let res = null;
+
+    const components = await this.components.save(request.body);
+
+    this.logger.log('debug', 'Saved components', components);
 
     res = {
       body: components,

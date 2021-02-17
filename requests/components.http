@@ -34,3 +34,30 @@ Accept: bla
 # @name GetAllComponentsAsJSON
 GET {{baseUrl}}/component HTTP/1.1
 Accept: application/json
+
+########
+
+# @name FilterComponents
+POST {{baseUrl}}/component/query HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{  
+    "uri": "https://node.semcom.digita.ai/c/001"
+}
+
+########
+
+# @name SaveComponent
+POST {{baseUrl}}/component/save HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{  
+     "uri": "foo5/bar",
+     "label": "test5",
+     "description": "test5",
+     "author": "test5",
+     "version": "test5",
+     "latest": "true"
+}
