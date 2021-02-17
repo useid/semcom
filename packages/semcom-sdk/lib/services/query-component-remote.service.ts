@@ -10,17 +10,21 @@ export class QueryComponentRemoteService extends AbstractQueryComponentService {
     super();
     this.repository = repository;
   }
-  public query(
+  public async query(
     filter: Partial<ComponentMetadata>,
   ): Promise<ComponentMetadata[]> {
-    return fetch(`${this.repository}/component/query`, {
+    const response = await fetch(`${this.repository}/component/query`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
       },
       body: JSON.stringify(filter),
-    })
-      .then((response) => response.json())
-      .then((json: ComponentMetadata[]) => json);
+    });
+
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
   }
 }
