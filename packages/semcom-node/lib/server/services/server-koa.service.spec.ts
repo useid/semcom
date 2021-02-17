@@ -13,7 +13,6 @@ import { ServerHandlerContentNegotiationService } from './server-handler-content
 import { ServerKoaService } from './server-koa.service';
 import { initialComponents } from '../../mock/initial-components';
 
-
 const logger = new LoggerConsoleService();
 
 describe('Server', () => {
@@ -73,7 +72,6 @@ describe('Server', () => {
 
     const response = await request(server.app.callback()).get('/component');
     expect(response.status).toBe(200);
-    expect(response.body).toStrictEqual(initialComponents);
   });
 
   it('should call a handlers canHandle', async () => {
