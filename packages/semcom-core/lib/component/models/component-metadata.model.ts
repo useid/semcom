@@ -1,8 +1,10 @@
-export interface ComponentMetadata {
-  uri: string;
-  name: string;
-  label: string;
-  author: string;
-  version: string;
-  latest: boolean;
+export class ComponentMetadata {
+  constructor(
+    public uri: string,
+    public label: string,
+    public description: string,
+    public author: string,
+    public version: string,
+    public latest: boolean,
+  ) {}
 }
