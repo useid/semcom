@@ -20,12 +20,14 @@ Host: [SEMCOM_HOST]
     "uri": "https://node.semcom.digita.ai/c/001",
     "id": "001",
     "label": "Foo 1",
+    "description": "Foo 1",
     "shape": "component"
   },
   {
     "uri": "https://node.semcom.digita.ai/c/002",
     "id": "002",
-    "label": "Foo 2",
+    "label": "Foo 1",
+    "description": "Foo 2",
     "shape": "component"
   }
 ]
