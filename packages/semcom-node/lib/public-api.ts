@@ -1,5 +1,7 @@
 export * from './component/services/component-controller.service';
 export * from './component/services/component-transformer.service';
+export * from './component/services/base-component.service';
+export * from './component/services/component.service';
 export * from './quad/services/quad-serialization.service';
 export * from './server/models/server-options.model';
 export * from './server/models/server-route.model';
