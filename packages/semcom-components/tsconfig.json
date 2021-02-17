@@ -12,12 +12,15 @@
         "baseUrl": "./",
         "forceConsistentCasingInFileNames": true,
         "strict": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "downlevelIteration": true,
         "experimentalDecorators": true,
         "importHelpers": true,
         "lib": [
+          "es2015",
           "dom"
         ]
     },
