@@ -1,23 +1,23 @@
 import {
+  AbstractManageComponentService,
+  AbstractQueryComponentService,
   ComponentMetadata,
-  ManageComponentInMemoryService,
-  QueryComponentInMemoryService,
 } from '@digita-ai/semcom-core';
 import { ComponentService } from './component.service';
 
 export class BaseComponentService implements ComponentService {
-  private queryService: QueryComponentInMemoryService;
-  private manageService: ManageComponentInMemoryService;
+  private queryService: AbstractQueryComponentService;
+  private manageService: AbstractManageComponentService;
 
   constructor(
-    queryService: QueryComponentInMemoryService,
-    manageService: ManageComponentInMemoryService,
+    queryService: AbstractQueryComponentService,
+    manageService: AbstractManageComponentService,
   ) {
     this.queryService = queryService;
     this.manageService = manageService;
   }
   public query(
-    filter: Partial<ComponentMetadata>,
+    filter?: Partial<ComponentMetadata>,
   ): Promise<ComponentMetadata[]> {
     return this.queryService.query(filter);
   }
