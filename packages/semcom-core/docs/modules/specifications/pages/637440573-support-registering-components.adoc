@@ -71,21 +71,47 @@ When defining the component, we must guarantee a unique HTML tag. It could be th
 
 When the component is registered, it should now be usable in an HTML page.
 
-Examples:
+JavaScript import/define example:
 
-Importing the `Component`
 [source, js]
 ----
-const module = await import('https://components.digita.ai/album');
-----
-
-Defining the `Component`
-[source, js]
-----
-export function processComponent(component) {
-    customElements.define('test-component', component);
+export async function register(componentMetadata) {
+    const component = await import(componentMetadata.uri);
+    // add to this.registered
+    customElements.define(componentMetadata.tag, component.default);
     return component;
 }
 ----
 
 The `isRegistered()` method checks `this.registered` for an entry with key `component.uri`. If one exists, return `true`, otherwise `false`.
+
+==== Test cases
+
+The list of test cases is non-exhaustive and serves as a guideline for writing tests.
+
+Note: an example of an existing Web Component: https://unpkg.com/x-notification@2.1.1/dist/index.js. Contains a default export of a class which extends HTMLElement. You can use this as `ComponentMetadata.uri` in tests.
+
+[options="header"]
+
+|======================================
+| Test case 	| Test data 	| Expected 	
+| `register(componentMetadata)` should import and define correctly 
+| `componentMetadata` is a `ComponentMetadata` object with valid `tag`, `uri` has valid Web Component 
+| The `Component` is registered in `CustomElementsRegistry` and returned.
+
+| `register(componentMetadata)` should throw error when `componentMetadata` is null or undefined, or when `tag`/`uri` attributes are `null` or `undefined`. 
+| `null`, `undefined` or invalid `ComponentMetadata` object.
+| Should throw error
+
+| `register(componentMetadata)` should throw error when `componentMetadata.tag` is https://www.npmjs.com/package/is-valid-element-name[invalid]
+| `ComponentMetadata` object with invalid `tag` attribute. (e.g. 'TEST-component', 'test', '5', ...)
+| Should throw error
+
+| `register(componentMetadata)` should throw error when `componentMetadata.uri` is not found
+| `ComponentMetadata` object with invalid `uri` attribute. (e.g. https://github.com/)
+| Should throw error
+
+| `register(componentMetadata)` should throw error when `componentMetadata.uri` is found, but does not contain Web Component
+| `ComponentMetadata` object with invalid `uri` attribute. (e.g. https://raw.githubusercontent.com/angular/angular/master/tools/source-map-test/index.js)
+| Should throw error
+|======================================
