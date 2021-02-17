@@ -4,25 +4,31 @@ import { QueryComponentInMemoryService } from './query-component-in-memory.servi
 describe('QueryComponentInMemoryService', () => {
   let service: QueryComponentInMemoryService;
   const components: ComponentMetadata[] = [
-    new ComponentMetadata(
-      'foo1/bar',
-      'test1',
-      'test1',
-      'test1',
-      'test1',
-      false,
-    ),
-    new ComponentMetadata('foo2/bar', 'test2', 'test2', 'test2', 'test2', true),
-    new ComponentMetadata(
-      'foo3/bar',
-      'test3',
-      'test3',
-      'test3',
-      'test3',
-      false,
-    ),
-    new ComponentMetadata('foo4/bar', 'test4', 'test4', 'test4', 'test4', true),
-  ];
+    {
+      uri: 'foo1/bar',
+      description: 'test1',
+      label: 'test1',
+      author: 'test1',
+      version: 'test1',
+      latest: true,
+    } as ComponentMetadata,
+    {
+      uri: 'foo2/bar',
+      description: 'test2',
+      label: 'test2',
+      author: 'test2',
+      version: 'test2',
+      latest: false,
+    } as ComponentMetadata,
+    {
+      uri: 'foo3/bar',
+      description: 'test3',
+      label: 'test3',
+      author: 'test3',
+      version: 'test3',
+      latest: true,
+    } as ComponentMetadata,
+  ] as ComponentMetadata[];
 
   beforeEach(() => {
     service = new QueryComponentInMemoryService(components);

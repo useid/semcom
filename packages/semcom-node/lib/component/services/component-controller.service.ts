@@ -74,19 +74,7 @@ export class ComponentControllerService implements ServerController {
 
     let res = null;
 
-    const data: ComponentMetadata[] = request.body.map(
-      (component: ComponentMetadata) =>
-        new ComponentMetadata(
-          component.uri,
-          component.label,
-          component.description,
-          component.author,
-          component.version,
-          component.latest,
-        ),
-    );
-
-    const components = await this.components.save(data);
+    const components = await this.components.save(request.body);
 
     this.logger.log('debug', 'Saved components', components);
 
