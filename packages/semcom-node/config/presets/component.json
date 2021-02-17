@@ -5,25 +5,62 @@
   ],
   "@graph": [
     {
-      "@id": "urn:semcom-node:default:ComponentService",
-      "@type": "ComponentMockService",
-      "ComponentMockService:_logger": {
-        "@id": "urn:semcom-node:default:LoggerService"
-      },
-      "ComponentMockService:_resources": [
+      "@id": "urn:semcom-node:default:QueryComponentService",
+      "@type": "QueryComponentInMemoryService",
+      "QueryComponentInMemoryService:_components": [
         {
-          "@type": "Component",
-          "Component:_label": "Foo 1",
-          "Component:_id": "001",
-          "Component:_uri": "https://node.semcom.digita.ai/c/001"
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Foo 1",
+          "ComponentMetadata:_label": "001",
+          "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
+          "ComponentMetadata:_author": "Foo 1",
+          "ComponentMetadata:_version": "001",
+          "ComponentMetadata:_latest": true
         },
         {
-          "@type": "Component",
-          "Component:_label": "Foo 2",
-          "Component:_id": "002",
-          "Component:_uri": "https://node.semcom.digita.ai/c/002"
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Foo 2",
+          "ComponentMetadata:_label": "002",
+          "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
+          "ComponentMetadata:_author": "Foo 2",
+          "ComponentMetadata:_version": "002",
+          "ComponentMetadata:_latest": true
         }
       ]
+    },
+    {
+      "@id": "urn:semcom-node:default:ManageComponentService",
+      "@type": "ManageComponentInMemoryService",
+      "ManageComponentInMemoryService:_components": [
+        {
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Foo 1",
+          "ComponentMetadata:_label": "001",
+          "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
+          "ComponentMetadata:_author": "Foo 1",
+          "ComponentMetadata:_version": "001",
+          "ComponentMetadata:_latest": true
+        },
+        {
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Foo 2",
+          "ComponentMetadata:_label": "002",
+          "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
+          "ComponentMetadata:_author": "Foo 2",
+          "ComponentMetadata:_version": "002",
+          "ComponentMetadata:_latest": true
+        }
+      ]
+    },
+    {
+      "@id": "urn:semcom-node:default:ComponentService",
+      "@type": "BaseComponentService",
+      "BaseComponentService:_queryService": {
+        "@id": "urn:semcom-node:default:QueryComponentService"
+      },
+      "BaseComponentService:_manageService": {
+        "@id": "urn:semcom-node:default:ManageComponentService"
+      }
     },
     {
       "@id": "urn:semcom-node:default:ComponentControllerService",
