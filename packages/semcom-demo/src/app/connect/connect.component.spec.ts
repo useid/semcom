@@ -3,7 +3,7 @@ import { ConnectComponent } from './connect.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
 
-describe('HomeComponent', () => {
+describe('ConnectComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [

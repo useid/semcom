@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { ConnectComponent } from './connect/connect.component';
 import { ConnectGuard } from './connect/connect.guard';
+import { ConnectResolver } from './connect/connect.resolver';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 
@@ -19,7 +20,7 @@ const routes: Routes = [
     children: [
       {
         path: 'callback',
-        resolve: [ConnectGuard],
+        resolve: [ConnectResolver],
         children: []
       }
     ]

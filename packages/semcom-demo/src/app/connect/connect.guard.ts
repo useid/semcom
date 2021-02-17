@@ -1,39 +1,21 @@
-import { CanActivate, Resolve, Router, UrlTree } from '@angular/router';
-import { ISessionInfo, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { AppState } from '../app.reducers';
+import { ISessionInfo } from '@inrupt/solid-client-authn-browser';
 import { Injectable } from '@angular/core';
-import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { providerConnected } from './connect.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConnectGuard implements CanActivate, Resolve<void> {
+export class ConnectGuard implements CanActivate{
 
   sessionInfo$: Observable<ISessionInfo|null> = this.store.select(state => state.connectState.sessionInfo);
 
-  constructor(private store: Store<AppState>, private router: Router, private location: Location) {}
-
-  resolve(): void {
-    handleIncomingRedirect(window.location.href).then( ( sessionInfo: ISessionInfo | undefined ) => {
-      if (sessionInfo) {
-        this.store.dispatch(providerConnected({ sessionInfo }));
-        this.router.navigateByUrl('/home');
-      } else {
-        this.router.navigateByUrl('/connect');
-      }
-    });
-  }
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   canActivate(): Observable<true|UrlTree> {
-    // const redirectUrl: string = state.url;
-    return this.checkLogin(/* redirectUrl */);
-  }
-
-  checkLogin(/* redirectUrl: string */): Observable<true|UrlTree> {
     return this.sessionInfo$.pipe<ISessionInfo|null, true|UrlTree>(
       take(1),
       map(sessionInfo => {

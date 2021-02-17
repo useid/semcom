@@ -1,9 +1,8 @@
 import { ActionReducerMap, createReducer, on } from '@ngrx/store';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
+import { providerConnected, providersLoaded } from './connect/connect.actions';
 import { ISessionInfo } from '@inrupt/solid-client-authn-browser';
-import { Provider } from './connect/models/provider.model';
-import { providerConnected } from './connect/connect.actions';
-import { providersLoaded } from './connect/services/provider.actions';
+import { Provider } from './models/provider.model';
 
 export interface AppState {
   routerState: RouterReducerState;

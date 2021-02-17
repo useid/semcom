@@ -1,11 +1,10 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { connectPageInit, providerSelected } from '../connect.actions';
+import { connectPageInit, providerSelected } from './connect.actions';
 import { EMPTY } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ProviderService } from './provider.service';
-import { login } from '@inrupt/solid-client-authn-browser';
-import { providersLoaded } from './provider.actions';
+import { ProviderService } from '../services/provider.service';
+import { providersLoaded } from './connect.actions';
 
 @Injectable()
 export class ProviderEffects {
@@ -22,7 +21,7 @@ export class ProviderEffects {
 
   connectProvider$ = createEffect(() => this.actions$.pipe(
     ofType(providerSelected),
-    tap(action => login({ oidcIssuer: action.provider.url, redirectUrl: 'http://localhost:4200/connect/callback' }))
+    tap(action => this.providerService.connect(action.provider.url))
   ), { dispatch: false });
 
   constructor(

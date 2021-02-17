@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { connectPageInit, providerSelected } from './connect.actions';
 import { AppState } from '../app.reducers';
 import { Observable } from 'rxjs';
-import { Provider } from './models/provider.model';
+import { Provider } from '../models/provider.model';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -21,6 +21,7 @@ export class ConnectComponent implements OnInit{
     }
 
     connect(provider: Provider): void {
+      if(!provider) {throw new Error();}
       this.store.dispatch(providerSelected({ provider }));
     }
 

@@ -2,14 +2,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ConnectComponent } from './connect/connect.component';
 import { EffectsModule } from '@ngrx/effects';
-import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home/home.module';
 import { NgModule } from '@angular/core';
-import { ProviderEffects } from './connect/services/provider.effects';
+import { ProviderEffects } from './connect/connect.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -20,9 +20,10 @@ import { reducers } from './app.reducers';
 
 export const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
 
-export const declarations = [AppComponent, HomeComponent, ConnectComponent];
+export const declarations = [AppComponent, ConnectComponent];
 export const providers = [AppComponent];
 export const imports = [
+  HomeModule,
   BrowserModule,
   HttpClientModule,
   AppRoutingModule,
