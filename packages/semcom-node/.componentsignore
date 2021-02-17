@@ -2,5 +2,7 @@
   "Error",
   "EventEmitter",
   "LoggerService",
-  "ComponentService"
+  "ComponentService",
+  "AbstractManageComponentService",
+  "AbstractQueryComponentService"
 ]
