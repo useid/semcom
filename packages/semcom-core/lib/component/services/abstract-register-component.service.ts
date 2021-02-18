@@ -5,5 +5,5 @@ export abstract class AbstractRegisterComponentService {
 
   public abstract register(
     component: ComponentMetadata,
-  ): Promise<ComponentMetadata>;
+  ): Promise<string>;
 }

@@ -4,6 +4,7 @@ export abstract class ComponentMetadata {
     public label: string,
     public description: string,
     public author: string,
+    public tag: string,
     public version: string,
     public latest: boolean,
   ) {}
