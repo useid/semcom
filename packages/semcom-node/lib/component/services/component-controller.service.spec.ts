@@ -7,7 +7,7 @@ import {
 import { BaseComponentService } from './base-component.service';
 import { ComponentControllerService } from './component-controller.service';
 import { ServerRequest } from '../../server/models/server-request.model';
-import { initialComponents } from '../../mock/initial-components';
+import { initialComponents } from '@digita-ai/semcom-core';
 
 describe('ComponentControllerService', () => {
   let controller: ComponentControllerService = null;

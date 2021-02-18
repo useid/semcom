@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentMetadata } from '../component/models/component-metadata.model';
 
 export const initialComponents = [
   {
