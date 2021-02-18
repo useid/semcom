@@ -1,0 +1,117 @@
+= Technical Specification: Support registering of components
+
+== Author(s)
+
+* Stijn Taelemans
+
+== References
+
+* Functional analysis: see semcom-core docs
+
+* Branch: `637440573-support-registering-components`
+* Projects:
+** https://github.com/digita-ai/semcom[semcom]
+
+== Introduction
+
+=== Overview
+
+This specification is about part of the SDK that registers the Components on the web page using the `CustomElementRegistry`.
+
+== Solution
+
+=== semcom-core
+
+==== Models
+
+===== ComponentMetadata
+
+Add the `tag: string` attribute to the existing `ComponentMetadata` model. We'll need it later for registering the component.
+
+Example: 
+
+[source, json]
+----
+{
+    "uri": "https://components.digita.ai/album",
+    "label": "Image Album Component",
+    "description":  "Component that renders images",
+    "author":  "digita.ai",
+    "tag": "dgt-album",
+    "version":  "1.0.0",
+    "latest":  true,
+}
+----
+
+==== Services
+
+===== AbstractRegisterComponentService
+
+Create 'register-component-abstract.service.ts' under lib/component/services/register.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+=== semcom-sdk
+
+==== Services
+
+===== RegisterComponentRemoteService
+
+Create 'register-component-remote.service.ts' under lib/services.
+
+Extends `AbstractRegisterComponentService`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+This service registers the component to the web page. Take a look at MDN's https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[Using custom elements], specifically the https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define[`CustomElementRegistry.define()`] method is important.
+
+The `register(component: ComponentMetadata)` first imports the `Component` using its 'uri'. After that, it registers the component to the page using the `CustomElementRegistry`. (See examples) `this.registered` is a `Map` with keys: `component.uri` and values: `component.tag`.
+
+When defining the component, we must guarantee a unique HTML tag. It could be that two Semantic Components share the same tag, which is why we must keep track of the Components we already registered in this page. (`this.registered`) When registering a Component with a tag that is already used, append a hash of its `uri` to the tag, then register it in `this.registered` and using `define()` with this new tag. (See: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest[`digest`]) Try not to use an external library for this if not necessary.
+
+When the component is registered, it should now be usable in an HTML page.
+
+JavaScript import/define example:
+
+[source, js]
+----
+export async function register(componentMetadata) {
+    const component = await import(componentMetadata.uri);
+    // add to this.registered
+    customElements.define(componentMetadata.tag, component.default);
+    return component;
+}
+----
+
+The `isRegistered()` method checks `this.registered` for an entry with key `component.uri`. If one exists, return `true`, otherwise `false`.
+
+==== Test cases
+
+The list of test cases is non-exhaustive and serves as a guideline for writing tests.
+
+Note: an example of an existing Web Component: https://unpkg.com/x-notification@2.1.1/dist/index.js. Contains a default export of a class which extends HTMLElement. 
+
+[options="header"]
+
+|======================================
+| Test case 	| Test data 	| Expected 	
+| `register(componentMetadata)` should import and define correctly 
+| `componentMetadata` is a `ComponentMetadata` object with valid `tag`, `uri` has valid Web Component. (use an example Web Component in a local js file for testing)
+| The `Component` is registered in `CustomElementsRegistry` and returned.
+
+| `register(componentMetadata)` should throw error when `componentMetadata` is null or undefined, or when `tag`/`uri` attributes are `null` or `undefined`. 
+| `null`, `undefined` or invalid `ComponentMetadata` object.
+| Should throw error
+
+| `register(componentMetadata)` should throw error when `componentMetadata.tag` is https://www.npmjs.com/package/is-valid-element-name[invalid]
+| `ComponentMetadata` object with invalid `tag` attribute. (e.g. 'TEST-component', 'test', '5', ...)
+| Should throw error
+
+| `register(componentMetadata)` should throw error when `componentMetadata.uri` is not found
+| `ComponentMetadata` object with invalid `uri` attribute. (e.g. https://github.com/)
+| Should throw error
+
+| `register(componentMetadata)` should throw error when `componentMetadata.uri` is found, but does not contain Web Component
+| `ComponentMetadata` object with invalid `uri` attribute. (e.g. https://raw.githubusercontent.com/angular/angular/master/tools/source-map-test/index.js)
+| Should throw error
+|======================================
