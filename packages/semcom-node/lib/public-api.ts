@@ -12,3 +12,5 @@ export * from './server/services/server-handler.service';
 export * from './server/services/server-handler-content-negotiation.service';
 export * from './server/services/server-koa.service';
 export * from './launcher/services/launcher.service';
+export * from './server/models/server-error.model';
+export * from './server/models/server-bad-request-error.model';

@@ -48,6 +48,7 @@ export class ComponentTransformerService {
    * Transforms quads to a Component
    * @param quads The quads to transform
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public fromQuads(quads: Quad[]): ComponentMetadata {
     throw new Error('Not implemented');
   }

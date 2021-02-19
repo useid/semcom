@@ -1,5 +1,6 @@
-import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 import { BaseComponentService } from './base-component.service';
+import { LoggerService } from '@digita-ai/semcom-core';
+import { ServerBadRequestError } from '../../server/models/server-bad-request-error.model';
 import { ServerController } from '../../server/models/server-controller.model';
 import { ServerRequest } from '../../server/models/server-request.model';
 import { ServerResponse } from '../../server/models/server-response.model';
@@ -73,6 +74,12 @@ export class ComponentControllerService implements ServerController {
     this.logger.log('debug', 'Saving components', request);
 
     let res = null;
+
+    const contentType = request.headers['content-type'];
+
+    if (contentType !== 'application/json') {
+      throw new ServerBadRequestError('Content type is not supported.');
+    }
 
     const components = await this.components.save(request.body);
 

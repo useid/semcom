@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { AbstractManageComponentService } from './abstract-manage-component.service';
 import { ComponentMetadata } from '../models/component-metadata.model';
 export class ManageComponentInMemoryService extends AbstractManageComponentService {

@@ -4,6 +4,7 @@ import * as bodyParser from 'koa-bodyparser';
 import type { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
 import { LoggerService } from '@digita-ai/semcom-core';
 import { Server } from 'http';
+import { ServerBadRequestError } from '../models/server-bad-request-error.model';
 import { ServerHandlerService } from './server-handler.service';
 import { ServerOptions } from '../models/server-options.model';
 import { ServerRequest } from '../models/server-request.model';
@@ -44,7 +45,7 @@ export class ServerKoaService extends ServerService {
 
     this.logger.log('debug', 'Registered controllers');
 
-    this.app.use(bodyParser({strict: true}));
+    this.app.use(bodyParser({ strict: true }));
     this.app.use(this.router.routes());
     this.app.use(this.router.allowedMethods());
 
@@ -122,7 +123,21 @@ export class ServerKoaService extends ServerService {
     }
 
     const request = this.generateRequest(ctx);
-    const originalResponse = await route.execute(request);
+
+    let originalResponse = null;
+
+    try {
+      originalResponse = await route.execute(request);
+    } catch (error) {
+      if (error instanceof ServerBadRequestError) {
+        this.logger.log('warn', 'Bad request', { error });
+
+        originalResponse = {
+          body: error.message,
+          status: 400,
+        };
+      }
+    }
 
     this.logger.log('debug', 'Executed route', { originalResponse });
 
@@ -140,10 +155,13 @@ export class ServerKoaService extends ServerService {
     ctx.body = handledResponse.body;
     ctx.status = handledResponse.status;
 
-    Object.keys(handledResponse.headers).forEach(
-      (headerKey) =>
-        (ctx.response.headers[headerKey] = handledResponse.headers[headerKey]),
-    );
+    if (handledResponse.headers) {
+      Object.keys(handledResponse.headers).forEach(
+        (headerKey) =>
+          (ctx.response.headers[headerKey] =
+            handledResponse.headers[headerKey]),
+      );
+    }
   }
 
   private generateRequest(

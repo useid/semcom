@@ -10,6 +10,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
     return this.registered.has(component.uri);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public register(component: ComponentMetadata): Promise<ComponentMetadata> {
     return;
   }
