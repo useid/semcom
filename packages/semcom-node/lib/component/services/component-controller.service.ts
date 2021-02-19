@@ -19,7 +19,7 @@ export class ComponentControllerService implements ServerController {
       execute: (request) => this.query(request),
     },
     {
-      path: '/component/save',
+      path: '/component',
       method: 'post',
       execute: (request) => this.save(request),
     },
