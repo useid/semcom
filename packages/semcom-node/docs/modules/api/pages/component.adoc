@@ -17,16 +17,68 @@ Host: [SEMCOM_HOST]
 ----
 [
   {
-    "uri": "https://node.semcom.digita.ai/c/001",
-    "id": "001",
-    "label": "Foo 1",
-    "shape": "component"
+    "@id": "https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/001",
+    "@type": [
+      "http://semcom.digita.ai/voc#component"
+    ],
+    "http://semcom.digita.ai/voc#label": [
+      {
+        "@id": "Component 1"
+      }
+    ],
+    "http://semcom.digita.ai/voc#description": [
+      {
+        "@id": "Lorem psum sid amet."
+      }
+    ],
+    "http://semcom.digita.ai/voc#author": [
+      {
+        "@id": "https://digita.ai"
+      }
+    ],
+    "http://semcom.digita.ai/voc#version": [
+      {
+        "@id": "0.1.0"
+      }
+    ],
+    "http://semcom.digita.ai/voc#latest": [
+      {
+        "@value": "true",
+        "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+      }
+    ]
   },
   {
-    "uri": "https://node.semcom.digita.ai/c/002",
-    "id": "002",
-    "label": "Foo 2",
-    "shape": "component"
+    "@id": "https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/002",
+    "@type": [
+      "http://semcom.digita.ai/voc#component"
+    ],
+    "http://semcom.digita.ai/voc#label": [
+      {
+        "@id": "Component 2"
+      }
+    ],
+    "http://semcom.digita.ai/voc#description": [
+      {
+        "@id": "Lorem psum sid amet."
+      }
+    ],
+    "http://semcom.digita.ai/voc#author": [
+      {
+        "@id": "https://digita.ai"
+      }
+    ],
+    "http://semcom.digita.ai/voc#version": [
+      {
+        "@id": "0.1.0"
+      }
+    ],
+    "http://semcom.digita.ai/voc#latest": [
+      {
+        "@value": "true",
+        "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+      }
+    ]
   }
 ]
 ----
@@ -44,7 +96,72 @@ Accept: text/turtle
 [source,json]
 ----
 <https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/001> a <http://semcom.digita.ai/voc#component>;
-    <http://semcom.digita.ai/voc#label> <Foo 1>.
+    <http://semcom.digita.ai/voc#label> <Component 1>;
+    <http://semcom.digita.ai/voc#description> <Lorem psum sid amet.>;
+    <http://semcom.digita.ai/voc#author> <https://digita.ai>;
+    <http://semcom.digita.ai/voc#version> <0.1.0>;
+    <http://semcom.digita.ai/voc#latest> true.
 <https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/002> a <http://semcom.digita.ai/voc#component>;
-    <http://semcom.digita.ai/voc#label> <Foo 2>.
+    <http://semcom.digita.ai/voc#label> <Component 2>;
+    <http://semcom.digita.ai/voc#description> <Lorem psum sid amet.>;
+    <http://semcom.digita.ai/voc#author> <https://digita.ai>;
+    <http://semcom.digita.ai/voc#version> <0.1.0>;
+    <http://semcom.digita.ai/voc#latest> true.
+----
+
+== Query components
+Query components based on a filter.
+
+[source,http]
+----
+POST /component/query HTTP/1.1
+Host: [SEMCOM_HOST]
+Accept: text/turtle
+Content-Type: application/json
+
+{
+  "uri": "https://node.semcom.digita.ai/c/001"
+}
+----
+
+[source,json]
+----
+<https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/001> a <http://semcom.digita.ai/voc#component>;
+    <http://semcom.digita.ai/voc#label> <Component 1>;
+    <http://semcom.digita.ai/voc#description> <Lorem psum sid amet.>;
+    <http://semcom.digita.ai/voc#author> <https://digita.ai>;
+    <http://semcom.digita.ai/voc#version> <0.1.0>;
+    <http://semcom.digita.ai/voc#latest> true.
+----
+
+== Save component
+Save a new component.
+
+[source,http]
+----
+POST /component HTTP/1.1
+Host: [SEMCOM_HOST]
+Accept: text/turtle
+Content-Type: application/json
+
+[
+  {
+    "uri": "https://node.semcom.digita.ai/c/003",
+    "label": "test5",
+    "description": "test5",
+    "author": "test5",
+    "version": "test5",
+    "latest": "true"
+  }
+]
+----
+
+[source,json]
+----
+<https://node.semcom.digita.ai/c/https://node.semcom.digita.ai/c/003> a <http://semcom.digita.ai/voc#component>;
+    <http://semcom.digita.ai/voc#label> <test5>;
+    <http://semcom.digita.ai/voc#description> <test5>;
+    <http://semcom.digita.ai/voc#author> <test5>;
+    <http://semcom.digita.ai/voc#version> <test5>;
+    <http://semcom.digita.ai/voc#latest> <true>.
 ----

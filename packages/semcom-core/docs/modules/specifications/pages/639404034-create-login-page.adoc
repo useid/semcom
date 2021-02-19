@@ -6,7 +6,7 @@
 
 === References
 
-* Functional analysis: https://www.figma.com/file/pPdyUg0GbiH36wyxcnLsW6/Demo---SemCom?node-id=4%3A385[Figma]
+* Functional analysis: see semcom-core docs
 * https://www.wrike.com/open.htm?id=639404034[Wrike task]
 
 * Branch: `feature/639404034-create-login-page`
@@ -72,12 +72,12 @@ The page should dispatch `ConnectFinished` when the Inrupt SDK has successfully 
 
 Configure the routing as follows:
 
-* Path 'connect' should load `ConnectPageComponent`.
-* Path 'connect/callback' should load `ConnectCallback`.
-* Path '' should load `ConnectPageComponent`.
-* Any other path should also load `ConnectPageComponent`.
+Path 'connect' should load `ConnectPageComponent`.
+Path 'connect/callback' should load `ConnectCallback`
+Path '' should load `ConnectPageComponent`.
+Any other path should also load `ConnectPageComponent`
 
-Feel free to create a simple https://angular.io/guide/router#displaying-a-404-page[404 page] if you want.
+Feel free to create a simple 404 page if you want
 
 ===== Models
 
@@ -87,15 +87,11 @@ Create under app/features/connect/models/provider.model.ts
 
 This class describes a pod provider and is used to connect and show on the connect page.
 
-
-[cols="1,1",options="header"]
-
-|================
 | Attribute | Type
+| ================
 | `name` | `string`
-
 | `url` | `string`
-|================
+| ================
 
 
 ===== Services
@@ -111,35 +107,24 @@ This service contains a basic list of providers which can be retrieved by callin
 
 https://ngrx.io/guide/store/actions
 
-
-[cols="1,1",options="header"]
-
-|======================================
 | Action 	| Effect 	| Reducer 	
+|======================================
 | `Connect` | Use the Inrupt SDK to login. | None 
-
 | `ConnectFinished` | None | Overwrite `action.sessionInfo` in the connect feature's state. 
-
 | `LoadProviders` | Use `ProviderService` to retrieve `Provider`s | None 
-
 | `LoadProvidersFinished` | None | Overwrite `action.providers` in the connect feature's state. 
 |======================================
 
 We use the `type` attribute as follows: `[Feature Name] Action Name`, as opposed to `[Page/Component Name] Action Name` example in the NgRx documentation.
 Actions in general are grouped by feature, not by a page or a component.
 
-[cols="1,1",options="header"]
-
-|================
 | Action | Type | Attributes
+| ================
 | `Connect` | `[Connect] Connect` | `{ loginUri: string }`
-
 | `ConnectFinished` | `[Connect] Connect Finished` | `{ sessionInfo: ISessionInfo }`
-
 | `LoadProviders` | `[Connect] Load Providers` | None
-
 | `LoadProvidersFinished` | `[Connect] Load Providers Finished` | `{ providers: Provider[] }`
-|================
+| ================
 
 
 ===== Effects
@@ -150,15 +135,11 @@ https://ngrx.io/guide/effects
 
 Create effects file: app/features/connect/connect.effects.ts
 
-
-[cols="1,1",options="header"]
-
-|================
 | Effect | Description
+| ================
 | `connect$` | This effects should call the `login()` function of the Inrupt SDK. (See: https://docs.inrupt.com/developer-tools/javascript/client-libraries/tutorial/authenticate/#in-a-browser-environment[authentication documentation], step 1) The redirect URI is should be the same as the `DemoConnectCallbackPageComponent`'s route.
-
 | `loadProviders$` | Use `ProviderService.all()` to retrieve a list of `Provider`s. When retrieved, pass the list of providers to a `LoadProvidersFinished` action dispatch.
-|================
+| ================
 
 ===== Reducers
 
@@ -176,21 +157,16 @@ State shape:
 
 Initial values for these attributes is `null`.
 
-
-[cols="1,1",options="header"]
-
-|================
 | Reducer | Description
+| ================
 | `on ConnectFinished` | Set the connect state's `sessionInfo` to the `ConnectFinished` action's attribute `sessionInfo`. (See: https://ngrx.io/guide/store/reducers#creating-the-reducer-function[setScores action and reducer] for an example of a reducer that uses an action's payload)
-
-| `on LoadProvidersFinished` | Use `ProviderService.all()` to retrieve a list of `Provider`s. When retrieved, pass the list of providers to a `LoadProvidersFinished` action dispatch.
-|================
+| `on ` | Use `ProviderService.all()` to retrieve a list of `Provider`s. When retrieved, pass the list of providers to a `LoadProvidersFinished` action dispatch.
+| ================
 
 Don't forget to https://ngrx.io/guide/store/reducers#registering-root-state[register root/feature state], if you haven't done this already.
 
 
 ===== Translations
 
-* `common.header.title` (SemCom Demo)
-
-* `onboarding.pages.connect-page.title` (Connect your pod)
+`common.header.title` (SemCom Demo)
+`onboarding.pages.connect-page.title` (Connect your pod)

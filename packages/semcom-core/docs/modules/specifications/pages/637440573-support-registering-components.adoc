@@ -28,7 +28,7 @@ This specification is about part of the SDK that registers the Components on the
 
 Add the `tag: string` attribute to the existing `ComponentMetadata` model. We'll need it later for registering the component.
 
-Example: 
+Example:
 
 [source, json]
 ----
@@ -49,7 +49,7 @@ Example:
 
 Create 'register-component-abstract.service.ts' under lib/component/services/register.
 
-The attributes and functions of this model can be found in the class diagram. 
+The attributes and functions of this model can be found in the class diagram.
 
 === semcom-sdk
 
@@ -61,7 +61,7 @@ Create 'register-component-remote.service.ts' under lib/services.
 
 Extends `AbstractRegisterComponentService`.
 
-The attributes and functions of this model can be found in the class diagram. 
+The attributes and functions of this model can be found in the class diagram.
 
 This service registers the component to the web page. Take a look at MDN's https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements[Using custom elements], specifically the https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define[`CustomElementRegistry.define()`] method is important.
 
@@ -89,17 +89,17 @@ The `isRegistered()` method checks `this.registered` for an entry with key `comp
 
 The list of test cases is non-exhaustive and serves as a guideline for writing tests.
 
-Note: an example of an existing Web Component: https://unpkg.com/x-notification@2.1.1/dist/index.js. Contains a default export of a class which extends HTMLElement. 
+Note: an example of an existing Web Component: https://unpkg.com/x-notification@2.1.1/dist/index.js. Contains a default export of a class which extends HTMLElement.
 
 [options="header"]
 
 |======================================
-| Test case 	| Test data 	| Expected 	
-| `register(componentMetadata)` should import and define correctly 
+| Test case 	| Test data 	| Expected
+| `register(componentMetadata)` should import and define correctly
 | `componentMetadata` is a `ComponentMetadata` object with valid `tag`, `uri` has valid Web Component. (use an example Web Component in a local js file for testing)
 | The `Component` is registered in `CustomElementsRegistry` and returned.
 
-| `register(componentMetadata)` should throw error when `componentMetadata` is null or undefined, or when `tag`/`uri` attributes are `null` or `undefined`. 
+| `register(componentMetadata)` should throw error when `componentMetadata` is null or undefined, or when `tag`/`uri` attributes are `null` or `undefined`.
 | `null`, `undefined` or invalid `ComponentMetadata` object.
 | Should throw error
 

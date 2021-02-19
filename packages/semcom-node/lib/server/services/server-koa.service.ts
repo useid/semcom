@@ -1,8 +1,10 @@
 import * as Koa from 'koa';
 import * as Router from '@koa/router';
-import { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
+import * as bodyParser from 'koa-bodyparser';
+import type { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
 import { LoggerService } from '@digita-ai/semcom-core';
 import { Server } from 'http';
+import { ServerBadRequestError } from '../models/server-bad-request-error.model';
 import { ServerHandlerService } from './server-handler.service';
 import { ServerOptions } from '../models/server-options.model';
 import { ServerRequest } from '../models/server-request.model';
@@ -26,16 +28,21 @@ export class ServerKoaService extends ServerService {
       throw new Error('Attribute options should be set');
     }
 
-    const routes = options.controllers
-      .map(controller => controller.routes)
-      .reduce((acc, val) => acc.concat(val), []);
+    const routes = options.controllers.map((controller) => controller.routes).reduce((acc, val) => acc.concat(val), []);
 
     this.logger.log('debug', 'Determined routes', routes);
 
-    routes.forEach(route => this.router.register(route.path, [route.method], async (ctx) => await this.executeAndTransform(route, ctx, options.handlers)));
+    routes.forEach((route) =>
+      this.router.register(
+        route.path,
+        [route.method],
+        async (ctx) => await this.executeAndTransform(route, ctx, options.handlers),
+      ),
+    );
 
     this.logger.log('debug', 'Registered controllers');
 
+    this.app.use(bodyParser({ strict: true }));
     this.app.use(this.router.routes());
     this.app.use(this.router.allowedMethods());
 
@@ -45,7 +52,11 @@ export class ServerKoaService extends ServerService {
     this.logger.log('debug', `Server listening on port ${port}`);
   }
 
-  private async executeHandlers(handlers: ServerHandlerService[], request: ServerRequest, response: ServerResponse): Promise<ServerResponse> {
+  private async executeHandlers(
+    handlers: ServerHandlerService[],
+    request: ServerRequest,
+    response: ServerResponse,
+  ): Promise<ServerResponse> {
     if (!handlers) {
       throw new Error('Argument handlers should be set.');
     }
@@ -67,7 +78,11 @@ export class ServerKoaService extends ServerService {
     return handledResponse;
   }
 
-  private async executeHandler(handler: ServerHandlerService, request: ServerRequest, response: ServerResponse): Promise<ServerResponse> {
+  private async executeHandler(
+    handler: ServerHandlerService,
+    request: ServerRequest,
+    response: ServerResponse,
+  ): Promise<ServerResponse> {
     if (!handler) {
       throw new Error('Argument handler should be set.');
     }
@@ -91,7 +106,11 @@ export class ServerKoaService extends ServerService {
     return handledResponse;
   }
 
-  private async executeAndTransform(route: ServerRoute, ctx: ParameterizedContext<DefaultState, DefaultContext>, handlers: ServerHandlerService[]): Promise<void> {
+  private async executeAndTransform(
+    route: ServerRoute,
+    ctx: ParameterizedContext<DefaultState, DefaultContext>,
+    handlers: ServerHandlerService[],
+  ): Promise<void> {
     if (!route) {
       throw new Error('Attribute route should be set');
     }
@@ -101,18 +120,38 @@ export class ServerKoaService extends ServerService {
     }
 
     const request = this.generateRequest(ctx);
-    const originalResponse = await route.execute(request);
 
-    this.logger.log('debug', 'Executed route', { originalResponse });
+    let originalResponse: ServerResponse = null;
+
+    try {
+      originalResponse = await route.execute(request);
+    } catch (error) {
+      if (error instanceof ServerBadRequestError) {
+        this.logger.log('warn', 'Bad request', { error });
+
+        originalResponse = {
+          body: error.message,
+          status: 400,
+          headers: null,
+        };
+      }
+    }
+
+    this.logger.log('debug', 'Executed route' + JSON.stringify(originalResponse.headers), { originalResponse });
 
     const handledResponse = await this.executeHandlers(handlers, request, originalResponse);
 
-    this.logger.log('debug', 'Handled response', { originalResponse, handledResponse });
+    this.logger.log('debug', 'Handled response' + JSON.stringify(handledResponse.headers), {
+      originalResponse,
+      handledResponse,
+    });
 
     ctx.body = handledResponse.body;
     ctx.status = handledResponse.status;
 
-    Object.keys(handledResponse.headers).forEach(headerKey => ctx.response.headers[headerKey] = handledResponse.headers[headerKey]);
+    if (handledResponse.headers) {
+      ctx.response.set(handledResponse.headers);
+    }
   }
 
   private generateRequest(ctx: ParameterizedContext<DefaultState, DefaultContext>): ServerRequest {
@@ -120,6 +159,10 @@ export class ServerKoaService extends ServerService {
       throw new Error('Argument ctx should be set.');
     }
 
-    return { method: ctx.req.method, headers: ctx.req.headers as { [key: string]: string } };
+    return {
+      body: ctx.request.body,
+      method: ctx.req.method,
+      headers: ctx.req.headers as { [key: string]: string },
+    };
   }
 }

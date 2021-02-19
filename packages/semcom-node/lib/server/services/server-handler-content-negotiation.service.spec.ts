@@ -12,7 +12,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
+      new ComponentTransformerService(logger),
       new QuadSerializationService(logger)
     );
 
@@ -23,7 +23,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
+      new ComponentTransformerService(logger),
       new QuadSerializationService(logger)
     );
     const request: ServerRequest = { method: 'GET', headers: { accept: '*/*' } };
@@ -41,7 +41,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
+      new ComponentTransformerService(logger),
       new QuadSerializationService(logger)
     );
     const request: ServerRequest = {
@@ -62,7 +62,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
+      new ComponentTransformerService(logger),
       new QuadSerializationService(logger)
     );
     const request: ServerRequest = {
@@ -83,7 +83,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     const server = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
+      new ComponentTransformerService(logger),
       new QuadSerializationService(logger)
     );
     const request: ServerRequest = {

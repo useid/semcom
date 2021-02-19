@@ -1,5 +1,5 @@
 import * as Quad from 'rdf-quad';
-import { Component, LoggerService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 
 /** Service that transforms Components */
 export class ComponentTransformerService {
@@ -9,7 +9,7 @@ export class ComponentTransformerService {
    * Transforms a Component to quads
    * @param component The component to transform
    */
-  private toQuadsOne(component: Component): Quad[] {
+  private toQuadsOne(component: ComponentMetadata): Quad[] {
     this.logger.log('debug', 'Transforming component to quads', { component });
 
     if (!component) {
@@ -22,11 +22,11 @@ export class ComponentTransformerService {
         'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
         'http://semcom.digita.ai/voc#component',
       ),
-      Quad(
-        `https://node.semcom.digita.ai/c/${component.uri}`,
-        'http://semcom.digita.ai/voc#label',
-        component.label,
-      ),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#label', component.label),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#description', component.description),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#author', component.author),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#version', component.version),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#latest', component.latest),
     ].reduce((acc, val) => acc.concat(val), []);
   }
 
@@ -34,21 +34,20 @@ export class ComponentTransformerService {
    * Transforms multiple Components to quads
    * @param components The components to transform
    */
-  public toQuads(components: Component[]): Quad[] {
+  public toQuads(components: ComponentMetadata[]): Quad[] {
     if (!components) {
       throw new Error('Argument components should be set.');
     }
 
-    return components
-      .map((component) => this.toQuadsOne(component))
-      .reduce((acc, val) => acc.concat(val), []);
+    return components.map((component) => this.toQuadsOne(component)).reduce((acc, val) => acc.concat(val), []);
   }
 
   /**
    * Transforms quads to a Component
    * @param quads The quads to transform
    */
-  public fromQuads(quads: Quad[]): Component {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public fromQuads(quads: Quad[]): ComponentMetadata {
     throw new Error('Not implemented');
   }
 }
