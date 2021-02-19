@@ -1,7 +1,4 @@
-import {
-  AbstractRegisterComponentService,
-  ComponentMetadata,
-} from '@digita-ai/semcom-core';
+import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
 
 export class RegisterComponentService extends AbstractRegisterComponentService {
   private registered: Map<string, string>;

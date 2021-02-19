@@ -1,7 +1,4 @@
-import {
-  AbstractQueryComponentService,
-  ComponentMetadata,
-} from '@digita-ai/semcom-core';
+import { AbstractQueryComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
 
 export class QueryComponentRemoteService extends AbstractQueryComponentService {
   private repository: string;
@@ -10,9 +7,7 @@ export class QueryComponentRemoteService extends AbstractQueryComponentService {
     super();
     this.repository = repository;
   }
-  public async query(
-    filter: Partial<ComponentMetadata>,
-  ): Promise<ComponentMetadata[]> {
+  public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
     const response = await fetch(`${this.repository}/component/query`, {
       method: 'POST',
       headers: {

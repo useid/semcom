@@ -28,9 +28,7 @@ export class ServerKoaService extends ServerService {
       throw new Error('Attribute options should be set');
     }
 
-    const routes = options.controllers
-      .map((controller) => controller.routes)
-      .reduce((acc, val) => acc.concat(val), []);
+    const routes = options.controllers.map((controller) => controller.routes).reduce((acc, val) => acc.concat(val), []);
 
     this.logger.log('debug', 'Determined routes', routes);
 
@@ -38,8 +36,7 @@ export class ServerKoaService extends ServerService {
       this.router.register(
         route.path,
         [route.method],
-        async (ctx) =>
-          await this.executeAndTransform(route, ctx, options.handlers),
+        async (ctx) => await this.executeAndTransform(route, ctx, options.handlers),
       ),
     );
 
@@ -141,11 +138,7 @@ export class ServerKoaService extends ServerService {
 
     this.logger.log('debug', 'Executed route', { originalResponse });
 
-    const handledResponse = await this.executeHandlers(
-      handlers,
-      request,
-      originalResponse,
-    );
+    const handledResponse = await this.executeHandlers(handlers, request, originalResponse);
 
     this.logger.log('debug', 'Handled response', {
       originalResponse,
@@ -157,16 +150,12 @@ export class ServerKoaService extends ServerService {
 
     if (handledResponse.headers) {
       Object.keys(handledResponse.headers).forEach(
-        (headerKey) =>
-          (ctx.response.headers[headerKey] =
-            handledResponse.headers[headerKey]),
+        (headerKey) => (ctx.response.headers[headerKey] = handledResponse.headers[headerKey]),
       );
     }
   }
 
-  private generateRequest(
-    ctx: ParameterizedContext<DefaultState, DefaultContext>,
-  ): ServerRequest {
+  private generateRequest(ctx: ParameterizedContext<DefaultState, DefaultContext>): ServerRequest {
     if (!ctx) {
       throw new Error('Argument ctx should be set.');
     }

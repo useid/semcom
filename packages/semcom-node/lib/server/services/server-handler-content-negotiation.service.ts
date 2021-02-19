@@ -16,10 +16,7 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
     super();
   }
 
-  public async canHandle(
-    request: ServerRequest,
-    response: ServerResponse,
-  ): Promise<boolean> {
+  public async canHandle(request: ServerRequest, response: ServerResponse): Promise<boolean> {
     this.logger.log('debug', 'Checking content negotiation handler', {
       request,
       response,
@@ -38,10 +35,7 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
     return contentType !== 'application/json';
   }
 
-  public async handle(
-    request: ServerRequest,
-    response: ServerResponse,
-  ): Promise<ServerResponse> {
+  public async handle(request: ServerRequest, response: ServerResponse): Promise<ServerResponse> {
     this.logger.log('debug', 'Running content negotiation handler', {
       request,
       response,
@@ -62,9 +56,7 @@ export class ServerHandlerContentNegotiationService extends ServerHandlerService
         ? this.defaultContentType
         : request.headers['accept'];
 
-    const isContentTypeSupported = await this.isContentTypeSupported(
-      contentType,
-    );
+    const isContentTypeSupported = await this.isContentTypeSupported(contentType);
 
     if (isContentTypeSupported) {
       const components: ComponentMetadata[] = response.body;

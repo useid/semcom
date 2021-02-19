@@ -25,10 +25,7 @@ export class ComponentControllerService implements ServerController {
     },
   ];
 
-  constructor(
-    private components: BaseComponentService,
-    private logger: LoggerService,
-  ) {}
+  constructor(private components: BaseComponentService, private logger: LoggerService) {}
 
   public async all(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Getting filtered components', request);

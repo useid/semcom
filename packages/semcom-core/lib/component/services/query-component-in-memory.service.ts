@@ -10,9 +10,7 @@ export class QueryComponentInMemoryService extends AbstractQueryComponentService
     this.components = components;
   }
 
-  public async query(
-    filter: Partial<ComponentMetadata>,
-  ): Promise<ComponentMetadata[]> {
+  public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
     return _.filter(this.components, filter);
   }
 }

@@ -22,11 +22,7 @@ export class ComponentTransformerService {
         'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
         'http://semcom.digita.ai/voc#component',
       ),
-      Quad(
-        `https://node.semcom.digita.ai/c/${component.uri}`,
-        'http://semcom.digita.ai/voc#label',
-        component.label,
-      ),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#label', component.label),
     ].reduce((acc, val) => acc.concat(val), []);
   }
 
@@ -39,9 +35,7 @@ export class ComponentTransformerService {
       throw new Error('Argument components should be set.');
     }
 
-    return components
-      .map((component) => this.toQuadsOne(component))
-      .reduce((acc, val) => acc.concat(val), []);
+    return components.map((component) => this.toQuadsOne(component)).reduce((acc, val) => acc.concat(val), []);
   }
 
   /**
