@@ -6,12 +6,13 @@ import type { DatasetIndexed } from 'rdf-dataset-indexed/dataset';
 // import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 // confetti();
 export class ProfileComponent extends LitElement implements Component {
-  
+
   // required by semcom, but would leave it out
   metadata = {
     uri: 'string',
-    name: 'SemCom Profile Component',
-    label: 'Digita SemCom component for profile information',
+    label: 'SemCom Profile Component',
+    description: 'Digita SemCom component for profile information',
+    tag: 'profile',
     author: 'Digita',
     version: '0.2.1',
     latest: true
@@ -21,12 +22,12 @@ export class ProfileComponent extends LitElement implements Component {
   name: string | undefined = 'Wouter';
 
   set rdfData(dataset: DatasetIndexed) {
-    this.name = dataset.filter( 
+    this.name = dataset.filter(
       quad => quad.predicate.equals(DataFactory.namedNode('http://example.org/predicate'))
     ).toArray()[0].object.value;
     console.log('data-update');
   }
-  
+
   static get styles() {
     return [
       css`
@@ -54,21 +55,21 @@ export class ProfileComponent extends LitElement implements Component {
   connectedCallback() {
     super.connectedCallback();
     console.log('[CElem] element connected');
-  } 
-  
+  }
+
   // Invoked each time the element is disconnected from a DOM.
   disconnectedCallback() {
     super.disconnectedCallback();
     console.log('[CElem] element disconnected');
   }
-  
+
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
     //super.adoptedCallback();
     console.log('[CElem] element moved to other DOM');
   }
 
-  // Invoked each time one of the element's attributes specified in observedAttributes is changed. 
+  // Invoked each time one of the element's attributes specified in observedAttributes is changed.
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
     console.log(`[CElem] changed ${name} attribute from "${oldValue}" to "${newValue}"`);
