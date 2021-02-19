@@ -51,6 +51,16 @@ describe('RegisterComponentService', () => {
     );
   });
 
+  it('should throw error when componentMetadata.tag is invalid', async () => {
+    const mockComponent = {
+      uri: './../../mock/component.ts',
+      tag: 'font-face',
+    } as ComponentMetadata;
+    await expect(service.register(mockComponent)).rejects.toThrow(
+      'Name argument is not a valid custom element name.',
+    );
+  });
+
   it('should throw error when componentMetadata.uri is not found', async () => {
     const mockComponent = {
       uri: './../../mock/non-working-component.ts',
