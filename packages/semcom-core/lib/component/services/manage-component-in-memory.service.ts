@@ -9,10 +9,14 @@ export class ManageComponentInMemoryService extends AbstractManageComponentServi
   }
 
   public async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
+    if (!components) {
+      throw new Error('Argument components should be set.');
+    }
+
     if (this.components.filter((c) => components.find((component) => component.uri === c.uri)).length === 0) {
       this.components = this.components.concat(components);
     }
 
-    return this.components;
+    return components;
   }
 }

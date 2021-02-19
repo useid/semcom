@@ -121,7 +121,7 @@ export class ServerKoaService extends ServerService {
 
     const request = this.generateRequest(ctx);
 
-    let originalResponse = null;
+    let originalResponse: ServerResponse = null;
 
     try {
       originalResponse = await route.execute(request);
@@ -132,15 +132,16 @@ export class ServerKoaService extends ServerService {
         originalResponse = {
           body: error.message,
           status: 400,
+          headers: null,
         };
       }
     }
 
-    this.logger.log('debug', 'Executed route', { originalResponse });
+    this.logger.log('debug', 'Executed route' + JSON.stringify(originalResponse.headers), { originalResponse });
 
     const handledResponse = await this.executeHandlers(handlers, request, originalResponse);
 
-    this.logger.log('debug', 'Handled response', {
+    this.logger.log('debug', 'Handled response' + JSON.stringify(handledResponse.headers), {
       originalResponse,
       handledResponse,
     });
@@ -149,9 +150,7 @@ export class ServerKoaService extends ServerService {
     ctx.status = handledResponse.status;
 
     if (handledResponse.headers) {
-      Object.keys(handledResponse.headers).forEach(
-        (headerKey) => (ctx.response.headers[headerKey] = handledResponse.headers[headerKey]),
-      );
+      ctx.response.set(handledResponse.headers);
     }
   }
 

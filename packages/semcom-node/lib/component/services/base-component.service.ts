@@ -18,6 +18,10 @@ export class BaseComponentService implements ComponentService {
   }
 
   public save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
+    if (!components) {
+      throw new Error('Argument components should be set.');
+    }
+
     return this.manageService.save(components);
   }
 }

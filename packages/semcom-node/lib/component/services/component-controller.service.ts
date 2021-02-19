@@ -70,7 +70,7 @@ export class ComponentControllerService implements ServerController {
   public async save(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Saving components', request);
 
-    let res = null;
+    let res: ServerResponse = null;
 
     const contentType = request.headers['content-type'];
 
@@ -78,7 +78,7 @@ export class ComponentControllerService implements ServerController {
       throw new ServerBadRequestError('Content type is not supported.');
     }
 
-    const components = await this.components.save(request.body);
+    const components = await this.components.save([request.body]);
 
     this.logger.log('debug', 'Saved components', components);
 
@@ -87,8 +87,15 @@ export class ComponentControllerService implements ServerController {
       headers: {
         'content-type': 'application/json',
       },
-      status: 200,
+      status: 201,
     };
+
+    if (components.length === 1) {
+      this.logger.log('debug', 'Setting location', components);
+      const component = components[0];
+
+      res.headers['Location'] = component.uri;
+    }
 
     return res;
   }
