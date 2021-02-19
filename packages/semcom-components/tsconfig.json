@@ -10,6 +10,8 @@
             "node_modules/@types"
         ],
         "baseUrl": "./",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "strictNullChecks": true,
