@@ -1,8 +1,13 @@
-import { html, render } from 'lit-html';
-import { Component } from '../../semcom-core/dist/public-api';
+import { LitElement, css, html, internalProperty } from 'lit-element';
+import type { Component } from '@digita-ai/semcom-core';
+import DataFactory from 'rdf-ext';
+import type { DatasetIndexed } from 'rdf-dataset-indexed/dataset';
 
-export class ProfileComponent extends HTMLElement implements Component {
-
+// import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+// confetti();
+export class ProfileComponent extends LitElement implements Component {
+  
+  // required by semcom, but would leave it out
   metadata = {
     uri: 'string',
     name: 'SemCom Profile Component',
@@ -12,19 +17,61 @@ export class ProfileComponent extends HTMLElement implements Component {
     latest: true
   }
 
-  // template = function from data to TemplateResult object
-  template = (name: string) => html`
-    <h1>Hello ${name}</h1>
-  `;
+  @internalProperty()
+  name: string | undefined = 'Wouter';
 
-  constructor() {
-    super();
-    this.attachShadow({mode: 'open'});
+  set rdfData(dataset: DatasetIndexed) {
+    this.name = dataset.filter( 
+      quad => quad.predicate.equals(DataFactory.namedNode('http://example.org/predicate'))
+    ).toArray()[0].object.value;
+    console.log('data-update');
+  }
+  
+  static get styles() {
+    return [
+      css`
+        :host {
+          color: red;
+        }
+      `
+    ];
   }
 
-  setData(data: any): void {
-    console.log(data);
-    render(this.template(data), this.shadowRoot || this );
+  render() { return html`
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+    <div class='hero'>
+      <div class='container'>
+        <h1>Hello ${this.name}</h1>
+      </div>
+    </div>
+  `;}
+
+  /*
+   * W3C Custom Element Specification (from MDN)
+   */
+
+  // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
+  connectedCallback() {
+    super.connectedCallback();
+    console.log('[CElem] element connected');
+  } 
+  
+  // Invoked each time the element is disconnected from a DOM.
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    console.log('[CElem] element disconnected');
+  }
+  
+  // Invoked each time the custom element is moved to a new DOM.
+  adoptedCallback() {
+    //super.adoptedCallback();
+    console.log('[CElem] element moved to other DOM');
+  }
+
+  // Invoked each time one of the element's attributes specified in observedAttributes is changed. 
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    super.attributeChangedCallback(name, oldValue, newValue);
+    console.log(`[CElem] changed ${name} attribute from "${oldValue}" to "${newValue}"`);
   }
 
 }
