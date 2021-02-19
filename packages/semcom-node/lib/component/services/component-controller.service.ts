@@ -1,5 +1,6 @@
-import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 import { BaseComponentService } from './base-component.service';
+import { LoggerService } from '@digita-ai/semcom-core';
+import { ServerBadRequestError } from '../../server/models/server-bad-request-error.model';
 import { ServerController } from '../../server/models/server-controller.model';
 import { ServerRequest } from '../../server/models/server-request.model';
 import { ServerResponse } from '../../server/models/server-response.model';
@@ -18,16 +19,13 @@ export class ComponentControllerService implements ServerController {
       execute: (request) => this.query(request),
     },
     {
-      path: '/component/save',
+      path: '/component',
       method: 'post',
       execute: (request) => this.save(request),
     },
   ];
 
-  constructor(
-    private components: BaseComponentService,
-    private logger: LoggerService,
-  ) {}
+  constructor(private components: BaseComponentService, private logger: LoggerService) {}
 
   public async all(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Getting filtered components', request);
@@ -72,9 +70,15 @@ export class ComponentControllerService implements ServerController {
   public async save(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Saving components', request);
 
-    let res = null;
+    let res: ServerResponse = null;
 
-    const components = await this.components.save(request.body);
+    const contentType = request.headers['content-type'];
+
+    if (contentType !== 'application/json') {
+      throw new ServerBadRequestError('Content type is not supported.');
+    }
+
+    const components = await this.components.save([request.body]);
 
     this.logger.log('debug', 'Saved components', components);
 
@@ -83,8 +87,15 @@ export class ComponentControllerService implements ServerController {
       headers: {
         'content-type': 'application/json',
       },
-      status: 200,
+      status: 201,
     };
+
+    if (components.length === 1) {
+      this.logger.log('debug', 'Setting location', components);
+      const component = components[0];
+
+      res.headers['Location'] = component.uri;
+    }
 
     return res;
   }

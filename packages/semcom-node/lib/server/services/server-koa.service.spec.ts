@@ -11,7 +11,7 @@ import { ComponentTransformerService } from '../../component/services/component-
 import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
 import { ServerHandlerContentNegotiationService } from './server-handler-content-negotiation.service';
 import { ServerKoaService } from './server-koa.service';
-import {initialComponents} from '@digita-ai/semcom-core';
+import { initialComponents } from '../../mock/initial-components';
 
 const logger = new LoggerConsoleService();
 

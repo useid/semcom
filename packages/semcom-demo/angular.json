@@ -15,11 +15,15 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "demo",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "sourceMap": true,
+            "customWebpackConfig": {
+              "path": "./webpack.config.js"
+            },
             "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -100,15 +104,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         },

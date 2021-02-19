@@ -1,0 +1,28 @@
+@use "../../styles" as *;
+
+:host {
+
+  @extend .container;
+  @extend .has-text-centered;
+
+  padding-top: 10%;
+
+}
+
+.logo {
+
+  @extend .image;
+  @extend .container;
+
+  width: 12.5rem;
+
+}
+
+.title {
+
+  @extend .block;
+  @extend .is-size-3;
+
+  font-weight: 300;
+
+}

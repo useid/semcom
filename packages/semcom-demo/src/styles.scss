@@ -2,14 +2,47 @@
 
 @charset "utf-8";
 
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Roboto:300,400);
+
 // DGT colors
 $color-primary-light: #F7F9FA;
 $color-primary-normal: #70808F;
 $color-primary-dark: #2F363C;
+$color-background-body: #EEEEEE;
+$color-background-root: #F7F9FA;
 $color-accent-normal: #FF796E;
+
+// DGT measures
+$site-max-width: 800px;
+$measure-gutter-top: 60px;
+$measure-gutter-normal: 5px;
+$measure-gutter-large: 10px;
+$measure-gutter-xlarge: 20px;
+$measure-gutter-xxlarge: 40px;
+$measure-gutter-xxxlarge: 80px;
+$component-component-border: 1px;
+$component-component-normal: 36px;
+$measure-font-normal: 1rem;
+$measure-font-small: 0.90rem;
+$measure-font-large: 1.10rem;
 
 // Override Bulma variables
 $primary: $color-primary-normal;
+$dark: $color-primary-dark;
+$light: $color-primary-light;
+$background: $color-background-root;
 $link: $color-accent-normal;
+
+$family-sans-serif: "Roboto", "Fira Sans", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+body {
+
+  @extend .hero;
+  @extend .is-fullheight;
+
+  background-color: $color-background-body;
+
+}
 
 @import './node_modules/bulma/bulma.sass';

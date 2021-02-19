@@ -7,13 +7,16 @@ describe('QueryComponentRemoteService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should send get request to repository url', async () => {
+  it('should send get request to repository url', () => {
     const service = new QueryComponentRemoteService('test');
 
-    const mockFetch = jest.fn().mockImplementation(async () => {
-      return { json: async () => ({}), ok: true };
+    const mockFetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        json: () => Promise.resolve({}),
+      });
     });
     window.fetch = mockFetch;
+
     service.query({});
     expect(fetch).toBeCalledWith('test/component/query', {
       body: '{}',

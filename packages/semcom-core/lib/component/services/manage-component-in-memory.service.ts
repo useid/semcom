@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { AbstractManageComponentService } from './abstract-manage-component.service';
 import { ComponentMetadata } from '../models/component-metadata.model';
 export class ManageComponentInMemoryService extends AbstractManageComponentService {
@@ -9,15 +8,15 @@ export class ManageComponentInMemoryService extends AbstractManageComponentServi
     this.components = components;
   }
 
-  public async save(
-    components: ComponentMetadata[],
-  ): Promise<ComponentMetadata[]> {
-    if (
-      this.components.filter((c) => components.find((component) => component.uri === c.uri)).length === 0
-    ) {
+  public async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
+    if (!components) {
+      throw new Error('Argument components should be set.');
+    }
+
+    if (this.components.filter((c) => components.find((component) => component.uri === c.uri)).length === 0) {
       this.components = this.components.concat(components);
     }
 
-    return this.components;
+    return components;
   }
 }

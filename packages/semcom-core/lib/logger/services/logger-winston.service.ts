@@ -21,7 +21,8 @@ export class LoggerWinstonService extends LoggerService {
         });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public log(level: string, message: string, payload?: any): void {
-        this.logger.log(level, `${message}` + (payload ? ` - ${JSON.stringify(payload)}` : ''));
+        this.logger.log(level, `${message}`);
     }
 }
