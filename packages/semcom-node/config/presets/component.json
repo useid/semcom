@@ -10,20 +10,20 @@
       "QueryComponentInMemoryService:_components": [
         {
           "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Foo 1",
-          "ComponentMetadata:_label": "001",
+          "ComponentMetadata:_description": "Lorem psum sid amet.",
+          "ComponentMetadata:_label": "Component 1",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
-          "ComponentMetadata:_author": "Foo 1",
-          "ComponentMetadata:_version": "001",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         },
         {
           "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Foo 2",
-          "ComponentMetadata:_label": "002",
+          "ComponentMetadata:_description": "Lorem psum sid amet.",
+          "ComponentMetadata:_label": "Component 2",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
-          "ComponentMetadata:_author": "Foo 2",
-          "ComponentMetadata:_version": "002",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         }
       ]
@@ -34,20 +34,20 @@
       "ManageComponentInMemoryService:_components": [
         {
           "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Foo 1",
-          "ComponentMetadata:_label": "001",
+          "ComponentMetadata:_description": "Lorem psum sid amet.",
+          "ComponentMetadata:_label": "Component 1",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
-          "ComponentMetadata:_author": "Foo 1",
-          "ComponentMetadata:_version": "001",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         },
         {
           "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Foo 2",
-          "ComponentMetadata:_label": "002",
+          "ComponentMetadata:_description": "Lorem psum sid amet.",
+          "ComponentMetadata:_label": "Component 2",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
-          "ComponentMetadata:_author": "Foo 2",
-          "ComponentMetadata:_version": "002",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         }
       ]
