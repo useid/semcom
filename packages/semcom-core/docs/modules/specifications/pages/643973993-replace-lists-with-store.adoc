@@ -36,8 +36,6 @@ Create 'abstract-component-store.service.ts' in 'lib/store/services'
 
 Implements `Store<ComponentMetadata>`.
 
-Create in 'lib/store/services'.
-
 The attributes and functions of this model can be found in the class diagram. 
 
 ===== ComponentInMemoryStore
@@ -45,8 +43,6 @@ The attributes and functions of this model can be found in the class diagram.
 Create 'component-in-memory-store.service.ts' in 'lib/store/services'.
 
 Extends `AbstractComponentStore`.
-
-Create in 'lib/store/services'.
 
 The attributes and functions of this model can be found in the class diagram. 
 
@@ -72,13 +68,13 @@ Exists in semcom-core's 'lib/component/services'. Remove this interface as we wo
 
 ===== BaseComponentService
 
-Exists in semcom-core's 'lib/component/services'. Remove this service as we won't need it anymore. Controllers that used this service will now directly call the appropriate methods in `QueryComponentBaseService` or `ManageComponentBaseService`.
+Exists in semcom-core's 'lib/component/services'. Remove this service as we won't need it anymore. Controllers that used this service should now directly call the appropriate methods in `QueryComponentBaseService` or `ManageComponentBaseService`.
 
 ==== Configuration
 
-You'll need to define this `AbstractComponentStore` in the config. Create a new file `store.json` for this. Import it in `config-default.json`.
+You'll need to define `ComponentStore` in the config (`"@id": "urn:semcom-node:default:ComponentStore", "@type": "ComponentInMemoryStore", ...`). Create a new file `store.json` for this. Import it in `config-default.json`.
 
-The components.js config will have to be updated to make use of these new services. The `(Base)ComponentService` no longer exists, so remove its entries. The `QueryComponentBaseService` and `ManageComponentBaseService` need a `AbstractComponentStore`, instead of the list of `ComponentMetadata` we have now .he con
+The components.js config will have to be updated to make use of the new store service. The `(Base)ComponentService` no longer exists, so remove its entries. The `QueryComponentBaseService` and `ManageComponentBaseService` need a `ComponentStore`, instead of the list of `ComponentMetadata` we have now.
 
 The `ComponentControllerService` will now use the query and manage service directly, replacing `ComponentService`.
 
@@ -137,3 +133,7 @@ These test cases are for the `ComponentInMemoryStore`. Feel free to add more tes
 |======================================
 
 === semcom-core
+
+==== Services
+
+Make sure `Manage-/QueryComponentBaseService` references are removed from semcom-core.
