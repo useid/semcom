@@ -16,9 +16,15 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
       throw Error('Invalid componentMetadata');
     }
 
-    const isRegistered = await this.isRegistered(componentMetadata);
+    let isRegistered: boolean;
+    let component;
 
-    const component = await import(componentMetadata.uri);
+    try {
+      component = await import(componentMetadata.uri);
+      isRegistered = await this.isRegistered(componentMetadata);
+    } catch (error) {
+      throw new Error('Something went wrong during import');
+    }
 
     if (isRegistered) {
       const encoder = new TextEncoder();
@@ -31,8 +37,13 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
       };
     }
 
-    this.registered.set(componentMetadata.uri, componentMetadata.tag);
-    customElements.define(componentMetadata.tag, component.default);
+    try {
+      customElements.define(componentMetadata.tag, component.default);
+      this.registered.set(componentMetadata.uri, componentMetadata.tag);
+    } catch (error) {
+      throw Error('Failed to register componentMetadata');
+    }
+
     return componentMetadata.tag;
   }
 }
