@@ -2,11 +2,9 @@ import * as request from 'supertest';
 import {
   ComponentMetadata,
   LoggerConsoleService,
-  ManageComponentInMemoryService,
-  QueryComponentInMemoryService,
 } from '@digita-ai/semcom-core';
-import { BaseComponentService } from '../../component/services/base-component.service';
 import { ComponentControllerService } from '../../component/services/component-controller.service';
+import { ComponentInMemoryStore } from '../../store/services/component-in-memory-store.service';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
 import { ServerHandlerContentNegotiationService } from './server-handler-content-negotiation.service';
@@ -60,10 +58,7 @@ describe('Server', () => {
     server.start({
       controllers: [
         new ComponentControllerService(
-          new BaseComponentService(
-            new QueryComponentInMemoryService(components),
-            new ManageComponentInMemoryService(components),
-          ),
+          new ComponentInMemoryStore(components),
           logger,
         ),
       ],
@@ -86,10 +81,7 @@ describe('Server', () => {
     server.start({
       controllers: [
         new ComponentControllerService(
-          new BaseComponentService(
-            new QueryComponentInMemoryService(components),
-            new ManageComponentInMemoryService(components),
-          ),
+          new ComponentInMemoryStore(components),
           logger,
         ),
       ],
@@ -113,10 +105,7 @@ describe('Server', () => {
     server.start({
       controllers: [
         new ComponentControllerService(
-          new BaseComponentService(
-            new QueryComponentInMemoryService(components),
-            new ManageComponentInMemoryService(components),
-          ),
+          new ComponentInMemoryStore(components),
           logger,
         ),
       ],
@@ -132,10 +121,7 @@ describe('Server', () => {
     server.start({
       controllers: [
         new ComponentControllerService(
-          new BaseComponentService(
-            new QueryComponentInMemoryService(components),
-            new ManageComponentInMemoryService(components),
-          ),
+          new ComponentInMemoryStore(components),
           logger,
         ),
       ],

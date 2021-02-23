@@ -1,4 +1,4 @@
-import { BaseComponentService } from './base-component.service';
+import { ComponentStore } from '../../store/services/component-store.service';
 import { LoggerService } from '@digita-ai/semcom-core';
 import { ServerBadRequestError } from '../../server/models/server-bad-request-error.model';
 import { ServerController } from '../../server/models/server-controller.model';
@@ -25,16 +25,16 @@ export class ComponentControllerService implements ServerController {
     },
   ];
 
-  constructor(private components: BaseComponentService, private logger: LoggerService) {}
+  constructor(private components: ComponentStore, private logger: LoggerService) {}
 
   public async all(request: ServerRequest): Promise<ServerResponse> {
-    this.logger.log('debug', 'Getting filtered components', request);
+    this.logger.log('debug', 'Getting all components', request);
 
     let res = null;
 
-    const components = await this.components.query();
+    const components = await this.components.all();
 
-    this.logger.log('debug', 'Retrieved filtered components', components);
+    this.logger.log('debug', 'Retrieved all components', components);
 
     res = {
       body: components,
@@ -48,13 +48,13 @@ export class ComponentControllerService implements ServerController {
   }
 
   public async query(request: ServerRequest): Promise<ServerResponse> {
-    this.logger.log('debug', 'Getting all components', request);
+    this.logger.log('debug', 'Getting filtered components', request);
 
     let res = null;
 
     const components = await this.components.query(request.body);
 
-    this.logger.log('debug', 'Retrieved all components', components);
+    this.logger.log('debug', 'Retrieved filtered components', components);
 
     res = {
       body: components,
