@@ -8,7 +8,6 @@ export class ComponentInMemoryStore extends ComponentStore {
   }
 
   public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
-    console.log('hallo');
     return _.filter(this.components, filter);
   }
   public async all(): Promise<ComponentMetadata[]> {
