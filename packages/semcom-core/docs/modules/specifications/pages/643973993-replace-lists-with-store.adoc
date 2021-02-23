@@ -30,7 +30,7 @@ Create 'store.service.ts' in 'lib/store/services'.
 
 The attributes and functions of this model can be found in the class diagram. 
 
-===== AbstractComponentStore
+===== ComponentStore
 
 Create 'abstract-component-store.service.ts' in 'lib/store/services'
 
@@ -42,25 +42,25 @@ The attributes and functions of this model can be found in the class diagram.
 
 Create 'component-in-memory-store.service.ts' in 'lib/store/services'.
 
-Extends `AbstractComponentStore`.
+Extends `ComponentStore`.
 
 The attributes and functions of this model can be found in the class diagram. 
 
-===== QueryComponentBaseService
+===== QueryComponentStoreService
 
 Exists in semcom-core's 'lib/component/services'
 
-This service is the old `QueryComponentInMemoryService`. Since the 'InMemory' part has now moved to a different service, rename this service to `QueryComponentBaseService`. Move this service to the semcom-node repo.
+This service is the old `QueryComponentInMemoryService`. Since the 'InMemory' part has now moved to a different service, rename this service to `QueryComponentStoreService`. Move this service to the semcom-node repo.
 
-`this.components` should be refactored to be an `AbstractComponentStore`.
+`this.components` should be refactored to be an `ComponentStore`.
 
-===== ManageComponentBaseService
+===== ManageComponentStoreService
 
 Exists in semcom-core's 'lib/component/services'
 
-This service is the old `ManageComponentInMemoryService`. Since the 'InMemory' part has now moved to a different service, rename this service to `ManageComponentBaseService`. Move this service to the semcom-node repo.
+This service is the old `ManageComponentInMemoryService`. Since the 'InMemory' part has now moved to a different service, rename this service to `ManageComponentStoreService`. Move this service to the semcom-node repo.
 
-`this.components` should be refactored to be an `AbstractComponentStore`.
+`this.components` should be refactored to be an `ComponentStore`.
 
 ===== ComponentService
 
@@ -68,13 +68,13 @@ Exists in semcom-core's 'lib/component/services'. Remove this interface as we wo
 
 ===== BaseComponentService
 
-Exists in semcom-core's 'lib/component/services'. Remove this service as we won't need it anymore. Controllers that used this service should now directly call the appropriate methods in `QueryComponentBaseService` or `ManageComponentBaseService`.
+Exists in semcom-core's 'lib/component/services'. Remove this service as we won't need it anymore. Controllers that used this service should now directly call the appropriate methods in `QueryComponentStoreService` or `ManageComponentStoreService`.
 
 ==== Configuration
 
 You'll need to define `ComponentStore` in the config (`"@id": "urn:semcom-node:default:ComponentStore", "@type": "ComponentInMemoryStore", ...`). Create a new file `store.json` for this. Import it in `config-default.json`.
 
-The components.js config will have to be updated to make use of the new store service. The `(Base)ComponentService` no longer exists, so remove its entries. The `QueryComponentBaseService` and `ManageComponentBaseService` need a `ComponentStore`, instead of the list of `ComponentMetadata` we have now.
+The components.js config will have to be updated to make use of the new store service. The `(Base)ComponentService` no longer exists, so remove its entries. The `QueryComponentStoreService` and `ManageComponentStoreService` need a `ComponentStore`, instead of the list of `ComponentMetadata` we have now.
 
 The `ComponentControllerService` will now use the query and manage service directly, replacing `ComponentService`.
 
@@ -136,4 +136,4 @@ These test cases are for the `ComponentInMemoryStore`. Feel free to add more tes
 
 ==== Services
 
-Make sure `Manage-/QueryComponentBaseService` references are removed from semcom-core.
+Make sure `Manage-/QueryComponentStoreService` references are removed from semcom-core. Remove the `Abstract-` prefix from `AbstractQueryComponentService` and `AbstractManageComponentService`.
