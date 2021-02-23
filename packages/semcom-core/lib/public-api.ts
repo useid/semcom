@@ -10,3 +10,4 @@ export * from './logger/services/logger-console.service';
 export * from './logger/services/logger-winston.service';
 export * from './component/services/manage.service';
 export * from './component/services/query.service';
+export * from './mock/initial-components';

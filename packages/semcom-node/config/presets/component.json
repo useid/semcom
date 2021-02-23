@@ -14,6 +14,7 @@
           "ComponentMetadata:_label": "Component 1",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
           "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "component-1",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         },
@@ -23,6 +24,7 @@
           "ComponentMetadata:_label": "Component 2",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
           "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "component-2",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         }
@@ -38,6 +40,7 @@
           "ComponentMetadata:_label": "Component 1",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
           "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "component-1",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         },
@@ -47,6 +50,7 @@
           "ComponentMetadata:_label": "Component 2",
           "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
           "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "component-2",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         }

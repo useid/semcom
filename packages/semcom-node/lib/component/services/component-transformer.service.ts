@@ -27,6 +27,7 @@ export class ComponentTransformerService {
       Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#author', component.author),
       Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#version', component.version),
       Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#latest', component.latest),
+      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#tag', component.tag),
     ].reduce((acc, val) => acc.concat(val), []);
   }
 

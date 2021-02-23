@@ -137,11 +137,15 @@ export class ServerKoaService extends ServerService {
       }
     }
 
-    this.logger.log('debug', 'Executed route' + JSON.stringify(originalResponse.headers), { originalResponse });
+    this.logger.log('debug', 'Executed route', { originalResponse });
 
-    const handledResponse = await this.executeHandlers(handlers, request, originalResponse);
+    const handledResponse = await this.executeHandlers(
+      handlers,
+      request,
+      originalResponse,
+    );
 
-    this.logger.log('debug', 'Handled response' + JSON.stringify(handledResponse.headers), {
+    this.logger.log('debug', 'Handled response', {
       originalResponse,
       handledResponse,
     });
@@ -154,7 +158,9 @@ export class ServerKoaService extends ServerService {
     }
   }
 
-  private generateRequest(ctx: ParameterizedContext<DefaultState, DefaultContext>): ServerRequest {
+  private generateRequest(
+    ctx: ParameterizedContext<DefaultState, DefaultContext>,
+  ): ServerRequest {
     if (!ctx) {
       throw new Error('Argument ctx should be set.');
     }

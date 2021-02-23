@@ -58,6 +58,7 @@ Content-Type: application/json
     "label": "test5",
     "description": "test5",
     "author": "test5",
+    "tag": "component-3",
     "version": "test5",
     "latest": "true"
 }
@@ -73,6 +74,7 @@ Accept: application/json
     "label": "test5",
     "description": "test5",
     "author": "test5",
+    "tag": "component-3",
     "version": "test5",
     "latest": "true"
 }
