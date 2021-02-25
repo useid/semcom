@@ -6,7 +6,9 @@ import {
 import { ComponentControllerService } from '../../component/services/component-controller.service';
 import { ComponentInMemoryStore } from '../../store/services/component-in-memory-store.service';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
+import { ManageComponentStoreService } from '../../component/services/manage-component-store.service';
 import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
+import { QueryComponentStoreService } from '../../component/services/query-component-store.service';
 import { ServerHandlerContentNegotiationService } from './server-handler-content-negotiation.service';
 import { ServerKoaService } from './server-koa.service';
 import { initialComponents } from '../../mock/initial-components';
@@ -55,10 +57,13 @@ describe('Server', () => {
   });
 
   it('should return 200 on registered routes', async () => {
+    const store = new ComponentInMemoryStore(components);
+
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentInMemoryStore(components),
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
           logger,
         ),
       ],
@@ -78,10 +83,13 @@ describe('Server', () => {
     );
     handler.canHandle = mockListen;
 
+    const store = new ComponentInMemoryStore(components);
+
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentInMemoryStore(components),
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
           logger,
         ),
       ],
@@ -102,10 +110,13 @@ describe('Server', () => {
     );
     handler.handle = mockListen;
 
+    const store = new ComponentInMemoryStore(components);
+
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentInMemoryStore(components),
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
           logger,
         ),
       ],
@@ -118,10 +129,13 @@ describe('Server', () => {
   });
 
   it('should return 404 on unknow routes', async () => {
+    const store = new ComponentInMemoryStore(components);
+
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentInMemoryStore(components),
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
           logger,
         ),
       ],

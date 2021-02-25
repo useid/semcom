@@ -2,5 +2,7 @@
   "Error",
   "EventEmitter",
   "LoggerService",
-  "ComponentMetadata"
+  "ComponentMetadata",
+  "ManageComponentService",
+  "QueryComponentService"
 ]

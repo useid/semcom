@@ -15,3 +15,5 @@ export * from './server/services/server-koa.service';
 export * from './launcher/services/launcher.service';
 export * from './server/models/server-error.model';
 export * from './server/models/server-bad-request-error.model';
+export * from './component/services/manage-component-store.service';
+export * from './component/services/query-component-store.service';

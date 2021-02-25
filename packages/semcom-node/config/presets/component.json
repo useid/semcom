@@ -5,20 +5,23 @@
   ],
   "@graph": [
     {
-      "@id": "urn:semcom-node:default:QueryComponentStoreService",
+      "@id": "urn:semcom-node:default:QueryComponentService",
       "@type": "QueryComponentStoreService",
       "QueryComponentStoreService:_components": { "@id": "urn:semcom-node:default:ComponentStore" }
     },
     {
-      "@id": "urn:semcom-node:default:ManageComponentStoreService",
+      "@id": "urn:semcom-node:default:ManageComponentService",
       "@type": "ManageComponentStoreService",
       "ManageComponentStoreService:_components": { "@id": "urn:semcom-node:default:ComponentStore" }
     },
     {
       "@id": "urn:semcom-node:default:ComponentControllerService",
       "@type": "ComponentControllerService",
-      "ComponentControllerService:_components": {
-        "@id": "urn:semcom-node:default:ComponentStore"
+      "ComponentControllerService:_queryService": {
+        "@id": "urn:semcom-node:default:QueryComponentService"
+      },
+      "ComponentControllerService:_manageService": {
+        "@id": "urn:semcom-node:default:ManageComponentService"
       },
       "ComponentControllerService:_logger": {
         "@id": "urn:semcom-node:default:LoggerService"

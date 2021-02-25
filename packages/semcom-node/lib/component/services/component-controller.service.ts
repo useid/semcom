@@ -1,5 +1,6 @@
-import { ComponentStore } from '../../store/services/component-store.service';
 import { LoggerService } from '@digita-ai/semcom-core';
+import { ManageComponentStoreService } from './manage-component-store.service';
+import { QueryComponentStoreService } from './query-component-store.service';
 import { ServerBadRequestError } from '../../server/models/server-bad-request-error.model';
 import { ServerController } from '../../server/models/server-controller.model';
 import { ServerRequest } from '../../server/models/server-request.model';
@@ -25,14 +26,14 @@ export class ComponentControllerService implements ServerController {
     },
   ];
 
-  constructor(private components: ComponentStore, private logger: LoggerService) {}
+  constructor(private queryService: QueryComponentStoreService, private manageService: ManageComponentStoreService, private logger: LoggerService) {}
 
   public async all(request: ServerRequest): Promise<ServerResponse> {
     this.logger.log('debug', 'Getting all components', request);
 
     let res = null;
 
-    const components = await this.components.all();
+    const components = await this.queryService.query({});
 
     this.logger.log('debug', 'Retrieved all components', components);
 
@@ -52,7 +53,7 @@ export class ComponentControllerService implements ServerController {
 
     let res = null;
 
-    const components = await this.components.query(request.body);
+    const components = await this.queryService.query(request.body);
 
     this.logger.log('debug', 'Retrieved filtered components', components);
 
@@ -78,7 +79,7 @@ export class ComponentControllerService implements ServerController {
       throw new ServerBadRequestError('Content type is not supported.');
     }
 
-    const components = await this.components.save([request.body]);
+    const components = await this.manageService.save([request.body]);
 
     this.logger.log('debug', 'Saved components', components);
 
