@@ -1,17 +1,31 @@
-import { ComponentMetadata } from '../models/component-metadata.model';
-import { QueryComponentInMemoryService } from './query-component-in-memory.service';
+import { ComponentInMemoryStore } from './component-in-memory-store.service';
+import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { initialComponents } from './../../mock/initial-components';
 
-describe('QueryComponentInMemoryService', () => {
-  let service: QueryComponentInMemoryService;
+describe('ComponentInMemoryStoreService', () => {
+  let service: ComponentInMemoryStore;
   const components: ComponentMetadata[] = initialComponents;
 
   beforeEach(() => {
-    service = new QueryComponentInMemoryService(components);
+    service = new ComponentInMemoryStore(components);
   });
 
   it('should be correctly instantiated', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should save correct component', () => {
+    const service = new ComponentInMemoryStore(components);
+    const mockComponent = {
+      uri: 'foo5/bar',
+      description: 'test5',
+      label: 'test5',
+      author: 'test5',
+      version: 'test5',
+      latest: true,
+    } as ComponentMetadata;
+    const result = service.save([mockComponent]);
+    expect(result).resolves.toContain(mockComponent);
   });
 
   it('should filter correct components when filled in', () => {
@@ -31,6 +45,6 @@ describe('QueryComponentInMemoryService', () => {
 
   it('should filter all latest components', () => {
     const result = service.query({ latest: true });
-    expect(result).resolves.toEqual([components[0], components[2]]);
+    expect(result).resolves.toEqual([components[1], components[3]]);
   });
 });

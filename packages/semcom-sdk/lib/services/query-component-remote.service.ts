@@ -1,6 +1,6 @@
-import { AbstractQueryComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentMetadata, QueryComponentService } from '@digita-ai/semcom-core';
 
-export class QueryComponentRemoteService extends AbstractQueryComponentService {
+export class QueryComponentRemoteService extends QueryComponentService {
   private repository: string;
 
   constructor(repository: string) {

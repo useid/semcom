@@ -1,11 +1,8 @@
-import {
-  ComponentMetadata,
-  LoggerConsoleService,
-  ManageComponentInMemoryService,
-  QueryComponentInMemoryService,
-} from '@digita-ai/semcom-core';
-import { BaseComponentService } from './base-component.service';
+import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
 import { ComponentControllerService } from './component-controller.service';
+import { ComponentInMemoryStore } from '../../store/services/component-in-memory-store.service';
+import { ManageComponentStoreService } from './manage-component-store.service';
+import { QueryComponentStoreService } from './query-component-store.service';
 import { ServerRequest } from '../../server/models/server-request.model';
 import { initialComponents } from '../../mock/initial-components';
 
@@ -14,11 +11,11 @@ describe('ComponentControllerService', () => {
   const components: ComponentMetadata[] = initialComponents;
 
   beforeEach(() => {
+    const store = new ComponentInMemoryStore(components);
+
     controller = new ComponentControllerService(
-      new BaseComponentService(
-        new QueryComponentInMemoryService(components),
-        new ManageComponentInMemoryService(components),
-      ),
+      new QueryComponentStoreService(store),
+      new ManageComponentStoreService(store),
       new LoggerConsoleService(),
     );
   });
