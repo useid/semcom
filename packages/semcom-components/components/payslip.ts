@@ -5,14 +5,14 @@ import type { DatasetIndexed } from 'rdf-dataset-indexed/dataset';
 
 // import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 // confetti();
-export class ProfileComponent extends LitElement implements Component {
+export class PayslipComponent extends LitElement implements Component {
 
   // required by semcom, but would leave it out
   metadata = {
-    uri: 'http://example.org/profileComponent',
-    label: 'SemCom Profile Component',
-    description: 'Digita SemCom component for profile information',
-    tag: 'profile',
+    uri: 'http://example.org/payslipComponent',
+    label: 'SemCom Payslip Component',
+    description: 'Digita SemCom component for payslip information',
+    tag: 'payslip',
     author: 'Digita',
     version: '0.2.1',
     latest: true
@@ -32,7 +32,7 @@ export class ProfileComponent extends LitElement implements Component {
     return [
       css`
         :host {
-          color: red;
+          font-variant: small-caps;
         }
       `
     ];
@@ -42,7 +42,7 @@ export class ProfileComponent extends LitElement implements Component {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
     <div class='hero'>
       <div class='container'>
-        <h1>Hello ${this.name}</h1>
+        <h1>Paid: ${this.name}</h1>
       </div>
     </div>
   `;}
