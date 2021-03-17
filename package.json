@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "npm ci && ./node_modules/.bin/lerna bootstrap --ignore-prepublish",
-    "build": "./node_modules/.bin/lerna run build",
-    "lint": "./node_modules/.bin/lerna run lint --parallel",
-    "lint:fix": "./node_modules/.bin/lerna run lint:fix --parallel",
-    "start": "./node_modules/.bin/lerna run start --parallel",
-    "release": "./node_modules/.bin/lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix='' --no-granular-pathspec",
-    "test": "./node_modules/.bin/lerna run test --parallel"
+    "bootstrap": "npm ci && lerna bootstrap --ignore-prepublish",
+    "build": "lerna run build",
+    "lint": "lerna run lint --parallel",
+    "lint:fix": "lerna run lint:fix --parallel",
+    "start": "lerna run start --parallel",
+    "release": "lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix='' --no-granular-pathspec",
+    "test": "lerna run test --parallel"
   },
   "repository": {
     "type": "git",
