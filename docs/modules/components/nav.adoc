@@ -1,0 +1,4 @@
+
+* xref:index.adoc[Information on the specific Semantic Components]
+
+** xref:refactor.adoc[Refactor components add logic using custom fetch functions]
