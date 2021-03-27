@@ -1,10 +1,10 @@
-import { LitElement, css, html, internalProperty } from 'lit-element';
+import * as N3 from 'n3';
+import { LitElement, css, html, property } from 'lit-element';
 import type { Component } from '@digita-ai/semcom-core';
-import DataFactory from 'rdf-ext';
-import type { DatasetIndexed } from 'rdf-dataset-indexed/dataset';
 
 // import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 // confetti();
+
 export class PayslipComponent extends LitElement implements Component {
 
   // required by semcom, but would leave it out
@@ -18,15 +18,36 @@ export class PayslipComponent extends LitElement implements Component {
     latest: true
   }
 
-  @internalProperty()
-  name: string | undefined = 'Wouter';
+  data (
+    entry: string,
+    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+  ): Promise<void> {
 
-  set rdfData(dataset: DatasetIndexed) {
-    this.name = dataset.filter(
-      quad => quad.predicate.equals(DataFactory.namedNode('http://example.org/predicate'))
-    ).toArray()[0].object.value;
-    console.log('data-update');
+    const myFetch = customFetch ?? fetch;
+    const parser = new N3.Parser();
+    const store = new N3.Store();
+
+    const paidUri = new N3.NamedNode('http://example.org/paid');
+
+    return myFetch(entry)
+      .then((response) => response.text())
+      .then((text) => { console.log(text);
+        store.addQuads(parser.parse(text));
+        this.paid = parseFloat(store.getQuads(null, paidUri, null, null)[0]?.object.value) ?? undefined;
+      });
+
   }
+
+  @property({ type: Number }) paid?: number;
+
+  render() { return html`
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+    <div class='hero'>
+      <div class='container'>
+        <h1>Paid: €${ this.paid ?? 0 }</h1>
+      </div>
+    </div>
+  `;}
 
   static get styles() {
     return [
@@ -37,15 +58,6 @@ export class PayslipComponent extends LitElement implements Component {
       `
     ];
   }
-
-  render() { return html`
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
-    <div class='hero'>
-      <div class='container'>
-        <h1>Paid: ${this.name}</h1>
-      </div>
-    </div>
-  `;}
 
   /*
    * W3C Custom Element Specification (from MDN)

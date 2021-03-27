@@ -1,10 +1,11 @@
 import DataFactory from 'rdf-ext';
-import type { DatasetIndexed } from 'rdf-dataset-indexed/dataset';
+import DatasetExt from 'rdf-ext/lib/Dataset';
 import { PayslipComponent } from './components/payslip';
 import { ProfileComponent } from './components/profile';
 import type { Quad } from 'rdf-js';
 
-// register service
+
+// mock registration service
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
@@ -15,15 +16,21 @@ declare global {
   }
 }
 
-// data retrieval
+
+// mock data retrieval
 
 const subject = DataFactory.namedNode('http://example.org/subject');
-const predicate = DataFactory.namedNode('http://example.org/predicate');
-const object = DataFactory.literal('Stijn');
+const name = DataFactory.namedNode('http://example.org/name');
+const paid = DataFactory.namedNode('http://example.org/paid');
+const stijn = DataFactory.literal('Stijn');
+const money = DataFactory.literal((5.32).toString(10));
 
-const quad: Quad = DataFactory.quad(subject, predicate, object);
+const stmt1: Quad = DataFactory.quad(subject, name, stijn);
+const stmt2: Quad = DataFactory.quad(subject, paid, money);
 
-const data: DatasetIndexed<Quad, Quad> = DataFactory.dataset([quad]);
+const data: DatasetExt = DataFactory.dataset([stmt1, stmt2]);
+
+const mockFetch = () => Promise.resolve(new Response(data.toCanonical()));
 
 
 // client app
@@ -31,11 +38,14 @@ const data: DatasetIndexed<Quad, Quad> = DataFactory.dataset([quad]);
 const profile = document.createElement('profile-component');
 const payslip = document.createElement('payslip-component');
 
-profile.rdfData = data;
-payslip.rdfData = data;
+profile.data('i-dont-matter', mockFetch);
+payslip.data('i-dont-matter', mockFetch);
 
 document.body.appendChild(profile);
 document.body.appendChild(payslip);
+
+
+// exports
 
 export * from './components/profile';
 export * from './components/payslip';
