@@ -1,9 +1,5 @@
-import DataFactory from 'rdf-ext';
-import DatasetExt from 'rdf-ext/lib/Dataset';
 import { PayslipComponent } from './components/payslip';
 import { ProfileComponent } from './components/profile';
-import type { Quad } from 'rdf-js';
-
 
 // mock registration service
 
@@ -16,21 +12,13 @@ declare global {
   }
 }
 
+let temp = await fetch('./testdata/profile.txt');
+const profileFile: string = await temp.text();
+const mockFetchProfile = () => Promise.resolve(new Response(profileFile));
 
-// mock data retrieval
-
-const subject = DataFactory.namedNode('http://example.org/subject');
-const name = DataFactory.namedNode('http://example.org/name');
-const paid = DataFactory.namedNode('http://example.org/paid');
-const stijn = DataFactory.literal('Stijn');
-const money = DataFactory.literal((5.32).toString(10));
-
-const stmt1: Quad = DataFactory.quad(subject, name, stijn);
-const stmt2: Quad = DataFactory.quad(subject, paid, money);
-
-const data: DatasetExt = DataFactory.dataset([stmt1, stmt2]);
-
-const mockFetch = () => Promise.resolve(new Response(data.toCanonical()));
+temp = await fetch('./testdata/singlePayslip.txt');
+const payslipFile: string = await temp.text();
+const mockFetchPayslip = () => Promise.resolve(new Response(payslipFile));
 
 
 // client app
@@ -38,12 +26,11 @@ const mockFetch = () => Promise.resolve(new Response(data.toCanonical()));
 const profile = document.createElement('profile-component');
 const payslip = document.createElement('payslip-component');
 
-profile.data('i-dont-matter', mockFetch);
-payslip.data('i-dont-matter', mockFetch);
+profile.data('i-dont-matter', mockFetchProfile);
+payslip.data('i-dont-matter', mockFetchPayslip);
 
 document.body.appendChild(profile);
 document.body.appendChild(payslip);
-
 
 // exports
 
