@@ -2,12 +2,14 @@
   "compilerOptions": {
     "module": "es2020",
     "target": "es2015",
+    // "module": "esnext",
+    // "target": "es2017",
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "outDir": "dist",
     "typeRoots": [
-     "node_modules/@types"
+      "node_modules/@types"
     ],
     "baseUrl": "./",
     "esModuleInterop": true,
@@ -20,6 +22,7 @@
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    //"importHelpers": true,
     "lib": [
       "es2015",
       "dom"
