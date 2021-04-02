@@ -65,7 +65,6 @@ export default class ProfileComponent extends LitElement implements Component {
     super.disconnectedCallback();
     console.log('[CElem] element disconnected');
   }
-
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
     //super.adoptedCallback();
