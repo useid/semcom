@@ -9,20 +9,16 @@ import * as N3 from 'n3';
  */
 export const resourceShape = (uri: string, customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>): Promise<string[]> => {
 
-  const myFetch = customFetch ?? fetch;
+  const myFetch = customFetch ? customFetch : fetch;
 
   const result = () => myFetch(uri, { method: 'GET' }).then(async (response) => {
-    console.log(response);
     const parser = new N3.Parser();
-    response.text().then((body) => {
-      const data = parser.parse(body);
-      console.log(data);
-      const classes = new N3.Store(data).match(null, N3.DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null);
-      console.log(classes);
+    return response.text().then((body) => {
+      const classes = new N3.Store(parser.parse(body)).getQuads(null, N3.DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null).map((quad) => quad.object.value);
+      return classes;
     });
-    return [];
   });
 
-  return uri ? Promise.reject('invalid uri') : result();
+  return uri ? result() : Promise.reject('invalid uri');
 
 };

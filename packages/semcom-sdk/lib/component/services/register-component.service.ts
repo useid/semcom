@@ -1,14 +1,17 @@
 import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
 
 export class RegisterComponentService extends AbstractRegisterComponentService {
+
   private registered: Map<string, string> = new Map();
 
   public async isRegistered(componentMetadata: ComponentMetadata): Promise<boolean> {
+
     if (!componentMetadata || !componentMetadata.uri) {
       throw Error('Invalid componentMetadata');
     }
 
     return this.registered.has(componentMetadata.uri);
+
   }
 
   public async register(componentMetadata: ComponentMetadata): Promise<string> {
@@ -16,34 +19,48 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
       throw Error('Invalid componentMetadata');
     }
 
-    let isRegistered: boolean;
-    let component;
+    let tag: string;
 
-    try {
-      component = await import(componentMetadata.uri);
-      isRegistered = await this.isRegistered(componentMetadata);
-    } catch (error) {
-      throw new Error('Something went wrong during import');
+    if (this.registered.has(componentMetadata.uri)) {
+
+      tag = this.registered.get(componentMetadata.uri);
+
+    } else {
+
+      let component;
+
+      tag = `semcom-${ componentMetadata.tag }-${ btoa(Date.now().toString()).replace('==', '').toLowerCase() }`;
+
+      this.registered.set(componentMetadata.uri, tag);
+
+      console.log('Register element from ', componentMetadata.uri, ' as ', tag);
+
+      try {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = componentMetadata.uri;
+        script.onload = (event) => console.log(event);
+        document.head.appendChild(script);
+      } catch (error) {
+        this.registered.delete(componentMetadata.uri);
+        console.log(error);
+
+        throw new Error('Something went wrong during import');
+      }
+
+      // try {
+      //   customElements.define(tag, component.default);
+      // } catch (error) {
+      //   this.registered.delete(componentMetadata.uri);
+      //   throw Error('Failed to register componentMetadata');
+      // }
+
     }
 
-    if (isRegistered) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(componentMetadata.uri);
-      const hash = await crypto.subtle.digest('SHA-256', data);
+    console.log('DONE');
 
-      componentMetadata = {
-        ...componentMetadata,
-        tag: `${componentMetadata.tag}-${hash}`,
-      };
-    }
+    return tag;
 
-    try {
-      customElements.define(componentMetadata.tag, component.default);
-      this.registered.set(componentMetadata.uri, componentMetadata.tag);
-    } catch (error) {
-      throw Error('Failed to register componentMetadata');
-    }
-
-    return componentMetadata.tag;
   }
+
 }

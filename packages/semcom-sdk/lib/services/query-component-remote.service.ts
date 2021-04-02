@@ -1,6 +1,7 @@
 import { ComponentMetadata, QueryComponentService } from '@digita-ai/semcom-core';
 
 export class QueryComponentRemoteService extends QueryComponentService {
+
   private repository: string;
 
   constructor(repository: string) {
@@ -9,6 +10,7 @@ export class QueryComponentRemoteService extends QueryComponentService {
   }
 
   public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
+
     if (!this.repository) {
       throw new Error('Argument this.repository should be set.');
     }
@@ -17,6 +19,7 @@ export class QueryComponentRemoteService extends QueryComponentService {
       method: 'POST',
       headers: {
         Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(filter),
     });
@@ -26,5 +29,7 @@ export class QueryComponentRemoteService extends QueryComponentService {
     }
 
     return response.json();
+
   }
+
 }

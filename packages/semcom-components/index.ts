@@ -1,11 +1,14 @@
 import DataFactory from 'rdf-ext';
 import DatasetExt from 'rdf-ext/lib/Dataset';
-import { PayslipComponent } from './components/payslip';
-import { ProfileComponent } from './components/profile';
+import PayslipComponent from './components/payslip';
+import ProfileComponent from './components/profile';
 import type { Quad } from 'rdf-js';
 
 
 // mock registration service
+
+
+//eval(`import("${'http:/localhost:8080/components/profile.js'}")`);
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);

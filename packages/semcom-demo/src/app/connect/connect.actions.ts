@@ -6,6 +6,11 @@ export const connectPageInit = createAction(
   '[Connect] Connect Page Initialized'
 );
 
+export const connectPageError = createAction(
+  '[Connect] Connect Page Error',
+  props<{ error: any }>()
+);
+
 export const providerSelected = createAction(
   '[Connect] Provider Selected',
   props<{ provider: Provider }>()

@@ -5,25 +5,14 @@ import type { Component } from '@digita-ai/semcom-core';
 // import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 // confetti();
 
-export class PayslipComponent extends LitElement implements Component {
-
-  // required by semcom, but would leave it out
-  metadata = {
-    uri: 'http://example.org/payslipComponent',
-    label: 'SemCom Payslip Component',
-    description: 'Digita SemCom component for payslip information',
-    tag: 'payslip',
-    author: 'Digita',
-    version: '0.2.1',
-    latest: true
-  }
+export default class PayslipComponent extends LitElement implements Component {
 
   data (
     entry: string,
     customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>
   ): Promise<void> {
 
-    const myFetch = customFetch ?? fetch;
+    const myFetch = customFetch ? customFetch : fetch;
     const parser = new N3.Parser();
     const store = new N3.Store();
 
@@ -33,7 +22,9 @@ export class PayslipComponent extends LitElement implements Component {
       .then((response) => response.text())
       .then((text) => { console.log(text);
         store.addQuads(parser.parse(text));
-        this.paid = parseFloat(store.getQuads(null, paidUri, null, null)[0]?.object.value) ?? undefined;
+        const amountTriple =  store.getQuads(null, paidUri, null, null)[0];
+        const amount = amountTriple ? parseFloat(amountTriple.object.value) : undefined;
+        this.paid = amount ? amount : undefined;
       });
 
   }
@@ -44,7 +35,7 @@ export class PayslipComponent extends LitElement implements Component {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
     <div class='hero'>
       <div class='container'>
-        <h1>Paid: €${ this.paid ?? 0 }</h1>
+        <h1>Paid: €${ this.paid ? this.paid : 0 }</h1>
       </div>
     </div>
   `;}

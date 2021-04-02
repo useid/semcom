@@ -1,36 +1,35 @@
 {
-    "compilerOptions": {
-        "module": "es2020",
-        "target": "es2015",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "declaration": true,
-        "outDir": "dist",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "baseUrl": "./",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "strictNullChecks": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "lib": [
-          "es2015",
-          "dom"
-        ]
-    },
-    "include": [
-        "./"
+  "compilerOptions": {
+    "module": "es2020",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "dist",
+    "typeRoots": [
+     "node_modules/@types"
     ],
-    "exclude": [
-        "node_modules",
-        "dist"
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015",
+      "dom"
     ]
+  },
+  "include": [
+    "./"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

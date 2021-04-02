@@ -1,3 +1,4 @@
 [
-  "AbstractRegisterComponentService"
+  "AbstractRegisterComponentService",
+  "QueryComponentService"
 ]

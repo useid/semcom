@@ -1,24 +1,26 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "sourceMap": true,
-        "declaration": true,
-        "outDir": "dist",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "lib": [
-            "es2016",
-            "dom"
-        ]
-    },
-    "include": [
-        "lib"
+  "compilerOptions": {
+    "module": "es2020",
+    "target": "es2015",
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "typeRoots": [
+      "node_modules/@types"
     ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts",
-        "dist"
+    "lib": [
+      "es2020",
+      "dom"
     ]
+  },
+  "include": [
+      "lib"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "dist"
+  ]
 }

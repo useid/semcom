@@ -8,13 +8,13 @@
     "dist"
   ],
   "scripts": {
-    "start": "cp index.html dist && ./node_modules/.bin/http-server -p 80 --gzip --brotli --proxy 'http://localhost:80?' dist/",
-    "serve": "./node_modules/.bin/snowpack dev --polyfill-node",
+    "start": "cp index.html dist && http-server -p 8080 --gzip --brotli --cors --proxy 'http://localhost:8080?' dist/",
+    "serve": "snowpack dev --polyfill-node --open none",
     "build": "rm -rf ./dist && npm run build:ts",
-    "build:ts": "./node_modules/.bin/tsc",
-    "build:sp": "./node_modules/.bin/snowpack build --polyfill-node",
-    "lint": "./node_modules/.bin/eslint .",
-    "lint:fix": "./node_modules/.bin/eslint --fix .",
+    "build:ts": "tsc",
+    "build:sp": "snowpack build --polyfill-node",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "prepare": "npm run build"
   },
   "dependencies": {
