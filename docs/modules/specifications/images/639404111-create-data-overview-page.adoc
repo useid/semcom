@@ -1,0 +1,173 @@
+== Technical Specification: Create data overview page
+
+=== Author(s)
+
+* Stijn Taelemans
+
+=== References
+
+* Branch: `feature/639404111-create-data-overview-page`
+* Projects:
+** https://github.com/digita-ai/semcom[semcom-demo]
+
+=== Introduction
+
+==== Overview
+
+This specification is about the main page in the SemCom demo project which displays a user's information using Semantic Components.
+
+=== Solution
+
+_This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
+
+==== semcom-demo
+
+===== Components
+
+https://angular.io/guide/feature-modules[Generate new `data` module] for this feature. 
+
+====== DemoDataOverviewPageComponent
+
+The finished component (with Semantic Components) should look like this:
+
+image::../images/639404111-create-data-overview-page/data-overview-page.svg[DemoDataOverviewPageComponent]
+
+Generate under app/features/data/pages/data-overview-page.component.ts (selector: <demo-data-overview-page>)
+
+This component should be the same as the login page, without the logo, title and buttons. Just the header and blank page should be shown for now. The header should be edited so that it contains a logout button.
+
+Later, when the Semantic Components are made, we'll use the data retrieved from a user's profile to query `semcom-node` with `semcom-sdk`. We can then use the retrieved `ComponentMetadata` to retrieve the necessary `Component` s that visualize a part of a user's profile (described in this document) and their payslips. (or any other data, to be implemented later)
+
+====== Sematic Components
+
+To fill in the `DemoDataOverviewPageComponent`, you'll need some Semantic Components.
+
+I'm not sure how these can be easily developed. Normally, in Angular, you instantly know how your component is coming along, which elements need more styling, etc... I suppose you could create a very basic Semantic Component to start with, try to retrieve it using our SDK, add it to the `DemoDataOverviewPageComponent` and then continue developing it until it looks and works as it should. They might already be created when this spec is implemented.
+
+===== Routing 
+
+* Path '' should load `AppComponent`
+** Path 'data' should load `ConnectPageComponent`. Create a `ConnectedGuard` which redirects a user to `connect` if they are not logged in. (See: https://angular.io/guide/router-tutorial-toh#milestone-5-route-guards[Route guards])
+** Path '' should redirect to `data`. 
+** Any other path should also load `ConnectPageComponent`.
+
+The `ConnectedGuard` can check a user's logged in state in multiple ways:
+
+* When state is not persisted across refreshes (should be like this by default), you can check if `GeneralState.profile` is set. This attribute should be set after a user connects.
+* Check if the https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/classes/sessionmanager.html#class-sessionmanager[`SessionManager`] has any sessions. These sessions will be cleared after a refresh. Note: `SessionManager` will be removed in a future release of the Inrupt SDK.
+* Persist state and the session across refreshes. The user should now always be logged in. Not sure how to properly persist the session across refreshes as we have been struggling with this in dgt-browser as well. Feel free to experiment. As far as I know: a session's https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/interfaces/isessioninfo.html[sessionInfo] is stored in either https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/interfaces/isessionoptions.html#securestorage[secureStorage] or insecureStorage, which a developer can implement themselves. They can then specify the type of storage . A sort of SessionManager is then needed that will keep track of existing sessions by using the state? We can store ISessionInfo in the state, but it does not contain auth tokens of any kind. We need to store these auth tokens, wherever they are currently kept, in the state, otherwise they will be lost after a refresh. After that, we should recreate the session with all of this info in order to use its functions, but this can not be done using the current https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/classes/session.html#constructor[constructor] and/or setters.
+
+Experimenting with the latter is easier in this demo project, as there are less places a problem can occur when compared to `dgt-browser`, but should not necessarily be done right now.
+
+===== Models
+
+
+===== Services
+
+====== DataService
+
+Generate under app/features/data/services/data.service.ts
+
+This service should contain a method `fetchProfile(webId: string): Thing` which fetches a user's profile when given a WebID. See: https://docs.inrupt.com/developer-tools/javascript/client-libraries/tutorial/read-write-data/[read/write data with the Inrupt SDK].
+
+Later, we'll expand this service to allow for the retrieval of Type Registrations, which cna be used to retrieve other pieces of a user's data. (e.g. a user's payslips)
+
+
+===== Actions
+
+Create in app/features/profile/profile.actions.ts
+
+[cols="1,1",options="header"]
+
+|======================================
+| Action 	| Effect 	| Reducer 	
+| `LoadProfile` | Use the DataService to fetch user's profile. | None 
+
+| `LoadProfileFinished` | None | Add profile information to state. 
+|======================================
+
+
+Add following to app/features/connect/connect.actions.ts
+
+[cols="1,1",options="header"]
+
+|======================================
+| Action 	| Effect 	| Reducer 	
+| `Logout` | Use the Inrupt SDK to log out. | None 
+
+| `LogoutFinished` | None | Reset state to initial values. 
+|======================================
+
+
+===== Effects
+
+https://ngrx.io/guide/effects
+
+====== ConnectEffects
+
+Add to connect.effects.ts file:
+
+
+[cols="1,1",options="header"]
+
+|================
+| Effect | Description
+| `logout$` | This effect should call the `logout()` function of the Inrupt SDK. (See: https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/functions.html#logout[solid-client-authn-browser functions])
+|================
+
+====== AppEffects
+
+Add to app/app.actions.ts:
+
+
+[cols="1,1",options="header"]
+
+|================
+| Effect | Description
+| `loadProfile$` | 
+|================
+
+
+===== Reducer
+
+`GeneralState` shape: 
+
+Add `GeneralState` to existing `AppState` file: app/app.state.ts
+
+[source, js]
+----
+{
+    "profile": Thing,
+}
+----
+
+
+`AppState` shape: 
+
+New `GeneralState` should be added to existing `AppState`
+
+[source, js]
+----
+{
+    "general": GeneralState,
+    "connect": ConnectState
+}
+----
+
+Initial values for `AppState.general` should be initialGeneralState. (See https://ngrx.io/guide/store/reducers#setting-the-initial-state[setting the initial state])
+
+Create `GeneralState` reducer in app/app.reducer.ts
+
+
+[cols="1,1",options="header"]
+
+|================
+| Reducer | Description
+| `on LoadProfileFinished` | Set the `GeneralState.profile` to the action's `profile` payload.
+| `on LogoutFinished` | The whole state should be reset to its https://ngrx.io/guide/store/reducers#setting-the-initial-state[initial values]. 
+|================
+
+
+===== Translations
+
+* `common.header.logout` (Log out)
