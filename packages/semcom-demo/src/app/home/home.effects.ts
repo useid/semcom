@@ -28,7 +28,6 @@ export class HomeEffects {
     ofType(shapesDetected),
     mergeMap(({shapeIds}) => forkJoin(shapeIds.map((shapeId) => this.semComService.queryComponents(shapeId)))),
     map((resultsPerShape) => resultsPerShape.filter(results => results.length > 0)),
-    tap((resultsPerShape) => console.log(resultsPerShape)),
     map((resultsPerShape) => resultsPerShape.map(results => results[0])),
     map((selection) => componentsSelected({ components: selection })),
     catchError((error) => of(homePageError({ error })))
@@ -37,7 +36,6 @@ export class HomeEffects {
   fetchComponentsFromMetadata$ = createEffect(() => this.actions$.pipe(
     ofType(componentsSelected),
     mergeMap(({ components }) => forkJoin(components.map((metadata) => this.semComService.registerComponent(metadata)))),
-    tap((tags) => console.log('Registered ', tags)),
     map((tags) => componentsRegistered({ tags })),
     catchError((error) => of(homePageError({ error })))
   ));

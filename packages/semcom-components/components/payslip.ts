@@ -20,7 +20,7 @@ export default class PayslipComponent extends LitElement implements Component {
 
     return myFetch(entry)
       .then((response) => response.text())
-      .then((text) => { console.log(text);
+      .then((text) => {
         store.addQuads(parser.parse(text));
         this.periodStart = +store.getQuads(null,  new N3.NamedNode(`${pay}from`), null, null)[0]?.object.value * 1000;
         this.periodEnd = +store.getQuads(null,  new N3.NamedNode(`${pay}until`), null, null)[0]?.object.value * 1000;
@@ -107,25 +107,25 @@ export default class PayslipComponent extends LitElement implements Component {
   // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
   connectedCallback() {
     super.connectedCallback();
-    console.log('[CElem] element connected');
+    console.info('[DGT-PayslipComponent] Element connected');
   }
 
   // Invoked each time the element is disconnected from a DOM.
   disconnectedCallback() {
     super.disconnectedCallback();
-    console.log('[CElem] element disconnected');
+    console.info('[DGT-PayslipComponent] Element disconnected');
   }
 
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
     //super.adoptedCallback();
-    console.log('[CElem] element moved to other DOM');
+    console.info('[DGT-PayslipComponent] Element moved to other DOM');
   }
 
   // Invoked each time one of the element's attributes specified in observedAttributes is changed.
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-    console.log(`[CElem] changed ${name} attribute from "${oldValue}" to "${newValue}"`);
+    console.info(`[DGT-PayslipComponent] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);
   }
 
 }

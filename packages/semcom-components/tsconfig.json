@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "es2020",
-    "target": "es2015",
-    // "module": "esnext",
-    // "target": "es2017",
+    // "module": "es2020",
+    // "target": "es2015",
+    "module": "esnext",
+    "target": "es2017",
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
@@ -24,7 +24,7 @@
     "experimentalDecorators": true,
     //"importHelpers": true,
     "lib": [
-      "es2015",
+      "es2020",
       "dom"
     ]
   },

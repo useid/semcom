@@ -33,31 +33,21 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
       this.registered.set(componentMetadata.uri, tag);
 
-      console.log('Register element from ', componentMetadata.uri, ' as ', tag);
-
       try {
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = componentMetadata.uri;
-        script.onload = (event) => console.log(event);
-        document.head.appendChild(script);
+        component = await eval(`import("${componentMetadata.uri}")`);
       } catch (error) {
         this.registered.delete(componentMetadata.uri);
-        console.log(error);
-
         throw new Error('Something went wrong during import');
       }
 
-      // try {
-      //   customElements.define(tag, component.default);
-      // } catch (error) {
-      //   this.registered.delete(componentMetadata.uri);
-      //   throw Error('Failed to register componentMetadata');
-      // }
+      try {
+        customElements.define(tag, component.default);
+      } catch (error) {
+        this.registered.delete(componentMetadata.uri);
+        throw Error('Failed to register componentMetadata');
+      }
 
     }
-
-    console.log('DONE');
 
     return tag;
 

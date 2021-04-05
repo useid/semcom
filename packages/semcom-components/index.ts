@@ -1,5 +1,5 @@
-import PayslipComponent from './components/payslip';
-import ProfileComponent from './components/profile';
+import PayslipComponent from './components/payslip.js';
+import ProfileComponent from './components/profile.js';
 
 // mock registration service
 
@@ -31,5 +31,5 @@ fetch('./testdata/payslip.txt').then((response) => response.text()).then((paysli
 
 // exports
 
-export * from './components/profile';
-export * from './components/payslip';
+export * from './components/profile.js';
+export * from './components/payslip.js';
