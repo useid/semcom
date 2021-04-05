@@ -1,5 +1,5 @@
 {
-  "INPUT_NAME_PLACEHOLDER": "enter your name ...",
-  "HELLO_MSG": "Hello {{name}}!",
-  "SAY_HI": "Say hi."
+  "app.header.title": "SemCom Demo",
+  "connect.title": "Connect your pod",
+  "home.title": "Welcome"
 }

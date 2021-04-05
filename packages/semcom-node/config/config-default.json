@@ -7,7 +7,8 @@
     "files-dasn:config/presets/serializer.json",
     "files-dasn:config/presets/component.json",
     "files-dasn:config/presets/server.json",
-    "files-dasn:config/presets/launcher.json"
+    "files-dasn:config/presets/launcher.json",
+    "files-dasn:config/presets/store.json"
   ],
   "@graph": [
   ]

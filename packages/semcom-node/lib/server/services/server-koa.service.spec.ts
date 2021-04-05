@@ -1,19 +1,24 @@
 import * as request from 'supertest';
 import {
-  ComponentMockService,
+  ComponentMetadata,
   LoggerConsoleService,
 } from '@digita-ai/semcom-core';
 import { ComponentControllerService } from '../../component/services/component-controller.service';
+import { ComponentInMemoryStore } from '../../store/services/component-in-memory-store.service';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
+import { ManageComponentStoreService } from '../../component/services/manage-component-store.service';
 import { QuadSerializationService } from '../../quad/services/quad-serialization.service';
+import { QueryComponentStoreService } from '../../component/services/query-component-store.service';
 import { ServerHandlerContentNegotiationService } from './server-handler-content-negotiation.service';
 import { ServerKoaService } from './server-koa.service';
+import { initialComponents } from '../../mock/initial-components';
 
 const logger = new LoggerConsoleService();
 
 describe('Server', () => {
   let server: ServerKoaService = null;
   const mockListen = jest.fn();
+  const components: ComponentMetadata[] = initialComponents;
 
   afterEach(() => {
     mockListen.mockReset();
@@ -52,13 +57,14 @@ describe('Server', () => {
   });
 
   it('should return 200 on registered routes', async () => {
+    const store = new ComponentInMemoryStore(components);
+
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, [
-            { uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },
-          ]),
-          logger
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
+          logger,
         ),
       ],
       handlers: [],
@@ -66,25 +72,25 @@ describe('Server', () => {
 
     const response = await request(server.app.callback()).get('/component');
     expect(response.status).toBe(200);
-    expect(response.body).toStrictEqual([{ uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' }]);
   });
 
   it('should call a handlers canHandle', async () => {
     const handler = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
-      new QuadSerializationService(logger)
+      new ComponentTransformerService(logger),
+      new QuadSerializationService(logger),
     );
     handler.canHandle = mockListen;
+
+    const store = new ComponentInMemoryStore(components);
 
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, [
-            { uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },
-          ]),
-          logger
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
+          logger,
         ),
       ],
       handlers: [handler],
@@ -99,18 +105,19 @@ describe('Server', () => {
     const handler = new ServerHandlerContentNegotiationService(
       logger,
       'application/ld+json',
-      new ComponentTransformerService(logger), 
-      new QuadSerializationService(logger)
+      new ComponentTransformerService(logger),
+      new QuadSerializationService(logger),
     );
     handler.handle = mockListen;
+
+    const store = new ComponentInMemoryStore(components);
 
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, [
-            { uri: 'foo/bar', id: 'bar', label: 'test', shape: 'test' },
-          ]),
-          logger
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
+          logger,
         ),
       ],
       handlers: [handler],
@@ -122,11 +129,14 @@ describe('Server', () => {
   });
 
   it('should return 404 on unknow routes', async () => {
+    const store = new ComponentInMemoryStore(components);
+
     server.start({
       controllers: [
         new ComponentControllerService(
-          new ComponentMockService(logger, []),
-          logger
+          new QueryComponentStoreService(store),
+          new ManageComponentStoreService(store),
+          logger,
         ),
       ],
       handlers: [],

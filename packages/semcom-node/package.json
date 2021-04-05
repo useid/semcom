@@ -27,11 +27,11 @@
     "semcom-node": "./dist/main.js"
   },
   "scripts": {
-    "build": "rm -rf ./dist && npm run build:ts && npm run build:components",
-    "build:ts": "./node_modules/.bin/tsc",
+    "build": "rimraf ./dist && npm run build:ts && npm run build:components",
+    "build:ts": "tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
-    "lint": "./node_modules/.bin/eslint .",
-    "lint:fix": "./node_modules/.bin/eslint --fix .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "prepare": "npm run build",
     "release:antora": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
     "start": "node dist/main.js",
@@ -63,7 +63,9 @@
     "koa": "^2.13.0",
     "rdf-quad": "^1.5.0",
     "rdf-serialize": "^1.0.1",
-    "streamify-array": "^1.0.1"
+    "streamify-array": "^1.0.1",
+    "@types/koa-bodyparser": "^4.3.0",
+    "koa-bodyparser": "^4.3.0"
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^2.2.4",
@@ -75,6 +77,7 @@
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "componentsjs-generator": "2.1.0",
+    "rimraf": "^2.6.2",
     "dot-json": "^1.2.1",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",

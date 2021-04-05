@@ -5,31 +5,23 @@
   ],
   "@graph": [
     {
-      "@id": "urn:semcom-node:default:ComponentService",
-      "@type": "ComponentMockService",
-      "ComponentMockService:_logger": {
-        "@id": "urn:semcom-node:default:LoggerService"
-      },
-      "ComponentMockService:_resources": [
-        {
-          "@type": "Component",
-          "Component:_label": "Foo 1",
-          "Component:_id": "001",
-          "Component:_uri": "https://node.semcom.digita.ai/c/001"
-        },
-        {
-          "@type": "Component",
-          "Component:_label": "Foo 2",
-          "Component:_id": "002",
-          "Component:_uri": "https://node.semcom.digita.ai/c/002"
-        }
-      ]
+      "@id": "urn:semcom-node:default:QueryComponentService",
+      "@type": "QueryComponentStoreService",
+      "QueryComponentStoreService:_components": { "@id": "urn:semcom-node:default:ComponentStore" }
+    },
+    {
+      "@id": "urn:semcom-node:default:ManageComponentService",
+      "@type": "ManageComponentStoreService",
+      "ManageComponentStoreService:_components": { "@id": "urn:semcom-node:default:ComponentStore" }
     },
     {
       "@id": "urn:semcom-node:default:ComponentControllerService",
       "@type": "ComponentControllerService",
-      "ComponentControllerService:_components": {
-        "@id": "urn:semcom-node:default:ComponentService"
+      "ComponentControllerService:_queryService": {
+        "@id": "urn:semcom-node:default:QueryComponentService"
+      },
+      "ComponentControllerService:_manageService": {
+        "@id": "urn:semcom-node:default:ManageComponentService"
       },
       "ComponentControllerService:_logger": {
         "@id": "urn:semcom-node:default:LoggerService"

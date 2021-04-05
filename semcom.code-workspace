@@ -5,6 +5,10 @@
       "path": "."
     },
     {
+      "name": "SemCom (docs)",
+      "path": "docs"
+    },
+    {
       "name": "SemCom Core",
       "path": "packages/semcom-core"
     },
@@ -13,15 +17,22 @@
       "path": "packages/semcom-node"
     },
     {
+      "name": "SemCom SDK",
+      "path": "packages/semcom-sdk"
+    },
+    {
       "name": "SemCom Demo",
       "path": "packages/semcom-demo"
     },
     {
-      "name": "SemCom SDK",
-      "path": "packages/semcom-sdk"
+      "name": "SemCom Components",
+      "path": "packages/semcom-components"
     }
   ],
   "settings": {
+    "cSpell.words": [
+      "semcom"
+    ]
   },
   "extensions": {
     "recommendations": [
