@@ -8,6 +8,7 @@
     "build": "ng build",
     "prepare": "npm run build",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:ci": "npm run test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "e2e": "ng e2e"

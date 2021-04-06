@@ -5,7 +5,7 @@
   "author": "",
   "license": "",
   "scripts": {
-    "start": "community-solid-server -c config/config-file.json --rootFilePath /tmp/css -p 3001"
+    "start": "community-solid-server -p 80 --rootFilePath /tmp/css -c config/config-file.json"
   },
   "dependencies": {
     "@solid/community-server": "0.8.1"

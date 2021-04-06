@@ -14,7 +14,6 @@ on:
 
 env:
   NPM_TOKEN: ${{secrets.GA_TOKEN}}
-  IMAGE_NAME: semcom-node
 
 jobs:
   test:
@@ -42,11 +41,13 @@ jobs:
         with:
           node-version: 14
 
-      - run: npm run bootstrap
-      
       - run: npm run lint
 
-      - run: npm test
+      - run: npm run bootstrap
+
+      - run: npm run build
+
+      - run: npm run test:ci
 
   release:
     name: Create release
@@ -75,13 +76,13 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
-    
+
     steps:
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
           registry-url: https://npm.pkg.github.com/
 
       - run: npm run bootstrap
@@ -96,28 +97,65 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+      - run: npm publish packages/semcom-sdk
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
   publish-docker:
     name: Publish Docker image
-    needs: publish-npm
+    needs: release
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Log into registry
-        run: echo "${{ secrets.GA_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Extract tag
+        id: extract-tag
+        run: echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
 
-      - name: Build image
-        run: docker build --tag $IMAGE_NAME --build-arg NPM_TOKEN=${{secrets.GA_TOKEN}} packages/semcom-node/
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
-      - name: Push image
-        run: |
-          IMAGE_ID=ghcr.io/digita-ai/$IMAGE_NAME
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GA_TOKEN }}
+
+      - name: Build and push semcom node
+        id: docker_build_semcom_node
+        uses: docker/build-push-action@v2
+        with:
+          context: packages/semcom-node/
+          push: true
+          tags: ghcr.io/digita-ai/dgt-semcom-node:${{ steps.extract-tag.outputs.tag }}
+          build-args: |
+            NPM_TOKEN=${{secrets.GA_TOKEN}}
+
+      - name: Build and push semcom demo
+        id: docker_build_semcom_demo
+        uses: docker/build-push-action@v2
+        with:
+          context: packages/semcom-demo/
+          push: true
+          tags: ghcr.io/digita-ai/dgt-semcom-demo:${{ steps.extract-tag.outputs.tag }}
+          build-args: |
+            NPM_TOKEN=${{secrets.GA_TOKEN}}
+
+      - name: Build and push semcom demo pods
+        id: docker_build_semcom_demo_pods
+        uses: docker/build-push-action@v2
+        with:
+          context: packages/semcom-demo-pods/
+          push: true
+          tags: ghcr.io/digita-ai/dgt-semcom-demo-pods:${{ steps.extract-tag.outputs.tag }}
+          build-args: |
+            NPM_TOKEN=${{secrets.GA_TOKEN}}
 
   deploy-develop:
     name: Deploy to develop
@@ -137,10 +175,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Log into registry
-        run: echo "${{ secrets.GA_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GA_TOKEN }}
 
-      - name: Deploy to Azure Container Instances
+      - name: Deploy semcom node on develop
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
@@ -152,4 +194,30 @@ jobs:
           name: semcom-node-develop
           location: 'west europe'
           ports: 3000
-          # ip-address: 'Private'
+
+      - name: Deploy semcom demo on develop
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: semcom-demo-develop
+          image: ghcr.io/digita-ai/semcom-demo:${{ steps.extract-tag.outputs.tag }}
+          registry-login-server: ghcr.io
+          registry-username: ${{ secrets.GA_USERNAME }}
+          registry-password: ${{ secrets.GA_TOKEN }}
+          name: semcom-demo-develop
+          location: 'west europe'
+          ports: 4200
+
+      - name: Deploy semcom demo pods on develop
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: semcom-demo-pods-develop
+          image: ghcr.io/digita-ai/semcom-demo-pods:${{ steps.extract-tag.outputs.tag }}
+          registry-login-server: ghcr.io
+          registry-username: ${{ secrets.GA_USERNAME }}
+          registry-password: ${{ secrets.GA_TOKEN }}
+          name: semcom-demo-pods-develop
+          location: 'west europe'
+          ports: 80
+          command-line: ./node_modules/.bin/community-solid-server -b https://pods.semcom.digita.ai -p 80 --rootFilePath /tmp/css -c config/config-file.json

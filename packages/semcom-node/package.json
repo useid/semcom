@@ -36,6 +36,7 @@
     "release:antora": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
     "start": "node dist/main.js",
     "test": "jest",
+    "test:ci": "jest --runInBand",
     "version": "npm run release:antora"
   },
   "bugs": {
