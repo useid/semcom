@@ -3,22 +3,9 @@ module.exports = {
     out: "dist"
   },
   optimize: {
-    //bundle: true,
-    target: 'es2017',
+    target: 'es2015',
   },
   plugins: [
     '@snowpack/plugin-typescript',
-    //'@snowpack/plugin-webpack',
-    // {
-    //   extendConfig: (config) => {
-    //     config.module.rules.push({
-    //       exclude: [
-    //         './index.js',
-    //         './index.ts'
-    //       ]
-    //     });
-    //     return config;
-    //   },
-    // },
   ]
 };

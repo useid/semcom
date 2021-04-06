@@ -2,9 +2,6 @@ import * as N3 from 'n3';
 import { LitElement, css, html, property } from 'lit-element';
 import type { Component } from '@digita-ai/semcom-core';
 
-// import confetti from 'https://cdn.skypack.dev/canvas-confetti';
-// confetti();
-
 export default class PayslipComponent extends LitElement implements Component {
 
   data (

@@ -1,4 +1,3 @@
-
 export interface Component extends HTMLElement {
   data (
     entry: string,

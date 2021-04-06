@@ -1,10 +1,5 @@
-import PayslipComponent from './components/payslip.js';
-import ProfileComponent from './components/profile.js';
-
-// mock registration service
-
-
-//eval(`import("${'http:/localhost:8080/components/profile.js'}")`);
+import PayslipComponent from './components/payslip';
+import ProfileComponent from './components/profile';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
@@ -15,21 +10,23 @@ declare global {
   }
 }
 
-fetch('./testdata/profile.txt').then((response) => response.text()).then((profileFile) => {
-  const mockFetchProfile = () => Promise.resolve(new Response(profileFile));
-  const profile = document.createElement('profile-component');
-  profile.data('i-dont-matter', mockFetchProfile);
-  document.body.appendChild(profile);
+fetch('./testdata/profile.txt').then((response) => {
+  response.text().then((profileFile) => {
+    const mockFetchProfile = () => Promise.resolve(new Response(profileFile));
+    const profile = document.createElement('profile-component');
+    profile.data('i-dont-matter', mockFetchProfile);
+    document.body.appendChild(profile);
+  });
 });
 
-fetch('./testdata/payslip.txt').then((response) => response.text()).then((payslipFile) => {
-  const mockFetchPayslip = () => Promise.resolve(new Response(payslipFile));
-  const payslip = document.createElement('payslip-component');
-  payslip.data('i-dont-matter', mockFetchPayslip);
-  document.body.appendChild(payslip);
+fetch('./testdata/singlePayslip.txt').then((response) => {
+  response.text().then((payslipFile) => {
+    const mockFetchPayslip = () => Promise.resolve(new Response(payslipFile));
+    const payslip = document.createElement('payslip-component');
+    payslip.data('i-dont-matter', mockFetchPayslip);
+    document.body.appendChild(payslip);
+  });
 });
 
-// exports
-
-export * from './components/profile.js';
-export * from './components/payslip.js';
+export * from './components/profile';
+export * from './components/payslip';

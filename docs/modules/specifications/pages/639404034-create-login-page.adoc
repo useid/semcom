@@ -27,7 +27,7 @@ _This is a proposed solution and is open to change. If you feel some things can 
 
 ===== Components
 
-Where possible, I've tried to use Angular Material components. Check out https://material.angular.io/components/categories[the full list of Material components] and https://material.angular.io/guide/getting-started#display-a-component[how to use them] if you haven't already. I've prefixed components with 'demo-' (e.g. <demo-connect-page>). Angular's default prefix is 'app-', so you'll need to change it in the angular.json configuration file. 
+Where possible, I've tried to use Angular Material components. Check out https://material.angular.io/components/categories[the full list of Material components] and https://material.angular.io/guide/getting-started#display-a-component[how to use them] if you haven't already. I've prefixed components with 'demo-' (e.g. <demo-connect-page>). Angular's default prefix is 'app-', so you'll need to change it in the angular.json configuration file.
 
 Some tips:
 
@@ -45,7 +45,7 @@ The HTML of this component should only contain one `<div>` with a `<router-outle
 
 ====== DemoConnectPageComponent
 
-This component is the first page a user sees when they open the app. It constists of a `MatToolbar` at the top, our logo, a title and some buttons to connect with different pod providers. I've chosen Solid Community and the new Inrupt Solid server, but any Solid server should work. 
+This component is the first page a user sees when they open the app. It constists of a `MatToolbar` at the top, our logo, a title and some buttons to connect with different pod providers. I've chosen Solid Community and the new Inrupt Solid server, but any Solid server should work.
 
 The finished component should look like this:
 
@@ -59,7 +59,7 @@ When one of the buttons is clicked, the `Connect` action should be dispatched. (
 
 ====== DemoConnectCallbackPageComponent
 
-This component is the first page a user sees when they open the app. It constists of a `MatToolbar` at the top, our logo, a title and some buttons to connect with different pod providers. I've chosen Solid Community and the new Inrupt Solid server, but any Solid server should work. 
+This component is the first page a user sees when they open the app. It constists of a `MatToolbar` at the top, our logo, a title and some buttons to connect with different pod providers. I've chosen Solid Community and the new Inrupt Solid server, but any Solid server should work.
 
 Generate under app/features/connect/pages/connect-callback.component.ts (selector: <demo-connect-callback>)
 
@@ -68,7 +68,7 @@ The page should dispatch `ConnectFinished` when the Inrupt SDK has successfully 
 
 `ConnectCallback` should then navigate us away from this page. (defined later in this document)
 
-===== Routing 
+===== Routing
 
 Configure the routing as follows:
 
@@ -107,12 +107,12 @@ This service contains a basic list of providers which can be retrieved by callin
 
 https://ngrx.io/guide/store/actions
 
-| Action 	| Effect 	| Reducer 	
+| Action 	| Effect 	| Reducer
 |======================================
-| `Connect` | Use the Inrupt SDK to login. | None 
-| `ConnectFinished` | None | Overwrite `action.sessionInfo` in the connect feature's state. 
-| `LoadProviders` | Use `ProviderService` to retrieve `Provider`s | None 
-| `LoadProvidersFinished` | None | Overwrite `action.providers` in the connect feature's state. 
+| `Connect` | Use the Inrupt SDK to login. | None
+| `ConnectFinished` | None | Overwrite `action.sessionInfo` in the connect feature's state.
+| `LoadProviders` | Use `ProviderService` to retrieve `Provider`s | None
+| `LoadProvidersFinished` | None | Overwrite `action.providers` in the connect feature's state.
 |======================================
 
 We use the `type` attribute as follows: `[Feature Name] Action Name`, as opposed to `[Page/Component Name] Action Name` example in the NgRx documentation.
@@ -145,7 +145,10 @@ Create effects file: app/features/connect/connect.effects.ts
 
 https://ngrx.io/guide/store/reducers
 
-State shape: 
+`ConnectState` shape:
+
+Create `ConnectState` file: app/features/connect/connect.state.ts
+Register as https://ngrx.io/guide/store/reducers#register-feature-state[feature state]
 
 [source, js]
 ----
@@ -157,10 +160,27 @@ State shape:
 
 Initial values for these attributes is `null`.
 
-| Reducer | Description
-| ================
+`AppState` shape:
+
+Create `AppState` file: app/app.state.ts
+
+[source, js]
+----
+{
+    "connect": ConnectState
+}
+----
+
+Initial values for `AppState.connect` should be initialConnectState. (See https://ngrx.io/guide/store/reducers#setting-the-initial-state[setting the initial state])
+
+Create `ConnectState` reducer in app/features/connect/connect.reducer.ts
+
+[cols="1,1",options="header"]
+
+|================
+| Reducer Function | Description
 | `on ConnectFinished` | Set the connect state's `sessionInfo` to the `ConnectFinished` action's attribute `sessionInfo`. (See: https://ngrx.io/guide/store/reducers#creating-the-reducer-function[setScores action and reducer] for an example of a reducer that uses an action's payload)
-| `on ` | Use `ProviderService.all()` to retrieve a list of `Provider`s. When retrieved, pass the list of providers to a `LoadProvidersFinished` action dispatch.
+| `on LoadProvidersFinished` | Use `ProviderService.all()` to retrieve a list of `Provider`s. When retrieved, pass the list of providers to a `LoadProvidersFinished` action dispatch.
 | ================
 
 Don't forget to https://ngrx.io/guide/store/reducers#registering-root-state[register root/feature state], if you haven't done this already.
