@@ -1,0 +1,54 @@
+@prefix solid: <http://www.w3.org/ns/solid/terms#> .
+@prefix  foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix   pay: <http://digita.ai/voc/payslip#> .
+@prefix      : <#> .
+
+<>
+    a foaf:PersonalProfileDocument ;
+    foaf:primaryTopic :me ;
+    foaf:maker :me .
+
+:me
+    a foaf:Person ;
+    foaf:name "Tia Pieters" .
+
+:payslip-jan-2021-w1
+    a pay:payslip ;
+    pay:employer <https://lidl.be> ;
+    pay:employee :me ;
+    pay:from "1609459200" ;
+    pay:until "1612051200" ;
+    pay:stature "White Collar" ;
+    pay:dependent "1" ;
+    pay:wageUnit pay:month ;
+    pay:grossAmount "2600" ;
+    pay:taxableAmount "2200" ;
+    pay:netAmount "1500" .
+
+
+:payslip-feb-2021-w1
+    a pay:payslip ;
+    pay:employer <https://lidl.be> ;
+    pay:employee :me ;
+    pay:from "1612137600" ;
+    pay:until "1614470400" ;
+    pay:stature "White Collar" ;
+    pay:dependent "1" ;
+    pay:wageUnit pay:month ;
+    pay:grossAmount "2600" ;
+    pay:taxableAmount "2200" ;
+    pay:netAmount "1500" .
+
+
+:payslip-mar-2021-w1
+    a pay:payslip;
+    pay:employer <https://lidl.be>;
+    pay:employee :me;
+    pay:from "1614556800";
+    pay:until "1617148800";
+    pay:stature "White Collar";
+    pay:dependent "1";
+    pay:wageUnit <http://digita.ai/voc/payslip#month>;
+    pay:grossAmount "2600";
+    pay:taxableAmount "2200";
+    pay:netAmount "1500".
