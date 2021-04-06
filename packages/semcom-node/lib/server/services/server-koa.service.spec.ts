@@ -2,10 +2,7 @@ import * as request from 'supertest';
 import {
   ComponentMetadata,
   LoggerConsoleService,
-  ManageComponentInMemoryService,
-  QueryComponentInMemoryService,
 } from '@digita-ai/semcom-core';
-import { BaseComponentService } from '../../component/services/base-component.service';
 import { ComponentControllerService } from '../../component/services/component-controller.service';
 import { ComponentInMemoryStore } from '../../store/services/component-in-memory-store.service';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
