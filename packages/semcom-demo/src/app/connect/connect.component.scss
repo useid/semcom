@@ -52,11 +52,16 @@
     width: 200px;
     height: 40px;
 
-    color: $primary;
+    color: $dark;
     background-color: $background;
 
     border: 1px solid $dark;
     border-radius: 0;
+
+    &:hover {
+      color: $accent;
+      border: 1px solid $accent;
+    }
 
   }
 

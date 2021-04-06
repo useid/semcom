@@ -5,7 +5,6 @@ export * from './component/services/query-component.service';
 export * from './component/services/abstract-register-component.service';
 export * from './logger/services/logger.service';
 export * from './logger/services/logger-console.service';
-export * from './logger/services/logger-winston.service';
 export * from './component/services/manage.service';
 export * from './component/services/query.service';
 export * from './mock/initial-components';

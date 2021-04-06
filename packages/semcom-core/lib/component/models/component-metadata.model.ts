@@ -7,5 +7,6 @@ export abstract class ComponentMetadata {
     public tag: string,
     public version: string,
     public latest: boolean,
+    public shapes: string[],
   ) {}
 }

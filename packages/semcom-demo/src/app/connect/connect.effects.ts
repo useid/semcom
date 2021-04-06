@@ -1,27 +1,28 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { connectPageInit, providerSelected } from './connect.actions';
-import { EMPTY } from 'rxjs';
+import { connectPageError, connectPageInit, providerSelected, providersLoaded } from './connect.actions';
 import { Injectable } from '@angular/core';
 import { ProviderService } from '../services/provider.service';
-import { providersLoaded } from './connect.actions';
+import { of } from 'rxjs';
 
 @Injectable()
-export class ProviderEffects {
+export class ConnectEffects {
 
   loadProviders$ = createEffect(() => this.actions$.pipe(
     ofType(connectPageInit),
-    mergeMap(() => this.providerService.getAll()
-      .pipe(
-        map(providers => (providersLoaded({ providers }))),
-        catchError(() => EMPTY)
-      ))
-    )
-  );
+    mergeMap(() => this.providerService.getAll()),
+    map(providers => providersLoaded({ providers })),
+    catchError((error) => of(connectPageError({ error })))
+  ));
 
   connectProvider$ = createEffect(() => this.actions$.pipe(
     ofType(providerSelected),
     tap(action => this.providerService.connect(action.provider.url))
+  ), { dispatch: false });
+
+  logConnectPageErrors$ = createEffect(() => this.actions$.pipe(
+    ofType(connectPageError),
+    tap((error) => console.error(error)),
   ), { dispatch: false });
 
   constructor(

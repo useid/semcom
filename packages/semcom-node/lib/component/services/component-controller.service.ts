@@ -52,7 +52,6 @@ export class ComponentControllerService implements ServerController {
     this.logger.log('debug', 'Getting filtered components', request);
 
     let res = null;
-
     const components = await this.queryService.query(request.body);
 
     this.logger.log('debug', 'Retrieved filtered components', components);

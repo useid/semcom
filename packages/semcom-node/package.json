@@ -58,14 +58,15 @@
   },
   "dependencies": {
     "@digita-ai/semcom-core": "0.2.1",
+    "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
+    "@types/koa-bodyparser": "^4.3.0",
     "componentsjs": "4.0.5",
     "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
     "rdf-quad": "^1.5.0",
     "rdf-serialize": "^1.0.1",
-    "streamify-array": "^1.0.1",
-    "@types/koa-bodyparser": "^4.3.0",
-    "koa-bodyparser": "^4.3.0"
+    "streamify-array": "^1.0.1"
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^2.2.4",

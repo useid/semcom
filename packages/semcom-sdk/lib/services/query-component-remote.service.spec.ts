@@ -20,7 +20,10 @@ describe('QueryComponentRemoteService', () => {
     service.query({});
     expect(fetch).toBeCalledWith('test/component/query', {
       body: '{}',
-      headers: { Accept: 'application/json' },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       method: 'POST',
     });
   });
