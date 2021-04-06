@@ -13,7 +13,7 @@
 == References
 
 * Project: https://github.com/digita-ai/dgt-semcom[@digita-ai/semcom-components]
-//* Branch: `feature/658432185-initial-setup-docs`
+* Branch: `feature/641783722-create-example-components`
 
 
 == Overview of the proposed solution
@@ -23,23 +23,9 @@ This analysis describes a refactor of the initial components implementing the Se
 
 == Detailed analysis of the suggested implementation
 
-The current initial implementations use a `rdfData` function setting a single `@internalProperty` called `name`. Remove them, and add a new static function returning a properties object. For example:
+The start of the refactor is already done: both components now contain a decorated example property and a `data` function which takes and `entry` uri and a custom `fetch` function.
 
-[source,typescript]
-----
-static get properties() {
-  return {
-    name: String
-  }
-}
-----
-
-Both components already contain private properties and public setters for the new `fetch` function and `entry` field. Implement the logic so that on any update of the field, the component
-
-- logs an error if the function is not set, or
-- uses the function to get the data from the entry uri.
-
-The component should then read and parse the data (e.g. using N3.js), and store any information it needs in the properties object. This can be done directly, e.g. not via `this.properties().name` but via `this.name`. Make sure each component has the right properties for its functionality.
+Implement the data logic so that the component uses the custom function to get the data from the uri. The component should then read and parse the data (e.g. using N3.js), and store any information it needs in decorated properties.
 
 When the data logic is completed, update the HTML template returned by the `render` function, and add the necessary CSS to the static `styles` function, to present the data in the component.
 
