@@ -8,17 +8,18 @@
     "dist"
   ],
   "scripts": {
-    "start": "cp index.html dist && ./node_modules/.bin/http-server -p 80 --gzip --brotli --proxy 'http://localhost:80?' dist/",
-    "serve": "./node_modules/.bin/snowpack dev --polyfill-node",
-    "build": "rm -rf ./dist && npm run build:ts",
-    "build:ts": "./node_modules/.bin/tsc",
-    "build:sp": "./node_modules/.bin/snowpack build --polyfill-node",
-    "lint": "./node_modules/.bin/eslint .",
-    "lint:fix": "./node_modules/.bin/eslint --fix .",
+    "start": "cp index.html dist && http-server -p 8080 --gzip --brotli --cors --proxy 'http://localhost:8080?' dist/",
+    "serve": "snowpack dev --polyfill-node --open none",
+    "build": "rm -rf ./dist && npm run build:sp",
+    "build:ts": "tsc",
+    "build:sp": "snowpack build --polyfill-node",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "prepare": "npm run build"
   },
   "dependencies": {
     "@digita-ai/semcom-core": "0.2.1",
+    "@snowpack/plugin-webpack": "^2.3.1",
     "@types/n3": "^1.8.0",
     "@types/rdf-ext": "^1.3.8",
     "@types/rdf-js": "^4.0.1",

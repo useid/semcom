@@ -1,19 +1,20 @@
 import { CanActivate, Router, UrlTree } from '@angular/router';
-import { map, take } from 'rxjs/operators';
-import { AppState } from '../app.reducers';
+import { map, take, tap } from 'rxjs/operators';
 import { ISessionInfo } from '@inrupt/solid-client-authn-browser';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { connectSessionInfoSelector } from './connect.state';
+import { info } from 'node:console';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConnectGuard implements CanActivate{
 
-  sessionInfo$: Observable<ISessionInfo|null> = this.store.select(state => state.connectState.sessionInfo);
+  sessionInfo$: Observable<ISessionInfo|null> = this.store.select(connectSessionInfoSelector);
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store, private router: Router) {}
 
   canActivate(): Observable<true|UrlTree> {
     return this.sessionInfo$.pipe<ISessionInfo|null, true|UrlTree>(

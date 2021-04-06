@@ -1,5 +1,5 @@
-import { PayslipComponent } from './components/payslip';
-import { ProfileComponent } from './components/profile';
+import PayslipComponent from './components/payslip';
+import ProfileComponent from './components/profile';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);

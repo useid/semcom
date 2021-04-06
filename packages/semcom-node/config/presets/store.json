@@ -10,21 +10,23 @@
       "ComponentInMemoryStore:_components": [
         {
           "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Lorem psum sid amet.",
-          "ComponentMetadata:_label": "Component 1",
-          "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/001",
+          "ComponentMetadata:_description": "Digita SemCom component for profile information.",
+          "ComponentMetadata:_label": "SemCom Profile Component",
+          "ComponentMetadata:_uri": "http://localhost:8080/components/profile.js",
+          "ComponentMetadata:_shapes": "http://xmlns.com/foaf/0.1/PersonalProfileDocument",
           "ComponentMetadata:_author": "https://digita.ai",
-          "ComponentMetadata:_tag": "component-1",
+          "ComponentMetadata:_tag": "profile",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         },
         {
           "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Lorem psum sid amet.",
-          "ComponentMetadata:_label": "Component 2",
-          "ComponentMetadata:_uri": "https://node.semcom.digita.ai/c/002",
+          "ComponentMetadata:_description": "Digita SemCom component for payslip information.",
+          "ComponentMetadata:_label": "SemCom Payslip Component",
+          "ComponentMetadata:_uri": "http://localhost:8080/components/payslip.js",
+          "ComponentMetadata:_shapes": "urn:example:payslipClass",
           "ComponentMetadata:_author": "https://digita.ai",
-          "ComponentMetadata:_tag": "component-2",
+          "ComponentMetadata:_tag": "payslip",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         }

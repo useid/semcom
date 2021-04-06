@@ -1,6 +1,6 @@
 import { ISessionInfo, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser';
 import { Resolve, Router } from '@angular/router';
-import { AppState } from '../app.reducers';
+import { ConnectState } from './connect.state';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -12,9 +12,9 @@ import { providerConnected } from './connect.actions';
 })
 export class ConnectResolver implements Resolve<void> {
 
-  sessionInfo$: Observable<ISessionInfo|null> = this.store.select(state => state.connectState.sessionInfo);
+  sessionInfo$: Observable<ISessionInfo|null> = this.store.select(state => state.sessionInfo);
 
-  constructor(private store: Store<AppState>, private router: Router, private location: Location) {}
+  constructor(private store: Store<ConnectState>, private router: Router, private location: Location) {}
 
   resolve(): void {
     handleIncomingRedirect(window.location.href).then( ( sessionInfo: ISessionInfo | undefined ) => {

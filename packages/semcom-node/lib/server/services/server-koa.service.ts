@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import * as Router from '@koa/router';
 import * as bodyParser from 'koa-bodyparser';
+import * as cors from '@koa/cors';
 import type { DefaultContext, DefaultState, ParameterizedContext } from 'koa';
 import { LoggerService } from '@digita-ai/semcom-core';
 import { Server } from 'http';
@@ -42,6 +43,7 @@ export class ServerKoaService extends ServerService {
 
     this.logger.log('debug', 'Registered controllers');
 
+    this.app.use(cors({ origin: '*' }));
     this.app.use(bodyParser({ strict: true }));
     this.app.use(this.router.routes());
     this.app.use(this.router.allowedMethods());

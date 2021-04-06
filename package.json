@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bootstrap": "npm ci && lerna bootstrap --ignore-prepublish",
+    "bootstrap:no-ci": "npm i && lerna bootstrap --no-ci --ignore-prepublish",
     "build": "lerna run build",
     "lint": "lerna run lint --parallel",
     "lint:fix": "lerna run lint:fix --parallel",

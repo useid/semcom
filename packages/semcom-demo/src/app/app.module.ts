@@ -1,29 +1,23 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing.module';
-
 import { BrowserModule } from '@angular/platform-browser';
-import { ConnectComponent } from './connect/connect.component';
+import { ConnectModule } from './connect/connect.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HomeModule } from './home/home.module';
 import { NgModule } from '@angular/core';
-import { ProviderEffects } from './connect/connect.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { environment } from '../environments/environment';
-import { reducers } from './app.reducers';
 
 export const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http);
 
-export const declarations = [AppComponent, ConnectComponent];
+export const declarations = [AppComponent];
 export const providers = [AppComponent];
 export const imports = [
-  HomeModule,
   BrowserModule,
   HttpClientModule,
   AppRoutingModule,
@@ -35,13 +29,17 @@ export const imports = [
       deps: [HttpClient]
     }
   }),
-  StoreModule.forRoot(reducers),
+  StoreModule.forRoot({
+    routerFeature: routerReducer,
+  }),
   StoreDevtoolsModule.instrument({
     maxAge: 25,
     logOnly: environment.production
   }),
   StoreRouterConnectingModule.forRoot(),
-  EffectsModule.forRoot([ProviderEffects])
+  EffectsModule.forRoot([]),
+  HomeModule,
+  ConnectModule,
 ];
 
 @NgModule({
