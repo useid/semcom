@@ -11,7 +11,8 @@
     "lint:fix": "lerna run lint:fix --parallel",
     "start": "lerna run start --parallel",
     "release": "lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix='' --no-granular-pathspec",
-    "test": "lerna run test --parallel"
+    "test": "lerna run test --parallel",
+    "test:ci": "lerna run test:ci"
   },
   "repository": {
     "type": "git",
