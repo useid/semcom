@@ -133,7 +133,7 @@ jobs:
         with:
           context: packages/semcom-node/
           push: true
-          tags: ghcr.io/digita-ai/dgt-semcom-node:${{ steps.extract-tag.outputs.tag }}
+          tags: ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
@@ -143,7 +143,7 @@ jobs:
         with:
           context: packages/semcom-components/
           push: true
-          tags: ghcr.io/digita-ai/dgt-semcom-components:${{ steps.extract-tag.outputs.tag }}
+          tags: ghcr.io/digita-ai/semcom-components:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
@@ -153,7 +153,7 @@ jobs:
         with:
           context: packages/semcom-demo-app/
           push: true
-          tags: ghcr.io/digita-ai/dgt-semcom-demo-app:${{ steps.extract-tag.outputs.tag }}
+          tags: ghcr.io/digita-ai/semcom-demo-app:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
@@ -163,7 +163,7 @@ jobs:
         with:
           context: packages/semcom-demo-pods/
           push: true
-          tags: ghcr.io/digita-ai/dgt-semcom-demo-pods:${{ steps.extract-tag.outputs.tag }}
+          tags: ghcr.io/digita-ai/semcom-demo-pods:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
