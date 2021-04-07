@@ -29,10 +29,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prepare": "npm run build",
-    "release:antora": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
     "test": "jest",
-    "test:ci": "jest --runInBand",
-    "version": "npm run release:antora"
+    "test:ci": "jest --runInBand"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"

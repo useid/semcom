@@ -10,7 +10,9 @@
     "lint": "lerna run lint --parallel",
     "lint:fix": "lerna run lint:fix --parallel",
     "start": "lerna run start --parallel",
-    "release": "lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix='' --no-granular-pathspec",
+    "release": "npm run release:docs && npm run release:version",
+    "release:docs": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
+    "release:version": "lerna version --exact --conventional-commits -m 'chore: release %s' --force-publish --tag-version-prefix='' --no-granular-pathspec",
     "test": "lerna run test --parallel",
     "test:ci": "lerna run test:ci"
   },
