@@ -19,7 +19,7 @@ RUN npm install
 COPY . /usr/src/app
 
 # Copy initial data
-COPY data/leapeeters/ /tmp/css/leapeeters/
+COPY data/tiapieters/ /tmp/css/tiapieters/
 COPY data/tonypaillard/ /tmp/css/tonypaillard/
 
 # Expose ports.
