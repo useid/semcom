@@ -137,6 +137,16 @@ jobs:
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
+      - name: Build and push semcom components
+        id: docker_build_semcom_components
+        uses: docker/build-push-action@v2
+        with:
+          context: packages/semcom-components/
+          push: true
+          tags: ghcr.io/digita-ai/dgt-semcom-components:${{ steps.extract-tag.outputs.tag }}
+          build-args: |
+            NPM_TOKEN=${{secrets.GA_TOKEN}}
+
       - name: Build and push semcom demo
         id: docker_build_semcom_demo
         uses: docker/build-push-action@v2
@@ -195,6 +205,19 @@ jobs:
           location: 'west europe'
           ports: 3000
 
+      - name: Deploy semcom components on develop
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          dns-name-label: semcom-components-develop
+          image: ghcr.io/digita-ai/semcom-components:${{ steps.extract-tag.outputs.tag }}
+          registry-login-server: ghcr.io
+          registry-username: ${{ secrets.GA_USERNAME }}
+          registry-password: ${{ secrets.GA_TOKEN }}
+          name: semcom-components-develop
+          location: 'west europe'
+          ports: 8080
+
       - name: Deploy semcom demo on develop
         uses: 'azure/aci-deploy@v1'
         with:
@@ -219,5 +242,5 @@ jobs:
           registry-password: ${{ secrets.GA_TOKEN }}
           name: semcom-demo-pods-develop
           location: 'west europe'
-          ports: 80
-          command-line: ./node_modules/.bin/community-solid-server -b https://pods.semcom.digita.ai -p 80 --rootFilePath /tmp/css -c config/config-file.json
+          ports: 9000
+          command-line: ./node_modules/.bin/community-solid-server -b https://pods.semcom.digita.ai -p 9000 --rootFilePath /tmp/css -c config/config-file.json

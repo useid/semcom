@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-LABEL org.opencontainers.image.source https://github.com/digita-ai/dgt-platform-web
+LABEL org.opencontainers.image.source https://github.com/digita-ai/semcom
 
 # Create app directory
 RUN mkdir -p /usr/src/app
