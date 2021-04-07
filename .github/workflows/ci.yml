@@ -147,13 +147,13 @@ jobs:
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
-      - name: Build and push semcom demo
+      - name: Build and push semcom demo app
         id: docker_build_semcom_demo
         uses: docker/build-push-action@v2
         with:
-          context: packages/semcom-demo/
+          context: packages/semcom-demo-app/
           push: true
-          tags: ghcr.io/digita-ai/dgt-semcom-demo:${{ steps.extract-tag.outputs.tag }}
+          tags: ghcr.io/digita-ai/dgt-semcom-demo-app:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
@@ -222,12 +222,12 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: semcom-demo-develop
-          image: ghcr.io/digita-ai/semcom-demo:${{ steps.extract-tag.outputs.tag }}
+          dns-name-label: semcom-demo-app-develop
+          image: ghcr.io/digita-ai/semcom-demo-app:${{ steps.extract-tag.outputs.tag }}
           registry-login-server: ghcr.io
           registry-username: ${{ secrets.GA_USERNAME }}
           registry-password: ${{ secrets.GA_TOKEN }}
-          name: semcom-demo-develop
+          name: semcom-demo-app-develop
           location: 'west europe'
           ports: 4200
 

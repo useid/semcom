@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "semcom-demo": {
+    "semcom-demo-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "semcom-demo:build"
+            "browserTarget": "semcom-demo-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "semcom-demo:build:production"
+              "browserTarget": "semcom-demo-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "semcom-demo:build"
+            "browserTarget": "semcom-demo-app:build"
           }
         },
         "test": {
@@ -116,18 +116,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "semcom-demo:serve"
+            "devServerTarget": "semcom-demo-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "semcom-demo:serve:production"
+              "devServerTarget": "semcom-demo-app:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "semcom-demo",
+  "defaultProject": "semcom-demo-app",
   "cli": {
     "analytics": false,
     "defaultCollection": "@ngrx/schematics"

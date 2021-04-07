@@ -1,5 +1,5 @@
 {
-  "name": "@digita-ai/semcom-demo",
+  "name": "@digita-ai/semcom-demo-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -77,6 +77,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/digita-ai/semcom.git",
-    "directory": "packages/semcom-demo"
+    "directory": "packages/semcom-demo-app"
   }
 }
