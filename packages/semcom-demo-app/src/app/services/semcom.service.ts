@@ -9,7 +9,8 @@ import { fetch as inruptFetch } from '@inrupt/solid-client-authn-browser';
 export class SemComService {
 
   private registry: AbstractRegisterComponentService = new RegisterComponentService();
-  private repo: QueryComponentService = new QueryComponentRemoteService('http://localhost:3000');
+  //private repo: QueryComponentService = new QueryComponentRemoteService('http://localhost:3000');
+  private repo: QueryComponentService = new QueryComponentRemoteService('https://node.semcom.digita.ai');
 
   detectShapes(uri: string): Observable<string[]> {
     return from(resourceShape(uri, inruptFetch));
