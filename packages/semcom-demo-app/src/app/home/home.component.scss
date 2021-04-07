@@ -26,3 +26,15 @@
   font-weight: 300;
 
 }
+
+#components > div {
+
+  @extend .section;
+
+  border-top: 1px solid $dark;
+
+  &:first-child {
+    border-top: none;
+  }
+
+}
