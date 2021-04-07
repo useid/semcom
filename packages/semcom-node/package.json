@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-node",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
@@ -56,7 +56,7 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.3.2",
+    "@digita-ai/semcom-core": "0.3.3",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "@types/koa-bodyparser": "^4.3.0",

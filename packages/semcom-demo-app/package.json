@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-demo-app",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
@@ -22,8 +22,8 @@
     "@angular/platform-browser": "~11.1.2",
     "@angular/platform-browser-dynamic": "~11.1.2",
     "@angular/router": "~11.1.2",
-    "@digita-ai/semcom-core": "0.3.2",
-    "@digita-ai/semcom-sdk": "0.3.2",
+    "@digita-ai/semcom-core": "0.3.3",
+    "@digita-ai/semcom-sdk": "0.3.3",
     "@inrupt/solid-client": "^1.4.0",
     "@inrupt/solid-client-authn-browser": "^1.6.0",
     "@ngrx/effects": "^11.0.1",
