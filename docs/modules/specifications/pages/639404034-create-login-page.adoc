@@ -11,7 +11,7 @@
 
 * Branch: `feature/639404034-create-login-page`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom-demo]
+** https://github.com/digita-ai/semcom[semcom-demo-app]
 
 === Introduction
 
@@ -23,7 +23,7 @@ This specification is about the first page in the SemCom demo project which allo
 
 _This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
 
-==== semcom-demo
+==== semcom-demo-app
 
 ===== Components
 

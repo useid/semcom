@@ -21,8 +21,12 @@
       "path": "packages/semcom-sdk"
     },
     {
-      "name": "SemCom Demo",
-      "path": "packages/semcom-demo"
+      "name": "SemCom Demo App",
+      "path": "packages/semcom-demo-app"
+    },
+    {
+      "name": "SemCom Demo Pods",
+      "path": "packages/semcom-demo-pods"
     },
     {
       "name": "SemCom Components",

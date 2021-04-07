@@ -1,0 +1,36 @@
+@prefix  solid: <http://www.w3.org/ns/solid/terms#> .
+@prefix   foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix  vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix       : <#> .
+
+<>
+a foaf:PersonalProfileDocument;
+foaf:primaryTopic :me;
+foaf:maker :me.
+
+:id1601909945358
+    vcard:country-name "Belgium";
+    vcard:locality "Brussels";
+    vcard:postal-code "1000";
+    vcard:region "Brusssels";
+    vcard:street-address "Country Road 69".
+
+:id1589374025993 a vcard:Work; vcard:value <mailto:tony.paillard@cynalco.com>.
+:id1589374027282 a vcard:Home; vcard:value <mailto:den.tony@gmail.com>.
+
+:id1601214413622 a vcard:Work; vcard:value <tel:+32479315191>.
+:id1601214413645 a vcard:Home; vcard:value <tel:+3216438543>.
+
+:me
+    a schema:Person, foaf:Person;
+    vcard:hasPhoto <https://thispersondoesnotexist.com/image>;
+    vcard:note "I enjoy nettle soup!";
+    vcard:organization-name "Cynalco Medics";
+    vcard:role "Janitor & Maintenance";
+    solid:privateTypeIndex </settings/privateTypeIndex.ttl>;
+    solid:publicTypeIndex </settings/publicTypeIndex.ttl>;
+    vcard:hasEmail :id1589374025993, :id1589374027282;
+    vcard:hasAddress :id1601909945358;
+    vcard:hasTelephone :id1601214413622, :id1601214413645;
+    foaf:name "Tony Paillard".

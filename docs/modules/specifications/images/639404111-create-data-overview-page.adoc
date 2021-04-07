@@ -8,7 +8,7 @@
 
 * Branch: `feature/639404111-create-data-overview-page`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom-demo]
+** https://github.com/digita-ai/semcom[semcom-demo-app]
 
 === Introduction
 
@@ -20,11 +20,11 @@ This specification is about the main page in the SemCom demo project which displ
 
 _This is a proposed solution and is open to change. If you feel some things can be done better, please discuss with this document's link:###authors[author(s)]._
 
-==== semcom-demo
+==== semcom-demo-app
 
 ===== Components
 
-https://angular.io/guide/feature-modules[Generate new `data` module] for this feature. 
+https://angular.io/guide/feature-modules[Generate new `data` module] for this feature.
 
 ====== DemoDataOverviewPageComponent
 
@@ -44,11 +44,11 @@ To fill in the `DemoDataOverviewPageComponent`, you'll need some Semantic Compon
 
 I'm not sure how these can be easily developed. Normally, in Angular, you instantly know how your component is coming along, which elements need more styling, etc... I suppose you could create a very basic Semantic Component to start with, try to retrieve it using our SDK, add it to the `DemoDataOverviewPageComponent` and then continue developing it until it looks and works as it should. They might already be created when this spec is implemented.
 
-===== Routing 
+===== Routing
 
 * Path '' should load `AppComponent`
 ** Path 'data' should load `ConnectPageComponent`. Create a `ConnectedGuard` which redirects a user to `connect` if they are not logged in. (See: https://angular.io/guide/router-tutorial-toh#milestone-5-route-guards[Route guards])
-** Path '' should redirect to `data`. 
+** Path '' should redirect to `data`.
 ** Any other path should also load `ConnectPageComponent`.
 
 The `ConnectedGuard` can check a user's logged in state in multiple ways:
@@ -80,10 +80,10 @@ Create in app/features/profile/profile.actions.ts
 [cols="1,1",options="header"]
 
 |======================================
-| Action 	| Effect 	| Reducer 	
-| `LoadProfile` | Use the DataService to fetch user's profile. | None 
+| Action 	| Effect 	| Reducer
+| `LoadProfile` | Use the DataService to fetch user's profile. | None
 
-| `LoadProfileFinished` | None | Add profile information to state. 
+| `LoadProfileFinished` | None | Add profile information to state.
 |======================================
 
 
@@ -92,10 +92,10 @@ Add following to app/features/connect/connect.actions.ts
 [cols="1,1",options="header"]
 
 |======================================
-| Action 	| Effect 	| Reducer 	
-| `Logout` | Use the Inrupt SDK to log out. | None 
+| Action 	| Effect 	| Reducer
+| `Logout` | Use the Inrupt SDK to log out. | None
 
-| `LogoutFinished` | None | Reset state to initial values. 
+| `LogoutFinished` | None | Reset state to initial values.
 |======================================
 
 
@@ -124,13 +124,13 @@ Add to app/app.actions.ts:
 
 |================
 | Effect | Description
-| `loadProfile$` | 
+| `loadProfile$` |
 |================
 
 
 ===== Reducer
 
-`GeneralState` shape: 
+`GeneralState` shape:
 
 Add `GeneralState` to existing `AppState` file: app/app.state.ts
 
@@ -142,7 +142,7 @@ Add `GeneralState` to existing `AppState` file: app/app.state.ts
 ----
 
 
-`AppState` shape: 
+`AppState` shape:
 
 New `GeneralState` should be added to existing `AppState`
 
@@ -164,7 +164,7 @@ Create `GeneralState` reducer in app/app.reducer.ts
 |================
 | Reducer | Description
 | `on LoadProfileFinished` | Set the `GeneralState.profile` to the action's `profile` payload.
-| `on LogoutFinished` | The whole state should be reset to its https://ngrx.io/guide/store/reducers#setting-the-initial-state[initial values]. 
+| `on LogoutFinished` | The whole state should be reset to its https://ngrx.io/guide/store/reducers#setting-the-initial-state[initial values].
 |================
 
 

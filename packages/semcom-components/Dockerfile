@@ -9,7 +9,6 @@ WORKDIR /usr/src/app
 # Install app dependencies
 ARG NPM_TOKEN
 COPY package.json /usr/src/app/
-COPY package-lock.json /usr/src/app/
 COPY .npmrc /usr/src/app/
 RUN npm install
 
@@ -20,5 +19,5 @@ RUN rm -f /usr/src/app/.npmrc
 RUN npm run build
 
 # Expose ports.
-EXPOSE 3000
+EXPOSE 8080
 CMD npm start

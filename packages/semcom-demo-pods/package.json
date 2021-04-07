@@ -1,0 +1,13 @@
+{
+  "name": "@digita-ai/semcom-demo-pods",
+  "version": "0.2.1",
+  "description": "",
+  "author": "",
+  "license": "",
+  "scripts": {
+    "start": "community-solid-server -p 9000 --rootFilePath /tmp/css -c config/config-file.json"
+  },
+  "dependencies": {
+    "@solid/community-server": "0.8.1"
+  }
+}
