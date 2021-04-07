@@ -13,7 +13,6 @@
     "lint:fix": "ng lint --fix",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~11.1.2",
     "@angular/common": "~11.1.2",
