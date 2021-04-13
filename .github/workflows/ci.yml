@@ -3,11 +3,14 @@ name: CI
 on:
   push:
     branches:
+      - master
+      - develop
       - release
       - release/*
-      - feature/*
-      - develop
-      - master
+      - feat/*
+      - fix/*
+      - test/*
+      - chore/*
 
     tags:
       - '*'
