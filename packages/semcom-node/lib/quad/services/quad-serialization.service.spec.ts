@@ -1,7 +1,7 @@
 import { LoggerConsoleService } from '@digita-ai/semcom-core';
 import { QuadSerializationService } from './quad-serialization.service';
 
-describe('ComponentControllerService', () => {
+describe('QuadSerializationService', () => {
     let quads: QuadSerializationService = null;
 
     beforeEach(() => {

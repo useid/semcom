@@ -1,7 +1,7 @@
 import { ComponentTransformerService } from './component-transformer.service';
 import { LoggerConsoleService } from '@digita-ai/semcom-core';
 
-describe('ComponentControllerService', () => {
+describe('ComponentTransformerService', () => {
     let transformer: ComponentTransformerService = null;
 
     beforeEach(() => {

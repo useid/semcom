@@ -15,7 +15,6 @@ describe('ComponentInMemoryStoreService', () => {
   });
 
   it('should save correct component', () => {
-    const service = new ComponentInMemoryStore(components);
     const mockComponent = {
       uri: 'foo5/bar',
       description: 'test5',
