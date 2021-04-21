@@ -35,7 +35,7 @@
     "prepare": "npm run build",
     "start": "node dist/main.js",
     "test": "jest --silent",
-    "test:ci": "jest --runInBand"
+    "test:ci": "jest --runInBand --silent"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
