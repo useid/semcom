@@ -34,7 +34,7 @@
     "lint:fix": "eslint --fix .",
     "prepare": "npm run build",
     "start": "node dist/main.js",
-    "test": "jest --silent ",
+    "test": "jest --silent",
     "test:ci": "jest --runInBand --silent"
   },
   "bugs": {
