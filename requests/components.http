@@ -43,7 +43,7 @@ Accept: text/turtle
 Content-Type: application/json
 
 {
-    "uri": "https://node.semcom.digita.ai/c/001"
+    "uri": "https://components.semcom.digita.ai/components/profile.js"
 }
 
 ########

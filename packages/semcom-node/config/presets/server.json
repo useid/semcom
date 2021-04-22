@@ -1,12 +1,80 @@
 {
-  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld",
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-core/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-http/^0.0.0/components/context.jsonld"
+  ],
   "@graph": [
     {
-      "@id": "urn:semcom-node:default:ServerService",
-      "@type": "ServerKoaService",
-      "ServerKoaService:_logger": {
-        "@id": "urn:semcom-node:default:LoggerService"
+      "@id": "urn:handlersjs-http:default:NodeHttpServer",
+      "@type": "NodeHttpServer",
+      "NodeHttpServer:_port": "3000",
+      "NodeHttpServer:_host": "localhost",
+      "NodeHttpServer:_nodeHttpStreamsHandler": {
+        "@id": "urn:handlersjs-http:default:NodeHttpRequestResponseHandler",
+        "@type": "NodeHttpRequestResponseHandler",
+        "NodeHttpRequestResponseHandler:_httpHandler": {
+          "@type": "SequenceHandler",
+          "SequenceHandler:_handlers": [
+            {
+              "@id": "urn:handlersjs-http:default:RoutedHttpRequestHandler",
+              "@type": "RoutedHttpRequestHandler",
+              "RoutedHttpRequestHandler:_handlerControllerList": [
+                {
+                  "@id": "urn:handlersjs-http:default:HttpHandlerController",
+                  "@type": "HttpHandlerController",
+                  "HttpHandlerController:_label": "ControllerList",
+                  "HttpHandlerController:_routes": [
+                    {
+                      "@id": "urn:semcom-node:default:ComponentsRoute"
+                    },
+                    {
+                      "@id": "urn:semcom-node:default:QueryComponentsRoute"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
+            }
+          ]
+        }
       }
+    },
+    {
+      "@id": "urn:semcom-node:default:ComponentsRoute",
+      "@type": "HttpHandlerRoute",
+      "HttpHandlerRoute:_operations": [
+        {
+          "@type": "HttpHandlerOperation",
+          "HttpHandlerOperation:_method": "GET",
+          "HttpHandlerOperation:_publish": true
+        },
+        {
+          "@type": "HttpHandlerOperation",
+          "HttpHandlerOperation:_method": "POST",
+          "HttpHandlerOperation:_publish": true
+        }
+      ],
+      "HttpHandlerRoute:_handler": {
+        "@id": "urn:semcom-node:default:ComponentHttpHandler"
+      },
+      "HttpHandlerRoute:_path": "/component"
+    },
+    {
+      "@id": "urn:semcom-node:default:QueryComponentsRoute",
+      "@type": "HttpHandlerRoute",
+      "HttpHandlerRoute:_operations": [
+        {
+          "@type": "HttpHandlerOperation",
+          "HttpHandlerOperation:_method": "POST",
+          "HttpHandlerOperation:_publish": true
+        }
+      ],
+      "HttpHandlerRoute:_handler": {
+        "@id": "urn:semcom-node:default:QueryComponentHttpHandler"
+      },
+      "HttpHandlerRoute:_path": "/component/query"
     }
   ]
 }

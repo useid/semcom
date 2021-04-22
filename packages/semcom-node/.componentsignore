@@ -4,5 +4,6 @@
   "LoggerService",
   "ComponentMetadata",
   "ManageComponentService",
-  "QueryComponentService"
+  "QueryComponentService",
+  "HttpHandler"
 ]

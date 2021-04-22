@@ -34,8 +34,8 @@
     "lint:fix": "eslint --fix .",
     "prepare": "npm run build",
     "start": "node dist/main.js",
-    "test": "jest",
-    "test:ci": "jest --runInBand"
+    "test": "jest --silent",
+    "test:ci": "jest --runInBand --silent"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
@@ -43,11 +43,9 @@
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node",
   "lsd:components": "dist/components/components.jsonld",
   "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld": "node_modules/@digita-ai/semcom-core/dist/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
   },
   "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/": "node_modules/@digita-ai/semcom-core/dist/components/",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/": "dist/components/",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/config/": "config/",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/dist/": "dist/"
@@ -56,6 +54,8 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
+    "@digita-ai/handlersjs-core": "^0.0.9",
+    "@digita-ai/handlersjs-http": "^0.0.9",
     "@digita-ai/semcom-core": "0.3.4",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
@@ -65,6 +65,7 @@
     "koa-bodyparser": "^4.3.0",
     "rdf-quad": "^1.5.0",
     "rdf-serialize": "^1.0.1",
+    "rxjs": "6.3.3",
     "streamify-array": "^1.0.1"
   },
   "devDependencies": {

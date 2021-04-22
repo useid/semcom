@@ -1,0 +1,40 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld"
+  ],
+  "@graph": [
+    {
+      "@id": "urn:semcom-node:default:ComponentHttpHandler",
+      "@type": "ComponentHttpHandler",
+      "ComponentHttpHandler:_components": {
+        "@id": "urn:semcom-node:default:ComponentService"
+      }
+    },
+    {
+      "@id": "urn:semcom-node:default:QueryComponentHttpHandler",
+      "@type": "QueryComponentHttpHandler",
+      "QueryComponentHttpHandler:_components": {
+        "@id": "urn:semcom-node:default:ComponentService"
+      }
+    },
+    {
+      "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler",
+      "@type": "ContentNegotiationHttpHandler",
+      "ContentNegotiationHttpHandler:_logger": {
+        "@id": "urn:semcom-node:default:LoggerService"
+      },
+      "ContentNegotiationHttpHandler:_defaultContentType": "application/ld+json",
+      "ContentNegotiationHttpHandler:_transformer": {
+        "@id": "urn:semcom-node:default:ComponentTransformerService"
+      },
+      "ContentNegotiationHttpHandler:_serializer": {
+        "@id": "urn:semcom-node:default:QuadSerializationService"
+      }
+    }
+  ]
+}
+
+
+
+
