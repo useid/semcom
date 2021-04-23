@@ -4,9 +4,10 @@ const config: Config.InitialOptions = {
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  rootDir: './',
   globals: {
     'ts-jest': {
-      tsconfig: 'tsconfig.json',
+      tsconfig: '<rootDir>/tsconfig.json',
     },
   },
 };

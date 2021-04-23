@@ -7,10 +7,12 @@ on:
       - develop
       - release
       - release/*
+      - feature/*
       - feat/*
       - fix/*
       - test/*
       - chore/*
+      - build/*
 
     tags:
       - '*'

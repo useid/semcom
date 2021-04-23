@@ -34,6 +34,12 @@
     }
   ],
   "settings": {
+    "eslint.format.enable": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "files.eol": "\n",
     "cSpell.words": [
       "semcom"
     ]
