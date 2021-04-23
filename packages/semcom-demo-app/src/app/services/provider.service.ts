@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Provider } from '../models/provider.model';
 import { login } from '@inrupt/solid-client-authn-browser';
+import { Provider } from '../models/provider.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProviderService {
@@ -17,7 +17,7 @@ export class ProviderService {
   connect(issuer: string): void {
     login({
       oidcIssuer: issuer,
-      redirectUrl: window.location.origin + '/connect/callback'
+      redirectUrl: window.location.origin + '/connect/callback',
     });
   }
 

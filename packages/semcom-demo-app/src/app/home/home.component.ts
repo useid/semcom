@@ -2,15 +2,15 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { Observable, combineLatest } from 'rxjs';
 import { Component as SemComComponent } from '@digita-ai/semcom-core';
 import { Store } from '@ngrx/store';
-import { connectWebIdSelector } from '../connect/connect.state';
 import { fetch } from '@inrupt/solid-client-authn-browser';
+import { connectWebIdSelector } from '../connect/connect.state';
 import { homeComponentsSelector } from './home.state';
 import { homePageInit } from './home.actions';
 
 @Component({
   selector: 'demo-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: [ './home.component.scss' ],
 })
 export class HomeComponent implements OnInit {
 

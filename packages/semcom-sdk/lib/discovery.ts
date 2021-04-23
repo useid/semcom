@@ -7,7 +7,13 @@ import * as N3 from 'n3';
  * @param fetch a custom fetch function through which the resource (and its children) can be reached.
  * @returns the uris of the discovered shapes.
  */
-export const resourceShape = (uri: string, customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>): Promise<string[]> => {
+export const resourceShape = (
+  uri: string,
+  customFetch?: (
+    input: RequestInfo,
+    init?: RequestInit
+  ) => Promise<Response>,
+): Promise<string[]> => {
 
   const myFetch = customFetch ? customFetch : fetch;
 

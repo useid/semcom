@@ -11,18 +11,18 @@ export class ComponentService {
     private logger: LoggerService,
   ) {}
 
-  public all(): Observable<ComponentMetadata[]> {
+  all(): Observable<ComponentMetadata[]> {
     this.logger.log('debug', 'Getting all components');
     return from(this.queryService.query({}));
   }
 
-  public query(query: any): Observable<ComponentMetadata[]> {
+  query(query: any): Observable<ComponentMetadata[]> {
     this.logger.log('debug', 'Getting filtered components', query);
     return from(this.queryService.query(query));
   }
 
-  public save(body: any): Observable<any[]> {
+  save(body: any): Observable<any[]> {
     this.logger.log('debug', 'Saving components');
-    return from(this.manageService.save([body]));
+    return from(this.manageService.save([ body ]));
   }
 }

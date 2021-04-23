@@ -1,11 +1,11 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { componentsRegistered, componentsSelected, homePageError, homePageInit, shapesDetected } from './home.actions';
 import { forkJoin, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { SemComService } from '../services/semcom.service';
 import { Store } from '@ngrx/store';
+import { SemComService } from '../services/semcom.service';
 import { connectWebIdSelector } from '../connect/connect.state';
+import { componentsRegistered, componentsSelected, homePageError, homePageInit, shapesDetected } from './home.actions';
 
 @Injectable()
 export class HomeEffects {
@@ -13,7 +13,7 @@ export class HomeEffects {
   detectShapesOnInit$ = createEffect(() => this.actions$.pipe(
     ofType(homePageInit),
     concatLatestFrom(() => this.store.select(connectWebIdSelector)),
-    mergeMap(([, webid]) => {
+    mergeMap(([ , webid ]) => {
       if (webid) {
         return this.semComService.detectShapes(webid);
       } else {
@@ -21,23 +21,25 @@ export class HomeEffects {
       }
     }),
     map((shapeIds) => shapesDetected({ shapeIds })),
-    catchError((error) => of(homePageError({ error })))
+    catchError((error) => of(homePageError({ error }))),
   ));
 
   queryMetadataFromShapes$ = createEffect(() => this.actions$.pipe(
     ofType(shapesDetected),
     mergeMap(({shapeIds}) => forkJoin(shapeIds.map((shapeId) => this.semComService.queryComponents(shapeId)))),
-    map((resultsPerShape) => resultsPerShape.filter(results => results.length > 0)),
-    map((resultsPerShape) => resultsPerShape.map(results => results[0])),
+    map((resultsPerShape) => resultsPerShape.filter((results) => results.length > 0)),
+    map((resultsPerShape) => resultsPerShape.map((results) => results[0])),
     map((selection) => componentsSelected({ components: selection })),
-    catchError((error) => of(homePageError({ error })))
+    catchError((error) => of(homePageError({ error }))),
   ));
 
   fetchComponentsFromMetadata$ = createEffect(() => this.actions$.pipe(
     ofType(componentsSelected),
-    mergeMap(({ components }) => forkJoin(components.map((metadata) => this.semComService.registerComponent(metadata)))),
+    mergeMap(({ components }) => forkJoin(
+      components.map((metadata) => this.semComService.registerComponent(metadata)),
+    )),
     map((tags) => componentsRegistered({ tags })),
-    catchError((error) => of(homePageError({ error })))
+    catchError((error) => of(homePageError({ error }))),
   ));
 
   // loadProfileData$ = createEffect(() => this.actions$.pipe(
@@ -56,13 +58,14 @@ export class HomeEffects {
 
   logHomePageErrors$ = createEffect(() => this.actions$.pipe(
     ofType(homePageError),
+    /* eslint-disable no-console -- is error log */
     tap((error) => console.error(error.error)),
   ), { dispatch: false });
 
   constructor(
     private actions$: Actions,
     private store: Store,
-    private semComService: SemComService
+    private semComService: SemComService,
   ) {}
 
 }

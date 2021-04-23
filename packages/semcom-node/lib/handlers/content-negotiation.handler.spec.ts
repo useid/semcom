@@ -1,7 +1,7 @@
 import { HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
+import { LoggerConsoleService } from '@digita-ai/semcom-core';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
 import { ContentNegotiationHttpHandler } from '../handlers/content-negotiation.handler';
-import { LoggerConsoleService } from '@digita-ai/semcom-core';
 import { QuadSerializationService } from '../quad/services/quad-serialization.service';
 
 const logger = new LoggerConsoleService();
@@ -16,7 +16,7 @@ describe('ServerHandlerContentNegotiationService', () => {
       logger,
       'application/ld+json',
       new ComponentTransformerService(logger),
-      new QuadSerializationService(logger)
+      new QuadSerializationService(logger),
     );
 
     mockCTX = {
@@ -26,7 +26,7 @@ describe('ServerHandlerContentNegotiationService', () => {
         },
         path: '/path',
         method: 'GET',
-      }
+      },
     };
 
     mockResponse = {
@@ -58,12 +58,12 @@ describe('ServerHandlerContentNegotiationService', () => {
   describe('handle()', () => {
     it('throws when context.request is null', async() => {
       await expect(handler.handle({ ...mockCTX, request: null }, mockResponse).toPromise()).rejects.toThrow(
-        'Argument request should be set.'
+        'Argument request should be set.',
       );
     });
     it('throws when response is null', async() => {
       await expect(handler.handle(mockCTX, null).toPromise()).rejects.toThrow(
-        'Argument response should be set.'
+        'Argument response should be set.',
       );
     });
     it('should return 406 for unknown content types', async() => {

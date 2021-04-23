@@ -1,3 +1,4 @@
+/* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
 import { LitElement, css, html, property } from 'lit-element';
 import type { Component } from '@digita-ai/semcom-core';
@@ -6,7 +7,7 @@ export default class PayslipComponent extends LitElement implements Component {
 
   data (
     entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
   ): Promise<void> {
 
     const myFetch = customFetch ? customFetch : fetch;
@@ -71,11 +72,12 @@ export default class PayslipComponent extends LitElement implements Component {
         .infoWrapper > div {
           padding: 0 10px;
         }
-      `
+      `,
     ];
   }
 
-  render() { return html`
+  render() {
+    return html`
     <div class="payslip">
       <div><strong>Period of ${this.periodStart ? new Date(this.periodStart).toLocaleDateString() : 'Unknown'} - ${this.periodEnd ? new Date(this.periodEnd).toLocaleDateString() : 'Unknown'}</strong></div>
       <div class="infoWrapper">
@@ -95,7 +97,8 @@ export default class PayslipComponent extends LitElement implements Component {
       <div class="amounts"><strong>Net amount:</strong> ${this.netAmount ? `€ ${this.netAmount?.toFixed(2)}` : 'Unknown'}</div>
       <hr>
     </div>
-  `;}
+  `;
+  }
 
   /*
    * W3C Custom Element Specification (from MDN)
@@ -115,7 +118,7 @@ export default class PayslipComponent extends LitElement implements Component {
 
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
-    //super.adoptedCallback();
+    // super.adoptedCallback();
     console.info('[DGT-PayslipComponent] Element moved to other DOM');
   }
 

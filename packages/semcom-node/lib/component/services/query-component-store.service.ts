@@ -6,7 +6,7 @@ export class QueryComponentStoreService extends QueryComponentService {
     super();
   }
 
-  public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
+  async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
     return this.components.query(filter);
   }
 }

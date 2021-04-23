@@ -1,10 +1,11 @@
+/* eslint-disable no-eval -- webpack can't handle dynamic imports */
 import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
 
 export class RegisterComponentService extends AbstractRegisterComponentService {
 
   private registered: Map<string, string> = new Map();
 
-  public async isRegistered(componentMetadata: ComponentMetadata): Promise<boolean> {
+  async isRegistered(componentMetadata: ComponentMetadata): Promise<boolean> {
 
     if (!componentMetadata || !componentMetadata.uri) {
       throw Error('Invalid componentMetadata');
@@ -14,7 +15,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
   }
 
-  public async register(componentMetadata: ComponentMetadata): Promise<string> {
+  async register(componentMetadata: ComponentMetadata): Promise<string> {
     if (!componentMetadata || !componentMetadata.tag || !componentMetadata.uri) {
       throw Error('Invalid componentMetadata');
     }

@@ -17,7 +17,6 @@ const launch = async () => {
   );
 
   server.start();
-  console.log('Server started!');
 };
 
 launch();

@@ -4,8 +4,8 @@ import { ISessionInfo } from '@inrupt/solid-client-authn-browser';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { connectSessionInfoSelector } from './connect.state';
 import { info } from 'node:console';
+import { connectSessionInfoSelector } from './connect.state';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +19,13 @@ export class ConnectGuard implements CanActivate{
   canActivate(): Observable<true|UrlTree> {
     return this.sessionInfo$.pipe<ISessionInfo|null, true|UrlTree>(
       take(1),
-      map(sessionInfo => {
+      map((sessionInfo) => {
         if (sessionInfo && sessionInfo.isLoggedIn) {
           return true;
         } else {
           return this.router.parseUrl('/connect');
         }
-      })
+      }),
     );
   }
 

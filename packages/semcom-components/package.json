@@ -15,7 +15,14 @@
     "build:sp": "snowpack build --polyfill-node",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "lint:staged": "lint-staged",
     "prepare": "npm run build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "../../.eslintrc.json"
+    ],
+    "ignorePatterns": "snowpack.config.js"
   },
   "dependencies": {
     "@digita-ai/semcom-core": "0.3.4",
@@ -36,6 +43,7 @@
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",
     "http-server": "^0.12.3",
+    "lint-staged": "^10.5.4",
     "snowpack": "^3.0.11",
     "typescript": "^4.1.3"
   },

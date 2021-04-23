@@ -1,7 +1,7 @@
 import { HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
 import { Observable, of, throwError } from 'rxjs';
-import { ComponentService } from '../component/services/component.service';
 import { map } from 'rxjs/operators';
+import { ComponentService } from '../component/services/component.service';
 
 export class ComponentHttpHandler extends HttpHandler {
 
@@ -48,7 +48,10 @@ export class ComponentHttpHandler extends HttpHandler {
         })),
         map((data) => {
           if (data.result.length > 1) {
-            data.response.headers['location'] = data.result[0].uri;
+            data.response.headers = Object.assign(
+              data.response.headers,
+              { location: data.result[0].uri },
+            );
           }
           return data.response;
         }),
@@ -56,9 +59,8 @@ export class ComponentHttpHandler extends HttpHandler {
     }
   }
 
-
   canHandle(context: HttpHandlerContext): Observable<boolean> {
-    if (['GET', 'POST'].includes(context.request.method)) {
+    if ([ 'GET', 'POST' ].includes(context.request.method)) {
       return of(true);
     }
     return of(false);

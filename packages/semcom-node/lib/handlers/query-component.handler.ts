@@ -1,7 +1,7 @@
 import { HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
 import { Observable, of, throwError } from 'rxjs';
-import { ComponentService } from '../component/services/component.service';
 import { map } from 'rxjs/operators';
+import { ComponentService } from '../component/services/component.service';
 
 export class QueryComponentHttpHandler extends HttpHandler {
 
@@ -26,7 +26,6 @@ export class QueryComponentHttpHandler extends HttpHandler {
       })),
     );
   }
-
 
   canHandle(context: HttpHandlerContext): Observable<boolean> {
     if (context.request.method === 'POST') {

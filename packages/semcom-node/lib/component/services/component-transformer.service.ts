@@ -7,6 +7,7 @@ export class ComponentTransformerService {
 
   /**
    * Transforms a Component to quads
+   *
    * @param component The component to transform
    */
   private toQuadsOne(component: ComponentMetadata): Quad[] {
@@ -33,9 +34,10 @@ export class ComponentTransformerService {
 
   /**
    * Transforms multiple Components to quads
+   *
    * @param components The components to transform
    */
-  public toQuads(components: ComponentMetadata[]): Quad[] {
+  toQuads(components: ComponentMetadata[]): Quad[] {
     if (!components) {
       throw new Error('Argument components should be set.');
     }
@@ -45,10 +47,11 @@ export class ComponentTransformerService {
 
   /**
    * Transforms quads to a Component
+   *
    * @param quads The quads to transform
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public fromQuads(quads: Quad[]): ComponentMetadata {
+  fromQuads(quads: Quad[]): ComponentMetadata {
     throw new Error('Not implemented');
   }
 }

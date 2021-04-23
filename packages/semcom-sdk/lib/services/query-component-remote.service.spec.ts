@@ -10,11 +10,9 @@ describe('QueryComponentRemoteService', () => {
   it('should send get request to repository url', () => {
     const service = new QueryComponentRemoteService('test');
 
-    const mockFetch = jest.fn().mockImplementation(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve({}),
-      });
-    });
+    const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
+      json: () => Promise.resolve({}),
+    }));
     window.fetch = mockFetch;
 
     service.query({});
@@ -22,7 +20,7 @@ describe('QueryComponentRemoteService', () => {
       body: '{}',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       method: 'POST',
     });

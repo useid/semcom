@@ -1,3 +1,4 @@
+/* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
 import { LitElement, css, html, property } from 'lit-element';
 import type { Component } from '@digita-ai/semcom-core';
@@ -6,7 +7,7 @@ export default class ProfileComponent extends LitElement implements Component {
 
   data (
     entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
   ): Promise<void> {
 
     const myFetch = customFetch ? customFetch : fetch;
@@ -27,10 +28,10 @@ export default class ProfileComponent extends LitElement implements Component {
         this.city = store.getQuads(null, new N3.NamedNode(`${n}locality`), null, null)[0]?.object.value;
         this.country = store.getQuads(null, new N3.NamedNode(`${n}country-name`), null, null)[0]?.object.value;
         this.about = store.getQuads(null, new N3.NamedNode(`${n}note`), null, null)[0]?.object.value;
-        store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map(tele => {
+        store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
           this.phones?.push(store.getQuads(new N3.NamedNode(tele.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
         });
-        store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map(mail => {
+        store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map((mail) => {
           this.emails?.push(store.getQuads(new N3.NamedNode(mail.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
         });
       });
@@ -111,11 +112,12 @@ export default class ProfileComponent extends LitElement implements Component {
           margin: auto;
           text-align: center;
         }
-      `
+      `,
     ];
   }
 
-  render() { return html`
+  render() {
+    return html`
     <div class="container">
       <img id="avatar" src="${this.avatar}" alt="avatar">
       <div class="title">${this.name}</div>
@@ -143,7 +145,7 @@ export default class ProfileComponent extends LitElement implements Component {
       <div class="contactContainerWrapper">
         ${(this.phones && this.phones.length > 0) ? html`
           <div class="contactContainer">
-            ${this.phones?.map(phone => html`
+            ${this.phones?.map((phone) => html`
               <div class="phone">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15.4841 5.20831C15.0571 4.14081 14.4166 3.18975 13.6014 2.37457C12.7862 1.55938 11.8351 0.938282 10.7676 0.49187C10.2436 0.278368 9.70012 0.123094 9.15666 0.00663909C8.96257 -0.0321794 8.76848 0.103685 8.72966 0.297778C8.69084 0.49187 8.82671 0.685962 9.0208 0.724781C9.52544 0.821827 10.0301 0.957691 10.4959 1.15178C11.4664 1.53997 12.3398 2.12225 13.0773 2.87921C13.8149 3.61676 14.3972 4.49017 14.8048 5.46063C14.9988 5.94586 15.1541 6.4311 15.2318 6.93574C15.2706 7.11042 15.4064 7.22687 15.5811 7.22687C15.6005 7.22687 15.6199 7.22687 15.6394 7.22687C15.8334 7.18806 15.9693 6.99396 15.9305 6.79987C15.8529 6.27582 15.6976 5.73236 15.4841 5.20831Z" fill="#2F363C"/>
@@ -158,7 +160,7 @@ export default class ProfileComponent extends LitElement implements Component {
         ` : ''}
         ${(this.emails && this.emails.length > 0) ? html`
           <div class="contactContainer">
-            ${this.emails?.map(email => html`
+            ${this.emails?.map((email) => html`
               <div class="email">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
                   <path d="M485.743,85.333H26.257C11.815,85.333,0,97.148,0,111.589V400.41c0,14.44,11.815,26.257,26.257,26.257h459.487
@@ -176,7 +178,8 @@ export default class ProfileComponent extends LitElement implements Component {
         ` : ''}
       </div>
     </div>
-  `;}
+  `;
+  }
 
   /*
    * W3C Custom Element Specification (from MDN)
@@ -195,7 +198,7 @@ export default class ProfileComponent extends LitElement implements Component {
   }
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
-    //super.adoptedCallback();
+    // super.adoptedCallback();
     console.info('[DGT-ProfileComponent] Element moved to other DOM');
   }
 

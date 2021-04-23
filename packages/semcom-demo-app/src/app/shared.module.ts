@@ -7,14 +7,14 @@ export const providers = [];
 export const imports = [];
 export const exports = [
   CommonModule,
-  TranslateModule
+  TranslateModule,
 ];
 
 @NgModule({
   declarations,
   providers,
   imports,
-  exports
+  exports,
 })
 
 export class SharedModule { }

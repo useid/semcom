@@ -3,11 +3,16 @@ name: CI
 on:
   push:
     branches:
+      - master
+      - develop
       - release
       - release/*
       - feature/*
-      - develop
-      - master
+      - feat/*
+      - fix/*
+      - test/*
+      - chore/*
+      - build/*
 
     tags:
       - '*'
@@ -43,9 +48,9 @@ jobs:
 
       - run: npm run bootstrap
 
-      - run: npm run lint
+      - run: npm run lint:all
 
-      - run: npm run build
+      - run: npm run build:all
 
       - run: npm run test:ci
 
@@ -87,7 +92,7 @@ jobs:
 
       - run: npm run bootstrap
 
-      - run: npm run build
+      - run: npm run build:all
 
       - run: npm publish packages/semcom-core
         env:
