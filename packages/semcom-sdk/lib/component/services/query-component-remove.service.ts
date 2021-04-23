@@ -10,7 +10,7 @@ export class QueryComponentRemoteService extends QueryComponentService {
     super();
     this.repository = repository;
   }
-  public query(
+  query(
     filter: Partial<ComponentMetadata>,
   ): Promise<ComponentMetadata[]> {
     return new Promise(null);

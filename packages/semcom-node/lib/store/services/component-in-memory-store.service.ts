@@ -6,26 +6,25 @@ export class ComponentInMemoryStore extends ComponentStore {
     super();
   }
 
-  public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
+  async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
     return this.components.filter((component) =>
       Object.keys(filter).every((key) => {
         const componentValue = component[key];
         const filterValue = filter[key];
-        return ( componentValue === filterValue ) || (
+        return (componentValue === filterValue) || (
           Array.isArray(componentValue) &&
           Array.isArray(filterValue) &&
           filterValue.every((value) => componentValue.includes(value))
         );
-      })
-    );
+      }));
   }
-  public async all(): Promise<ComponentMetadata[]> {
+  async all(): Promise<ComponentMetadata[]> {
     return this.components;
   }
-  public async get(uri: string): Promise<ComponentMetadata[]> {
-    return this.components.filter((component) => uri == component.uri);
+  async get(uri: string): Promise<ComponentMetadata[]> {
+    return this.components.filter((component) => uri === component.uri);
   }
-  public async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
+  async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
     if (!components) {
       throw new Error('Argument components should be set.');
     }

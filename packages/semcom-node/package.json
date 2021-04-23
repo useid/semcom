@@ -38,6 +38,11 @@
     "test": "jest --silent",
     "test:ci": "jest --runInBand --silent"
   },
+  "eslintConfig": {
+    "extends": [
+      "../../.eslintrc.json"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
   },

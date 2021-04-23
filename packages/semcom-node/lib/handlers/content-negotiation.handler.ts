@@ -2,9 +2,9 @@ import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 import { HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
 import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { map, switchMap, tap, toArray } from 'rxjs/operators';
+import serialize from 'rdf-serialize';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
 import { QuadSerializationService } from '../quad/services/quad-serialization.service';
-import serialize from 'rdf-serialize';
 
 export class ContentNegotiationHttpHandler extends HttpHandler {
   constructor(
@@ -16,13 +16,13 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
     super();
   }
 
-  public canHandle(context: HttpHandlerContext): Observable<boolean> {
+  canHandle(context: HttpHandlerContext): Observable<boolean> {
     this.logger.log('debug', 'Checking content negotiation handler', { context });
 
-    return of(context.request.headers['accept'] !== 'application/json');
+    return of(context.request.headers.accept !== 'application/json');
   }
 
-  public handle(context: HttpHandlerContext, response: HttpHandlerResponse): Observable<HttpHandlerResponse> {
+  handle(context: HttpHandlerContext, response: HttpHandlerResponse): Observable<HttpHandlerResponse> {
     this.logger.log('debug', 'Running content negotiation handler', {
       context,
       response,
@@ -38,9 +38,9 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
 
     const request = context.request;
     const contentType =
-      !request.headers['accept'] || request.headers['accept'] === '*/*'
+      !request.headers.accept || request.headers.accept === '*/*'
         ? this.defaultContentType
-        : request.headers['accept'];
+        : request.headers.accept;
 
     return this.isContentTypeSupported(contentType).pipe(
       switchMap((isContentTypeSupported) => {

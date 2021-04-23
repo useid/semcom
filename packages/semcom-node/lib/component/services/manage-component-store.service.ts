@@ -7,7 +7,7 @@ export class ManageComponentStoreService extends ManageComponentService{
     super();
   }
 
-  public async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
+  async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
     if (!components) {
       throw new Error('Argument components should be set.');
     }

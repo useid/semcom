@@ -1,6 +1,6 @@
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { providerConnected, providersLoaded } from '../connect/connect.actions';
 import { ISessionInfo } from '@inrupt/solid-client-authn-browser';
+import { providerConnected, providersLoaded } from '../connect/connect.actions';
 import { Provider } from '../models/provider.model';
 
 export const FEATURE_KEY = 'semcom-connect-feature';
@@ -22,7 +22,12 @@ export const connectReducer = createReducer(
 );
 
 export const connectSelector = createFeatureSelector<any, ConnectState>(FEATURE_KEY);
-export const connectProvidersSelector = createSelector(connectSelector, state => state.providers);
-export const connectSessionInfoSelector = createSelector(connectSelector, state => state.sessionInfo);
-export const connectWebIdSelector = createSelector(connectSessionInfoSelector, sessionInfo => sessionInfo ? sessionInfo.webId : undefined);
+export const connectProvidersSelector = createSelector(connectSelector, (state) => state.providers);
+export const connectSessionInfoSelector = createSelector(connectSelector, (state) => state.sessionInfo);
+export const connectWebIdSelector = createSelector(
+  connectSessionInfoSelector,
+  (sessionInfo) => sessionInfo
+    ? sessionInfo.webId
+    : undefined,
+);
 

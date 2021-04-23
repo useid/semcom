@@ -1,5 +1,5 @@
-import { ComponentInMemoryStore } from './component-in-memory-store.service';
 import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentInMemoryStore } from './component-in-memory-store.service';
 import { initialComponents } from './../../mock/initial-components';
 
 describe('ComponentInMemoryStoreService', () => {
@@ -23,13 +23,13 @@ describe('ComponentInMemoryStoreService', () => {
       version: 'test5',
       latest: true,
     } as ComponentMetadata;
-    const result = service.save([mockComponent]);
+    const result = service.save([ mockComponent ]);
     expect(result).resolves.toContain(mockComponent);
   });
 
   it('should filter correct components when filled in', () => {
     const result = service.query({ uri: components[0].uri });
-    expect(result).resolves.toEqual([components[0]]);
+    expect(result).resolves.toEqual([ components[0] ]);
   });
 
   it('should filter all components when filter is not filled in', () => {
@@ -44,6 +44,6 @@ describe('ComponentInMemoryStoreService', () => {
 
   it('should filter all latest components', () => {
     const result = service.query({ latest: true });
-    expect(result).resolves.toEqual([components[1], components[3]]);
+    expect(result).resolves.toEqual([ components[1], components[3] ]);
   });
 });

@@ -33,6 +33,11 @@
     "test": "jest",
     "test:ci": "jest --runInBand"
   },
+  "eslintConfig": {
+    "extends": [
+      "../../.eslintrc.json"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
   },

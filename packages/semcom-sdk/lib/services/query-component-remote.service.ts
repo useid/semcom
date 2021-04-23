@@ -9,7 +9,7 @@ export class QueryComponentRemoteService extends QueryComponentService {
     this.repository = repository;
   }
 
-  public async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
+  async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
 
     if (!this.repository) {
       throw new Error('Argument this.repository should be set.');
@@ -19,7 +19,7 @@ export class QueryComponentRemoteService extends QueryComponentService {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(filter),
     });

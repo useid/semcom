@@ -18,6 +18,12 @@
     "lint:staged": "lint-staged",
     "prepare": "npm run build"
   },
+  "eslintConfig": {
+    "extends": [
+      "../../.eslintrc.json"
+    ],
+    "ignorePatterns": "snowpack.config.js"
+  },
   "dependencies": {
     "@digita-ai/semcom-core": "0.3.4",
     "@snowpack/plugin-webpack": "^2.3.1",

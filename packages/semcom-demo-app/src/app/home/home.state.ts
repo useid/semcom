@@ -19,4 +19,4 @@ export const homeReducer = createReducer(
 );
 
 export const homeSelector = createFeatureSelector<any, HomeState>(FEATURE_KEY);
-export const homeComponentsSelector = createSelector(homeSelector, state => state.components);
+export const homeComponentsSelector = createSelector(homeSelector, (state) => state.components);
