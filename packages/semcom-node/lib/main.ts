@@ -13,7 +13,7 @@ const launch = async () => {
   await manager.configRegistry.register(configPath);
 
   const server: NodeHttpServer = await manager.instantiate(
-    'urn:handlersjs-http:default:NodeHttpServer',
+    'urn:semcom-node:default:NodeHttpServer',
   );
 
   server.start();
