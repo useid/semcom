@@ -54,8 +54,8 @@
       "runem.lit-plugin",
       "zjcompt.es6-string-javascript",
       "bashmish.es6-string-css",
-      "lit-plugin",
-      "lit-html",
+      "runem.lit-plugin",
+      "bierner.lit-html",
     ]
   }
 }
