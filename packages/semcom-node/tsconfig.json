@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        // "allowJs": true,
+        // "checkJs": true,
+        "module": "es2020",
         "target": "es2020",
-        "lib": [
-          "es2020",
-          "dom"
-        ],
         "sourceMap": true,
         "declaration": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
         "outDir": "dist",
         "typeRoots": [
             "node_modules/@types",
@@ -19,6 +19,7 @@
     "exclude": [
         "node_modules",
         "**/*.spec.ts",
-        "dist"
+        "dist",
+        "config-js"
     ]
 }

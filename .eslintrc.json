@@ -9,7 +9,7 @@
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["node_modules", "dist", "coverage", "*.conf.js", "*.config.js", "*.conf.ts", "*.config.ts"],
+  "ignorePatterns": ["node_modules", "dist", "config-js", "coverage", "*.conf.js", "*.config.js", "*.conf.ts", "*.config.ts"],
   "rules": {
     "eol-last": ["error", "always"], // fixes end of file newline (replaces editorconfig's "insert_final_newline")
     "linebreak-style": ["error", "unix"], // fixes line breaks (replaces prettier's "endOfLine" and editorconfig's "end_of_line")
