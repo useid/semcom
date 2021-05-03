@@ -4,16 +4,22 @@
 
 ## List changed files
 STATUS=$(git status --porcelain)
-STAGED=$(echo "$STATUS" | grep -e '^M ' | sed -e 's/^M  //g')
-#MODIFIED=$(echo "$STATUS" | grep -e '^ M' | sed -e 's/^ M //g')
-#UNTRACKED=$(echo "$STATUS" | grep -e '^??' | sed -e 's/^?? //g')
+STAGED=$(echo "$STATUS" | grep -E '^(M|A|D|R|C) ' | sed -E 's/^(M|A|D|R|C)  ([^ ]+).*$/\2/g')
+#MODIFIED=$(echo "$STATUS" | grep -E '^ (M|A|D|R|C)' | sed -E 's/^ (M|A|D|R|C) ([^ ]+).*$/\2/g')
+#UNTRACKED=$(echo "$STATUS" | grep -E '^??' | sed -E 's/^?? //g')
 #CHANGED=$(echo "$STAGED" && echo "$MODIFIED" && echo "$UNTRACKED")
 
 ## Check for ongoing merge
 MERGE=$(git rev-parse -q --verify MERGE_HEAD || echo "")
+M_MSG=$([[ -f .git/MERGE_MSG ]] && cat .git/MERGE_MSG || echo '')
 
 ## Check for empty commits
-[[ -z "$STAGED" && -z "$MERGE" ]] && echo "[COMMIT-MSG Hook] No staged changes && no ongoing merge => aborting commit" && exit 1
+if [[ -z "$STAGED" && -z "$MERGE" ]] ; then 
+    
+    echo "[COMMIT-MSG Hook] No staged changes && no ongoing merge => aborting commit"
+    exit 1
+
+fi
 
 ## Lint commit message
 echo "[COMMIT-MSG Hook] Linting commit message" && ./node_modules/.bin/commitlint --edit $1
@@ -72,15 +78,18 @@ else
     git reset --hard
     git clean -df
 
-    if [[ -n "$STAGED" ]] ; then
+    if [[ -n "$STAGED" ]] ; then 
         echo "[COMMIT-MSG Hook] Restoring working tree"
         git stash list | grep -q "$STASH" && git stash pop -q --index
     fi
 
-    if [[ -n "$MERGE" ]] ; then
+    if [[ -n "$MERGE" ]] ; then 
         echo "[COMMIT-MSG Hook] Restoring ongoing merge status"
-        git update-ref MERGE_HEAD "$MERGE"
-    fi
+        git update-ref MERGE_HEAD "$MERGE"   
+        if [[ -n "$M_MSG" ]] ; then 
+            echo "$M_MSG" > .git/MERGE_MSG
+        fi
+    fi 
 
     exit $TESTS
 
