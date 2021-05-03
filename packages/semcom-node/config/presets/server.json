@@ -5,41 +5,48 @@
   ],
   "@graph": [
     {
-      "@id": "urn:handlersjs-http:default:NodeHttpServer",
+      "@id": "urn:semcom-node:default:NodeHttpServer",
       "@type": "NodeHttpServer",
       "NodeHttpServer:_port": "3000",
       "NodeHttpServer:_host": "localhost",
       "NodeHttpServer:_nodeHttpStreamsHandler": {
-        "@id": "urn:handlersjs-http:default:NodeHttpRequestResponseHandler",
+        "@id": "urn:semcom-node:default:NodeHttpRequestResponseHandler",
         "@type": "NodeHttpRequestResponseHandler",
         "NodeHttpRequestResponseHandler:_httpHandler": {
-          "@type": "SequenceHandler",
-          "SequenceHandler:_handlers": [
-            {
-              "@id": "urn:handlersjs-http:default:RoutedHttpRequestHandler",
-              "@type": "RoutedHttpRequestHandler",
-              "RoutedHttpRequestHandler:_handlerControllerList": [
-                {
-                  "@id": "urn:handlersjs-http:default:HttpHandlerController",
-                  "@type": "HttpHandlerController",
-                  "HttpHandlerController:_label": "ControllerList",
-                  "HttpHandlerController:_routes": [
-                    {
-                      "@id": "urn:semcom-node:default:ComponentsRoute"
-                    },
-                    {
-                      "@id": "urn:semcom-node:default:QueryComponentsRoute"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
-            }
-          ]
+          "@type": "HttpCorsRequestHandler",
+          "HttpCorsRequestHandler:_handler": {
+            "@id": "urn:semcom-node:default:PipeThroughHandler"
+          }
         }
       }
+    },
+    {
+      "@id": "urn:semcom-node:default:PipeThroughHandler",
+      "@type": "SequenceHandler",
+      "SequenceHandler:_handlers": [
+        {
+          "@id": "urn:semcom-node:default:RoutedHttpRequestHandler",
+          "@type": "RoutedHttpRequestHandler",
+          "RoutedHttpRequestHandler:_handlerControllerList": [
+            {
+              "@id": "urn:semcom-node:default:HttpHandlerController",
+              "@type": "HttpHandlerController",
+              "HttpHandlerController:_label": "ControllerList",
+              "HttpHandlerController:_routes": [
+                {
+                  "@id": "urn:semcom-node:default:ComponentsRoute"
+                },
+                {
+                  "@id": "urn:semcom-node:default:QueryComponentsRoute"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
+        }
+      ]
     },
     {
       "@id": "urn:semcom-node:default:ComponentsRoute",
@@ -68,6 +75,11 @@
         {
           "@type": "HttpHandlerOperation",
           "HttpHandlerOperation:_method": "POST",
+          "HttpHandlerOperation:_publish": true
+        },
+        {
+          "@type": "HttpHandlerOperation",
+          "HttpHandlerOperation:_method": "OPTIONS",
           "HttpHandlerOperation:_publish": true
         }
       ],

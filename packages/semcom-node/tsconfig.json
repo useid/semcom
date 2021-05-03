@@ -12,6 +12,10 @@
         "typeRoots": [
             "node_modules/@types",
         ],
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "importHelpers": true,
+        "moduleResolution": "node"
     },
     "include": [
         "lib"
