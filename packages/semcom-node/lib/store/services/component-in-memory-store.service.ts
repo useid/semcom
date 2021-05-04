@@ -1,4 +1,5 @@
 import { ComponentMetadata } from '@digita-ai/semcom-core';
+import * as semver from 'semver';
 import { ComponentStore } from './component-store.service';
 
 export class ComponentInMemoryStore extends ComponentStore {
@@ -7,7 +8,7 @@ export class ComponentInMemoryStore extends ComponentStore {
   }
 
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
-    return this.components.filter((component) =>
+    let filtered = this.components.filter((component) =>
       Object.keys(filter).every((key) => {
         const componentValue = component[key];
         const filterValue = filter[key];
@@ -15,8 +16,19 @@ export class ComponentInMemoryStore extends ComponentStore {
           Array.isArray(componentValue) &&
           Array.isArray(filterValue) &&
           filterValue.every((value) => componentValue.includes(value))
+          || (key === 'version')
         );
       }));
+
+    // seperated version logic for readability
+
+    if(filtered && filter.version) {
+      const versions = filtered.map((component) => component.version);
+      const maxVersion = semver.maxSatisfying(versions, filter.version);
+      filtered = [ filtered.find((component) =>  component.version === maxVersion) ];
+    }
+
+    return filtered;
   }
   async all(): Promise<ComponentMetadata[]> {
     return this.components;

@@ -27,7 +27,7 @@ export class HomeEffects {
   queryMetadataFromShapes$ = createEffect(() => this.actions$.pipe(
     ofType(shapesDetected),
     mergeMap(({shapeIds}) => forkJoin(shapeIds.concat([ 'http://digita.ai/voc/input#input' ]).map((shapeId) => this.semComService.queryComponents(shapeId)))),
-    map((resultsPerShape) => resultsPerShape.filter((results) => results.length > 0)),
+    map((resultsPerShape) => resultsPerShape.filter((results) => results.length > 0 && results[0])),
     map((resultsPerShape) => resultsPerShape.map((results) => results[0])),
     map((selection) => componentsSelected({ components: selection })),
     catchError((error) => of(homePageError({ error }))),
