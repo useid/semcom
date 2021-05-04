@@ -35,7 +35,7 @@
     "lint:staged": "lint-staged",
     "prepare": "npm run build",
     "start": "node dist/main.js",
-    "test": "jest --silent",
+    "test": "jest",
     "test:ci": "jest --runInBand --silent"
   },
   "eslintConfig": {
@@ -72,6 +72,7 @@
     "rdf-quad": "^1.5.0",
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
+    "semver": "^7.3.5",
     "streamify-array": "^1.0.1"
   },
   "devDependencies": {
