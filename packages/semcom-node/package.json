@@ -35,7 +35,7 @@
     "lint:staged": "lint-staged",
     "prepare": "npm run build",
     "start": "node dist/main.js",
-    "test": "jest --silent",
+    "test": "jest",
     "test:ci": "jest --runInBand --silent",
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
@@ -56,8 +56,8 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.0.9",
-    "@digita-ai/handlersjs-http": "^0.0.9",
+    "@digita-ai/handlersjs-core": "^0.1.4",
+    "@digita-ai/handlersjs-http": "^0.1.4",
     "@digita-ai/semcom-core": "0.3.4",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
@@ -68,6 +68,7 @@
     "rdf-quad": "^1.5.0",
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
+    "semver": "^7.3.5",
     "streamify-array": "^1.0.1"
   },
   "devDependencies": {

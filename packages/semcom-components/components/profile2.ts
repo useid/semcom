@@ -188,7 +188,7 @@ export default class ProfileComponent extends LitElement implements Component {
           </div>
         ` : ''}
       </div>
-      <p>Example Profile Component v0.1.0</p>
+      <p>Example Profile Component v1.0.0</p>
     </div>
   `;
 

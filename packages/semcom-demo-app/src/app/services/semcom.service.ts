@@ -20,7 +20,7 @@ export class SemComService {
 
   queryComponents(shapeId: string): Observable<ComponentMetadata[]> {
 
-    const filter = { shapes: [ shapeId ] } as ComponentMetadata;
+    const filter = { shapes: [ shapeId ], version: '^0.1.0' } as ComponentMetadata;
 
     return from(this.repo.query(filter));
 

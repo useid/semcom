@@ -26,7 +26,7 @@ describe('ServerHandlerContentNegotiationService', () => {
         headers: {
           accept: '*/*',
         },
-        path: '/path',
+        url: new URL('http://example.com'),
         method: 'GET',
       },
     };
