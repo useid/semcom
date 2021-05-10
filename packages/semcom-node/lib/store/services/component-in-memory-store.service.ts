@@ -8,7 +8,7 @@ export class ComponentInMemoryStore extends ComponentStore {
   }
 
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
-    let filtered = this.components.filter((component) =>
+    const filtered = this.components.filter((component) =>
       Object.keys(filter).every((key) => {
         const componentValue = component[key];
         const filterValue = filter[key];
@@ -22,13 +22,14 @@ export class ComponentInMemoryStore extends ComponentStore {
 
     // seperated version logic for readability
 
+    let versioned = null;
     if(filtered && filter.version) {
       const versions = filtered.map((component) => component.version);
       const maxVersion = semver.maxSatisfying(versions, filter.version);
-      filtered = [ filtered.find((component) =>  component.version === maxVersion) ];
+      versioned = filtered.filter((component) =>  component.version === maxVersion);
     }
 
-    return filtered;
+    return versioned ?? filtered;
   }
   async all(): Promise<ComponentMetadata[]> {
     return this.components;
