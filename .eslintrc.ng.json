@@ -1,6 +1,6 @@
 {
   "extends": [
-    "./.eslintrc.json"
+    "@digita-ai/eslint-config"
   ],
   "overrides": [
     /* THIS CURRENTLY BREAKS
@@ -20,7 +20,7 @@
       },
       "plugins": ["jasmine"],
       "extends": [
-        "./.eslintrc.json",
+        "@digita-ai/eslint-config",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
         /* "plugin:jasmine/recommended" */ // throws lots of warnings

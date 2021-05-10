@@ -31,12 +31,8 @@
     "lint:staged": "lint-staged",
     "prepare": "npm run build",
     "test": "jest",
-    "test:ci": "jest --runInBand"
-  },
-  "eslintConfig": {
-    "extends": [
-      "../../.eslintrc.json"
-    ]
+    "test:ci": "jest --runInBand",
+    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
@@ -54,6 +50,7 @@
     "node": ">=12.17 <15"
   },
   "devDependencies": {
+    "@digita-ai/typescript-config": "^0.3.4",
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.14",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
@@ -63,6 +60,7 @@
     "dot-json": "^1.2.1",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
+    "jest-coverage-thresholds-bumper": "0.0.4",
     "lint-staged": "^10.5.4",
     "rimraf": "^2.6.2",
     "ts-jest": "^26.4.4",

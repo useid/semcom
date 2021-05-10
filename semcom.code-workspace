@@ -1,35 +1,35 @@
 {
   "folders": [
     {
-      "name": "SemCom (root)",
+      "name": "root",
       "path": "."
     },
     {
-      "name": "SemCom (docs)",
+      "name": "docs",
       "path": "docs"
     },
     {
-      "name": "SemCom Core",
+      "name": "core",
       "path": "packages/semcom-core"
     },
     {
-      "name": "SemCom Node",
+      "name": "node",
       "path": "packages/semcom-node"
     },
     {
-      "name": "SemCom SDK",
+      "name": "sdk",
       "path": "packages/semcom-sdk"
     },
     {
-      "name": "SemCom Demo App",
+      "name": "demo-app",
       "path": "packages/semcom-demo-app"
     },
     {
-      "name": "SemCom Demo Pods",
+      "name": "demo-pods",
       "path": "packages/semcom-demo-pods"
     },
     {
-      "name": "SemCom Components",
+      "name": "components",
       "path": "packages/semcom-components"
     }
   ],
