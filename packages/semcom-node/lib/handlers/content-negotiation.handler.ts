@@ -104,15 +104,7 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
     }
 
     return from(serialize.getContentTypes()).pipe(
-      tap((contentTypes) => {
-
-        if (!contentTypes) {
-
-          return throwError(new Error('contentTypes should be set.'));
-
-        }
-
-      }),
+      tap((contentTypes) => contentTypes ? contentTypes : throwError(new Error('contentTypes should be set.'))),
       map((contentTypes) => contentTypes.some((c) => c === contentType)),
     );
 

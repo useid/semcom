@@ -9,7 +9,7 @@
     "prepare": "npm run build",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:ci": "npm run test",
-    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json",
+    "posttest": "echo \"enable jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json\" ",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
@@ -75,7 +75,6 @@
     "@angular/compiler-cli": "~11.1.2",
     "@digita-ai/typescript-config": "^0.3.4",
     "@ngrx/schematics": "^10.1.2",
-    "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
     "eslint": "^7.6.0",
@@ -83,8 +82,6 @@
     "http-server": "^0.12.3",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
-    "jest": "^26.6.3",
-    "jest-coverage-thresholds-bumper": "0.0.4",
     "karma": "~5.2.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
@@ -102,5 +99,18 @@
     "type": "git",
     "url": "git+https://github.com/digita-ai/semcom.git",
     "directory": "packages/semcom-demo-app"
+  },
+  "jest": {
+    "preset": "@digita-ai/jest-config",
+    "displayName": "demo-app",
+    "testEnvironment": "jsdom",
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
   }
 }

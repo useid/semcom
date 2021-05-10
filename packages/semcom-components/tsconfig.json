@@ -1,36 +1,18 @@
 {
+  "extends": "@digita-ai/typescript-config/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
     "module": "es2020",
     "target": "es2015",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "dist",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "baseUrl": "./",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    //"importHelpers": true,
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "strict": false
   },
   "include": [
     "./"
   ],
   "exclude": [
-    "node_modules",
-    "dist"
+      "dist",
+      "node_modules",
+      "**/*.spec.ts"
   ]
 }

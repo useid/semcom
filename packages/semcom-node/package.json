@@ -92,5 +92,17 @@
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3",
     "yaml-cli": "^1.1.8"
+  },
+  "jest": {
+    "preset": "@digita-ai/jest-config",
+    "displayName": "node",
+    "coverageThreshold": {
+      "global": {
+        "branches": 35.71,
+        "functions": 49.02,
+        "lines": 49.3,
+        "statements": 48.67
+      }
+    }
   }
 }

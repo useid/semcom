@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export const declarations = [];
 export const providers = [];
 export const imports = [];
-export const exports = [
+export const exported = [
   CommonModule,
   TranslateModule,
 ];
@@ -14,7 +14,7 @@ export const exports = [
   declarations,
   providers,
   imports,
-  exports,
+  exports: exported,
 })
 
 export class SharedModule { }

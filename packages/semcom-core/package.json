@@ -72,5 +72,17 @@
     "@types/rdf-ext": "^1.3.8",
     "@types/rdf-js": "^4.0.1",
     "rdf-ext": "^1.3.0"
+  },
+  "jest": {
+    "preset": "@digita-ai/jest-config",
+    "displayName": "core",
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 15.79,
+        "statements": 15.79
+      }
+    }
   }
 }

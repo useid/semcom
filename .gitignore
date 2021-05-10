@@ -119,3 +119,5 @@ dist
 .pnp.*
 
 #*.npmrc
+
+coverage-summary.json

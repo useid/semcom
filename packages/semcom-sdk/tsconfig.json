@@ -1,26 +1,18 @@
 {
+  "extends": "@digita-ai/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "module": "es2020",
-    "target": "es2015",
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "baseUrl": "./lib",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es2020",
+    "strict": false
   },
-  "include": [
-      "lib"
+  "include": [ 
+      "lib" 
   ],
   "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "dist"
+      "dist",
+      "node_modules",
+      "**/*.spec.ts"
   ]
 }
