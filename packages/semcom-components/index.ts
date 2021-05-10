@@ -11,21 +11,29 @@ declare global {
 }
 
 fetch('./testdata/profile.txt').then((response) => {
+
   response.text().then((profileFile) => {
+
     const mockFetchProfile = () => Promise.resolve(new Response(profileFile));
     const profile = document.createElement('profile-component');
     profile.data('i-dont-matter', mockFetchProfile);
     document.body.appendChild(profile);
+
   });
+
 });
 
 fetch('./testdata/singlePayslip.txt').then((response) => {
+
   response.text().then((payslipFile) => {
+
     const mockFetchPayslip = () => Promise.resolve(new Response(payslipFile));
     const payslip = document.createElement('payslip-component');
     payslip.data('i-dont-matter', mockFetchPayslip);
     document.body.appendChild(payslip);
+
   });
+
 });
 
 export * from './components/profile';

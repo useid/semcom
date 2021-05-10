@@ -12,17 +12,27 @@ export class ComponentService {
   ) {}
 
   all(): Observable<ComponentMetadata[]> {
+
     this.logger.log('debug', 'Getting all components');
+
     return from(this.queryService.query({}));
+
   }
 
   query(query: any): Observable<ComponentMetadata[]> {
+
     this.logger.log('debug', 'Getting filtered components', query);
+
     return from(this.queryService.query(query));
+
   }
 
   save(body: any): Observable<any[]> {
+
     this.logger.log('debug', 'Saving components');
+
     return from(this.manageService.save([ body ]));
+
   }
+
 }

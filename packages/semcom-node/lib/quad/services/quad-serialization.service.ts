@@ -19,8 +19,12 @@ export class QuadSerializationService {
    * @param contentType The content type to convert to
    */
   serialize(quads: quad[], contentType: string): NodeJS.ReadableStream {
+
     this.logger.log('debug', 'serializing components', { quads, contentType });
     const parseStream = streamify(quads);
+
     return serialize.serialize(parseStream, { contentType });
+
   }
+
 }

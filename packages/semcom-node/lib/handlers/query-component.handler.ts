@@ -8,14 +8,19 @@ export class QueryComponentHttpHandler extends HttpHandler {
   constructor(
     private components: ComponentService,
   ) {
+
     super();
+
   }
 
   handle(context: HttpHandlerContext): Observable<HttpHandlerResponse> {
 
     if (!context.request.body) {
+
       return throwError(new Error('body of the request cannot be null or undefined.'));
+
     }
+
     return this.components.query(JSON.parse(context.request.body)).pipe(
       map((result) => ({
         body: JSON.stringify(result),
@@ -25,12 +30,19 @@ export class QueryComponentHttpHandler extends HttpHandler {
         status: 201,
       })),
     );
+
   }
 
   canHandle(context: HttpHandlerContext): Observable<boolean> {
+
     if (context.request.method === 'POST') {
+
       return of(true);
+
     }
+
     return of(false);
+
   }
+
 }

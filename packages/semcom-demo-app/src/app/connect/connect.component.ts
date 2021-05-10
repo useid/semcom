@@ -17,14 +17,21 @@ export class ConnectComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
+
     this.store.dispatch(connectPageInit());
+
   }
 
   connect(provider: Provider): void {
+
     if(!provider) {
+
       throw new Error();
+
     }
+
     this.store.dispatch(providerSelected({ provider }));
+
   }
 
 }

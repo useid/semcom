@@ -20,6 +20,7 @@ export default class ProfileComponent extends LitElement implements Component {
     return myFetch(entry)
       .then((response) => response.text())
       .then((text) => {
+
         store.addQuads(parser.parse(text));
         this.name = store.getQuads(null,  new N3.NamedNode(`${foaf}name`), null, null)[0]?.object.value;
         this.avatar = store.getQuads(null, new N3.NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
@@ -28,12 +29,19 @@ export default class ProfileComponent extends LitElement implements Component {
         this.city = store.getQuads(null, new N3.NamedNode(`${n}locality`), null, null)[0]?.object.value;
         this.country = store.getQuads(null, new N3.NamedNode(`${n}country-name`), null, null)[0]?.object.value;
         this.about = store.getQuads(null, new N3.NamedNode(`${n}note`), null, null)[0]?.object.value;
+
         store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
+
           this.phones?.push(store.getQuads(new N3.NamedNode(tele.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+
         });
+
         store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map((mail) => {
+
           this.emails?.push(store.getQuads(new N3.NamedNode(mail.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+
         });
+
       });
 
   }
@@ -45,10 +53,11 @@ export default class ProfileComponent extends LitElement implements Component {
   @property() city?: string;
   @property() country?: string;
   @property() about?: string;
-  @property({type: Array}) phones?: string[] = [];
-  @property({type: Array}) emails?: string[] = [];
+  @property({ type: Array }) phones?: string[] = [];
+  @property({ type: Array }) emails?: string[] = [];
 
   static get styles() {
+
     return [
       css`
         :host {
@@ -114,9 +123,11 @@ export default class ProfileComponent extends LitElement implements Component {
         }
       `,
     ];
+
   }
 
   render() {
+
     return html`
     <div class="container">
       <img id="avatar" src="${this.avatar}" alt="avatar">
@@ -179,6 +190,7 @@ export default class ProfileComponent extends LitElement implements Component {
       </div>
     </div>
   `;
+
   }
 
   /*
@@ -187,25 +199,33 @@ export default class ProfileComponent extends LitElement implements Component {
 
   // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
   connectedCallback() {
+
     super.connectedCallback();
     console.info('[DGT-ProfileComponent] Element connected');
+
   }
 
   // Invoked each time the element is disconnected from a DOM.
   disconnectedCallback() {
+
     super.disconnectedCallback();
     console.info('[DGT-ProfileComponent] Element disconnected');
+
   }
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
+
     // super.adoptedCallback();
     console.info('[DGT-ProfileComponent] Element moved to other DOM');
+
   }
 
   // Invoked each time one of the element's attributes specified in observedAttributes is changed.
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+
     super.attributeChangedCallback(name, oldValue, newValue);
     console.info(`[DGT-ProfileComponent] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);
+
   }
 
 }

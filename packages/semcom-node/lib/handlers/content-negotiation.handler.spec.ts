@@ -7,11 +7,13 @@ import { QuadSerializationService } from '../quad/services/quad-serialization.se
 const logger = new LoggerConsoleService();
 
 describe('ServerHandlerContentNegotiationService', () => {
+
   let handler: ContentNegotiationHttpHandler;
   let mockCTX: HttpHandlerContext;
   let mockResponse: HttpHandlerResponse;
 
   beforeEach(() => {
+
     handler = new ContentNegotiationHttpHandler(
       logger,
       'application/ld+json',
@@ -34,42 +36,66 @@ describe('ServerHandlerContentNegotiationService', () => {
       headers: {},
       status: 200,
     };
+
   });
 
   it('should be correctly instantiated', () => {
+
     expect(handler).toBeTruthy();
+
   });
 
   describe('canhandle()', () => {
+
     it('should return true when accept header = */*', async() => {
+
       mockCTX.request.headers.accept = '*/*';
       await expect(handler.canHandle(mockCTX).toPromise()).resolves.toBe(true);
+
     });
+
     it('should return true when accept header = text/turtle', async() => {
+
       mockCTX.request.headers.accept = 'text/turtle';
       await expect(handler.canHandle(mockCTX).toPromise()).resolves.toBe(true);
+
     });
+
     it('should return false when accept header = application/json', async() => {
+
       mockCTX.request.headers.accept = 'application/json';
       await expect(handler.canHandle(mockCTX).toPromise()).resolves.toBe(false);
+
     });
+
   });
 
   describe('handle()', () => {
+
     it('throws when context.request is null', async() => {
+
       await expect(handler.handle({ ...mockCTX, request: null }, mockResponse).toPromise()).rejects.toThrow(
         'Argument request should be set.',
       );
+
     });
+
     it('throws when response is null', async() => {
+
       await expect(handler.handle(mockCTX, null).toPromise()).rejects.toThrow(
         'Argument response should be set.',
       );
+
     });
+
     it('should return 406 for unknown content types', async() => {
+
       mockCTX.request.headers.accept = 'unsupportedContentType';
       const temp = await handler.handle(mockCTX, mockResponse).toPromise();
       await expect(temp.status).toBe(406);
+
     });
+
   });
+
 });

@@ -1,4 +1,5 @@
 export abstract class ComponentMetadata {
+
   constructor(
     public uri: string,
     public label: string,
@@ -9,4 +10,5 @@ export abstract class ComponentMetadata {
     public latest: boolean,
     public shapes: string[],
   ) {}
+
 }

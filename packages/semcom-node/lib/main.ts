@@ -3,6 +3,7 @@ import { ComponentsManager } from 'componentsjs';
 import { NodeHttpServer } from '@digita-ai/handlersjs-http';
 
 const launch = async () => {
+
   const mainModulePath = path.join(__dirname, '../');
   const configPath = path.join(__dirname, '../config/config-default.json');
 
@@ -17,6 +18,7 @@ const launch = async () => {
   );
 
   server.start();
+
 };
 
 launch();

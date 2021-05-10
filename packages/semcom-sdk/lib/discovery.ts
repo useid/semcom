@@ -18,11 +18,17 @@ export const resourceShape = (
   const myFetch = customFetch ? customFetch : fetch;
 
   const result = () => myFetch(uri, { method: 'GET' }).then(async (response) => {
+
     const parser = new N3.Parser();
+
     return response.text().then((body) => {
+
       const classes = new N3.Store(parser.parse(body)).getQuads(null, N3.DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null).map((quad) => quad.object.value);
+
       return classes;
+
     });
+
   });
 
   return uri ? result() : Promise.reject('invalid uri');

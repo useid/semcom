@@ -17,14 +17,22 @@ export class ConnectResolver implements Resolve<void> {
   constructor(private store: Store<ConnectState>, private router: Router, private location: Location) {}
 
   resolve(): void {
+
     handleIncomingRedirect(window.location.href).then((sessionInfo: ISessionInfo | undefined) => {
+
       if (sessionInfo) {
+
         this.store.dispatch(providerConnected({ sessionInfo }));
         this.router.navigateByUrl('/home');
+
       } else {
+
         this.router.navigateByUrl('/connect');
+
       }
+
     });
+
   }
 
 }

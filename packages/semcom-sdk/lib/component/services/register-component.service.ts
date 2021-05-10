@@ -8,7 +8,9 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
   async isRegistered(componentMetadata: ComponentMetadata): Promise<boolean> {
 
     if (!componentMetadata || !componentMetadata.uri) {
+
       throw Error('Invalid componentMetadata');
+
     }
 
     return this.registered.has(componentMetadata.uri);
@@ -16,8 +18,11 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
   }
 
   async register(componentMetadata: ComponentMetadata): Promise<string> {
+
     if (!componentMetadata || !componentMetadata.tag || !componentMetadata.uri) {
+
       throw Error('Invalid componentMetadata');
+
     }
 
     let tag: string;
@@ -35,17 +40,25 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
       this.registered.set(componentMetadata.uri, tag);
 
       try {
+
         component = await eval(`import("${componentMetadata.uri}")`);
+
       } catch (error) {
+
         this.registered.delete(componentMetadata.uri);
         throw new Error('Something went wrong during import');
+
       }
 
       try {
+
         customElements.define(tag, component.default);
+
       } catch (error) {
+
         this.registered.delete(componentMetadata.uri);
         throw Error('Failed to register componentMetadata');
+
       }
 
     }

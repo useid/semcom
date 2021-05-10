@@ -2,14 +2,19 @@ import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { RegisterComponentService } from './register-component.service';
 
 describe('RegisterComponentService', () => {
+
   let service: RegisterComponentService;
 
   beforeEach(() => {
+
     service = new RegisterComponentService();
+
   });
 
   it('should be correctly instantiated', () => {
+
     expect(service).toBeTruthy();
+
   });
 
   // it('should import and define correctly', async () => {
@@ -76,4 +81,5 @@ describe('RegisterComponentService', () => {
 
   //   await expect(service.register(mockComponent)).rejects.toThrow('Failed to register componentMetadata');
   // });
+
 });

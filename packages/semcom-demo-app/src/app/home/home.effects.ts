@@ -14,11 +14,17 @@ export class HomeEffects {
     ofType(homePageInit),
     concatLatestFrom(() => this.store.select(connectWebIdSelector)),
     mergeMap(([ , webid ]) => {
+
       if (webid) {
+
         return this.semComService.detectShapes(webid);
+
       } else {
+
         throw new Error('Could not load profile: no webid in session.');
+
       }
+
     }),
     map((shapeIds) => shapesDetected({ shapeIds })),
     catchError((error) => of(homePageError({ error }))),
@@ -26,7 +32,7 @@ export class HomeEffects {
 
   queryMetadataFromShapes$ = createEffect(() => this.actions$.pipe(
     ofType(shapesDetected),
-    mergeMap(({shapeIds}) => forkJoin(shapeIds.map((shapeId) => this.semComService.queryComponents(shapeId)))),
+    mergeMap(({ shapeIds }) => forkJoin(shapeIds.map((shapeId) => this.semComService.queryComponents(shapeId)))),
     map((resultsPerShape) => resultsPerShape.filter((results) => results.length > 0)),
     map((resultsPerShape) => resultsPerShape.map((results) => results[0])),
     map((selection) => componentsSelected({ components: selection })),

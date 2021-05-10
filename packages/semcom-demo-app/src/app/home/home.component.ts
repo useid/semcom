@@ -24,13 +24,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     combineLatest([ this.webid$, this.components$ ]).subscribe(([ webid, tags ]) => {
+
       if (webid) {
+
         tags.forEach((tag) => {
+
           const element = this.renderer.createElement(tag) as SemComComponent;
           element.data(webid, fetch);
           this.renderer.appendChild(this.container.nativeElement, element);
+
         });
+
       }
+
     });
 
     this.store.dispatch(homePageInit());

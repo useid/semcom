@@ -17,16 +17,24 @@ export class ConnectGuard implements CanActivate{
   constructor(private store: Store, private router: Router) {}
 
   canActivate(): Observable<true|UrlTree> {
+
     return this.sessionInfo$.pipe<ISessionInfo|null, true|UrlTree>(
       take(1),
       map((sessionInfo) => {
+
         if (sessionInfo && sessionInfo.isLoggedIn) {
+
           return true;
+
         } else {
+
           return this.router.parseUrl('/connect');
+
         }
+
       }),
     );
+
   }
 
 }

@@ -13,16 +13,23 @@ export class SemComService {
   private repo: QueryComponentService = new QueryComponentRemoteService('https://node.semcom.digita.ai');
 
   detectShapes(uri: string): Observable<string[]> {
+
     return from(resourceShape(uri, inruptFetch));
+
   }
 
   queryComponents(shapeId: string): Observable<ComponentMetadata[]> {
+
     const filter = { shapes: [ shapeId ] } as ComponentMetadata;
+
     return from(this.repo.query(filter));
+
   }
 
   registerComponent(metadata: ComponentMetadata): Observable<string> {
+
     return from(this.registry.register(metadata));
+
   }
 
 }

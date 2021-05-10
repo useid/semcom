@@ -19,6 +19,7 @@ export default class PayslipComponent extends LitElement implements Component {
     return myFetch(entry)
       .then((response) => response.text())
       .then((text) => {
+
         store.addQuads(parser.parse(text));
         this.periodStart = +store.getQuads(null,  new N3.NamedNode(`${pay}from`), null, null)[0]?.object.value * 1000;
         this.periodEnd = +store.getQuads(null,  new N3.NamedNode(`${pay}until`), null, null)[0]?.object.value * 1000;
@@ -29,6 +30,7 @@ export default class PayslipComponent extends LitElement implements Component {
         this.grossAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}grossAmount`), null, null)[0]?.object.value;
         this.taxableAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}taxableAmount`), null, null)[0]?.object.value;
         this.netAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}netAmount`), null, null)[0]?.object.value;
+
       });
 
   }
@@ -44,6 +46,7 @@ export default class PayslipComponent extends LitElement implements Component {
   @property({ type: Number }) netAmount?: number;
 
   static get styles() {
+
     return [
       css`
         .payslip {
@@ -74,9 +77,11 @@ export default class PayslipComponent extends LitElement implements Component {
         }
       `,
     ];
+
   }
 
   render() {
+
     return html`
     <div class="payslip">
       <div><strong>Period of ${this.periodStart ? new Date(this.periodStart).toLocaleDateString() : 'Unknown'} - ${this.periodEnd ? new Date(this.periodEnd).toLocaleDateString() : 'Unknown'}</strong></div>
@@ -98,6 +103,7 @@ export default class PayslipComponent extends LitElement implements Component {
       <hr>
     </div>
   `;
+
   }
 
   /*
@@ -106,26 +112,34 @@ export default class PayslipComponent extends LitElement implements Component {
 
   // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
   connectedCallback() {
+
     super.connectedCallback();
     console.info('[DGT-PayslipComponent] Element connected');
+
   }
 
   // Invoked each time the element is disconnected from a DOM.
   disconnectedCallback() {
+
     super.disconnectedCallback();
     console.info('[DGT-PayslipComponent] Element disconnected');
+
   }
 
   // Invoked each time the custom element is moved to a new DOM.
   adoptedCallback() {
+
     // super.adoptedCallback();
     console.info('[DGT-PayslipComponent] Element moved to other DOM');
+
   }
 
   // Invoked each time one of the element's attributes specified in observedAttributes is changed.
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+
     super.attributeChangedCallback(name, oldValue, newValue);
     console.info(`[DGT-PayslipComponent] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);
+
   }
 
 }

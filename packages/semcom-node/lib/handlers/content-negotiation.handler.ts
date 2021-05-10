@@ -7,36 +7,47 @@ import { ComponentTransformerService } from '../component/services/component-tra
 import { QuadSerializationService } from '../quad/services/quad-serialization.service';
 
 export class ContentNegotiationHttpHandler extends HttpHandler {
+
   constructor(
     private logger: LoggerService,
     private defaultContentType: string,
     private transformer: ComponentTransformerService,
     private serializer: QuadSerializationService,
   ) {
+
     super();
+
   }
 
   canHandle(context: HttpHandlerContext): Observable<boolean> {
+
     this.logger.log('debug', 'Checking content negotiation handler', { context });
 
     return of(context.request.headers.accept !== 'application/json');
+
   }
 
   handle(context: HttpHandlerContext, response: HttpHandlerResponse): Observable<HttpHandlerResponse> {
+
     this.logger.log('debug', 'Running content negotiation handler', {
       context,
       response,
     });
 
     if (!context.request) {
+
       return throwError(new Error('Argument request should be set.'));
+
     }
 
     if (!response) {
+
       return throwError(new Error('Argument response should be set.'));
+
     }
 
     const request = context.request;
+
     const contentType =
       !request.headers.accept || request.headers.accept === '*/*'
         ? this.defaultContentType
@@ -44,7 +55,9 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
 
     return this.isContentTypeSupported(contentType).pipe(
       switchMap((isContentTypeSupported) => {
+
         if (isContentTypeSupported) {
+
           const components: ComponentMetadata[] = JSON.parse(response.body);
 
           const quads = this.transformer.toQuads(components);
@@ -66,29 +79,43 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
               headers: { ...response.headers, 'content-type': contentType },
             })),
           );
+
         } else {
+
           return of({
             ...response,
             status: 406,
             body: '',
           });
+
         }
+
       }),
     );
+
   }
 
   private isContentTypeSupported(contentType: string): Observable<boolean> {
+
     if (!contentType) {
+
       return throwError(new Error('Argument contentType should be set.'));
+
     }
 
     return from(serialize.getContentTypes()).pipe(
       tap((contentTypes) => {
+
         if (!contentTypes) {
+
           return throwError(new Error('contentTypes should be set.'));
+
         }
+
       }),
       map((contentTypes) => contentTypes.some((c) => c === contentType)),
     );
+
   }
+
 }

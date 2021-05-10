@@ -4,7 +4,9 @@ import { declarations, imports, providers } from '../app.module';
 import { ConnectComponent } from './connect.component';
 
 describe('ConnectComponent', () => {
+
   beforeEach(async () => {
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -18,11 +20,15 @@ describe('ConnectComponent', () => {
         ...declarations,
       ],
     }).compileComponents();
+
   });
 
   it('should create the component', () => {
+
     const fixture = TestBed.createComponent(ConnectComponent);
     const component = fixture.componentInstance;
     expect(component).toBeTruthy();
+
   });
+
 });
