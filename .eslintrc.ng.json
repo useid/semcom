@@ -3,34 +3,18 @@
     "@digita-ai/eslint-config"
   ],
   "overrides": [
-    /* THIS CURRENTLY BREAKS
-    {
-      "files": ["*.html"],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {
-      }
-    },
-    */
     {
       "files": ["*.ts", "*.js"],
-      "env": {
-        "jasmine": true
-      },
-      "plugins": ["jasmine"],
       "extends": [
         "@digita-ai/eslint-config",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
-        /* "plugin:jasmine/recommended" */ // throws lots of warnings
       ],
       "rules": {
         "@typescript-eslint/ban-types": "off", // should be remedied
         "@typescript-eslint/no-var-requires": "off", // should be remedied
         "@typescript-eslint/no-empty-function": "off", // should be remedied
         "@typescript-eslint/no-empty-interface": "off", // should be remedied
-        "jasmine/no-focused-tests": "warn", // was error
         "@angular-eslint/no-empty-lifecycle-method": "off", // should be remedied
         "@angular-eslint/no-output-native": "off", // should be remedied
         "@angular-eslint/component-class-suffix": "error",
