@@ -17,6 +17,28 @@
           "ComponentMetadata:_author": "https://digita.ai",
           "ComponentMetadata:_tag": "profile",
           "ComponentMetadata:_version": "0.1.0",
+          "ComponentMetadata:_latest": false
+        },
+        {
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Digita SemCom component for profile information.",
+          "ComponentMetadata:_label": "SemCom Profile Component",
+          "ComponentMetadata:_uri": "https://components.semcom.digita.ai/components/profile1.js",
+          "ComponentMetadata:_shapes": "http://xmlns.com/foaf/0.1/PersonalProfileDocument",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "profile",
+          "ComponentMetadata:_version": "0.1.1",
+          "ComponentMetadata:_latest": false
+        },
+        {
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Digita SemCom component for profile information.",
+          "ComponentMetadata:_label": "SemCom Profile Component",
+          "ComponentMetadata:_uri": "https://components.semcom.digita.ai/components/profile2.js",
+          "ComponentMetadata:_shapes": "http://xmlns.com/foaf/0.1/PersonalProfileDocument",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "profile",
+          "ComponentMetadata:_version": "1.0.0",
           "ComponentMetadata:_latest": true
         },
         {
