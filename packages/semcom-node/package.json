@@ -99,10 +99,10 @@
     "displayName": "node",
     "coverageThreshold": {
       "global": {
-        "branches": 35.71,
-        "functions": 49.02,
-        "lines": 49.3,
-        "statements": 48.67
+        "branches": 42.86,
+        "functions": 47.17,
+        "lines": 49.66,
+        "statements": 48.43
       }
     }
   }
