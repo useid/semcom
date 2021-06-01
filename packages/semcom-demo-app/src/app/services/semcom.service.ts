@@ -10,7 +10,7 @@ export class SemComService {
 
   private registry: AbstractRegisterComponentService = new RegisterComponentService();
   // private repo: QueryComponentService = new QueryComponentRemoteService('http://localhost:3000');
-  private repo: QueryComponentService = new QueryComponentRemoteService('https://node.semcom.digita.ai');
+  private repo: QueryComponentService = new QueryComponentRemoteService('http://localhost:3000');
 
   detectShapes(uri: string): Observable<string[]> {
 
