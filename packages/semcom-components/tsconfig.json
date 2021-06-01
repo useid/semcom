@@ -1,12 +1,16 @@
 {
   "extends": "@digita-ai/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist",
-    "module": "es2020",
-    "target": "es2015",
+    "baseUrl": "lib",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    // Recommended by Lit Element
+    "module": "es2015",
+    "target": "es2017",
+    // Strict should be true
     "strict": false
   },
+  "files": [ "node_modules/vite/client.d.ts" ],
   "include": [
     "./"
   ],
