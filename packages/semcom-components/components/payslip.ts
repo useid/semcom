@@ -1,37 +1,32 @@
 /* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
-import { LitElement, css, html, property } from 'lit-element';
-import type { Component } from '@digita-ai/semcom-core';
+import { css, html, property } from 'lit-element';
+import { BaseComponent } from './base-component.model';
+import { ResponseEvent } from './base-component-events.model';
 
-export default class PayslipComponent extends LitElement implements Component {
+export default class PayslipComponent extends BaseComponent {
 
-  data (
-    entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-  ): Promise<void> {
+  handleResponse(event: ResponseEvent): void {
 
-    const myFetch = customFetch ? customFetch : fetch;
-    const parser = new N3.Parser();
-    const store = new N3.Store();
+    if (!event || !event.detail || !event.detail.quads) {
+
+      throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
+
+    }
 
     const pay = 'http://digita.ai/voc/payslip#';
 
-    return myFetch(entry)
-      .then((response) => response.text())
-      .then((text) => {
+    const store = new N3.Store(event.detail.quads);
 
-        store.addQuads(parser.parse(text));
-        this.periodStart = +store.getQuads(null,  new N3.NamedNode(`${pay}from`), null, null)[0]?.object.value * 1000;
-        this.periodEnd = +store.getQuads(null,  new N3.NamedNode(`${pay}until`), null, null)[0]?.object.value * 1000;
-        this.employee = store.getQuads(null,  new N3.NamedNode(`${pay}employee`), null, null)[0]?.object.value;
-        this.employer = store.getQuads(null,  new N3.NamedNode(`${pay}employer`), null, null)[0]?.object.value;
-        this.payType = store.getQuads(null,  new N3.NamedNode(`${pay}wageUnit`), null, null)[0]?.object.value;
-        this.stature = store.getQuads(null,  new N3.NamedNode(`${pay}stature`), null, null)[0]?.object.value;
-        this.grossAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}grossAmount`), null, null)[0]?.object.value;
-        this.taxableAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}taxableAmount`), null, null)[0]?.object.value;
-        this.netAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}netAmount`), null, null)[0]?.object.value;
-
-      });
+    this.periodStart = +store.getQuads(null,  new N3.NamedNode(`${pay}from`), null, null)[0]?.object.value * 1000;
+    this.periodEnd = +store.getQuads(null,  new N3.NamedNode(`${pay}until`), null, null)[0]?.object.value * 1000;
+    this.employee = store.getQuads(null,  new N3.NamedNode(`${pay}employee`), null, null)[0]?.object.value;
+    this.employer = store.getQuads(null,  new N3.NamedNode(`${pay}employer`), null, null)[0]?.object.value;
+    this.payType = store.getQuads(null,  new N3.NamedNode(`${pay}wageUnit`), null, null)[0]?.object.value;
+    this.stature = store.getQuads(null,  new N3.NamedNode(`${pay}stature`), null, null)[0]?.object.value;
+    this.grossAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}grossAmount`), null, null)[0]?.object.value;
+    this.taxableAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}taxableAmount`), null, null)[0]?.object.value;
+    this.netAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}netAmount`), null, null)[0]?.object.value;
 
   }
 

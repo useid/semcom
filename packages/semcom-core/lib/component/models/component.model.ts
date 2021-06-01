@@ -1,6 +1,5 @@
 export interface Component extends HTMLElement {
-  data (
-    entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>
-  ): Promise<void>;
+  read(uri: string): void;
+  write(uri: string): void;
+  append(uri: string): void;
 }

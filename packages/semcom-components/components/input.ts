@@ -1,29 +1,22 @@
 /* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
-import { LitElement, css, html, property } from 'lit-element';
-import type { Component } from '@digita-ai/semcom-core';
+import { css, html, property } from 'lit-element';
+import { BaseComponent } from './base-component.model';
+import { ResponseEvent } from './base-component-events.model';
 
-export default class InputComponent extends LitElement implements Component {
+export default class InputComponent extends BaseComponent {
 
-  data (
-    entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-  ): Promise<void> {
+  handleResponse(event: ResponseEvent): void {
 
-    const myFetch = customFetch ? customFetch : fetch;
-    const parser = new N3.Parser();
-    const store = new N3.Store();
+    if (!event || !event.detail || !event.detail.quads) {
 
-    this.localFetch = myFetch;
-    this.localEntry = entry;
+      throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
 
-    return myFetch(entry)
-      .then((response) => response.text())
-      .then((text) => {
+    }
 
-        store.addQuads(parser.parse(text));
+    const pay = 'http://digita.ai/voc/payslip#';
 
-      });
+    const store = new N3.Store(event.detail.quads);
 
   }
 

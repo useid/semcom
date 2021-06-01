@@ -1,50 +1,12 @@
 /* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
-import { LitElement, css, html, property } from 'lit-element';
-import type { Component } from '@digita-ai/semcom-core';
+import { css, html, property, PropertyValues, LitElement } from 'lit-element';
+import { BaseComponent } from './base-component.model';
+import { BaseComponentEvent, ResponseEvent } from './base-component-events.model';
 
-export default class ProfileComponent extends LitElement implements Component {
+export default class ProfileComponent extends BaseComponent {
 
-  data (
-    entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-  ): Promise<void> {
-
-    const myFetch = customFetch ? customFetch : fetch;
-    const parser = new N3.Parser();
-    const store = new N3.Store();
-
-    const foaf = 'http://xmlns.com/foaf/0.1/';
-    const n = 'http://www.w3.org/2006/vcard/ns#';
-
-    return myFetch(entry)
-      .then((response) => response.text())
-      .then((text) => {
-
-        store.addQuads(parser.parse(text));
-        this.name = store.getQuads(null,  new N3.NamedNode(`${foaf}name`), null, null)[0]?.object.value;
-        this.avatar = store.getQuads(null, new N3.NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
-        this.job = store.getQuads(null, new N3.NamedNode(`${n}role`), null, null)[0]?.object.value;
-        this.company = store.getQuads(null, new N3.NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
-        this.city = store.getQuads(null, new N3.NamedNode(`${n}locality`), null, null)[0]?.object.value;
-        this.country = store.getQuads(null, new N3.NamedNode(`${n}country-name`), null, null)[0]?.object.value;
-        this.about = store.getQuads(null, new N3.NamedNode(`${n}note`), null, null)[0]?.object.value;
-
-        store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
-
-          this.phones?.push(store.getQuads(new N3.NamedNode(tele.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
-
-        });
-
-        store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map((mail) => {
-
-          this.emails?.push(store.getQuads(new N3.NamedNode(mail.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
-
-        });
-
-      });
-
-  }
+  @property({ type: String }) entry;
 
   @property() name?: string;
   @property() avatar = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
@@ -55,6 +17,58 @@ export default class ProfileComponent extends LitElement implements Component {
   @property() about?: string;
   @property({ type: Array }) phones?: string[] = [];
   @property({ type: Array }) emails?: string[] = [];
+
+  // constructor() {
+
+  //   super();
+
+  //   this.addEventListener(BaseComponentEvent.RESPONSE, this.handleResponse);
+
+  // }
+
+  update(changed: PropertyValues): void {
+
+    if (changed.has('entry')) this.read(this.entry);
+
+  }
+
+  handleResponse(event: ResponseEvent): void {
+
+    console.log('handling response', event);
+
+    if (!event || !event.detail || !event.detail.quads) {
+
+      throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
+
+    }
+
+    const foaf = 'http://xmlns.com/foaf/0.1/';
+    const n = 'http://www.w3.org/2006/vcard/ns#';
+
+    const store = new N3.Store(event.detail.quads);
+
+    this.name = store.getQuads(null,  new N3.NamedNode(`${foaf}name`), null, null)[0]?.object.value;
+    console.log('updated name', this.name);
+    this.avatar = store.getQuads(null, new N3.NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
+    this.job = store.getQuads(null, new N3.NamedNode(`${n}role`), null, null)[0]?.object.value;
+    this.company = store.getQuads(null, new N3.NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
+    this.city = store.getQuads(null, new N3.NamedNode(`${n}locality`), null, null)[0]?.object.value;
+    this.country = store.getQuads(null, new N3.NamedNode(`${n}country-name`), null, null)[0]?.object.value;
+    this.about = store.getQuads(null, new N3.NamedNode(`${n}note`), null, null)[0]?.object.value;
+
+    store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
+
+      this.phones?.push(store.getQuads(new N3.NamedNode(tele.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+
+    });
+
+    store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map((mail) => {
+
+      this.emails?.push(store.getQuads(new N3.NamedNode(mail.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+
+    });
+
+  }
 
   static get styles() {
 
@@ -128,6 +142,8 @@ export default class ProfileComponent extends LitElement implements Component {
 
   render() {
 
+    console.log('rendering');
+
     return html`
     <div class="container">
       <img id="avatar" src="${this.avatar}" alt="avatar">
@@ -188,7 +204,7 @@ export default class ProfileComponent extends LitElement implements Component {
           </div>
         ` : ''}
       </div>
-      <p>Example Profile Component v0.1.0</p>
+      <p>Example event-based Profile Component v0.1.0</p>
     </div>
   `;
 

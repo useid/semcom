@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
         tags.forEach((tag) => {
 
           const element = this.renderer.createElement(tag) as SemComComponent;
-          element.data(webid, fetch);
           this.renderer.appendChild(this.container.nativeElement, element);
 
         });
