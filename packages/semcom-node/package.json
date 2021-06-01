@@ -33,7 +33,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
-    "prepare": "npm run build",
     "start": "node dist/main.js",
     "test": "jest",
     "test:ci": "jest --runInBand --silent",

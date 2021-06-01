@@ -9,6 +9,9 @@ export default ({ command, mode }) => {
         target: 'es2015',
         outDir: '../dist'
       },
+      define: {
+        'process.env': {}
+      },
       server: {
         port: 8080,
       }
@@ -23,7 +26,10 @@ export default ({ command, mode }) => {
           name: '@digita-ai/semcom-components'
         },
         outDir: '../dist'
-      }
+      },
+      define: {
+        'process.env': {}
+      },
     })
   }
 }
