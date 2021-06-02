@@ -54,7 +54,7 @@ export default class PayslipComponent extends BaseComponent {
 
     super.update(changed);
 
-    if (changed.has('entry')) this.readData(this.entry);
+    if (changed.has('entry') && this.entry) this.readData(this.entry);
 
   }
 
