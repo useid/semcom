@@ -2,6 +2,7 @@
   "name": "@digita-ai/semcom-demo-app",
   "version": "0.3.4",
   "scripts": {
+    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "ng": "ng",
     "serve": "ng serve",
     "start": "http-server -p 4200 --gzip --brotli --proxy 'http://lvh.me:4200?' dist/",

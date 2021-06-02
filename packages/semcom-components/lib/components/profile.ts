@@ -6,7 +6,7 @@ import { BaseComponent } from './base-component.model';
 
 export class ProfileComponent extends BaseComponent {
 
-  @property({ type: String }) entry;
+  @property({ type: String }) entry: string;
 
   @property() name?: string;
   @property() avatar = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
