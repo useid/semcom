@@ -22,7 +22,7 @@
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "npm run start:watch",
-    "start:watch": "vite --config vite.serve.config.ts",
+    "start:watch": "vite --config vite.serve.config.ts --mode development",
     "build": "rimraf ./dist && npm run build:bundle && npm run build:ts",
     "build:bundle": "vite build --config vite.build.config.ts",
     "build:ts": "tsc",
@@ -36,7 +36,7 @@
     "@digita-ai/semcom-core": "0.3.4",
     "@digita-ai/semcom-sdk": "0.3.4",
     "lit-element": "^2.4.0",
-    "n3": "^1.9.0"
+    "n3": "1.10.0"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",

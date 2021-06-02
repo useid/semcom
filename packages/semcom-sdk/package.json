@@ -31,7 +31,7 @@
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "build": "rimraf ./dist && npm run build:bundle && npm run build:ts && npm run build:components",
-    "build:bundle": "vite build",
+    "build:bundle": "vite build --mode development",
     "build:ts": "tsc",
     "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
     "lint": "eslint .",
@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@digita-ai/semcom-core": "0.3.4",
-    "n3": "^1.9.0"
+    "n3": "1.10.0"
   },
   "jest": {
     "preset": "@digita-ai/jest-config",

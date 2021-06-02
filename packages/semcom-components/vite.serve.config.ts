@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: 'lib',
+  mode: 'development',
   build: {
       target: 'es2015',
       outDir: '../dist'
@@ -10,6 +11,7 @@ export default defineConfig({
     port: 3001,
   },
   define: {
-    'process.env': {}
+    'process.env': {},
+    'Buffer': require('buffer'),
   },
 });

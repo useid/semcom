@@ -1,5 +1,3 @@
-/* eslint-disable no-console -- is a web component */
-import * as N3 from 'n3';
 import { css, html, property } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base-component.model';
@@ -18,10 +16,6 @@ export default class InputComponent extends BaseComponent {
       throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
 
     }
-
-    const pay = 'http://digita.ai/voc/payslip#';
-
-    const store = new N3.Store(event.detail.data);
 
   }
 

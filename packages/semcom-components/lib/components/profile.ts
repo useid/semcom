@@ -1,5 +1,4 @@
-/* eslint-disable no-console -- is a web component */
-import * as N3 from 'n3';
+import { NamedNode, Store } from 'n3';
 import { css, html, property, PropertyValues } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base-component.model';
@@ -42,25 +41,25 @@ export class ProfileComponent extends BaseComponent {
     const foaf = 'http://xmlns.com/foaf/0.1/';
     const n = 'http://www.w3.org/2006/vcard/ns#';
 
-    const store = new N3.Store(event.detail.data);
+    const store = new Store(event.detail.data);
 
-    this.name = store.getQuads(null,  new N3.NamedNode(`${foaf}name`), null, null)[0]?.object.value;
-    this.avatar = store.getQuads(null, new N3.NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
-    this.job = store.getQuads(null, new N3.NamedNode(`${n}role`), null, null)[0]?.object.value;
-    this.company = store.getQuads(null, new N3.NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
-    this.city = store.getQuads(null, new N3.NamedNode(`${n}locality`), null, null)[0]?.object.value;
-    this.country = store.getQuads(null, new N3.NamedNode(`${n}country-name`), null, null)[0]?.object.value;
-    this.about = store.getQuads(null, new N3.NamedNode(`${n}note`), null, null)[0]?.object.value;
+    this.name = store.getQuads(null,  new NamedNode(`${foaf}name`), null, null)[0]?.object.value;
+    this.avatar = store.getQuads(null, new NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
+    this.job = store.getQuads(null, new NamedNode(`${n}role`), null, null)[0]?.object.value;
+    this.company = store.getQuads(null, new NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
+    this.city = store.getQuads(null, new NamedNode(`${n}locality`), null, null)[0]?.object.value;
+    this.country = store.getQuads(null, new NamedNode(`${n}country-name`), null, null)[0]?.object.value;
+    this.about = store.getQuads(null, new NamedNode(`${n}note`), null, null)[0]?.object.value;
 
-    store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
+    store.getQuads(null, new NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
 
-      this.phones?.push(store.getQuads(new N3.NamedNode(tele.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+      this.phones?.push(store.getQuads(new NamedNode(tele.object.value), new NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
 
     });
 
-    store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map((mail) => {
+    store.getQuads(null, new NamedNode(`${n}hasEmail`), null, null).map((mail) => {
 
-      this.emails?.push(store.getQuads(new N3.NamedNode(mail.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+      this.emails?.push(store.getQuads(new NamedNode(mail.object.value), new NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
 
     });
 

@@ -1,4 +1,4 @@
-import * as N3 from 'n3';
+import { Store, Parser, DataFactory } from 'n3';
 
 /**
  * Discovers the shape of a resource, given its uri and a (custom) fetch function.
@@ -19,11 +19,11 @@ export const resourceShape = (
 
   const result = () => myFetch(uri, { method: 'GET' }).then(async (response) => {
 
-    const parser = new N3.Parser();
+    const parser = new Parser();
 
     return response.text().then((body) => {
 
-      const classes = new N3.Store(parser.parse(body)).getQuads(null, N3.DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null).map((quad) => quad.object.value);
+      const classes = new Store(parser.parse(body)).getQuads(null, DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null).map((quad) => quad.object.value);
 
       return classes;
 

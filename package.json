@@ -11,7 +11,7 @@
     "postinstall": "husky install",
     "bootstrap": "npm ci && lerna bootstrap",
     "bootstrap:no-ci": "npm i && lerna bootstrap --no-ci",
-    "bootstrap:clean": "npm run clean && lerna run clean --parallel && npm i && lerna bootstrap --no-ci",
+    "bootstrap:clean": "npm i && lerna run clean --parallel && lerna bootstrap --no-ci",
     "start": "lerna run start --parallel",
     "build": "lerna run build --since HEAD",
     "build:all": "lerna run build",
@@ -58,7 +58,7 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.4",
+    "typescript": "^4.1.3",
     "yaml-cli": "^1.1.8"
   },
   "commitlint": {

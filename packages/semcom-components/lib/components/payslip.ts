@@ -1,5 +1,5 @@
 /* eslint-disable no-console -- is a web component */
-import * as N3 from 'n3';
+import { NamedNode, Store } from 'n3';
 import { css, html, property } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base-component.model';
@@ -21,17 +21,17 @@ export default class PayslipComponent extends BaseComponent {
 
     const pay = 'http://digita.ai/voc/payslip#';
 
-    const store = new N3.Store(event.detail.data);
+    const store = new Store(event.detail.data);
 
-    this.periodStart = +store.getQuads(null,  new N3.NamedNode(`${pay}from`), null, null)[0]?.object.value * 1000;
-    this.periodEnd = +store.getQuads(null,  new N3.NamedNode(`${pay}until`), null, null)[0]?.object.value * 1000;
-    this.employee = store.getQuads(null,  new N3.NamedNode(`${pay}employee`), null, null)[0]?.object.value;
-    this.employer = store.getQuads(null,  new N3.NamedNode(`${pay}employer`), null, null)[0]?.object.value;
-    this.payType = store.getQuads(null,  new N3.NamedNode(`${pay}wageUnit`), null, null)[0]?.object.value;
-    this.stature = store.getQuads(null,  new N3.NamedNode(`${pay}stature`), null, null)[0]?.object.value;
-    this.grossAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}grossAmount`), null, null)[0]?.object.value;
-    this.taxableAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}taxableAmount`), null, null)[0]?.object.value;
-    this.netAmount = +store.getQuads(null,  new N3.NamedNode(`${pay}netAmount`), null, null)[0]?.object.value;
+    this.periodStart = +store.getQuads(null,  new NamedNode(`${pay}from`), null, null)[0]?.object.value * 1000;
+    this.periodEnd = +store.getQuads(null,  new NamedNode(`${pay}until`), null, null)[0]?.object.value * 1000;
+    this.employee = store.getQuads(null,  new NamedNode(`${pay}employee`), null, null)[0]?.object.value;
+    this.employer = store.getQuads(null,  new NamedNode(`${pay}employer`), null, null)[0]?.object.value;
+    this.payType = store.getQuads(null,  new NamedNode(`${pay}wageUnit`), null, null)[0]?.object.value;
+    this.stature = store.getQuads(null,  new NamedNode(`${pay}stature`), null, null)[0]?.object.value;
+    this.grossAmount = +store.getQuads(null,  new NamedNode(`${pay}grossAmount`), null, null)[0]?.object.value;
+    this.taxableAmount = +store.getQuads(null,  new NamedNode(`${pay}taxableAmount`), null, null)[0]?.object.value;
+    this.netAmount = +store.getQuads(null,  new NamedNode(`${pay}netAmount`), null, null)[0]?.object.value;
 
   }
 
