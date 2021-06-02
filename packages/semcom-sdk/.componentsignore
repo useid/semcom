@@ -1,4 +1,6 @@
 [
   "AbstractRegisterComponentService",
-  "QueryComponentService"
+  "QueryComponentService",
+  "Partial",
+  "CustomEvent"
 ]
