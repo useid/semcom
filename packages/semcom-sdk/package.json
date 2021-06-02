@@ -5,7 +5,7 @@
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-sdk#readme",
   "license": "ISC",
-  "main": "./dist/semcom-core.umd.js",
+  "main": "./dist/semcom-sdk.umd.js",
   "module": "./dist/semcom-sdk.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -52,9 +52,6 @@
   "lsd:importPaths": {
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/components/": "dist/components/",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/dist/": "dist/"
-  },
-  "engines": {
-    "node": ">=12.17 <15"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",

@@ -1,7 +1,7 @@
 /* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
 import { css, html, property } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-core';
+import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base-component.model';
 
 export default class PayslipComponent extends BaseComponent {

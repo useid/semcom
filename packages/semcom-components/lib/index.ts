@@ -1,5 +1,5 @@
 import * as N3 from 'n3';
-import { ComponentEventType, ComponentReadEvent, ComponentResponseEvent } from '@digita-ai/semcom-core';
+import { ComponentEventType, ComponentReadEvent, ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import ProfileComponent from './components/profile';
 
 customElements.define('profile-component', ProfileComponent);

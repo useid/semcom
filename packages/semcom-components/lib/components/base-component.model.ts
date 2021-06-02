@@ -1,4 +1,5 @@
-import { ComponentData, Component, ComponentAppendEvent, ComponentEventType, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-core';
+import { ComponentData, Component } from '@digita-ai/semcom-core';
+import { ComponentAppendEvent, ComponentEventType, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 
 import { LitElement } from 'lit-element';
 
