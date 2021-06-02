@@ -11,9 +11,9 @@ export default defineConfig({
           entry: path.resolve(__dirname, 'lib/index.ts'),
           name: '@digita-ai/semcom-sdk'
       },
-      outDir: '../dist'
+      outDir: '../dist',
   },
   define: {
-    'process.env': {},
+    'process.env.NODE_DEBUG': undefined
   },
 });

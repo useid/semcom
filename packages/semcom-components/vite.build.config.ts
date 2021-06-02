@@ -1,5 +1,5 @@
 import path from 'path';
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'lib',
@@ -10,10 +10,9 @@ export default defineConfig({
           entry: path.resolve(__dirname, 'lib/index.ts'),
           name: '@digita-ai/semcom-components'
       },
-      outDir: '../dist'
+      outDir: '../dist',
   },
   define: {
-    'process.env': {},
-    'Buffer': require('buffer'),
+    'process.env.NODE_DEBUG': undefined
   },
 });
