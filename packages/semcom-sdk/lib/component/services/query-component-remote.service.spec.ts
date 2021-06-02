@@ -33,4 +33,37 @@ describe('QueryComponentRemoteService', () => {
 
   });
 
+  it('should throw error when request fails', () => {
+
+    const service = new QueryComponentRemoteService('test');
+
+    const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
+      json: () => Promise.resolve({}),
+      ok: false,
+    }));
+
+    window.fetch = mockFetch;
+
+    service.query({});
+
+    expect(fetch).rejects.toThrow();
+
+  });
+
+  it('should throw error when querying if filter is not set', async () => {
+
+    const service = new QueryComponentRemoteService('test');
+
+    expect(service.query(null)).rejects.toThrow();
+
+  });
+
+  it('should throw error when querying if repository is not set', async () => {
+
+    const service = new QueryComponentRemoteService(null);
+
+    expect(service.query({})).rejects.toThrow();
+
+  });
+
 });

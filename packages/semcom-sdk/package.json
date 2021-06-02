@@ -59,8 +59,6 @@
     "@types/node": "^14.14.14",
     "@types/n3": "^1.4.5",
     "@types/rdf-js": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.10.0",
-    "@typescript-eslint/parser": "^4.10.0",
     "componentsjs": "4.0.5",
     "componentsjs-generator": "2.1.0",
     "eslint": "^7.16.0",
@@ -82,12 +80,19 @@
     "preset": "@digita-ai/jest-config",
     "displayName": "sdk",
     "testEnvironment": "jsdom",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/.*\\.conf(ig)?.ts",
+      "<rootDir>/lib/index.ts",
+      "<rootDir>/tests/"
+    ],
     "coverageThreshold": {
       "global": {
-        "branches": 10.53,
-        "functions": 23.08,
-        "lines": 22.45,
-        "statements": 21.15
+        "branches": 47.83,
+        "functions": 26.67,
+        "lines": 41.82,
+        "statements": 39.66
       }
     }
   }
