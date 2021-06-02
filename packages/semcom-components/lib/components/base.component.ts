@@ -42,8 +42,6 @@ export abstract class BaseComponent extends LitElement implements Component {
 
     this.dispatchEvent(new ComponentReadEvent({
       detail: { uri },
-      bubbles: true,
-      composed: true,
     }));
 
   }
@@ -70,8 +68,6 @@ export abstract class BaseComponent extends LitElement implements Component {
 
     this.dispatchEvent(new ComponentWriteEvent({
       detail: { uri, data },
-      bubbles: true,
-      composed: true,
     }));
 
   }
@@ -98,8 +94,6 @@ export abstract class BaseComponent extends LitElement implements Component {
 
     this.dispatchEvent(new ComponentAppendEvent({
       detail: { uri, data },
-      bubbles: true,
-      composed: true,
     }));
 
   }
