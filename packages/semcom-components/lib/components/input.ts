@@ -1,14 +1,19 @@
 /* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
 import { css, html, property } from 'lit-element';
+import { ComponentResponseEvent } from '@digita-ai/semcom-core';
 import { BaseComponent } from './base-component.model';
-import { ResponseEvent } from './base-component-events.model';
 
 export default class InputComponent extends BaseComponent {
 
-  handleResponse(event: ResponseEvent): void {
+  /**
+   * Handles a response event. Can be used to update the component's properties based on the data in the response.
+   *
+   * @param event The response event to handle.
+   */
+  handleResponse(event: ComponentResponseEvent): void {
 
-    if (!event || !event.detail || !event.detail.quads) {
+    if (!event || !event.detail || !event.detail.data) {
 
       throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
 
@@ -16,7 +21,7 @@ export default class InputComponent extends BaseComponent {
 
     const pay = 'http://digita.ai/voc/payslip#';
 
-    const store = new N3.Store(event.detail.quads);
+    const store = new N3.Store(event.detail.data);
 
   }
 
@@ -91,41 +96,6 @@ export default class InputComponent extends BaseComponent {
       <button @click="${this.fetcher}" type="submit">Submit</button>
     </div>
   `;
-
-  }
-
-  /*
-   * W3C Custom Element Specification (from MDN)
-   */
-
-  // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
-  connectedCallback() {
-
-    super.connectedCallback();
-    console.info('[DGT-InputComponent] Element connected');
-
-  }
-
-  // Invoked each time the element is disconnected from a DOM.
-  disconnectedCallback() {
-
-    super.disconnectedCallback();
-    console.info('[DGT-InputComponent] Element disconnected');
-
-  }
-  // Invoked each time the custom element is moved to a new DOM.
-  adoptedCallback() {
-
-    // super.adoptedCallback();
-    console.info('[DGT-InputComponent] Element moved to other DOM');
-
-  }
-
-  // Invoked each time one of the element's attributes specified in observedAttributes is changed.
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-
-    super.attributeChangedCallback(name, oldValue, newValue);
-    console.info(`[DGT-InputComponent] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);
 
   }
 

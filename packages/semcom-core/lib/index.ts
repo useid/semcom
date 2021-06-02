@@ -1,5 +1,7 @@
 export * from './component/models/component.model';
 export * from './component/models/component-metadata.model';
+export * from './component/models/component-data.model';
+export * from './component/models/component-events.model';
 export * from './component/services/manage-component.service';
 export * from './component/services/query-component.service';
 export * from './component/services/abstract-register-component.service';

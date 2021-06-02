@@ -1,10 +1,10 @@
 /* eslint-disable no-console -- is a web component */
 import * as N3 from 'n3';
-import { css, html, property, PropertyValues, LitElement } from 'lit-element';
+import { css, html, property, PropertyValues } from 'lit-element';
+import { ComponentResponseEvent } from '@digita-ai/semcom-core';
 import { BaseComponent } from './base-component.model';
-import { BaseComponentEvent, ResponseEvent } from './base-component-events.model';
 
-export default class ProfileComponent extends BaseComponent {
+export class ProfileComponent extends BaseComponent {
 
   @property({ type: String }) entry;
 
@@ -18,25 +18,22 @@ export default class ProfileComponent extends BaseComponent {
   @property({ type: Array }) phones?: string[] = [];
   @property({ type: Array }) emails?: string[] = [];
 
-  // constructor() {
-
-  //   super();
-
-  //   this.addEventListener(BaseComponentEvent.RESPONSE, this.handleResponse);
-
-  // }
-
   update(changed: PropertyValues): void {
 
-    if (changed.has('entry')) this.read(this.entry);
+    super.update(changed);
+
+    if (changed.has('entry')) this.readData(this.entry);
 
   }
 
-  handleResponse(event: ResponseEvent): void {
+  /**
+   * Handles a response event. Can be used to update the component's properties based on the data in the response.
+   *
+   * @param event The response event to handle.
+   */
+  handleResponse(event: ComponentResponseEvent): void {
 
-    console.log('handling response', event);
-
-    if (!event || !event.detail || !event.detail.quads) {
+    if (!event || !event.detail || !event.detail.data) {
 
       throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
 
@@ -45,10 +42,9 @@ export default class ProfileComponent extends BaseComponent {
     const foaf = 'http://xmlns.com/foaf/0.1/';
     const n = 'http://www.w3.org/2006/vcard/ns#';
 
-    const store = new N3.Store(event.detail.quads);
+    const store = new N3.Store(event.detail.data);
 
     this.name = store.getQuads(null,  new N3.NamedNode(`${foaf}name`), null, null)[0]?.object.value;
-    console.log('updated name', this.name);
     this.avatar = store.getQuads(null, new N3.NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
     this.job = store.getQuads(null, new N3.NamedNode(`${n}role`), null, null)[0]?.object.value;
     this.company = store.getQuads(null, new N3.NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
@@ -93,7 +89,7 @@ export default class ProfileComponent extends BaseComponent {
         .title {
           font-size: 1.7rem;
         }
-        .title, #info, #about, .contactContainerWrapper {
+        .title, #info, #about, .contact-container-wrapper {
           margin-top: 40px;
         }
         #about {
@@ -102,7 +98,7 @@ export default class ProfileComponent extends BaseComponent {
         #info {
           line-height: 1.5rem;
         }
-        .contactContainer {
+        .contact-container {
           width: 80%;
           margin-left: auto;
           margin-right: auto;
@@ -111,12 +107,12 @@ export default class ProfileComponent extends BaseComponent {
           flex-wrap: wrap;
           justify-content: space-around;
         }
-        .contactContainer > div {
+        .contact-container > div {
           border: 2px solid #2F363C;
           padding: 10px 25px 10px calc(25px + 1rem);
           margin: 10px 0;
         }
-        .contactContainer > div > div {
+        .contact-container > div > div {
           padding-left: 10px;
         }
         .email, .phone {
@@ -141,8 +137,6 @@ export default class ProfileComponent extends BaseComponent {
   }
 
   render() {
-
-    console.log('rendering');
 
     return html`
     <div class="container">
@@ -169,9 +163,9 @@ export default class ProfileComponent extends BaseComponent {
       ` : ''}
 
       <!-- CONTACT INFORMATION -->
-      <div class="contactContainerWrapper">
+      <div class="contact-container-wrapper">
         ${(this.phones && this.phones.length > 0) ? html`
-          <div class="contactContainer">
+          <div class="contact-container">
             ${this.phones?.map((phone) => html`
               <div class="phone">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -186,7 +180,7 @@ export default class ProfileComponent extends BaseComponent {
           </div>
         ` : ''}
         ${(this.emails && this.emails.length > 0) ? html`
-          <div class="contactContainer">
+          <div class="contact-container">
             ${this.emails?.map((email) => html`
               <div class="email">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
@@ -210,39 +204,6 @@ export default class ProfileComponent extends BaseComponent {
 
   }
 
-  /*
-   * W3C Custom Element Specification (from MDN)
-   */
-
-  // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
-  connectedCallback() {
-
-    super.connectedCallback();
-    console.info('[DGT-ProfileComponent] Element connected');
-
-  }
-
-  // Invoked each time the element is disconnected from a DOM.
-  disconnectedCallback() {
-
-    super.disconnectedCallback();
-    console.info('[DGT-ProfileComponent] Element disconnected');
-
-  }
-  // Invoked each time the custom element is moved to a new DOM.
-  adoptedCallback() {
-
-    // super.adoptedCallback();
-    console.info('[DGT-ProfileComponent] Element moved to other DOM');
-
-  }
-
-  // Invoked each time one of the element's attributes specified in observedAttributes is changed.
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-
-    super.attributeChangedCallback(name, oldValue, newValue);
-    console.info(`[DGT-ProfileComponent] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);
-
-  }
-
 }
+
+export default ProfileComponent;
