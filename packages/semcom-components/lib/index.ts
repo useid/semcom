@@ -1,6 +1,6 @@
 import { Parser } from 'n3';
 import { ComponentEventType, ComponentReadEvent, ComponentResponseEvent } from '@digita-ai/semcom-sdk';
-import ProfileComponent from './components/profile';
+import ProfileComponent from './components/profile.component';
 
 customElements.define('profile-component', ProfileComponent);
 
@@ -18,5 +18,6 @@ document.addEventListener(ComponentEventType.READ, (event: ComponentReadEvent) =
 
 });
 
-export * from './components/profile';
-export * from './components/payslip';
+export * from './components/profile.component';
+export * from './components/payslip.component';
+export * from './components/input.component';
