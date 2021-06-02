@@ -1,15 +1,16 @@
 import { ComponentData, Component } from '@digita-ai/semcom-core';
 import { ComponentAppendEvent, ComponentEventType, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
-
-import { LitElement } from 'lit-element';
+import { LitElement, property } from 'lit-element';
 
 /**
  * A base component which implements the Semcom-standard by using Lit.
  */
 export abstract class BaseComponent extends LitElement implements Component {
 
+  @property({ type: String }) entry?: string;
+
   /**
-   * Instantiates a `BaseComponent`, and add an event listener to handle `ResponseEvent`s.
+   * Instantiates a `BaseComponent`, and add an event listener to handle `ComponentResponseEvent`s.
    */
   constructor() {
 

@@ -5,8 +5,6 @@ import { BaseComponent } from './base.component';
 
 export class ProfileComponent extends BaseComponent {
 
-  @property({ type: String }) entry: string;
-
   @property() name?: string;
   @property() avatar = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
   @property() job?: string;
@@ -17,6 +15,11 @@ export class ProfileComponent extends BaseComponent {
   @property({ type: Array }) phones?: string[] = [];
   @property({ type: Array }) emails?: string[] = [];
 
+  /**
+   * Is executed when a property value is updated.
+   *
+   * @param changed Map of changes properties.
+   */
   update(changed: PropertyValues): void {
 
     super.update(changed);

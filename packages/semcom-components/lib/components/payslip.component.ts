@@ -1,10 +1,20 @@
 /* eslint-disable no-console -- is a web component */
 import { NamedNode, Store } from 'n3';
-import { css, html, property } from 'lit-element';
+import { css, html, property, PropertyValues } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base.component';
 
 export default class PayslipComponent extends BaseComponent {
+
+  @property({ type: Number }) periodStart?: number;
+  @property({ type: Number }) periodEnd?: number;
+  @property() employee = 'Unknown';
+  @property() employer = 'Unknown';
+  @property() payType = 'Unknown';
+  @property() stature = 'Unknown';
+  @property({ type: Number }) grossAmount?: number;
+  @property({ type: Number }) taxableAmount?: number;
+  @property({ type: Number }) netAmount?: number;
 
   /**
    * Handles a response event. Can be used to update the component's properties based on the data in the response.
@@ -35,15 +45,18 @@ export default class PayslipComponent extends BaseComponent {
 
   }
 
-  @property({ type: Number }) periodStart?: number;
-  @property({ type: Number }) periodEnd?: number;
-  @property() employee = 'Unknown';
-  @property() employer = 'Unknown';
-  @property() payType = 'Unknown';
-  @property() stature = 'Unknown';
-  @property({ type: Number }) grossAmount?: number;
-  @property({ type: Number }) taxableAmount?: number;
-  @property({ type: Number }) netAmount?: number;
+  /**
+   * Is executed when a property value is updated.
+   *
+   * @param changed Map of changes properties.
+   */
+  update(changed: PropertyValues): void {
+
+    super.update(changed);
+
+    if (changed.has('entry')) this.readData(this.entry);
+
+  }
 
   static get styles() {
 

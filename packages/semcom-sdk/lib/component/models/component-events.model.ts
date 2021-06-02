@@ -116,9 +116,25 @@ export type ComponentOperationEvent = ComponentReadEvent | ComponentWriteEvent |
  * Payload of a `ComponentResponseEvent`.
  */
 export interface ComponentResponseEventPayload {
+  /**
+   * The uri on which the operation was performed.
+   */
   uri: string;
+
+  /**
+   * The event which caused this response.
+   */
   cause: ComponentOperationEvent;
+
+  /**
+   * The component's data after the operation.
+   */
   data: ComponentData;
+
+  /**
+   * Indicates if the operation was successful.
+   */
+  success: boolean;
 }
 
 /**

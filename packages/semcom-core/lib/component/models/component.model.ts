@@ -5,6 +5,11 @@ import { ComponentData } from './component-data.model';
  */
 export interface Component extends HTMLElement {
   /**
+   * The component's entry into its data.
+   */
+  entry?: string;
+
+  /**
    * Should send a `ComponentReadEvent` to the component's parent to request data of a given resource.
    *
    * @param uri The uri of the resource to read.

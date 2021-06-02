@@ -1,8 +1,21 @@
-import { css, html, property } from 'lit-element';
+import { css, html, property, PropertyValues, query } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
+import { Literal, NamedNode, Quad } from 'n3';
 import { BaseComponent } from './base.component';
 
 export default class InputComponent extends BaseComponent {
+
+  /**
+   * The input field.
+   */
+  @query('input')
+  input: HTMLInputElement;
+
+  /**
+   * The slot element which contains the input field.
+   */
+  @query('button')
+  button: HTMLButtonElement;
 
   /**
    * Handles a response event. Can be used to update the component's properties based on the data in the response.
@@ -11,16 +24,35 @@ export default class InputComponent extends BaseComponent {
    */
   handleResponse(event: ComponentResponseEvent): void {
 
-    if (!event || !event.detail || !event.detail.data) {
+    if (!event) {
 
-      throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
+      throw new Error('Argument event should be set.');
+
+    }
+
+    this.input.disabled = false;
+    this.button.disabled = false;
+
+    if(event.detail.success){
+
+      this.input.value = '';
 
     }
 
   }
 
-  @property() localFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-  @property() localEntry?: string;
+  /**
+   * Is executed when a property value is updated.
+   *
+   * @param changed Map of changes properties.
+   */
+  update(changed: PropertyValues): void {
+
+    super.update(changed);
+
+    if (changed.has('entry')) this.readData(this.entry);
+
+  }
 
   static get styles() {
 
@@ -66,18 +98,31 @@ export default class InputComponent extends BaseComponent {
 
   }
 
-  fetcher = async () => {
+  /**
+   * Writes data when the user clicks the submit button.
+   */
+  handleClickSubmit() {
 
-    if(this.localFetch && this.localEntry) {
+    if (!this.entry) {
 
-      const inputField = this.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-      const uri = this.localEntry.split('/profile')[0] + '/inputTest';
-      await this.localFetch(uri, { method: 'PUT', body: inputField.value, headers: { 'content-type': 'text/plain' } });
-      inputField.value = '';
+      throw new Error('Argument this.entry should be set.');
 
     }
 
-  };
+    if (!this.input) {
+
+      throw new Error('Argument this.inputField should be set.');
+
+    }
+
+    this.input.disabled = true;
+    this.button.disabled = true;
+
+    const data = [ new Quad(new NamedNode(this.entry), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.input.value)) ];
+
+    this.writeData(this.entry, data);
+
+  }
 
   render() {
 
@@ -85,9 +130,9 @@ export default class InputComponent extends BaseComponent {
     <div class="container">
       <label for="name">Your Input:</label>
       <br>
-      <input type="text" id="inputField"/>
+      <input type="text" />
       <br>
-      <button @click="${this.fetcher}" type="submit">Submit</button>
+      <button @click="${this.handleClickSubmit}" type="submit">Submit</button>
     </div>
   `;
 
