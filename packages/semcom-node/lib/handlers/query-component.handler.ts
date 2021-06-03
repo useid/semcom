@@ -17,7 +17,7 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
     if (!context.request.body) {
 
-      return throwError(new Error('body of the request cannot be null or undefined.'));
+      return throwError(new Error('body of the request should be set.'));
 
     }
 
@@ -25,11 +25,11 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
     try {
 
-      JSON.parse(context.request.body);
+      parsedBody = JSON.parse(context.request.body);
 
     } catch (error) {
 
-      return throwError(new Error('error while parsing request body'));
+      return throwError(new Error('error while parsing request body.'));
 
     }
 
