@@ -1,4 +1,4 @@
-import * as Quad from 'rdf-quad';
+import { default as Quad } from 'rdf-quad';
 import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 
 /** Service that transforms Components */

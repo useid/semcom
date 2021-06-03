@@ -19,6 +19,12 @@ export class QueryComponentRemoteService extends QueryComponentService {
 
     }
 
+    if (!filter) {
+
+      throw new Error('Argument filter should be set.');
+
+    }
+
     const response = await fetch(`${this.repository}/component/query`, {
       method: 'POST',
       headers: {

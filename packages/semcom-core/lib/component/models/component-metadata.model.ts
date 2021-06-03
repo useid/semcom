@@ -1,4 +1,4 @@
-export abstract class ComponentMetadata {
+export class ComponentMetadata {
 
   constructor(
     public uri: string,

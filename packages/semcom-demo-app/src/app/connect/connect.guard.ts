@@ -1,10 +1,9 @@
 import { CanActivate, Router, UrlTree } from '@angular/router';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { ISessionInfo } from '@inrupt/solid-client-authn-browser';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { info } from 'node:console';
 import { connectSessionInfoSelector } from './connect.state';
 
 @Injectable({

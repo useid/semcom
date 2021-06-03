@@ -37,13 +37,36 @@ Accept: application/json
 
 ########
 
-# @name QueryComponents
+# @name QueryComponentsWithUri
 POST {{baseUrl}}/component/query HTTP/1.1
 Accept: text/turtle
 Content-Type: application/json
 
 {
     "uri": "https://components.semcom.digita.ai/components/profile.js"
+}
+
+########
+
+# @name QueryComponentsWithShape
+POST {{baseUrl}}/component/query HTTP/1.1
+Accept: text/turtle
+Content-Type: application/json
+
+{
+    "shapes": ["http://xmlns.com/foaf/0.1/PersonalProfileDocument"]
+}
+
+########
+
+# @name QueryComponentsWithShapeAndVersion
+POST {{baseUrl}}/component/query HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "shapes":["http://xmlns.com/foaf/0.1/PersonalProfileDocument"],
+    "version":"^0.1.0"
 }
 
 ########
