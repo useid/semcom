@@ -57,8 +57,8 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.1.4",
-    "@digita-ai/handlersjs-http": "^0.1.4",
+    "@digita-ai/handlersjs-core": "^0.2.1",
+    "@digita-ai/handlersjs-http": "^0.2.1",
     "@digita-ai/semcom-core": "0.3.4",
     "componentsjs": "4.0.5",
     "rdf-quad": "^1.5.0",
