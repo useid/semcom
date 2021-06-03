@@ -17,17 +17,29 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
     if (!context.request.body) {
 
-      return throwError(new Error('body of the request cannot be null or undefined.'));
+      return throwError(new Error('body of the request should be set.'));
 
     }
 
-    return this.components.query(JSON.parse(context.request.body)).pipe(
+    let parsedBody;
+
+    try {
+
+      parsedBody = JSON.parse(context.request.body);
+
+    } catch (error) {
+
+      return throwError(new Error('error while parsing request body.'));
+
+    }
+
+    return this.components.query(parsedBody).pipe(
       map((result) => ({
         body: JSON.stringify(result),
         headers: {
           'content-type': 'application/json',
         },
-        status: 201,
+        status: 200,
       })),
     );
 
