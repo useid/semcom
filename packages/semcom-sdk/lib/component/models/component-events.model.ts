@@ -1,4 +1,4 @@
-import { ComponentData } from '@digita-ai/semcom-core';
+import { Quad } from 'rdf-js';
 
 /**
  * Types of component events.
@@ -51,7 +51,7 @@ export interface ComponentWriteEventPayload {
   /**
    * The data which should be written to the resource.
    */
-  data: ComponentData;
+  data: Quad[];
 }
 
 /**
@@ -85,7 +85,7 @@ export interface ComponentAppendEventPayload {
   /**
    * The data which should be appended to the resource.
    */
-  data: ComponentData;
+  data: Quad[];
 }
 
 /**
@@ -129,7 +129,7 @@ export interface ComponentResponseEventPayload {
   /**
    * The component's data after the operation.
    */
-  data: ComponentData;
+  data: Quad[];
 
   /**
    * Indicates if the operation was successful.

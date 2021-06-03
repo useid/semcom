@@ -76,6 +76,12 @@
     "buffer": "6.0.3",
     "n3": "1.10.0"
   },
+  "eslintIgnore": [
+    "node_modules",
+    "dist",
+    "vite.config.ts",
+    "tests"
+  ],
   "jest": {
     "preset": "@digita-ai/jest-config",
     "displayName": "sdk",

@@ -22,9 +22,9 @@
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "npm run start:watch",
-    "start:watch": "vite --config vite.serve.config.ts --mode development",
+    "start:watch": "vite",
     "build": "rimraf ./dist && npm run build:bundle && npm run build:ts",
-    "build:bundle": "vite build --config vite.build.config.ts",
+    "build:bundle": "vite build",
     "build:ts": "tsc",
     "build:dev": "npm run build",
     "lint": "eslint .",

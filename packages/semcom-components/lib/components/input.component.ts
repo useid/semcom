@@ -41,19 +41,6 @@ export default class InputComponent extends BaseComponent {
 
   }
 
-  /**
-   * Is executed when a property value is updated.
-   *
-   * @param changed Map of changes properties.
-   */
-  update(changed: PropertyValues): void {
-
-    super.update(changed);
-
-    if (changed.has('entry') && this.entry) this.readData(this.entry);
-
-  }
-
   static get styles() {
 
     return [

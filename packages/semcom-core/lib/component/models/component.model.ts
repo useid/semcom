@@ -1,4 +1,4 @@
-import { ComponentData } from './component-data.model';
+import { Quad } from 'rdf-js';
 
 /**
  * Definition of a web component which complies to the Semcom-standard.
@@ -22,7 +22,7 @@ export interface Component extends HTMLElement {
    * @param uri The uri of the resource to read.
    * @param data The data which should be written to the resource.
    */
-  writeData(uri: string, data: ComponentData): void;
+  writeData(uri: string, data: Quad[]): void;
 
   /**
    * Should send a `ComponentAppendEvent` to the component's parent to append data to a given resource.
@@ -30,5 +30,5 @@ export interface Component extends HTMLElement {
    * @param uri The uri of the resource to read.
    * @param data The data which should be appended to the resource.
    */
-  appendData(uri: string, data: ComponentData): void;
+  appendData(uri: string, data: Quad[]): void;
 }
