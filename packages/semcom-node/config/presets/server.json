@@ -5,10 +5,34 @@
   ],
   "@graph": [
     {
+      "@id": "urn:semcom-node:variables:customConfigPath",
+      "@type": "Variable"
+    },
+    {
+      "@id": "urn:semcom-node:variables:mainModulePath",
+      "@type": "Variable"
+    },
+    {
+      "@id": "urn:semcom-node:variables:schema",
+      "@type": "Variable"
+    },
+    {
+      "@id": "urn:semcom-node:variables:host",
+      "@type": "Variable"
+    },
+    {
+      "@id": "urn:semcom-node:variables:port",
+      "@type": "Variable"
+    },
+    {
       "@id": "urn:semcom-node:default:NodeHttpServer",
       "@type": "NodeHttpServer",
-      "NodeHttpServer:_port": "3000",
-      "NodeHttpServer:_host": "localhost",
+      "NodeHttpServer:_port": {
+        "@id": "urn:semcom-node:variables:port"
+      },
+      "NodeHttpServer:_host": {
+        "@id": "urn:semcom-node:variables:host"
+      },
       "NodeHttpServer:_nodeHttpStreamsHandler": {
         "@id": "urn:semcom-node:default:NodeHttpRequestResponseHandler",
         "@type": "NodeHttpRequestResponseHandler",
