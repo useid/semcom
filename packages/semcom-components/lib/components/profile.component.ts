@@ -1,50 +1,9 @@
-/* eslint-disable no-console -- is a web component */
-import * as N3 from 'n3';
-import { LitElement, css, html, property } from 'lit-element';
-import type { Component } from '@digita-ai/semcom-core';
+import { NamedNode, Store } from 'n3';
+import { css, html, property, PropertyValues } from 'lit-element';
+import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
+import { BaseComponent } from './base.component';
 
-export default class ProfileComponent extends LitElement implements Component {
-
-  data (
-    entry: string,
-    customFetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-  ): Promise<void> {
-
-    const myFetch = customFetch ? customFetch : fetch;
-    const parser = new N3.Parser();
-    const store = new N3.Store();
-
-    const foaf = 'http://xmlns.com/foaf/0.1/';
-    const n = 'http://www.w3.org/2006/vcard/ns#';
-
-    return myFetch(entry)
-      .then((response) => response.text())
-      .then((text) => {
-
-        store.addQuads(parser.parse(text));
-        this.name = store.getQuads(null,  new N3.NamedNode(`${foaf}name`), null, null)[0]?.object.value;
-        this.avatar = store.getQuads(null, new N3.NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
-        this.job = store.getQuads(null, new N3.NamedNode(`${n}role`), null, null)[0]?.object.value;
-        this.company = store.getQuads(null, new N3.NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
-        this.city = store.getQuads(null, new N3.NamedNode(`${n}locality`), null, null)[0]?.object.value;
-        this.country = store.getQuads(null, new N3.NamedNode(`${n}country-name`), null, null)[0]?.object.value;
-        this.about = store.getQuads(null, new N3.NamedNode(`${n}note`), null, null)[0]?.object.value;
-
-        store.getQuads(null, new N3.NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
-
-          this.phones?.push(store.getQuads(new N3.NamedNode(tele.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
-
-        });
-
-        store.getQuads(null, new N3.NamedNode(`${n}hasEmail`), null, null).map((mail) => {
-
-          this.emails?.push(store.getQuads(new N3.NamedNode(mail.object.value), new N3.NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
-
-        });
-
-      });
-
-  }
+export class ProfileComponent extends BaseComponent {
 
   @property() name?: string;
   @property() avatar = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
@@ -55,6 +14,59 @@ export default class ProfileComponent extends LitElement implements Component {
   @property() about?: string;
   @property({ type: Array }) phones?: string[] = [];
   @property({ type: Array }) emails?: string[] = [];
+
+  /**
+   * Is executed when a property value is updated.
+   *
+   * @param changed Map of changes properties.
+   */
+  update(changed: PropertyValues): void {
+
+    super.update(changed);
+
+    if (changed.has('entry') && this.entry) this.readData(this.entry);
+
+  }
+
+  /**
+   * Handles a response event. Can be used to update the component's properties based on the data in the response.
+   *
+   * @param event The response event to handle.
+   */
+  handleResponse(event: ComponentResponseEvent): void {
+
+    if (!event || !event.detail || !event.detail.data) {
+
+      throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
+
+    }
+
+    const foaf = 'http://xmlns.com/foaf/0.1/';
+    const n = 'http://www.w3.org/2006/vcard/ns#';
+
+    const store = new Store(event.detail.data);
+
+    this.name = store.getQuads(null,  new NamedNode(`${foaf}name`), null, null)[0]?.object.value;
+    this.avatar = store.getQuads(null, new NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
+    this.job = store.getQuads(null, new NamedNode(`${n}role`), null, null)[0]?.object.value;
+    this.company = store.getQuads(null, new NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
+    this.city = store.getQuads(null, new NamedNode(`${n}locality`), null, null)[0]?.object.value;
+    this.country = store.getQuads(null, new NamedNode(`${n}country-name`), null, null)[0]?.object.value;
+    this.about = store.getQuads(null, new NamedNode(`${n}note`), null, null)[0]?.object.value;
+
+    store.getQuads(null, new NamedNode(`${n}hasTelephone`), null, null).map((tele) => {
+
+      this.phones?.push(store.getQuads(new NamedNode(tele.object.value), new NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+
+    });
+
+    store.getQuads(null, new NamedNode(`${n}hasEmail`), null, null).map((mail) => {
+
+      this.emails?.push(store.getQuads(new NamedNode(mail.object.value), new NamedNode(`${n}value`), null, null)[0]?.object.value.split(':')[1]);
+
+    });
+
+  }
 
   static get styles() {
 
@@ -79,7 +91,7 @@ export default class ProfileComponent extends LitElement implements Component {
         .title {
           font-size: 1.7rem;
         }
-        .title, #info, #about, .contactContainerWrapper {
+        .title, #info, #about, .contact-container-wrapper {
           margin-top: 40px;
         }
         #about {
@@ -88,7 +100,7 @@ export default class ProfileComponent extends LitElement implements Component {
         #info {
           line-height: 1.5rem;
         }
-        .contactContainer {
+        .contact-container {
           width: 80%;
           margin-left: auto;
           margin-right: auto;
@@ -97,12 +109,12 @@ export default class ProfileComponent extends LitElement implements Component {
           flex-wrap: wrap;
           justify-content: space-around;
         }
-        .contactContainer > div {
+        .contact-container > div {
           border: 2px solid #2F363C;
           padding: 10px 25px 10px calc(25px + 1rem);
           margin: 10px 0;
         }
-        .contactContainer > div > div {
+        .contact-container > div > div {
           padding-left: 10px;
         }
         .email, .phone {
@@ -153,9 +165,9 @@ export default class ProfileComponent extends LitElement implements Component {
       ` : ''}
 
       <!-- CONTACT INFORMATION -->
-      <div class="contactContainerWrapper">
+      <div class="contact-container-wrapper">
         ${(this.phones && this.phones.length > 0) ? html`
-          <div class="contactContainer">
+          <div class="contact-container">
             ${this.phones?.map((phone) => html`
               <div class="phone">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -170,7 +182,7 @@ export default class ProfileComponent extends LitElement implements Component {
           </div>
         ` : ''}
         ${(this.emails && this.emails.length > 0) ? html`
-          <div class="contactContainer">
+          <div class="contact-container">
             ${this.emails?.map((email) => html`
               <div class="email">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
@@ -188,45 +200,12 @@ export default class ProfileComponent extends LitElement implements Component {
           </div>
         ` : ''}
       </div>
-      <p>Example Profile Component v1.0.0</p>
+      <p>Example event-based Profile Component v0.1.0</p>
     </div>
   `;
 
   }
 
-  /*
-   * W3C Custom Element Specification (from MDN)
-   */
-
-  // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
-  connectedCallback() {
-
-    super.connectedCallback();
-    console.info('[DGT-ProfileComponent] Element connected');
-
-  }
-
-  // Invoked each time the element is disconnected from a DOM.
-  disconnectedCallback() {
-
-    super.disconnectedCallback();
-    console.info('[DGT-ProfileComponent] Element disconnected');
-
-  }
-  // Invoked each time the custom element is moved to a new DOM.
-  adoptedCallback() {
-
-    // super.adoptedCallback();
-    console.info('[DGT-ProfileComponent] Element moved to other DOM');
-
-  }
-
-  // Invoked each time one of the element's attributes specified in observedAttributes is changed.
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-
-    super.attributeChangedCallback(name, oldValue, newValue);
-    console.info(`[DGT-ProfileComponent] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);
-
-  }
-
 }
+
+export default ProfileComponent;

@@ -7,16 +7,16 @@
     // Recommended by Lit Element
     "module": "es2015",
     "target": "es2017",
-    // Strict should be true
-    "strict": false
+    // Strict should actually be true
+    "strict": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
   },
   "files": [ "node_modules/vite/client.d.ts" ],
-  "include": [
-    "./"
-  ],
+  "include": [ "lib" ],
   "exclude": [
-      "dist",
-      "node_modules",
-      "**/*.spec.ts"
+    "**/*.spec.ts",
+    "node_modules",
+    "dist"
   ]
 }

@@ -5,5 +5,7 @@
   "ComponentMetadata",
   "ManageComponentService",
   "QueryComponentService",
-  "HttpHandler"
+  "HttpHandler",
+  "Partial",
+  "CustomEvent"
 ]

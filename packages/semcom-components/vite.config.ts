@@ -10,7 +10,7 @@ export default ({ command, mode }) => {
         outDir: '../dist'
       },
       define: {
-        'process.env': {}
+        'process.env.NODE_DEBUG': undefined
       },
       server: {
         port: 8080,
@@ -28,7 +28,7 @@ export default ({ command, mode }) => {
         outDir: '../dist'
       },
       define: {
-        'process.env': {}
+        'process.env.NODE_DEBUG': undefined
       },
     })
   }

@@ -5,6 +5,7 @@
   "author": "",
   "license": "",
   "scripts": {
+    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "community-solid-server -p 9000 --rootFilePath /tmp/css -c config/config-file.json"
   },
   "dependencies": {

@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "release": "npm run release:docs && npm run release:version",
     "release:docs": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
     "release:version": "lerna version",
     "postinstall": "husky install",
     "bootstrap": "npm ci && lerna bootstrap",
     "bootstrap:no-ci": "npm i && lerna bootstrap --no-ci",
+    "bootstrap:clean": "npm i && lerna run clean --parallel && lerna bootstrap --no-ci",
     "start": "lerna run start --parallel",
     "build": "lerna run build --since HEAD",
     "build:all": "lerna run build",
@@ -56,7 +58,7 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.4",
+    "typescript": "4.1.5",
     "yaml-cli": "^1.1.8"
   },
   "commitlint": {
