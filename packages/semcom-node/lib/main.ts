@@ -31,7 +31,7 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
 
 };
 
-const createVariables = (args: string[]): Record<string, any> => {
+export const createVariables = (args: string[]): Record<string, any> => {
 
   const { argv: params } = yargs(hideBin(args))
     .usage('node ./dist/main.js [args]')
@@ -48,37 +48,8 @@ const createVariables = (args: string[]): Record<string, any> => {
     'urn:semcom-node:variables:customConfigPath': params.config,
     'urn:semcom-node:variables:mainModulePath': params.mainModulePath,
     'urn:semcom-node:variables:schema': params.schema,
-    'urn:semcom-node:variables:host': params.host,
-    'urn:semcom-node:variables:port': params.port ?? '3003',
+    'urn:semcom-node:variables:host': params.host ?? 'localhost',
+    'urn:semcom-node:variables:port': params.port ?? '3000',
   };
 
 };
-
-const vars = createVariables(process.argv);
-
-launch(vars);
-
-// import * as path from 'path';
-// import { ComponentsManager } from 'componentsjs';
-// import { NodeHttpServer } from '@digita-ai/handlersjs-http';
-
-// const launch = async () => {
-
-//   const mainModulePath = path.join(__dirname, '../');
-//   const configPath = path.join(__dirname, '../config/config-default.json');
-
-//   const manager = await ComponentsManager.build({
-//     mainModulePath,
-//   });
-
-//   await manager.configRegistry.register(configPath);
-
-//   const server: NodeHttpServer = await manager.instantiate(
-//     'urn:semcom-node:default:NodeHttpServer',
-//   );
-
-//   server.start();
-
-// };
-
-// launch();
