@@ -21,13 +21,25 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
     }
 
-    return this.components.query(JSON.parse(context.request.body)).pipe(
+    let parsedBody: string;
+
+    try {
+
+      JSON.parse(context.request.body);
+
+    } catch (error) {
+
+      return throwError(new Error('error while parsing request body'));
+
+    }
+
+    return this.components.query(parsedBody).pipe(
       map((result) => ({
         body: JSON.stringify(result),
         headers: {
           'content-type': 'application/json',
         },
-        status: 201,
+        status: 200,
       })),
     );
 
