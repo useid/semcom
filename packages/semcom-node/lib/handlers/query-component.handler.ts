@@ -21,7 +21,7 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
     }
 
-    let parsedBody: string;
+    let parsedBody;
 
     try {
 
