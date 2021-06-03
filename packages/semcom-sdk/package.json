@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-sdk",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-sdk#readme",
@@ -56,8 +56,8 @@
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
     "@types/jest": "^26.0.19",
-    "@types/node": "^14.14.14",
     "@types/n3": "^1.4.5",
+    "@types/node": "^14.14.14",
     "@types/rdf-js": "^4.0.1",
     "componentsjs": "4.0.5",
     "componentsjs-generator": "2.1.0",
@@ -72,7 +72,7 @@
     "vite": "2.2.3"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.3.4",
+    "@digita-ai/semcom-core": "0.4.0",
     "buffer": "6.0.3",
     "n3": "1.10.0"
   },
