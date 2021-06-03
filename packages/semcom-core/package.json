@@ -58,8 +58,6 @@
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.14",
     "@types/rdf-js": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.10.0",
-    "@typescript-eslint/parser": "^4.10.0",
     "componentsjs": "4.0.5",
     "componentsjs-generator": "2.1.0",
     "eslint": "^7.16.0",
