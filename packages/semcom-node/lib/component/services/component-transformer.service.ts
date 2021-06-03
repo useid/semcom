@@ -23,16 +23,16 @@ export class ComponentTransformerService {
 
     return [
       Quad(
-        `https://node.semcom.digita.ai/c/${component.uri}`,
+        `${component.uri}`,
         'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
         'http://semcom.digita.ai/voc#component',
       ),
-      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#label', component.label),
-      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#description', component.description),
-      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#author', component.author),
-      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#version', component.version),
-      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#latest', component.latest),
-      Quad(`https://node.semcom.digita.ai/c/${component.uri}`, 'http://semcom.digita.ai/voc#tag', component.tag),
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#label', component.label),
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#description', component.description),
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#author', component.author),
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#version', component.version),
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#latest', component.latest),
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#tag', component.tag),
     ].reduce((acc, val) => acc.concat(val), []);
 
   }
