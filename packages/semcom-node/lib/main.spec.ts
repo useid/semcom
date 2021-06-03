@@ -1,4 +1,25 @@
-import { createVariables } from './main';
+import { ComponentsManager } from 'componentsjs';
+import { createVariables, launch } from './main';
+
+describe('launch', () => {
+
+  afterEach(() => {
+
+    jest.clearAllMocks();
+
+  });
+
+  it('should call ComponentManager.build', async () => {
+
+    const buildSpy = jest.spyOn(ComponentsManager, 'build');
+
+    await launch(createVariables([ ]));
+
+    expect(buildSpy).toHaveBeenCalled();
+
+  });
+
+});
 
 describe('createVariables', () => {
 
