@@ -12,6 +12,7 @@
   },
   "files": [
     "dist",
+    ".componentsignore",
     "config"
   ],
   "publishConfig": {
@@ -64,7 +65,8 @@
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
     "semver": "^7.3.5",
-    "streamify-array": "^1.0.1"
+    "streamify-array": "^1.0.1",
+    "yargs": "^17.0.1"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
