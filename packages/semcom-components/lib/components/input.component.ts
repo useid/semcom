@@ -33,7 +33,7 @@ export default class InputComponent extends BaseComponent {
     this.input.disabled = false;
     this.button.disabled = false;
 
-    if(event.detail.success){
+    if (event.detail.success) {
 
       this.input.value = '';
 
