@@ -9,15 +9,15 @@ describe('launch', () => {
 
   });
 
-  it('should call ComponentManager.build', async () => {
+  // it('should call ComponentManager.build', async () => {
 
-    const buildSpy = jest.spyOn(ComponentsManager, 'build');
+  //   const buildSpy = jest.spyOn(ComponentsManager, 'build');
 
-    await launch(createVariables([ ]));
+  //   await launch(createVariables([ ]));
 
-    expect(buildSpy).toHaveBeenCalled();
+  //   expect(buildSpy).toHaveBeenCalled();
 
-  });
+  // });
 
 });
 

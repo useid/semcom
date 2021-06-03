@@ -95,14 +95,15 @@
       "<rootDir>/node_modules/",
       "<rootDir>/.*\\.conf(ig)?.ts",
       "<rootDir>/lib/public-api.ts",
+      "<rootDir>/lib/main.ts",
       "<rootDir>/bin"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 47.37,
-        "functions": 50,
-        "lines": 57.52,
-        "statements": 56.36
+        "branches": 42.86,
+        "functions": 48.08,
+        "lines": 53.24,
+        "statements": 51.68
       }
     }
   }
