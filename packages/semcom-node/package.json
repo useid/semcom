@@ -12,6 +12,7 @@
   },
   "files": [
     "dist",
+    ".componentsignore",
     "config"
   ],
   "publishConfig": {
@@ -24,7 +25,7 @@
   },
   "types": "./dist/public-api.d.ts",
   "bin": {
-    "semcom-node": "./dist/main.js"
+    "semcom-node": "./bin/server.js"
   },
   "scripts": {
     "build": "rimraf ./dist && npm run build:ts && npm run build:components",
@@ -34,7 +35,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
-    "start": "node dist/main.js",
+    "start": "node bin/server.js",
     "test": "jest",
     "test:ci": "jest --runInBand --silent",
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
@@ -64,7 +65,8 @@
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
     "semver": "^7.3.5",
-    "streamify-array": "^1.0.1"
+    "streamify-array": "^1.0.1",
+    "yargs": "^17.0.1"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
@@ -82,15 +84,26 @@
     "ts-node": "^9.1.1",
     "typescript": "4.1.5"
   },
+  "eslintIgnore": [
+    "bin"
+  ],
   "jest": {
     "preset": "@digita-ai/jest-config",
     "displayName": "node",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/.*\\.conf(ig)?.ts",
+      "<rootDir>/lib/public-api.ts",
+      "<rootDir>/lib/main.ts",
+      "<rootDir>/bin"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 42.86,
-        "functions": 47.17,
-        "lines": 49.66,
-        "statements": 48.43
+        "functions": 48.08,
+        "lines": 53.24,
+        "statements": 51.68
       }
     }
   }
