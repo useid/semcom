@@ -39,25 +39,29 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
       this.registered.set(componentMetadata.uri, tag);
 
-      try {
+      if (!customElements.get(tag)) {
 
-        component = await eval(`import("${componentMetadata.uri}")`);
+        try {
 
-      } catch (error) {
+          component = await eval(`import("${componentMetadata.uri}")`);
 
-        this.registered.delete(componentMetadata.uri);
-        throw new Error('Something went wrong during import');
+        } catch (error) {
 
-      }
+          this.registered.delete(componentMetadata.uri);
+          throw new Error('Something went wrong during import');
 
-      try {
+        }
 
-        customElements.define(tag, component.default);
+        try {
 
-      } catch (error) {
+          customElements.define(tag, component.default);
 
-        this.registered.delete(componentMetadata.uri);
-        throw Error('Failed to register componentMetadata');
+        } catch (error) {
+
+          this.registered.delete(componentMetadata.uri);
+          throw Error('Failed to register componentMetadata');
+
+        }
 
       }
 
