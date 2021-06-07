@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.4.1](https://github.com/digita-ai/semcom/compare/v0.4.0...v0.4.1) (2021-06-07)
+
+
+### **Bug Fixes**
+
+* return tag when it is already defined ([#97](https://github.com/digita-ai/semcom/issues/97)) ([aece100](https://github.com/digita-ai/semcom/commit/aece100f51e566aa5b2f9a438556d0d4ec605eb4))
+
+
+
 ## [0.4.0](https://github.com/digita-ai/semcom/compare/v0.1.1...v0.4.0) (2021-06-03)
 
 

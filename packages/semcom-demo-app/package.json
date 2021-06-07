@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-demo-app",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "ng": "ng",
@@ -47,8 +47,8 @@
     "@angular/platform-browser": "~11.1.2",
     "@angular/platform-browser-dynamic": "~11.1.2",
     "@angular/router": "~11.1.2",
-    "@digita-ai/semcom-core": "0.4.0",
-    "@digita-ai/semcom-sdk": "0.4.0",
+    "@digita-ai/semcom-core": "0.4.1",
+    "@digita-ai/semcom-sdk": "0.4.1",
     "@inrupt/solid-client": "1.6.1",
     "@inrupt/solid-client-authn-browser": "1.8.0",
     "@ngrx/effects": "^11.0.1",
