@@ -10,7 +10,7 @@ describe('QueryComponentRemoteService', () => {
 
   });
 
-  it('should send get request to repository url', () => {
+  it('should send get request to repository url', async () => {
 
     const service = new QueryComponentRemoteService('test');
 
@@ -21,7 +21,7 @@ describe('QueryComponentRemoteService', () => {
 
     window.fetch = mockFetch;
 
-    service.query({});
+    await service.query({});
 
     expect(fetch).toBeCalledWith('test/component/query', {
       body: '{}',
@@ -34,7 +34,7 @@ describe('QueryComponentRemoteService', () => {
 
   });
 
-  it('should throw error when request fails', () => {
+  it('should throw error when request fails', async () => {
 
     const service = new QueryComponentRemoteService('test');
 
@@ -45,23 +45,23 @@ describe('QueryComponentRemoteService', () => {
 
     window.fetch = mockFetch;
 
-    expect(service.query({})).rejects.toThrow();
+    await expect(service.query({})).rejects.toThrow();
 
   });
 
-  it('should throw error when querying if filter is not set', () => {
+  it('should throw error when querying if filter is not set', async () => {
 
     const service = new QueryComponentRemoteService('test');
 
-    expect(service.query(null)).rejects.toThrow();
+    await expect(service.query(null)).rejects.toThrow();
 
   });
 
-  it('should throw error when querying if repository is not set', () => {
+  it('should throw error when querying if repository is not set', async () => {
 
     const service = new QueryComponentRemoteService(null);
 
-    expect(service.query({})).rejects.toThrow();
+    await expect(service.query({})).rejects.toThrow();
 
   });
 
