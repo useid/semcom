@@ -16,6 +16,7 @@ describe('QueryComponentRemoteService', () => {
 
     const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
       json: () => Promise.resolve({}),
+      ok: true,
     }));
 
     window.fetch = mockFetch;
@@ -44,13 +45,11 @@ describe('QueryComponentRemoteService', () => {
 
     window.fetch = mockFetch;
 
-    service.query({});
-
-    expect(fetch).rejects.toThrow();
+    expect(service.query({})).rejects.toThrow();
 
   });
 
-  it('should throw error when querying if filter is not set', async () => {
+  it('should throw error when querying if filter is not set', () => {
 
     const service = new QueryComponentRemoteService('test');
 
@@ -58,7 +57,7 @@ describe('QueryComponentRemoteService', () => {
 
   });
 
-  it('should throw error when querying if repository is not set', async () => {
+  it('should throw error when querying if repository is not set', () => {
 
     const service = new QueryComponentRemoteService(null);
 
