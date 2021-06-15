@@ -8,8 +8,10 @@ export default class InputComponent extends BaseComponent {
   /**
    * The input field.
    */
-  @query('input')
-  input: HTMLInputElement;
+  @query('#content')
+  content: HTMLInputElement;
+  @query('#fileName')
+  fileName: HTMLInputElement;
 
   /**
    * The slot element which contains the input field.
@@ -30,12 +32,14 @@ export default class InputComponent extends BaseComponent {
 
     }
 
-    this.input.disabled = false;
+    this.content.disabled = false;
+    this.fileName.disabled = false;
     this.button.disabled = false;
 
     if (event.detail.success) {
 
-      this.input.value = '';
+      this.content.value = '';
+      this.fileName.value = '';
 
     }
 
@@ -90,24 +94,27 @@ export default class InputComponent extends BaseComponent {
    */
   handleClickSubmit() {
 
-    if (!this.entry) {
+    let location = this.entry;
 
-      throw new Error('Argument this.entry should be set.');
+    if (this.fileName?.value) {
+
+      location = this.fileName.value;
 
     }
 
-    if (!this.input) {
+    if (!this.content) {
 
       throw new Error('Argument this.inputField should be set.');
 
     }
 
-    this.input.disabled = true;
+    this.content.disabled = true;
+    this.fileName.disabled = true;
     this.button.disabled = true;
 
-    const data = [ new Quad(new NamedNode(this.entry), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.input.value)) ];
+    const data = [ new Quad(new NamedNode(location), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
 
-    this.writeData(this.entry, data);
+    this.writeData(location, data);
 
   }
 
@@ -115,11 +122,13 @@ export default class InputComponent extends BaseComponent {
 
     return html`
     <div class="container">
-      <label for="name">Your Input:</label>
-      <br>
-      <input type="text" />
-      <br>
-      <button @click="${this.handleClickSubmit}" type="submit">Submit</button>
+      <form>
+        <label for="fileName">File Location: (defaults to ${this.entry})</label>
+        <input id="fileName" type="text" name="fileName"/>
+        <label for="content">Content:</label>
+        <input id="content" type="text" name="content"/>
+        <button @click="${this.handleClickSubmit}" type="submit">Submit</button>
+      </form>
     </div>
   `;
 
