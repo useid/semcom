@@ -1,4 +1,4 @@
-import { css, html, property, PropertyValues, query } from 'lit-element';
+import { css, html, internalProperty, property, PropertyValues, query } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
 import { BaseComponent } from './base.component';
@@ -12,6 +12,9 @@ export default class InputComponent extends BaseComponent {
   content: HTMLInputElement;
   @query('#fileName')
   fileName: HTMLInputElement;
+
+  @internalProperty()
+  showAlert = false;
 
   /**
    * The slot element which contains the input field.
@@ -40,6 +43,10 @@ export default class InputComponent extends BaseComponent {
 
       this.content.value = '';
       this.fileName.value = '';
+
+    } else{
+
+      this.showAlert = true;
 
     }
 
@@ -84,6 +91,28 @@ export default class InputComponent extends BaseComponent {
           background-color: #45a049;
         }
 
+        .alert {
+          padding: 15px;
+          background-color: #f44336;
+          color: white;
+          margin-bottom: 15px;
+        }
+
+        .alert.hidden {
+          visibility: hidden;      
+        }
+        
+        .dismiss {
+          margin-left: 15px;
+          color: white;
+          font-weight: bold;
+          float: right;
+          font-size: 22px;
+          line-height: 20px;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+
       `,
     ];
 
@@ -111,10 +140,16 @@ export default class InputComponent extends BaseComponent {
     this.content.disabled = true;
     this.fileName.disabled = true;
     this.button.disabled = true;
+    this.showAlert = false;
 
     const data = [ new Quad(new NamedNode(location), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
-
     this.writeData(location, data);
+
+  }
+
+  toggleAlert() {
+
+    this.showAlert = false;
 
   }
 
@@ -122,13 +157,15 @@ export default class InputComponent extends BaseComponent {
 
     return html`
     <div class="container">
-      <form>
-        <label for="fileName">File Location: (defaults to ${this.entry})</label>
-        <input id="fileName" type="text" name="fileName"/>
-        <label for="content">Content:</label>
-        <input id="content" type="text" name="content"/>
-        <button @click="${this.handleClickSubmit}" type="submit">Submit</button>
-      </form>
+      <div class="alert ${this.showAlert ? '' : 'hidden'}" id="alert">
+        <span class="dismiss" @click="${this.toggleAlert}">&times;</span> 
+        Something went wrong while saving.
+      </div>
+      <label for="fileName">File Location: (defaults to ${this.entry})</label>
+      <input id="fileName" type="text" name="fileName"/>
+      <label for="content">Content:</label>
+      <input id="content" type="text" name="content"/>
+      <button @click="${this.handleClickSubmit}" type="submit">Submit</button>
     </div>
   `;
 

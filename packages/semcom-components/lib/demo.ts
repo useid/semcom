@@ -38,8 +38,20 @@ document.addEventListener(ComponentEventType.WRITE, (event: ComponentWriteEvent)
 
   }
 
-  setTimeout(() => event.target?.dispatchEvent(new ComponentResponseEvent({
-    detail: { ...event.detail, cause: event, success: true },
-  })), 2000);
+  try{
+
+    new URL('http://' + event.detail.uri + '.net');
+
+    setTimeout(() => event.target?.dispatchEvent(new ComponentResponseEvent({
+      detail: { ...event.detail, cause: event, success: true },
+    })), 2000);
+
+  } catch(e) {
+
+    event.target?.dispatchEvent(new ComponentResponseEvent({
+      detail: { ...event.detail, cause: event, success: false },
+    }));
+
+  }
 
 });
