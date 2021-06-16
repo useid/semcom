@@ -38,9 +38,9 @@ document.addEventListener(ComponentEventType.WRITE, (event: ComponentWriteEvent)
 
   }
 
-  try{
+  try {
 
-    new URL('http://' + event.detail.uri + '.net');
+    new URL(event.detail.uri);
 
     setTimeout(() => event.target?.dispatchEvent(new ComponentResponseEvent({
       detail: { ...event.detail, cause: event, success: true },

@@ -1,4 +1,4 @@
-import { css, html, internalProperty, property, PropertyValues, query } from 'lit-element';
+import { css, html, PropertyValues, query, state } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
 import { BaseComponent } from './base.component';
@@ -13,8 +13,11 @@ export default class InputComponent extends BaseComponent {
   @query('#fileName')
   fileName: HTMLInputElement;
 
-  @internalProperty()
+  @state()
   showAlert = false;
+
+  @state()
+  success: boolean;
 
   /**
    * The slot element which contains the input field.
@@ -38,15 +41,17 @@ export default class InputComponent extends BaseComponent {
     this.content.disabled = false;
     this.fileName.disabled = false;
     this.button.disabled = false;
+    this.showAlert = true;
 
     if (event.detail.success) {
 
       this.content.value = '';
       this.fileName.value = '';
+      this.success = true;
 
-    } else{
+    } else {
 
-      this.showAlert = true;
+      this.success = false;
 
     }
 
@@ -93,13 +98,20 @@ export default class InputComponent extends BaseComponent {
 
         .alert {
           padding: 15px;
-          background-color: #f44336;
           color: white;
           margin-bottom: 15px;
         }
 
         .alert.hidden {
           visibility: hidden;      
+        }
+
+        .alert.danger {
+          background-color: #f44336;
+        }
+
+        .alert.success {
+          background-color: #45a049
         }
         
         .dismiss {
@@ -123,17 +135,15 @@ export default class InputComponent extends BaseComponent {
    */
   handleClickSubmit() {
 
-    let location = this.entry;
+    if (!this.fileName) {
 
-    if (this.fileName?.value) {
-
-      location = this.fileName.value;
+      throw new Error('Argument this.fileName should be set.');
 
     }
 
     if (!this.content) {
 
-      throw new Error('Argument this.inputField should be set.');
+      throw new Error('Argument this.content should be set.');
 
     }
 
@@ -142,14 +152,8 @@ export default class InputComponent extends BaseComponent {
     this.button.disabled = true;
     this.showAlert = false;
 
-    const data = [ new Quad(new NamedNode(location), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
-    this.writeData(location, data);
-
-  }
-
-  toggleAlert() {
-
-    this.showAlert = false;
+    const data = [ new Quad(new NamedNode(this.fileName.value), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
+    this.writeData(this.fileName.value, data);
 
   }
 
@@ -157,11 +161,11 @@ export default class InputComponent extends BaseComponent {
 
     return html`
     <div class="container">
-      <div class="alert ${this.showAlert ? '' : 'hidden'}" id="alert">
-        <span class="dismiss" @click="${this.toggleAlert}">&times;</span> 
-        Something went wrong while saving.
+      <div class="alert ${this.showAlert ? '' : 'hidden'}  ${this.success ? 'success' : 'danger'}" id="alert">
+        <span class="dismiss" @click="${() => this.showAlert = false}">&times;</span> 
+        ${this.success ? 'Successfully saved content to file.' : 'Something went wrong while saving.'} 
       </div>
-      <label for="fileName">File Location: (defaults to ${this.entry})</label>
+      <label for="fileName">File Location:</label>
       <input id="fileName" type="text" name="fileName"/>
       <label for="content">Content:</label>
       <input id="content" type="text" name="content"/>
