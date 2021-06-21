@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared.module';
 import { FEATURE_KEY, connectReducer } from './connect.state';
-import { ConnectComponent } from './connect.component';
+import { ConnectComponent } from './oldconnect.component';
 import { ConnectEffects } from './connect.effects';
 
 export const declarations = [ ConnectComponent ];

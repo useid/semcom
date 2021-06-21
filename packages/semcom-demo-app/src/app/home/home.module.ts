@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared.module';
 import { FEATURE_KEY, homeReducer } from './home.state';
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './oldhome.component';
 import { HomeEffects } from './home.effects';
 
 export const declarations = [ HomeComponent ];

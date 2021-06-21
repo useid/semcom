@@ -1,36 +1,77 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { Provider } from '../models/provider.model';
-import { connectPageInit, providerSelected } from './connect.actions';
-import { connectProvidersSelector } from './connect.state';
+import { css, html, property, unsafeCSS, state } from 'lit-element';
+import { RxLitElement } from 'rx-lit';
+import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
+import { Interpreter, State } from 'xstate';
+import { DemoContext } from 'src/demo.machine';
 
-@Component({
-  selector: 'demo-connect',
-  templateUrl: './connect.component.html',
-  styleUrls: [ './connect.component.scss' ],
-})
-export class ConnectComponent implements OnInit {
+export class ConnectComponent extends RxLitElement {
 
-  providers$: Observable<Provider[]> = this.store.select<Provider[]>(connectProvidersSelector);
+  @property({ type: Object })
+  public actor: Interpreter<DemoContext>;
 
-  constructor(private store: Store) {}
+  @state()
+  state?: State<DemoContext>;
 
-  ngOnInit(): void {
+  /**
+   * Renders the component as HTML.
+   *
+   * @returns The rendered HTML of the component.
+   */
+  render() {
 
-    this.store.dispatch(connectPageInit());
+    return html`
+      <div class="block">
+        <figure class="logo">
+          <img src="/assets/img/Digita-Blue-NoText.png">
+        </figure>
+
+        <h1 class="title has-text-dark">{{ 'connect.title' | translate }}</h1>
+
+        </div>
+
+        <div class="providers">
+
+        <div *ngFor="let provider of providers$ | async">
+          <div class="provider-button">
+            <button (click)="connect(provider)">{{ provider.name }}</button>
+          </div>
+        </div>
+    </div>
+  `;
 
   }
 
-  connect(provider: Provider): void {
+  /**
+   * The styles associated with the component.
+   */
+  static get styles() {
 
-    if(!provider) {
-
-      throw new Error();
-
-    }
-
-    this.store.dispatch(providerSelected({ provider }));
+    return [
+      css`
+      :host {
+        padding-top: 10%;
+     }
+      .logo {
+        width: 12.5rem;
+     }
+      .title {
+        font-weight: 300;
+     }
+      .providers {
+        margin-top: 2rem;
+     }
+      .provider-button {
+        margin: 0 !important;
+        padding: 10px;
+     }
+      .provider-button > button {
+        width: 200px;
+        height: 40px;
+        border-radius: 0;
+     }
+      
+      `,
+    ];
 
   }
 

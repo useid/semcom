@@ -1,9 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { ConnectComponent } from './connect/connect.component';
+import { ConnectComponent } from './connect/oldconnect.component';
 import { ConnectGuard } from './connect/connect.guard';
 import { ConnectResolver } from './connect/connect.resolver';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './home/oldhome.component';
 
 const routes: Routes = [
   {
