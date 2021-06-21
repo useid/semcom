@@ -91,6 +91,12 @@ export default class InputComponent extends BaseComponent {
           border-radius: 4px;
           cursor: pointer;
         }
+
+        button:disabled, button[disabled]{
+          background-color: #cccccc !important;
+          color: #666666;
+          cursor: default;
+        }
         
         button[type=submit]:hover {
           background-color: #45a049;
@@ -147,9 +153,9 @@ export default class InputComponent extends BaseComponent {
 
     }
 
+    this.button.disabled = true;
     this.content.disabled = true;
     this.fileName.disabled = true;
-    this.button.disabled = true;
     this.showAlert = false;
 
     const data = [ new Quad(new NamedNode(this.fileName.value), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
