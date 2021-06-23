@@ -1,9 +1,7 @@
 import { Observable, of } from 'rxjs';
-import { Injectable } from '@angular/core';
 import { login } from '@inrupt/solid-client-authn-browser';
 import { Provider } from '../models/provider.model';
 
-@Injectable({ providedIn: 'root' })
 export class ProviderService {
 
   getAll(): Observable<Provider[]> {

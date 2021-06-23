@@ -1,24 +1,49 @@
+import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { Holder, Invite, Purpose, Session, Source } from '@digita-ai/ui-transfer-components';
 import { SolidDataset } from '@inrupt/solid-client';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { EventObject, MachineConfig, assign, StateSchema } from 'xstate';
-import { Provider } from './app/models/provider.model';
+import { Provider } from './models/provider.model';
+import { SemComService } from './services/semcom.service';
 
 /* CONTEXT */
 
 export interface DemoContext {
-  sources?: Provider[];
   profile?: SolidDataset | null;
-  components?: string[];
+  components?: ComponentMetadata[];
+  providers?: Provider[];
+  invite?: Invite;
+  holder?: Holder;
+  purpose?: Purpose;
+  session?: Session;
+  sources?: Source[];
+  semComService: SemComService;
+  shapeIds?: string[];
+}
+
+export interface WithSession extends DemoContext {
+  session: Session;
+}
+export interface WithShapeIds extends DemoContext {
+  shapeIds: string[];
+}
+export interface WithInviteLoaded extends DemoContext {
+  invite: Invite;
+  holder: Holder;
+  purpose: Purpose;
 }
 
 export interface WithSources extends DemoContext {
-  sources: Provider[];
+  sources: Source[];
 }
 
 /* STATES */
 
 export enum DemoStates {
   AUTHENTICATING = '[DemoState: Authenticating]',
+  LOADING_INVITE = '[DemoState: Loading invite]',
+  AWAITING_CONSENT = '[DemoState: Awaiting consent]',
   LOADING_SOURCES = '[DemoState: Loading sources]',
   AWAITING_SOURCE_SELECTION = '[DemoState: Awaiting source selection]',
   CONNECTING = '[DemoState: Connecting]',
@@ -30,11 +55,14 @@ export type DemoState =
     value: DemoStates.AUTHENTICATING;
     context: DemoContext;
   } | {
-    value: DemoStates.LOADING_SOURCES;
-    context: DemoContext;
+    value: DemoStates.LOADING_INVITE;
+    context: DemoContext & WithSession;
+  } | {
+    value: DemoStates.AWAITING_CONSENT | DemoStates.LOADING_SOURCES;
+    context: DemoContext & WithSession & WithInviteLoaded;
   } | {
     value: DemoStates.AWAITING_SOURCE_SELECTION | DemoStates.CONNECTING | DemoStates.CALLBACK;
-    context: DemoContext & WithSources;
+    context: DemoContext & WithSession & WithInviteLoaded & WithSources;
   };
 
 export interface DemoStateSchema extends StateSchema<DemoContext> {
@@ -52,6 +80,12 @@ export enum DemoEvents {
   CONSENT_GIVEN = '[DemoEvent: Consent given]',
   SOURCE_SELECTED = '[DemoEvent: Source selected]',
   CONNECTED = '[DemoEvent: Invite connected to source]',
+  HOME_PAGE_INIT = '[Home] Home Page Initialized',
+  HOME_PAGE_ERROR = '[Home] Home Page Error',
+  PROFILE_LOADED = '[Home] Profile Data Loaded',
+  SHAPES_DETECTED = '[Home] Data Shapes Detected',
+  COMPONENTS_SELECTED = '[Home] Components Selected',
+  COMPONENTS_REGISTERED = '[Home] Components Registered',
 }
 
 export class AuthenticatedEvent implements EventObject {
@@ -95,13 +129,57 @@ export class ConnectedEvent implements EventObject {
 
 }
 
+export class HomePageInitEvent implements EventObject {
+
+  public type: DemoEvents.HOME_PAGE_INIT = DemoEvents.HOME_PAGE_INIT;
+
+}
+
+export class HomePageErrorEvent implements EventObject {
+
+  public type: DemoEvents.HOME_PAGE_ERROR = DemoEvents.HOME_PAGE_ERROR;
+
+}
+
+export class ProfileLoadEvent implements EventObject {
+
+  public type: DemoEvents.PROFILE_LOADED = DemoEvents.PROFILE_LOADED;
+
+}
+
+export class ShapesDetectedEvent implements EventObject {
+
+  public type: DemoEvents.SHAPES_DETECTED = DemoEvents.SHAPES_DETECTED;
+  constructor(public shapeIds: string[]) {}
+
+}
+
+export class ComponentsSelectedEvent implements EventObject {
+
+  public type: DemoEvents.COMPONENTS_SELECTED = DemoEvents.COMPONENTS_SELECTED;
+  constructor(public components: ComponentMetadata[]) {}
+
+}
+
+export class ComponentsRegisteredEvent implements EventObject {
+
+  public type: DemoEvents.COMPONENTS_REGISTERED = DemoEvents.COMPONENTS_REGISTERED;
+
+}
+
 export type DemoEvent =
   | AuthenticatedEvent
   | InviteLoadedEvent
   | ConsentGivenEvent
   | SourcesLoadedEvent
   | SourceSelectedEvent
-  | ConnectedEvent;
+  | ConnectedEvent
+  | HomePageInitEvent
+  | HomePageErrorEvent
+  | ProfileLoadEvent
+  | ShapesDetectedEvent
+  | ComponentsSelectedEvent
+  | ComponentsRegisteredEvent;
 
 /* SERVICES */
 
@@ -140,6 +218,20 @@ const connectSource = (
   context: DemoContext,
   event: SourceSelectedEvent
 ): Observable<ConnectedEvent> => of(new ConnectedEvent());
+
+const detectShapesOnInit = (context: WithSession, event: HomePageInitEvent): Observable<ShapesDetectedEvent> =>
+  of(context.session.webId).pipe(
+    mergeMap((webId) => context.semComService.detectShapes(webId)),
+    map((shapeIds) => new ShapesDetectedEvent(shapeIds)),
+  );
+
+const queryMetadataFromShapes = (context: WithShapeIds, event: DemoEvent): Observable<ComponentsSelectedEvent> =>
+  of(context.shapeIds).pipe(
+    mergeMap((shapeIds) => forkJoin(shapeIds.concat([ 'http://digita.ai/voc/input#input' ]).map((shapeId) => context.semComService.queryComponents(shapeId)))),
+    map((resultsPerShape) => resultsPerShape.filter((results) => results.length > 0)),
+    map((resultsPerShape) => resultsPerShape.map((results) => results[0])),
+    map((components) => new ComponentsSelectedEvent(components))
+  );
 
 /* MACHINE */
 

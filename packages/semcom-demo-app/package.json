@@ -15,29 +15,6 @@
   "files": [
     "dist"
   ],
-  "eslintConfig": {
-    "extends": [
-      "../../.eslintrc.ng.json"
-    ],
-    "rules": {
-      "@angular-eslint/component-selector": [
-        "error",
-        {
-          "type": "element",
-          "prefix": "demo",
-          "style": "kebab-case"
-        }
-      ],
-      "@angular-eslint/directive-selector": [
-        "error",
-        {
-          "type": "attribute",
-          "prefix": "demo",
-          "style": "camelCase"
-        }
-      ]
-    }
-  },
   "dependencies": {
     "@digita-ai/semcom-core": "0.4.1",
     "@digita-ai/semcom-sdk": "0.4.1",
@@ -47,12 +24,14 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@xstate/inspect": "^0.4.1",
     "bulma": "^0.9.2",
-    "lit-element": "^2.4.0",
+    "lit-element": "^2.5.1",
     "rx-lit": "1.0.1",
     "sass": "^1.35.1",
     "tslib": "^2.1.0",
-    "xstate": "^4.17.1",
-    "zone.js": "~0.11.3"
+    "xstate": "^4.20.0",
+    "zone.js": "~0.11.3",
+    "@digita-ai/ui-transfer-components": "0.6.1",
+    "@digita-ai/ui-transfer-theme": "0.6.1"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",

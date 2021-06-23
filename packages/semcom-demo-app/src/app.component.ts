@@ -1,9 +1,7 @@
-import { css, html, unsafeCSS } from 'lit-element';
+import { css, html } from 'lit-element';
 import { RxLitElement } from 'rx-lit';
-import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 
-export class HometComponent extends RxLitElement {
-
+export class HomeComponent extends RxLitElement {
 
   /**
    * Renders the component as HTML.
