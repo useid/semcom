@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { login } from '@inrupt/solid-client-authn-browser';
+import { login } from '@digita-ai/inrupt-solid-client';
 import { Provider } from '../models/provider.model';
 
 export class ProviderService {

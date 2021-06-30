@@ -2,7 +2,7 @@ import { AbstractRegisterComponentService, QueryComponentService, ComponentMetad
 import { Observable, from } from 'rxjs';
 import { QueryComponentRemoteService,  RegisterComponentService, resourceShape } from '@digita-ai/semcom-sdk';
 
-import { fetch as inruptFetch } from '@inrupt/solid-client-authn-browser';
+import { fetch } from '@digita-ai/inrupt-solid-client';
 
 export class SemComService {
 
@@ -12,7 +12,7 @@ export class SemComService {
 
   detectShapes(uri: string): Observable<string[]> {
 
-    return from(resourceShape(uri, inruptFetch));
+    return from(resourceShape(uri, fetch));
 
   }
 

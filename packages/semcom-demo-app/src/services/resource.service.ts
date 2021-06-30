@@ -1,6 +1,6 @@
 import { from, Observable } from 'rxjs';
 import { SolidDataset, getSolidDataset } from '@inrupt/solid-client';
-import { fetch } from '@inrupt/solid-client-authn-browser';
+import { fetch } from '@digita-ai/inrupt-solid-client';
 
 export class ResourceService {
 
