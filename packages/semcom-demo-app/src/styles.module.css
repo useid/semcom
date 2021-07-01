@@ -1,0 +1,57 @@
+@import '../node_modules/@digita-ai/ui-transfer-theme/dist/style.css';
+
+
+:root {
+  --color-primary-light: #F7F9FA;
+  --color-primary-normal: #2b4c7f;
+  --color-primary-dark: #001029;
+  --color-background-body: #EEEEEE;
+  --color-background-root: #F7F9FA;
+  --color-accent-normal: #91c200;
+
+  --site-max-width: 800px;
+  --measure-gutter-top: 60px;
+  --measure-gutter-normal: 5px;
+  --measure-gutter-large: 10px;
+  --measure-gutter-xlarge: 20px;
+  --measure-gutter-xxlarge: 40px;
+  --measure-gutter-xxxlarge: 80px;
+  --component-component-border: 1px;
+  --component-component-normal: 36px;
+  --measure-font-normal: 1rem;
+  --measure-font-small: 0.90rem;
+  --measure-font-large: 1.10rem;
+
+  --primary: --color-primary-normal;
+  --dark: --color-primary-dark;
+  --light: --color-primary-light;
+  --background: --color-background-root;
+  --link: --color-accent-normal;
+  --accent: --color-accent-normal;
+
+  --size-sidebar: 300px;
+  --form-large: 375px;
+
+  --family-sans-serif: "Roboto", "Fira Sans", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  background-color: var(--colors-background-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+body {
+  height: 100%;
+  width: 100%;
+  background-color: var(--colors-background-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+body > * {
+  flex: 1 1;
+}

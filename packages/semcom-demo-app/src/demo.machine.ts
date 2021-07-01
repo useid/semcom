@@ -36,7 +36,8 @@ export enum DemoStates {
   AUTHENTICATING = '[DemoState: Authenticating]',
   DETECTING_SHAPES = '[DemoState: Detecting shapes]',
   QUERYING_METADATA = '[DemoState: Querying metadata]',
-  FETCHING_COMPONENTS = '[DemoState: Fetching components]',
+  REGISTER_COMPONENTS = '[DemoState: Register components]',
+  IDLE = '[DemoState: Idle]',
 }
 
 export type DemoState =
@@ -102,7 +103,7 @@ export class ComponentsSelectedEvent implements EventObject {
 export class ComponentsRegisteredEvent implements EventObject {
 
   public type: DemoEvents.COMPONENTS_REGISTERED = DemoEvents.COMPONENTS_REGISTERED;
-  constructor(public tags: string[]) {}
+  // constructor(public tags: string[]) {}
 
 }
 
@@ -152,7 +153,7 @@ const queryMetadataFromShapes = (
 
 };
 
-const fetchComponentsFromMetadata = (
+const registerComponentsFromMetadata = (
   context: DemoContext
 ): Observable<ComponentsRegisteredEvent> => {
 
@@ -164,9 +165,15 @@ const fetchComponentsFromMetadata = (
 
   return of(context.components).pipe(
     mergeMap((components) => forkJoin(
-      components.map((metadata) => context.semComService.registerComponent(metadata)),
+      components.map(async (metadata) => {
+
+        // eslint-disable-next-line no-eval
+        const elementComponent = await eval(`import("${metadata.uri}")`);
+        const ctor = customElements.get(metadata.tag) || customElements.define('demo-' + metadata.tag, elementComponent.default);
+
+      }),
     )),
-    map((tags) => new ComponentsRegisteredEvent(tags)),
+    map(() => new ComponentsRegisteredEvent()),
   );
 
 };
@@ -207,21 +214,25 @@ export const demoMachine: MachineConfig<DemoContext, DemoStateSchema, DemoEvent>
       on: {
         [DemoEvents.COMPONENTS_SELECTED]: {
           actions: assign({ components: (context, event) => event.components }),
-          target: DemoStates.FETCHING_COMPONENTS,
+          target: DemoStates.REGISTER_COMPONENTS,
         },
 
       },
     },
 
-    [DemoStates.FETCHING_COMPONENTS]: {
+    [DemoStates.REGISTER_COMPONENTS]: {
       invoke: {
-        src: fetchComponentsFromMetadata,
+        src: registerComponentsFromMetadata,
       },
       on: {
         [DemoEvents.COMPONENTS_REGISTERED]: {
-          actions: assign({ tags: (context, event) => event.tags }),
+          target: DemoStates.IDLE,
         },
       },
+    },
+
+    [DemoStates.IDLE]: {
+
     },
   },
 
