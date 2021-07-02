@@ -34,7 +34,7 @@ export class DemoComponent extends RxLitElement {
   @state()
   components: ComponentMetadata[];
 
-  @query('.content')
+  @query('.components')
   contentElement: HTMLDivElement;
 
   constructor() {
@@ -84,18 +84,19 @@ export class DemoComponent extends RxLitElement {
   render(): TemplateResult {
 
     return html`
-    <nav class="level has-background-primary">
-      <div class="level-left">
-        <a class="level-item">
-          <img class="logo" src="assets/img/Digita-Blue-NoText.png">
-          <span class="has-text-white">Semcom Demo</span>
+    <div class="demo-content">
+      <nav>
+        <a class="link-item">
+          <img class="logo" src="assets/img/Digita-White-NoText.png">
+          <span class="title">Semcom Demo</span>
         </a>
+      </nav>
+      <div class="content">
+        ${this.state.matches(DemoStates.AUTHENTICATING) ? html`<auth-flow .solidService="${this.solidService}" @authenticated="${this.onAuthenticated}"></auth-flow>` : html`` ? html`` : html`<loading-component></loading-component>`}
+        ${this.components ? html`<div class="components"></div>` : html`` ? html`` : html`<loading-component></loading-component>`}
       </div>
-    </nav>
-
-    
-    ${this.state.matches(DemoStates.AUTHENTICATING) ? html`<auth-flow .solidService="${this.solidService}" @authenticated="${this.onAuthenticated}"></auth-flow>` : html`` ? html`` : html`<loading-component></loading-component>`}
-    ${this.components ? html`<div class="content"></div>` : html`` ? html`` : html`<loading-component></loading-component>`}`;
+    </div>
+    `;
 
   }
 
@@ -104,10 +105,50 @@ export class DemoComponent extends RxLitElement {
     return [
       unsafeCSS(Theme),
       css`
-      :host {
-        display: relative;
+      .demo-content {
+        display:flex;
+        flex-direction: column;
         height: 100%;
-      }`,
+        margin: 0 auto;
+        width: var(--site-max-width);
+        background-color: var(--color-background-root);
+        box-shadow: 0px 0px 20px rgb(0 0 0 / 25%);
+      }
+      
+      nav {
+        background-color: #2b4c7f !important;
+        margin-bottom: 1.5rem;
+        height: 100px;
+      }
+
+      nav a {
+        display:flex;
+        justify-content: flex-start;
+        align-items:center;
+      }
+
+      .logo {
+        max-width: 100px;
+        max-height: 100%;
+      }
+
+      .title {
+        color: white;
+        font-size: 14;
+        font-weight: 400;
+      }
+
+      .content {
+        display:flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+      }
+
+      .content > * {
+        margin: 100px;
+      }
+      `,
     ];
 
   }

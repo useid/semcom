@@ -103,7 +103,6 @@ export class ComponentsSelectedEvent implements EventObject {
 export class ComponentsRegisteredEvent implements EventObject {
 
   public type: DemoEvents.COMPONENTS_REGISTERED = DemoEvents.COMPONENTS_REGISTERED;
-  // constructor(public tags: string[]) {}
 
 }
 
@@ -231,9 +230,7 @@ export const demoMachine: MachineConfig<DemoContext, DemoStateSchema, DemoEvent>
       },
     },
 
-    [DemoStates.IDLE]: {
-
-    },
+    [DemoStates.IDLE]: {},
   },
 
 };
