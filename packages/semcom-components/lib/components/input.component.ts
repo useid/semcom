@@ -1,4 +1,4 @@
-import { css, html, property, PropertyValues, query } from 'lit-element';
+import { css, html, PropertyValues, query, state } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
 import { BaseComponent } from './base.component';
@@ -8,8 +8,16 @@ export default class InputComponent extends BaseComponent {
   /**
    * The input field.
    */
-  @query('input')
-  input: HTMLInputElement;
+  @query('#content')
+  content: HTMLInputElement;
+  @query('#fileName')
+  fileName: HTMLInputElement;
+
+  @state()
+  showAlert = false;
+
+  @state()
+  success: boolean;
 
   /**
    * The slot element which contains the input field.
@@ -30,12 +38,20 @@ export default class InputComponent extends BaseComponent {
 
     }
 
-    this.input.disabled = false;
+    this.content.disabled = false;
+    this.fileName.disabled = false;
     this.button.disabled = false;
+    this.showAlert = true;
 
     if (event.detail.success) {
 
-      this.input.value = '';
+      this.content.value = '';
+      this.fileName.value = '';
+      this.success = true;
+
+    } else {
+
+      this.success = false;
 
     }
 
@@ -75,9 +91,44 @@ export default class InputComponent extends BaseComponent {
           border-radius: 4px;
           cursor: pointer;
         }
+
+        button:disabled, button[disabled]{
+          background-color: #cccccc !important;
+          color: #666666;
+          cursor: default;
+        }
         
         button[type=submit]:hover {
           background-color: #45a049;
+        }
+
+        .alert {
+          padding: 15px;
+          color: white;
+          margin-bottom: 15px;
+        }
+
+        .alert.hidden {
+          visibility: hidden;      
+        }
+
+        .alert.danger {
+          background-color: #f44336;
+        }
+
+        .alert.success {
+          background-color: #45a049
+        }
+        
+        .dismiss {
+          margin-left: 15px;
+          color: white;
+          font-weight: bold;
+          float: right;
+          font-size: 22px;
+          line-height: 20px;
+          cursor: pointer;
+          transition: 0.3s;
         }
 
       `,
@@ -90,24 +141,25 @@ export default class InputComponent extends BaseComponent {
    */
   handleClickSubmit() {
 
-    if (!this.entry) {
+    if (!this.fileName) {
 
-      throw new Error('Argument this.entry should be set.');
-
-    }
-
-    if (!this.input) {
-
-      throw new Error('Argument this.inputField should be set.');
+      throw new Error('Argument this.fileName should be set.');
 
     }
 
-    this.input.disabled = true;
+    if (!this.content) {
+
+      throw new Error('Argument this.content should be set.');
+
+    }
+
     this.button.disabled = true;
+    this.content.disabled = true;
+    this.fileName.disabled = true;
+    this.showAlert = false;
 
-    const data = [ new Quad(new NamedNode(this.entry), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.input.value)) ];
-
-    this.writeData(this.entry, data);
+    const data = [ new Quad(new NamedNode(this.fileName.value), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
+    this.writeData(this.fileName.value, data);
 
   }
 
@@ -115,10 +167,14 @@ export default class InputComponent extends BaseComponent {
 
     return html`
     <div class="container">
-      <label for="name">Your Input:</label>
-      <br>
-      <input type="text" />
-      <br>
+      <div class="alert ${this.showAlert ? '' : 'hidden'}  ${this.success ? 'success' : 'danger'}" id="alert">
+        <span class="dismiss" @click="${() => this.showAlert = false}">&times;</span> 
+        ${this.success ? 'Successfully saved content to file.' : 'Something went wrong while saving.'} 
+      </div>
+      <label for="fileName">File Location:</label>
+      <input id="fileName" type="text" name="fileName"/>
+      <label for="content">Content:</label>
+      <input id="content" type="text" name="content"/>
       <button @click="${this.handleClickSubmit}" type="submit">Submit</button>
     </div>
   `;
