@@ -84,6 +84,16 @@ export class DemoComponent extends RxLitElement {
   render(): TemplateResult {
 
     return html`
+    <nav class="level has-background-primary">
+      <div class="level-left">
+        <a class="level-item">
+          <img class="logo" src="assets/img/Digita-Blue-NoText.png">
+          <span class="has-text-white">Semcom Demo</span>
+        </a>
+      </div>
+    </nav>
+
+    
     ${this.state.matches(DemoStates.AUTHENTICATING) ? html`<auth-flow .solidService="${this.solidService}" @authenticated="${this.onAuthenticated}"></auth-flow>` : html`` ? html`` : html`<loading-component></loading-component>`}
     ${this.components ? html`<div class="content"></div>` : html`` ? html`` : html`<loading-component></loading-component>`}`;
 
