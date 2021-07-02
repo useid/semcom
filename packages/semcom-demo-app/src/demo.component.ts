@@ -88,7 +88,7 @@ export class DemoComponent extends RxLitElement {
       <nav>
         <a class="link-item">
           <img class="logo" src="assets/img/Digita-White-NoText.png">
-          <span class="title">Semcom Demo</span>
+          <span class="title">SemCom Demo</span>
         </a>
       </nav>
       <div class="content">
