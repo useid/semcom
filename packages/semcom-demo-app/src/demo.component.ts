@@ -52,7 +52,7 @@ export class DemoComponent extends RxLitElement {
 
     super.updated(changed);
 
-    if(changed && changed.has('components') && this.actor) {
+    if (changed && changed.has('components') && this.actor) {
 
       for (const component of this.components) {
 
@@ -72,7 +72,6 @@ export class DemoComponent extends RxLitElement {
   }
 
   onAuthenticated = (event: CustomEvent): void => { this.actor.send(new AuthenticatedEvent(event.detail)); };
-  onDone = (): void => { window.alert('This is a demo. Nowhere to go...'); };
 
   render(): TemplateResult {
 

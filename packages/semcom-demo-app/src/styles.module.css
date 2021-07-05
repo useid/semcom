@@ -1,6 +1,5 @@
 @import '../node_modules/@digita-ai/ui-transfer-theme/dist/style.css';
 
-
 :root {
   --color-primary-light: #F7F9FA;
   --color-primary-normal: #2b4c7f;
@@ -10,7 +9,6 @@
   --color-accent-normal: #91c200;
 
   --site-max-width: 800px;
-
 
   --size-sidebar: 300px;
 

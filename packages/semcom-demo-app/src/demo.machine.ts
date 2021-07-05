@@ -1,7 +1,7 @@
 import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { Session } from '@digita-ai/ui-transfer-components';
 import { Observable, of, forkJoin } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mapTo, mergeMap } from 'rxjs/operators';
 import { EventObject, MachineConfig, assign, StateSchema } from 'xstate';
 import { SemComService } from './services/semcom.service';
 
@@ -64,7 +64,6 @@ export enum DemoEvents {
 export class AuthenticatedEvent implements EventObject {
 
   public type: DemoEvents.AUTHENTICATED = DemoEvents.AUTHENTICATED;
-
   constructor(public session: Session) {}
 
 }
@@ -112,10 +111,11 @@ export type DemoEvent =
 /* SERVICES */
 
 const detectShapes = (
-  context: DemoContext, event: DemoEvent
+  context: DemoContext, 
+  event: DemoEvent,
 ): Observable<ShapesDetectedEvent> => {
 
-  if(!context.session){
+  if (!context.session) {
 
     throw Error('Parameter session should be set');
 
@@ -132,14 +132,15 @@ const queryMetadataFromShapes = (
   context: DemoContext
 ): Observable<ComponentsSelectedEvent> => {
 
-  if(!context.shapeIds){
+  if (!context.shapeIds) {
 
     throw Error('Parameter shapeIds should be set');
 
   }
 
   return of(context.shapeIds).pipe(
-    mergeMap((shapeIds) => forkJoin(shapeIds.concat([ 'http://digita.ai/voc/input#input' ]).map((shapeId) => context.semComService.queryComponents(shapeId)))),
+    map((shapeIds) => shapeIds.concat([ 'http://digita.ai/voc/input#input' ])),
+    mergeMap((shapeIds) => forkJoin(shapeIds.map((shapeId) => context.semComService.queryComponents(shapeId)))),
     map((resultsPerShape) => resultsPerShape.filter((results) => results.length > 0)),
     map((resultsPerShape) => resultsPerShape.map((results) => results[0])),
     map((components) => new ComponentsSelectedEvent(components))
@@ -151,7 +152,7 @@ const registerComponentsFromMetadata = (
   context: DemoContext
 ): Observable<ComponentsRegisteredEvent> => {
 
-  if(!context.components){
+  if (!context.components) {
 
     throw Error('Parameter components should be set');
 
@@ -167,7 +168,7 @@ const registerComponentsFromMetadata = (
 
       }),
     )),
-    map(() => new ComponentsRegisteredEvent()),
+    mapTo(new ComponentsRegisteredEvent()),
   );
 
 };
@@ -225,7 +226,9 @@ export const demoMachine: MachineConfig<DemoContext, DemoStateSchema, DemoEvent>
       },
     },
 
-    [DemoStates.IDLE]: {},
+    [DemoStates.IDLE]: {
+      type: 'final',
+    },
   },
 
 };
