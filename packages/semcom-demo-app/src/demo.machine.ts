@@ -111,7 +111,7 @@ export type DemoEvent =
 /* SERVICES */
 
 const detectShapes = (
-  context: DemoContext, 
+  context: DemoContext,
   event: DemoEvent,
 ): Observable<ShapesDetectedEvent> => {
 
