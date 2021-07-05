@@ -121,8 +121,7 @@ const detectShapes = (
 
   }
 
-  return of(context.session.webId).pipe(
-    mergeMap((webId) => context.semComService.detectShapes(webId)),
+  return context.semComService.detectShapes(context.session.webId).pipe(
     map((shapeIds) => new ShapesDetectedEvent(shapeIds)),
   );
 
@@ -159,15 +158,14 @@ const registerComponentsFromMetadata = (
   }
 
   return of(context.components).pipe(
-    mergeMap((components) => forkJoin(
+    mergeMap((components) =>
       components.map(async (metadata) => {
 
         // eslint-disable-next-line no-eval
         const elementComponent = await eval(`import("${metadata.uri}")`);
         const ctor = customElements.get(metadata.tag) || customElements.define('demo-' + metadata.tag, elementComponent.default);
 
-      }),
-    )),
+      })),
     mapTo(new ComponentsRegisteredEvent()),
   );
 
