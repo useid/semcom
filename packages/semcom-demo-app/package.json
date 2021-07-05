@@ -2,88 +2,46 @@
   "name": "@digita-ai/semcom-demo-app",
   "version": "0.4.1",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
-    "ng": "ng",
-    "serve": "ng serve",
-    "start": "http-server -p 4200 --gzip --brotli --proxy 'http://lvh.me:4200?' dist/",
-    "build": "ng build",
-    "test": "jest --passWithNoTests",
-    "test:ci": "jest --runInBand --silent --passWithNoTests",
-    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json",
+    "start": "http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
+    "start:watch": "vite --config vite.config.ts",
+    "build": "rimraf ./dist && vite build --config vite.config.ts && tsc",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
-    "e2e": "ng e2e"
+    "test": "jest --passWithNoTests",
+    "test:ci": "jest --silent --runInBand --passWithNoTests",
+    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
-  "eslintConfig": {
-    "extends": [
-      "../../.eslintrc.ng.json"
-    ],
-    "rules": {
-      "@angular-eslint/component-selector": [
-        "error",
-        {
-          "type": "element",
-          "prefix": "demo",
-          "style": "kebab-case"
-        }
-      ],
-      "@angular-eslint/directive-selector": [
-        "error",
-        {
-          "type": "attribute",
-          "prefix": "demo",
-          "style": "camelCase"
-        }
-      ]
-    }
-  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
-    "@angular/animations": "~11.1.2",
-    "@angular/common": "~11.1.2",
-    "@angular/compiler": "~11.1.2",
-    "@angular/core": "~11.1.2",
-    "@angular/forms": "~11.1.2",
-    "@angular/platform-browser": "~11.1.2",
-    "@angular/platform-browser-dynamic": "~11.1.2",
-    "@angular/router": "~11.1.2",
     "@digita-ai/semcom-core": "0.4.1",
     "@digita-ai/semcom-sdk": "0.4.1",
-    "@inrupt/solid-client": "1.6.1",
-    "@inrupt/solid-client-authn-browser": "1.8.0",
-    "@ngrx/effects": "^11.0.1",
-    "@ngrx/router-store": "^10.1.2",
-    "@ngrx/store": "^10.1.2",
-    "@ngrx/store-devtools": "^10.1.2",
-    "@ngx-translate/core": "^13.0.0",
-    "@ngx-translate/http-loader": "^6.0.0",
-    "bulma": "^0.9.2",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.1.0",
-    "zone.js": "~0.11.3"
+    "@digita-ai/inrupt-solid-client": "0.3.0",
+    "@digita-ai/ui-transfer-components": "0.6.1",
+    "@digita-ai/ui-transfer-theme": "0.6.1",
+    "@xstate/inspect": "^0.4.1",
+    "lit-element": "^2.5.1",
+    "rx-lit": "^1.0.1",
+    "rxjs": "^6.0.0",
+    "xstate": "^4.17.1"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^11.0.0",
-    "@angular-devkit/build-angular": "~0.1101.4",
-    "@angular-eslint/builder": "1.2.0",
-    "@angular-eslint/eslint-plugin": "1.2.0",
-    "@angular-eslint/eslint-plugin-template": "1.2.0",
-    "@angular-eslint/schematics": "1.2.0",
-    "@angular-eslint/template-parser": "1.2.0",
-    "@angular/cli": "~11.1.4",
-    "@angular/compiler-cli": "~11.1.2",
-    "@digita-ai/typescript-config": "^0.3.4",
-    "@ngrx/schematics": "^10.1.2",
-    "@types/node": "^12.11.1",
-    "codelyzer": "^6.0.0",
-    "eslint": "^7.6.0",
+    "@digita-ai/typescript-config": "^0.3.3",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.44",
+    "eslint": "^7.16.0",
     "http-server": "^0.12.3",
     "jest": "^26.6.3",
-    "jest-coverage-thresholds-bumper": "0.0.4",
-    "lint-staged": "^10.5.4",
-    "protractor": "~7.0.0",
-    "ts-node": "~8.3.0",
-    "typescript": "4.1.5"
+    "jest-coverage-thresholds-bumper": "^0.0.4",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-fetch-mock": "^3.0.3",
+    "rimraf": "^3.0.2",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4",
+    "vite": "^2.2.3"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

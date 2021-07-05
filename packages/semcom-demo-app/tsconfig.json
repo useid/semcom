@@ -3,27 +3,16 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist",
-    "strict": true,
-    "strictPropertyInitialization": false, // for angular decorators
+    "strict": false,
     "target": "es2015",
     "module": "es2020",
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
+  "files": [ "node_modules/vite/client.d.ts" ],
   "include": [
-    "src"
-  ],
+    "src"  ],
   "exclude": [
     "dist",
     "node_modules",
     "**/*.spec.ts"
   ],
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
 }

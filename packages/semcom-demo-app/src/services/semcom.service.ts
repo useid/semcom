@@ -1,11 +1,9 @@
 import { AbstractRegisterComponentService, QueryComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { QueryComponentRemoteService,  RegisterComponentService, resourceShape } from '@digita-ai/semcom-sdk';
 
-import { Injectable } from '@angular/core';
-import { fetch as inruptFetch } from '@inrupt/solid-client-authn-browser';
+import { fetch } from '@digita-ai/inrupt-solid-client';
 
-@Injectable({ providedIn: 'root' })
 export class SemComService {
 
   private registry: AbstractRegisterComponentService = new RegisterComponentService();
@@ -14,7 +12,7 @@ export class SemComService {
 
   detectShapes(uri: string): Observable<string[]> {
 
-    return from(resourceShape(uri, inruptFetch));
+    return from(resourceShape(uri, fetch));
 
   }
 
