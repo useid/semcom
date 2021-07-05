@@ -37,7 +37,7 @@ export enum DemoStates {
 
 export type DemoState =
   {
-    value: DemoStates.AUTHENTICATING;
+    value: DemoStates.AUTHENTICATING | DemoStates.QUERYING_METADATA | DemoStates.REGISTER_COMPONENTS | DemoStates.IDLE;
     context: DemoContext;
   } | {
     value: DemoStates.DETECTING_SHAPES;
