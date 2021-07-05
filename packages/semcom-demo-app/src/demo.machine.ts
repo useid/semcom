@@ -1,19 +1,14 @@
 import { ComponentMetadata } from '@digita-ai/semcom-core';
-import { Holder, Invite, Purpose, Session } from '@digita-ai/ui-transfer-components';
+import { Session } from '@digita-ai/ui-transfer-components';
 import { Observable, of, forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { EventObject, MachineConfig, assign, StateSchema } from 'xstate';
-import { Provider } from './models/provider.model';
 import { SemComService } from './services/semcom.service';
 
 /* CONTEXT */
 
 export interface DemoContext {
   components?: ComponentMetadata[];
-  providers?: Provider[];
-  invite?: Invite;
-  holder?: Holder;
-  purpose?: Purpose;
   session?: Session;
   semComService: SemComService;
   shapeIds?: string[];

@@ -3,7 +3,7 @@ import { createMachine, interpret, State } from 'xstate';
 import { from } from 'rxjs';
 import { RxLitElement } from 'rx-lit';
 import { map } from 'rxjs/operators';
-import { Purpose, Source, AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, SolidSDKService } from '@digita-ai/ui-transfer-components';
+import { AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, SolidSDKService } from '@digita-ai/ui-transfer-components';
 import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { demoMachine, DemoContext, DemoEvent, DemoState, DemoStates, AuthenticatedEvent } from './demo.machine';
@@ -26,12 +26,6 @@ export class DemoComponent extends RxLitElement {
   state: State<DemoContext>;
 
   @state()
-  sources: Source[];
-
-  @state()
-  purpose: Purpose;
-
-  @state()
   components: ComponentMetadata[];
 
   @query('.components')
@@ -48,7 +42,6 @@ export class DemoComponent extends RxLitElement {
     this.define('provider-list-item', ProviderListItemComponent);
 
     this.subscribe('state', from(this.actor));
-    this.subscribe('purpose', from(this.actor).pipe(map((appState) => appState.context.purpose)));
     this.subscribe('components', from(this.actor).pipe(map((appState) => appState.context.components)));
 
     this.actor.start();
