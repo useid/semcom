@@ -20,9 +20,13 @@ document.addEventListener(ComponentEventType.READ, (event: ComponentReadEvent) =
 
   fetch(event.detail.uri).then((response) => response.text().then((profileText) => {
 
+    const target = event.target;
+
+    event.stopPropagation();
+
     const quads = parser.parse(profileText);
 
-    event.target?.dispatchEvent(new ComponentResponseEvent({
+    target?.dispatchEvent(new ComponentResponseEvent({
       detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
     }));
 
@@ -31,6 +35,10 @@ document.addEventListener(ComponentEventType.READ, (event: ComponentReadEvent) =
 });
 
 document.addEventListener(ComponentEventType.WRITE, (event: ComponentWriteEvent) => {
+
+  const target = event.target;
+
+  event.stopPropagation();
 
   if (!event || !event.detail || !event.detail.uri) {
 
@@ -42,13 +50,13 @@ document.addEventListener(ComponentEventType.WRITE, (event: ComponentWriteEvent)
 
     new URL(event.detail.uri);
 
-    setTimeout(() => event.target?.dispatchEvent(new ComponentResponseEvent({
+    setTimeout(() => target?.dispatchEvent(new ComponentResponseEvent({
       detail: { ...event.detail, cause: event, success: true },
     })), 2000);
 
   } catch(e) {
 
-    event.target?.dispatchEvent(new ComponentResponseEvent({
+    target?.dispatchEvent(new ComponentResponseEvent({
       detail: { ...event.detail, cause: event, success: false },
     }));
 
