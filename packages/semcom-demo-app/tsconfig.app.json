@@ -4,7 +4,6 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "strict": true,
-    "strictPropertyInitialization": false, // for angular decorators
     "target": "es2015",
     "module": "es2020",
   },
