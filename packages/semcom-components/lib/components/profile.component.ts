@@ -47,7 +47,7 @@ export class ProfileComponent extends BaseComponent {
     const store = new Store(event.detail.data);
 
     this.name = store.getQuads(null,  new NamedNode(`${foaf}name`), null, null)[0]?.object.value;
-    this.avatar = store.getQuads(null, new NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value;
+    this.avatar = store.getQuads(null, new NamedNode(`${n}hasPhoto`), null, null)[0]?.object.value ?? this.avatar;
     this.job = store.getQuads(null, new NamedNode(`${n}role`), null, null)[0]?.object.value;
     this.company = store.getQuads(null, new NamedNode(`${n}organization-name`), null, null)[0]?.object.value;
     this.city = store.getQuads(null, new NamedNode(`${n}locality`), null, null)[0]?.object.value;
