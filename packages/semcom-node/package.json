@@ -36,6 +36,7 @@
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
     "start": "node bin/server.js",
+    "start:watch": "node bin/server.js -c config/config-default.dev.json",
     "test": "jest",
     "test:ci": "jest --runInBand --silent",
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
