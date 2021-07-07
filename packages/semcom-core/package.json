@@ -53,6 +53,9 @@
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/": "dist/components/",
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/dist/": "dist/"
   },
+  "dependencies": {
+    "lit-element": "^2.4.0"
+  },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
     "@types/jest": "^26.0.19",
