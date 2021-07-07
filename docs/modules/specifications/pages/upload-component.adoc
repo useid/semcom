@@ -1,0 +1,51 @@
+
+= SemCom upload component
+Wouter Termont
+
+This specification describes a SemCom component providing a graphical interface enabling developers to upload SemCom components to a SemCom node.
+
+
+== Functional requirements
+
+- The component should take a list of SemCom store URLs as attributes.
+
+- The component should present the user with an authentication flow, which uses Solid-OIDC to log in.
+
+- The component should then present the user with the choice between the SemCom stores of the list, as well as an input box for free input of SemCom store URLs.
+
+- After the user selects or enters a store, the component should check whether or not the user has permission to write to the store.
+
+- If that is the case, the component should present the user with a metadata form.
+
+- The metadata form should also contain a field for a checksum.
+
+- The metadata should then be saved to the SemCom store.
+
+- Success and error results should be displayed to the user.
+
+//- When the metadata is entered, the user should be able to upload the JS file via an upload field.
+
+//- The uploaded module should not be saved, but it's checksum should be checked. 
+
+
+== Technical requirements 
+
+- The component should be fully responsive to display size.
+
+- Size and other layout choices (color, borders, radius ...) should be changeable by the parent application with CSS variables.
+
+- The component should contain an XState machine to manage state.
+
+- For the authentication flow we use the authentication component of the Reuse Kit (UI Transfer).
+
+- The component will need a stateless card-type subcomponent to display the SemCom stores.
+
+- SemCom stores are Solid pod servers.
+
+- The free input of SemCom store URLS should be checked thoroughly (checks to be decided).
+
+- Checking whether the user has permission to upload can be done by checking the ACL file pointed to in the response headers of a HEAD request.
+
+- The metadata form should contain all fields of the metadata interface in the core package.
+
+- The checksum field should be added to the metadata interface.
