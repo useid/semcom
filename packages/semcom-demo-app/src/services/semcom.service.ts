@@ -6,9 +6,15 @@ import { fetch } from '@digita-ai/inrupt-solid-client';
 
 export class SemComService {
 
-  private registry: AbstractRegisterComponentService = new RegisterComponentService();
-  // private repo: QueryComponentService = new QueryComponentRemoteService('http://localhost:3000');
-  private repo: QueryComponentService = new QueryComponentRemoteService('http://localhost:3000');
+  private registry: AbstractRegisterComponentService;
+  private repo: QueryComponentService;
+
+  constructor() {
+
+    this.registry = new RegisterComponentService();
+    this.repo = new QueryComponentRemoteService(process.env.VITE_SEMCOM_NODE_URI);
+
+  }
 
   detectShapes(uri: string): Observable<string[]> {
 

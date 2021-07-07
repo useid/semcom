@@ -13,6 +13,7 @@
     "bootstrap:no-ci": "npm i && lerna bootstrap --no-ci",
     "bootstrap:clean": "npm i && lerna run clean --parallel && lerna bootstrap --no-ci",
     "start": "lerna run start --parallel",
+    "start:dev": "lerna run start:dev --parallel --no-bail",
     "build": "lerna run build --since HEAD",
     "build:all": "lerna run build",
     "lint": "lerna run lint --since HEAD --parallel",
