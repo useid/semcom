@@ -30,7 +30,7 @@ https://angular.io/guide/feature-modules[Generate new `data` module] for this fe
 
 The finished component (with Semantic Components) should look like this:
 
-image::../images/639404111-create-data-overview-page/data-overview-page.svg[DemoDataOverviewPageComponent]
+image::../images/create-data-overview-page/data-overview-page.svg[DemoDataOverviewPageComponent]
 
 Generate under app/features/data/pages/data-overview-page.component.ts (selector: <demo-data-overview-page>)
 

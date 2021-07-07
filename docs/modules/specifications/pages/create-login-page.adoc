@@ -49,7 +49,7 @@ This component is the first page a user sees when they open the app. It constist
 
 The finished component should look like this:
 
-image::639404034-connect-page.svg[DemoConnectPageComponent]
+image::connect-page.svg[DemoConnectPageComponent]
 
 Generate under app/features/connect/pages/connect-page.component.ts (selector: <demo-connect-page>)
 
