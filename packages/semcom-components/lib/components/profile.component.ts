@@ -1,7 +1,6 @@
 import { NamedNode, Store } from 'n3';
 import { css, html, property, PropertyValues } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
-import { BaseComponent } from './base.component';
+import { BaseComponent, ComponentResponseEvent } from '@digita-ai/semcom-core';
 
 export class ProfileComponent extends BaseComponent {
 
