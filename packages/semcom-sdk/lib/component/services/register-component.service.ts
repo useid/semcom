@@ -3,8 +3,6 @@ import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/
 
 export class RegisterComponentService extends AbstractRegisterComponentService {
 
-  private registered: Map<string, string> = new Map();
-
   async isRegistered(componentMetadata: ComponentMetadata): Promise<boolean> {
 
     if (!componentMetadata || !componentMetadata.uri) {
@@ -13,7 +11,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
     }
 
-    return this.registered.has(componentMetadata.uri);
+    return !!customElements.get(componentMetadata.uri);
 
   }
 
@@ -25,45 +23,31 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
     }
 
-    let tag: string;
+    const tag = `semcom-${ componentMetadata.tag }-${ btoa(Date.now().toString()).replace('==', '').toLowerCase() }`;
 
-    if (this.registered.has(componentMetadata.uri)) {
+    let elementComponent;
 
-      tag = this.registered.get(componentMetadata.uri);
+    try {
 
-    } else {
+      elementComponent = await eval(`import("${componentMetadata.uri}")`);
 
-      let component;
+    } catch (error) {
 
-      tag = `semcom-${ componentMetadata.tag }-${ btoa(Date.now().toString()).replace('==', '').toLowerCase() }`;
+      throw new Error('Something went wrong during import');
 
-      this.registered.set(componentMetadata.uri, tag);
+    }
+
+    try {
 
       if (!customElements.get(tag)) {
 
-        try {
-
-          component = await eval(`import("${componentMetadata.uri}")`);
-
-        } catch (error) {
-
-          this.registered.delete(componentMetadata.uri);
-          throw new Error('Something went wrong during import');
-
-        }
-
-        try {
-
-          customElements.define(tag, component.default);
-
-        } catch (error) {
-
-          this.registered.delete(componentMetadata.uri);
-          throw Error('Failed to register componentMetadata');
-
-        }
+        customElements.define(tag, elementComponent.default);
 
       }
+
+    } catch (error) {
+
+      throw Error('Failed to register componentMetadata');
 
     }
 
