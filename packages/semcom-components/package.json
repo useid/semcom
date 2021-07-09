@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
-    "start": "npm run start:dev",
+    "start": "npm run start:watch",
     "start:dev": "vite",
     "build": "rimraf ./dist && npm run build:bundle && npm run build:ts",
     "build:bundle": "vite build",

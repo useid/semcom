@@ -1,6 +1,7 @@
-import { css, html, query, state } from 'lit-element';
-import { BaseComponent, ComponentResponseEvent } from '@digita-ai/semcom-core';
+import { css, html, PropertyValues, query, state } from 'lit-element';
+import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
+import { BaseComponent } from './base.component';
 
 export default class InputComponent extends BaseComponent {
 
