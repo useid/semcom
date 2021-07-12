@@ -1,7 +1,7 @@
 import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { Session } from '@digita-ai/ui-transfer-components';
-import { Observable, of, forkJoin } from 'rxjs';
-import { map, mapTo, mergeMap } from 'rxjs/operators';
+import { Observable, of, forkJoin, zip } from 'rxjs';
+import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { EventObject, MachineConfig, assign, StateSchema } from 'xstate';
 import { SemComService } from './services/semcom.service';
 
@@ -24,6 +24,9 @@ export interface WithShapeIds extends DemoContext {
 export interface WithComponents extends DemoContext {
   components: ComponentMetadata[];
 }
+export interface WithTags extends DemoContext {
+  tags: string[];
+}
 
 /* STATES */
 
@@ -37,8 +40,11 @@ export enum DemoStates {
 
 export type DemoState =
   {
-    value: DemoStates.AUTHENTICATING | DemoStates.QUERYING_METADATA | DemoStates.REGISTER_COMPONENTS | DemoStates.IDLE;
+    value: DemoStates.AUTHENTICATING | DemoStates.QUERYING_METADATA | DemoStates.IDLE;
     context: DemoContext;
+  } | {
+    value: DemoStates.REGISTER_COMPONENTS;
+    context: DemoContext & WithSession & WithTags;
   } | {
     value: DemoStates.DETECTING_SHAPES;
     context: DemoContext & WithSession & WithShapeIds;
@@ -97,6 +103,7 @@ export class ComponentsSelectedEvent implements EventObject {
 export class ComponentsRegisteredEvent implements EventObject {
 
   public type: DemoEvents.COMPONENTS_REGISTERED = DemoEvents.COMPONENTS_REGISTERED;
+  constructor(public tags: string[]) {}
 
 }
 
@@ -158,15 +165,10 @@ const registerComponentsFromMetadata = (
   }
 
   return of(context.components).pipe(
-    mergeMap((components) =>
-      components.map(async (metadata) => {
-
-        // eslint-disable-next-line no-eval
-        const elementComponent = await eval(`import("${metadata.uri}")`);
-        const ctor = customElements.get(metadata.tag) || customElements.define('demo-' + metadata.tag, elementComponent.default);
-
-      })),
-    mapTo(new ComponentsRegisteredEvent()),
+    mergeMap((components) => forkJoin(
+      components.map((metadata) => context.semComService.registerComponent(metadata)),
+    )),
+    map((tags) => new ComponentsRegisteredEvent(tags)),
   );
 
 };
@@ -219,6 +221,7 @@ export const demoMachine: MachineConfig<DemoContext, DemoStateSchema, DemoEvent>
       },
       on: {
         [DemoEvents.COMPONENTS_REGISTERED]: {
+          actions: assign({ tags: (context, event) => event.tags }),
           target: DemoStates.IDLE,
         },
       },

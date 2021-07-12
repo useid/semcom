@@ -137,3 +137,5 @@ export abstract class BaseComponent extends LitElement implements Component {
   }
 
 }
+
+export default BaseComponent;

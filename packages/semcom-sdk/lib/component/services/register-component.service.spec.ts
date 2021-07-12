@@ -64,14 +64,6 @@ describe('RegisterComponentService', () => {
 
   });
 
-  // it('should throw error when componentMetadata.tag is invalid', async () => {
-  //   const mockComponent = {
-  //     uri: './../../mock/component.ts',
-  //     tag: 'font-face',
-  //   } as ComponentMetadata;
-  //   await expect(service.register(mockComponent)).rejects.toThrow('Failed to register componentMetadata');
-  // });
-
   it('should throw error when componentMetadata.uri is not found', async () => {
 
     const mockComponent = {
@@ -83,13 +75,25 @@ describe('RegisterComponentService', () => {
 
   });
 
-  // it('should throw error when componentMetadata.uri is found, but does not contain Web Component', async () => {
-  //   const mockComponent = {
-  //     uri: './../../mock/not-a-component.ts',
-  //     tag: 'app-component-5',
-  //   } as ComponentMetadata;
+  it('should return false when componentMetadata.uri is not found', async () => {
 
-  //   await expect(service.register(mockComponent)).rejects.toThrow('Failed to register componentMetadata');
-  // });
+    const mockComponent = {
+      uri: './../../mock/non-working-component.ts',
+      tag: 'app-component-4',
+    } as ComponentMetadata;
+
+    await expect(service.isRegistered(mockComponent)).resolves.toBeFalsy();
+
+  });
+
+  it('should throw error when componentMetadata is not set', async () => {
+
+    const mockComponent = {
+      tag: 'app-component-4',
+    } as ComponentMetadata;
+
+    await expect(service.isRegistered(mockComponent)).rejects.toThrow();
+
+  });
 
 });
