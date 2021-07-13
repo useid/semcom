@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Component } from '@digita-ai/semcom-core';
-import { ComponentAppendEvent, ComponentEventType, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import { LitElement, property } from 'lit-element';
 import { Quad } from 'rdf-js';
 
@@ -18,7 +18,7 @@ export abstract class BaseComponent extends LitElement implements Component {
 
     super();
 
-    this.addEventListener(ComponentEventType.RESPONSE, this.handleResponse);
+    this.addEventListener(ComponentEventTypes.RESPONSE, this.handleResponse);
 
   }
 

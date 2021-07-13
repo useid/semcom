@@ -3,12 +3,14 @@ import { Quad } from 'rdf-js';
 /**
  * Types of component events.
  */
-export enum ComponentEventType {
+export enum ComponentEventTypes {
   READ = 'semcom-data-read',
   WRITE = 'semcom-data-write',
   APPEND = 'semcom-data-append',
   RESPONSE = 'semcom-data-response',
 }
+
+export type ComponentEventType = keyof typeof ComponentEventTypes;
 
 /**
  * Payload of a `ComponentReadEvent`.
@@ -27,7 +29,7 @@ export class ComponentReadEvent extends CustomEvent<ComponentReadEventPayload> {
 
   constructor(init: Partial<CustomEventInit<ComponentReadEventPayload>>) {
 
-    super(ComponentEventType.READ, {
+    super(ComponentEventTypes.READ, {
       ...{
         bubbles: true,
         composed: true,
@@ -61,7 +63,7 @@ export class ComponentWriteEvent extends CustomEvent<ComponentWriteEventPayload>
 
   constructor(init: Partial<CustomEventInit<ComponentWriteEventPayload>>) {
 
-    super(ComponentEventType.WRITE, {
+    super(ComponentEventTypes.WRITE, {
       ...{
         bubbles: true,
         composed: true,
@@ -95,7 +97,7 @@ export class ComponentAppendEvent extends CustomEvent<ComponentAppendEventPayloa
 
   constructor(init: Partial<CustomEventInit<ComponentAppendEventPayload>>) {
 
-    super(ComponentEventType.APPEND, {
+    super(ComponentEventTypes.APPEND, {
       ...{
         bubbles: true,
         composed: true,
@@ -144,7 +146,7 @@ export class ComponentResponseEvent extends CustomEvent<ComponentResponseEventPa
 
   constructor(init: Partial<CustomEventInit<ComponentResponseEventPayload>>) {
 
-    super(ComponentEventType.RESPONSE, {
+    super(ComponentEventTypes.RESPONSE, {
       ...{
         bubbles: true,
         composed: true,

@@ -1,5 +1,5 @@
 import { Parser } from 'n3';
-import { ComponentEventType, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { addListener, ComponentEventType, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import ProfileComponent from './components/profile.component';
 import PayslipComponent from './components/payslip.component';
 import InputComponent from './components/input.component';
@@ -10,55 +10,40 @@ customElements.define('input-component', InputComponent);
 
 const parser = new Parser();
 
-document.addEventListener(ComponentEventType.READ, (event: ComponentReadEvent) => {
+addListener(ComponentEventTypes.READ, document, async (event: ComponentReadEvent) => {
 
-  if (!event || !event.detail || !event.detail.uri) {
+  const response = await fetch(event.detail.uri);
+  const profileText = await response.text();
+  const quads = parser.parse(profileText);
 
-    throw new Error('Argument event || !event.detail || !event.detail.uri should be set.');
-
-  }
-
-  fetch(event.detail.uri).then((response) => response.text().then((profileText) => {
-
-    const target = event.target;
-
-    event.stopPropagation();
-
-    const quads = parser.parse(profileText);
-
-    target?.dispatchEvent(new ComponentResponseEvent({
-      detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
-    }));
-
-  }));
+  return new ComponentResponseEvent({
+    detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
+  });
 
 });
 
-document.addEventListener(ComponentEventType.WRITE, (event: ComponentWriteEvent) => {
-
-  const target = event.target;
-
-  event.stopPropagation();
-
-  if (!event || !event.detail || !event.detail.uri) {
-
-    throw new Error('Argument event || !event.detail || !event.detail.uri should be set.');
-
-  }
+addListener(ComponentEventTypes.WRITE, document, async (event: ComponentWriteEvent) => {
 
   try {
 
     new URL(event.detail.uri);
 
-    setTimeout(() => target?.dispatchEvent(new ComponentResponseEvent({
-      detail: { ...event.detail, cause: event, success: true },
-    })), 2000);
+    const response = new Promise<ComponentResponseEvent>((resolve, reject) => {
+
+      setTimeout(() =>
+        resolve(new ComponentResponseEvent({
+          detail: { ...event.detail, cause: event, success: true },
+        })), 2000);
+
+    });
+
+    return response;
 
   } catch(e) {
 
-    target?.dispatchEvent(new ComponentResponseEvent({
+    return new ComponentResponseEvent({
       detail: { ...event.detail, cause: event, success: false },
-    }));
+    });
 
   }
 
