@@ -4,7 +4,6 @@ import { from } from 'rxjs';
 import { RxLitElement } from 'rx-lit';
 import { map } from 'rxjs/operators';
 import { AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, Session, SolidSDKService } from '@digita-ai/ui-transfer-components';
-import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { ComponentReadEvent, ComponentResponseEvent, addListener, ComponentEventTypes, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import { Parser } from 'n3';
