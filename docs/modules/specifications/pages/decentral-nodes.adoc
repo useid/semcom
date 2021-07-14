@@ -18,18 +18,18 @@ We often use the same types of storage classes and abstractions, so we should ce
 
 Code a `TypedKeyValueStore<M>` interface that extends from `KeyValueStore<keyof M, M[keyof M]>`. It should contain the same methods, but make them generic with a parameter `<T extends keyof M>`, and replace all key types `K` by `T` and value types `V` by `M[T]`. 
 
-Also code a `TimedKeyValueStore<K,V>` interface that extends from `KeyValueStore<K,V>`, and provides a function `latestUpdate(key: K)` returning a timestamp of when the value of that key has been updated, as well as a function `hasUpdate(key: K, time: number)` that returns a boolean depending on whether the time is older or newer than when the value of that key has been updated.
+Also code a `TimedKeyValueStore<K,V>` interface that extends from `KeyValueStore<K,V>`, and provides a function `latestUpdate(key: K)` returning a timestamp of when the value of that key has been updated, as well as a function `hasUpdate(key: K, time: number)` that returns a boolean depending on whether `time` is before or after the time when the value of that key has been updated last.
 
 Combine both interfaces in a `TimedTypedKeyValueStore<M>` interface.
 
-Make the `MemoryStore` implementation extends from the combined interface, implementing the new methods of the `TimedKeyValueStore`, and make it take an `initialData` parameter in it's construction, so we can add data via the ComponentsJS configuration (n.b. the initial data simply take the current time as latest update).
+Make the `MemoryStore` implementation extend from the combined interface, implementing the new methods of the `TimedKeyValueStore`, and make it take an `initialData` parameter in it's construction, so we can add data via the ComponentsJS configuration (n.b. the initial data simply take the current time as latest update).
 
 
 === Scheduler daemon
 
-We'll need to check peer nodes of a SemCom Node server repetitively, but we want to abstract the repetition pattern from the task that needs to be repeated. Start by moving the `Daemon` class from `handlersjs-http` to a `models` directory in the `handlersjs-core` library, and make the necessary changes to imports and exports. 
+We'll need to check peer nodes of a SemCom Node server repeatedly, but we want to abstract the repetition pattern from the task that needs to be repeated. Start by moving the `Daemon` class from `handlersjs-http` to a `models` directory in the `handlersjs-core` library, and make the necessary changes to imports and exports. 
 
-Then add a `daemons` directory, an implement a `Scheduler` that extends `Daemon`. This class can take an `interval` (in milliseconds) and a any function as `task`. When started, this daemon will set a timeout to wait for the given interval and then execute the task and set a new timeout. It should track the running timeout, so that when stopped it can cancel it.
+Then add a `daemons` directory, and implement a `Scheduler` that extends `Daemon`. This class can take an `interval` (in milliseconds) and an any function as `task`. When started, this daemon will set a timeout to wait for the given interval and then execute the task and set a new timeout. It should track the running timeout, so that when stopped it can cancel it.
 
 
 === Synchronization service
@@ -48,7 +48,7 @@ Code a `JsonStoreHandler` extending `HttpHandler`, taking a `TimedTypedKeyValueS
 
 == Tracking peers and stores
 
-Add a `TimedTypedKeyValueStore` to the ComponentsJS configuration with a an empty list of SemCom Node peer URLs and an empty list of SemCom Node store URLs. 
+Add a `TimedTypedKeyValueStore` to the ComponentsJS configuration with an empty list of SemCom Node peer URLs and an empty list of SemCom Node store URLs. 
 
 Add two endpoints to the SemCom Node router in the ComponentsJS configuration, each pointing to a different `JsonStoreHandler`: one serve the peers, one the list of stores.
 
