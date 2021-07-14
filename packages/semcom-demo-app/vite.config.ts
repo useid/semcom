@@ -19,7 +19,7 @@ export default defineConfig( ({ command, mode }) => {
 
   if (command === 'serve') {
       return {
-        root: 'src',
+        root: 'lib',
         server: {
           port: 4200,
         },
@@ -28,7 +28,7 @@ export default defineConfig( ({ command, mode }) => {
       }
   } else if (command === 'build'){
     return {
-        root: 'src',
+        root: 'lib',
         build: {
             target: 'es2015',
             outDir: '../dist',

@@ -4,7 +4,7 @@ import { css, html, property, PropertyValues } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base.component';
 
-export default class PayslipComponent extends BaseComponent {
+export class PayslipComponent extends BaseComponent {
 
   @property({ type: Number }) periodStart?: number;
   @property({ type: Number }) periodEnd?: number;
@@ -120,3 +120,5 @@ export default class PayslipComponent extends BaseComponent {
   }
 
 }
+
+export default PayslipComponent;

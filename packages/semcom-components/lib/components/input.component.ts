@@ -3,7 +3,7 @@ import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
 import { BaseComponent } from './base.component';
 
-export default class InputComponent extends BaseComponent {
+export class InputComponent extends BaseComponent {
 
   /**
    * The input field.
@@ -182,3 +182,5 @@ export default class InputComponent extends BaseComponent {
   }
 
 }
+
+export default InputComponent;

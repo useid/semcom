@@ -4,9 +4,8 @@ import { from } from 'rxjs';
 import { RxLitElement } from 'rx-lit';
 import { map } from 'rxjs/operators';
 import { AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, Session, SolidSDKService } from '@digita-ai/ui-transfer-components';
-import { ComponentMetadata } from '@digita-ai/semcom-core';
 import { Theme } from '@digita-ai/ui-transfer-theme';
-import { ComponentEventType, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { ComponentReadEvent, ComponentResponseEvent, addListener, ComponentEventTypes, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import { Parser } from 'n3';
 import { fetch } from '@digita-ai/inrupt-solid-client';
 import { demoMachine, DemoContext, DemoEvent, DemoState, DemoStates, AuthenticatedEvent } from './demo.machine';
@@ -29,7 +28,7 @@ export class DemoComponent extends RxLitElement {
   state: State<DemoContext>;
 
   @state()
-  components: ComponentMetadata[];
+  tags: string[];
 
   @state()
   session: Session;
@@ -49,7 +48,7 @@ export class DemoComponent extends RxLitElement {
 
     this.subscribe('state', from(this.actor));
     this.subscribe('session', from(this.actor).pipe(map((appState) => appState.context.session)));
-    this.subscribe('components', from(this.actor).pipe(map((appState) => appState.context.components)));
+    this.subscribe('tags', from(this.actor).pipe(map((appState) => appState.context.tags)));
 
     this.actor.start();
 
@@ -59,61 +58,48 @@ export class DemoComponent extends RxLitElement {
 
     super.updated(changed);
 
-    if (changed && changed.has('components') && this.actor) {
+    if (changed && changed.has('tags') && this.actor) {
 
-      for (const component of this.components) {
+      for (const tag of this.tags) {
 
-        const element = document.createElement('demo-' + component.tag);
+        const element = document.createElement(tag);
 
         const parser = new Parser();
 
-        element.addEventListener(ComponentEventType.READ, async (event: ComponentReadEvent) => {
-
-          const target = event.target;
-
-          event.stopPropagation();
-
-          if (!event || !event.detail || !event.detail.uri) {
-
-            throw new Error('Argument event || !event.detail || !event.detail.uri should be set.');
-
-          }
+        addListener(ComponentEventTypes.READ, element, async (event: ComponentReadEvent) => {
 
           const response = await fetch(event.detail.uri);
           const profileText = await response.text();
           const quads = parser.parse(profileText);
 
-          target?.dispatchEvent(new ComponentResponseEvent({
+          return new ComponentResponseEvent({
             detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
-          }));
+          });
 
         });
 
-        element.addEventListener(ComponentEventType.WRITE, (event: ComponentWriteEvent) => {
-
-          const target = event.target;
-
-          event.stopPropagation();
-
-          if (!event || !event.detail || !event.detail.uri) {
-
-            throw new Error('Argument event || !event.detail || !event.detail.uri should be set.');
-
-          }
+        addListener(ComponentEventTypes.WRITE, element, async (event: ComponentWriteEvent) => {
 
           try {
 
             new URL(event.detail.uri);
 
-            setTimeout(() => target?.dispatchEvent(new ComponentResponseEvent({
-              detail: { ...event.detail, cause: event, success: true },
-            })), 2000);
+            const response = new Promise<ComponentResponseEvent>((resolve, reject) => {
+
+              setTimeout(() =>
+                resolve(new ComponentResponseEvent({
+                  detail: { ...event.detail, cause: event, success: true },
+                })), 2000);
+
+            });
+
+            return response;
 
           } catch(e) {
 
-            target?.dispatchEvent(new ComponentResponseEvent({
+            return new ComponentResponseEvent({
               detail: { ...event.detail, cause: event, success: false },
-            }));
+            });
 
           }
 
@@ -149,7 +135,7 @@ export class DemoComponent extends RxLitElement {
       </nav>
       <div class="content">
         ${this.state.matches(DemoStates.AUTHENTICATING) ? html`<auth-flow .solidService="${this.solidService}" @authenticated="${this.onAuthenticated}"></auth-flow>` : html`` ? html`` : html`<loading-component></loading-component>`}
-        ${this.components ? html`<div class="components"></div>` : html`` ? html`` : html`<loading-component></loading-component>`}
+        ${this.tags ? html`<div class="components"></div>` : html`` ? html`` : html`<loading-component></loading-component>`}
       </div>
     </div>
     `;
