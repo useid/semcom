@@ -9,21 +9,21 @@ export class InputComponent extends BaseComponent {
    * The input field.
    */
   @query('#content')
-  content: HTMLInputElement;
+  content!: HTMLInputElement;
   @query('#fileName')
-  fileName: HTMLInputElement;
+  fileName!: HTMLInputElement;
 
   @state()
   showAlert = false;
 
   @state()
-  success: boolean;
+  success!: boolean;
 
   /**
    * The slot element which contains the input field.
    */
   @query('button')
-  button: HTMLButtonElement;
+  button!: HTMLButtonElement;
 
   /**
    * Handles a response event. Can be used to update the component's properties based on the data in the response.

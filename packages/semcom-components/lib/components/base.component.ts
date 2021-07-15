@@ -18,7 +18,8 @@ export abstract class BaseComponent extends LitElement implements Component {
 
     super();
 
-    this.addEventListener(ComponentEventTypes.RESPONSE, this.handleResponse);
+    // should be changed, not a good workaround
+    this.addEventListener(ComponentEventTypes.RESPONSE as any, this.handleResponse);
 
   }
 
