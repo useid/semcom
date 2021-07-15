@@ -72,10 +72,11 @@
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
     "@types/jest": "^26.0.19",
+    "@types/n3": "^1.4.4",
     "@types/node": "^14.14.14",
     "@types/streamify-array": "^1.0.0",
     "@types/supertest": "^2.0.10",
-    "@types/n3": "^1.4.4",
+    "@types/yargs": "^17.0.2",
     "componentsjs-generator": "2.1.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
