@@ -4,7 +4,7 @@
     "baseUrl": "./lib",
     "outDir": "./dist",
     "module": "commonjs",
-    "strict": false
+    "strict": true,
   },
   "include": [ 
       "lib" 
