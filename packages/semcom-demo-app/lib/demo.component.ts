@@ -25,16 +25,16 @@ export class DemoComponent extends RxLitElement {
   private actor = interpret(this.machine, { devTools: true }).onTransition((appState) => console.log(appState.value));
 
   @state()
-  state: State<DemoContext>;
+  state!: State<DemoContext>;
 
   @state()
-  tags: string[];
+  tags!: string[];
 
   @state()
-  session: Session;
+  session!: Session;
 
   @query('.components')
-  contentElement: HTMLDivElement;
+  contentElement!: HTMLDivElement;
 
   constructor() {
 
