@@ -6,7 +6,7 @@ export const addListener = <T extends ComponentOperationEvent>(
   process: (event: T) => Promise<ComponentResponseEvent>
 ): void => {
 
-  element.addEventListener(eventType, async (event: T) => {
+  element.addEventListener(eventType, async (event: any) => {
 
     const target = event.target;
 
