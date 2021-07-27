@@ -8,8 +8,6 @@
     "module": "es2015",
     "target": "es2017",
     "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
   },
   "files": [ "node_modules/vite/client.d.ts" ],
   "include": [ "lib" ],
