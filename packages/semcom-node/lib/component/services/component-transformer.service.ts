@@ -21,6 +21,9 @@ export class ComponentTransformerService {
 
     }
 
+    const shapeQuads = component.shapes.map((shape) =>
+      Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#shape', shape));
+
     return [
       Quad(
         `${component.uri}`,
@@ -33,6 +36,7 @@ export class ComponentTransformerService {
       Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#version', component.version),
       Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#latest', component.latest),
       Quad(`${component.uri}`, 'http://semcom.digita.ai/voc#tag', component.tag),
+      ...shapeQuads,
     ].reduce((acc, val) => acc.concat(val), []);
 
   }
