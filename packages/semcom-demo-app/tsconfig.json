@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist",
-    "strict": true,
+    "strict": false,
     "target": "es2015",
     "module": "es2020",
   },
