@@ -49,3 +49,30 @@ This specification describes a SemCom component providing a graphical interface 
 - The metadata form should contain all fields of the metadata interface in the core package.
 
 - The checksum field should be added to the metadata interface.
+
+
+== Components
+
+=== Loading
+
+Extend the loading component in the Data Reuse Kit (UI-Transfer), so that it can take text as an attribute to show under the circle.
+
+=== Error & success 
+
+Create a single LitElement `FeedbackComponent` in the Data Reuse Kit (UI-Transfer) to present the user with visual and textual feedback and the option to click on a button. All text should be changeable via attributes. 
+
+=== SemComRegisterComponent
+
+Now first try and write the base of the root component. Take a look at other root components, e.g. the one of the SemCom or UI-Transfer demo packages.
+
+Start by designing the body component in LitElement code. Then, create a machine containing two states (e.g. `Authenticating` and `Done`, the latter being a final state), a single event (e.g. `Authenticated`) and a context containing a session object which is optional during the `Authenticating` state and mandatory in the `Done` state; have the machine start in `Authenticating` and transition to `Done` on the `Authenticated` event.
+
+Finally, create an instance of the machine in the LitElement component, subscribe to the state (you will need RxLitElement for this), and conditionally render the UI Transfer authentication component during the `Authenticating` state, and the new `FeedbackComponent` in the `Done` state.
+
+=== Store selection
+
+Create a LitElement component containing the form, using the form and input components created for Solid-CRS (NDE). Ask Stijn if something is not clear about the use of those components. The component should take a list of SemCom store URLs, and validate user input (check valid URL and pod server).
+
+=== Metadata form
+
+Similar to the store selection, create a form component like in Solid-CRS (NDE). The form should validate the presence of a component URL, a shape list with at least one shape URI, and a checksum.

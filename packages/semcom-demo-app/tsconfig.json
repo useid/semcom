@@ -9,7 +9,7 @@
   },
   "files": [ "node_modules/vite/client.d.ts" ],
   "include": [
-    "src"  ],
+    "lib"  ],
   "exclude": [
     "dist",
     "node_modules",
