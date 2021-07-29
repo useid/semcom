@@ -45,7 +45,7 @@ export class ComponentHttpHandler extends HttpHandler {
 
       }
 
-      return this.components.save(JSON.parse(context.request.body)).pipe(
+      return this.components.save(context.request.body).pipe(
         map((result) => ({
           response: {
             body: JSON.stringify(result),
