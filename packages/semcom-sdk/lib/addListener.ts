@@ -1,12 +1,21 @@
-import { ComponentEventTypes, ComponentOperationEvent, ComponentResponseEvent } from './component/models/component-events.model';
+import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from './component/models/component-events.model';
 
-export const addListener = <T extends ComponentOperationEvent>(
-  eventType: ComponentEventTypes,
-  element: Node,
-  process: (event: T) => Promise<ComponentResponseEvent>
+declare global {
+  interface GlobalEventHandlersEventMap {
+    [ComponentEventTypes.READ]: ComponentReadEvent;
+    [ComponentEventTypes.WRITE]: ComponentWriteEvent;
+    [ComponentEventTypes.APPEND]: ComponentAppendEvent;
+    [ComponentEventTypes.RESPONSE]: ComponentResponseEvent;
+  }
+}
+
+export const addListener = <T extends ComponentEventTypes>(
+  eventType: T,
+  element: GlobalEventHandlers,
+  process: (event: GlobalEventHandlersEventMap[T]) => Promise<ComponentResponseEvent>
 ): void => {
 
-  element.addEventListener(eventType, async (event: any) => {
+  element.addEventListener<T>(eventType, async (event: GlobalEventHandlersEventMap[T]) => {
 
     const target = event.target;
 

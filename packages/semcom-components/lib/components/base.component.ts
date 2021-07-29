@@ -4,6 +4,15 @@ import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, Componen
 import { LitElement, property } from 'lit-element';
 import { Quad } from 'rdf-js';
 
+declare global {
+  interface HTMLElementEventMap {
+    [ComponentEventTypes.READ]: ComponentReadEvent;
+    [ComponentEventTypes.WRITE]: ComponentWriteEvent;
+    [ComponentEventTypes.APPEND]: ComponentAppendEvent;
+    [ComponentEventTypes.RESPONSE]: ComponentResponseEvent;
+  }
+}
+
 /**
  * A base component which implements the Semcom-standard by using Lit.
  */
@@ -18,8 +27,7 @@ export abstract class BaseComponent extends LitElement implements Component {
 
     super();
 
-    // should be changed, not a good workaround
-    this.addEventListener(ComponentEventTypes.RESPONSE as any, this.handleResponse);
+    this.addEventListener(ComponentEventTypes.RESPONSE, this.handleResponse);
 
   }
 
