@@ -58,8 +58,8 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.2.1",
-    "@digita-ai/handlersjs-http": "^0.2.1",
+    "@digita-ai/handlersjs-core": "^0.2.3",
+    "@digita-ai/handlersjs-http": "^0.2.3",
     "@digita-ai/semcom-core": "0.4.1",
     "componentsjs": "4.0.5",
     "n3": "^1.6.3",
@@ -104,10 +104,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 51.02,
+        "branches": 48.98,
         "functions": 53.85,
-        "lines": 61.97,
-        "statements": 59.48
+        "lines": 61.15,
+        "statements": 58.67
       }
     }
   }
