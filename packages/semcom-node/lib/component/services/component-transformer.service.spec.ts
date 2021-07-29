@@ -53,7 +53,10 @@ describe('ComponentTransformerService', () => {
           'http://semcom.digita.ai/voc#component',
         ));
 
-        [ 'label', 'description', 'author', 'tag', 'version', 'latest' ].forEach((predicate) => {
+        // test the metadata keys with singular values
+        const metaDataKeys: (keyof ComponentMetadata)[] = [ 'label', 'description', 'author', 'tag', 'version', 'latest' ];
+
+        metaDataKeys.forEach((predicate) => {
 
           expect(quads).toContainEqual(
             Quad(component.uri, `http://semcom.digita.ai/voc#${predicate}`, component[predicate])
@@ -61,6 +64,7 @@ describe('ComponentTransformerService', () => {
 
         });
 
+        // test the shapes key, which contains a list of values
         component.shapes.forEach((shape) => {
 
           expect(quads).toContainEqual(
