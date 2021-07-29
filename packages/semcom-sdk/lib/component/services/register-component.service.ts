@@ -23,7 +23,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
     }
 
-    const tag = `semcom-${ componentMetadata.tag }-${ btoa(Date.now().toString()).replace('==', '').toLowerCase() }`;
+    const tag = `semcom-${ componentMetadata.tag }-${ btoa(componentMetadata.uri).replace('=', '').toLowerCase() }`;
 
     let elementComponent;
 
@@ -47,7 +47,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
     } catch (error) {
 
-      throw Error('Failed to register componentMetadata');
+      throw Error(`Failed to register componentMetadata: ${error}`);
 
     }
 
