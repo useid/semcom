@@ -21,6 +21,9 @@ export class ComponentTransformerService {
 
     }
 
+    const shapeQuads = component.shapes.map((shape) =>
+      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#shape'), new Literal(component.shape)));
+
     const quads = [
       new Quad(new NamedNode(component.uri), new NamedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), new Literal('http://semcom.digita.ai/voc#component'),),
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#label'), new Literal(component.label)),
@@ -29,8 +32,9 @@ export class ComponentTransformerService {
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#version'), new Literal(component.version)),
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#latest'), new Literal(String(component.latest))),
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#tag'), new Literal(component.tag)),
+      ...shapeQuads,
     ];
-
+    
     return quads.reduce((acc: Quad[], val) => acc.concat(val), []);
 
   }
