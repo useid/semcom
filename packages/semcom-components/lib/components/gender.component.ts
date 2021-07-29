@@ -1,12 +1,14 @@
 /* eslint-disable no-console -- is a web component */
 import { NamedNode, Store } from 'n3';
-import { css, html, property, PropertyValues } from 'lit-element';
+import { css, CSSResult, html, property, PropertyValues } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { BaseComponent } from './base.component';
 
 export class GenderComponent extends BaseComponent {
 
   @property() gender = 'Unknown';
+
+  private genderPredicate = new NamedNode('http://digita.ai/voc/gender#type');
 
   /**
    * Handles a response event. Can be used to update the component's properties based on the data in the response.
@@ -21,11 +23,9 @@ export class GenderComponent extends BaseComponent {
 
     }
 
-    const genderPrefix = 'http://digita.ai/voc/gender#';
-
     const store = new Store(event.detail.data);
 
-    this.gender = store.getQuads(null,  new NamedNode(`${genderPrefix}type`), null, null)[0]?.object.value.split('#')[1];
+    this.gender = store.getQuads(null, this.genderPredicate, null, null)[0]?.object.value.split('#')[1];
 
   }
 
@@ -42,15 +42,7 @@ export class GenderComponent extends BaseComponent {
 
   }
 
-  static get styles() {
-
-    return [
-      css`
-        
-      `,
-    ];
-
-  }
+  static get styles(): CSSResult[] { return []; }
 
   render() {
 
