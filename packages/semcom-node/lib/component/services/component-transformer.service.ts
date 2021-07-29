@@ -34,7 +34,7 @@ export class ComponentTransformerService {
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#tag'), new Literal(component.tag)),
       ...shapeQuads,
     ];
-    
+
     return quads.reduce((acc: Quad[], val) => acc.concat(val), []);
 
   }
