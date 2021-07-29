@@ -5,8 +5,8 @@
     "outDir": "dist",
     "emitDeclarationOnly": true,
     // Recommended by Lit Element
-    "module": "es2015",
-    "target": "es2017",
+    "module": "es2020",
+    "target": "es2020",
     // Strict should actually be true
     "strict": false,
     "noImplicitAny": true,
