@@ -57,14 +57,6 @@ describe('QueryComponentHttpHandler', () => {
 
     });
 
-    it('should error when body is invalid json', async () => {
-
-      mockCTX.request.body = '{ test: }';
-
-      await expect(handler.handle(mockCTX).toPromise()).rejects.toThrow('error while parsing request body.');
-
-    });
-
   });
 
   describe('canHandle()', () => {
