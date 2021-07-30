@@ -33,7 +33,7 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
 
 export const createVariables = (args: string[]): Record<string, any> => {
 
-  const { argv: params } = yargs(hideBin(args))
+  const argv = yargs(hideBin(args))
     .usage('node ./dist/main.js [args]')
     .options({
       config: { type: 'string', alias: 'c' },
@@ -42,14 +42,14 @@ export const createVariables = (args: string[]): Record<string, any> => {
       schema: { type: 'string', alias: 's' },
       mainModulePath: { type: 'string', alias: 'm' },
     })
-    .help();
+    .help().parseSync();
 
   return {
-    'urn:semcom-node:variables:customConfigPath': params.config,
-    'urn:semcom-node:variables:mainModulePath': params.mainModulePath,
-    'urn:semcom-node:variables:schema': params.schema,
-    'urn:semcom-node:variables:host': params.host ?? 'localhost',
-    'urn:semcom-node:variables:port': params.port ?? '3000',
+    'urn:semcom-node:variables:customConfigPath': argv.config,
+    'urn:semcom-node:variables:mainModulePath': argv.mainModulePath,
+    'urn:semcom-node:variables:schema': argv.schema,
+    'urn:semcom-node:variables:host': argv.host ?? 'localhost',
+    'urn:semcom-node:variables:port': argv.port ?? '3000',
   };
 
 };
