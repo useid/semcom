@@ -3,10 +3,12 @@ import { addListener, ComponentEventType, ComponentEventTypes, ComponentReadEven
 import ProfileComponent from './components/profile.component';
 import PayslipComponent from './components/payslip.component';
 import InputComponent from './components/input.component';
+import GenderComponent from './components/gender.component';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
 customElements.define('input-component', InputComponent);
+customElements.define('gender-component', GenderComponent);
 
 const parser = new Parser();
 

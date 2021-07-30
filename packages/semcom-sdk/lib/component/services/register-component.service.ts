@@ -47,7 +47,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
     } catch (error) {
 
-      throw Error('Failed to register componentMetadata');
+      throw Error(`Failed to register componentMetadata: ${error}`);
 
     }
 

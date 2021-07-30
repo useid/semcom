@@ -4,8 +4,8 @@
     "baseUrl": "lib",
     "outDir": "dist",
     "emitDeclarationOnly": true,
+    "module": "es2020",
     // Recommended by Lit Element
-    "module": "es2015",
     "target": "es2017",
     "strict": true,
   },
