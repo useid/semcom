@@ -30,7 +30,7 @@ export default defineConfig( ({ command, mode }) => {
     return {
         root: 'lib',
         build: {
-            target: 'es2020',
+            target: 'es2015',
             outDir: '../dist',
         },
         server: {

@@ -6,7 +6,7 @@ export default ({ command, mode }) => {
     return defineConfig({
       root: 'dist',
       build: {
-        target: 'es2020',
+        target: 'es2015',
         outDir: '../dist'
       },
       define: {

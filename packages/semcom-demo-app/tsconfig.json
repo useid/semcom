@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "strict": false,
-    "target": "es2020",
+    "target": "es2015",
     "module": "es2020",
   },
   "files": [ "node_modules/vite/client.d.ts" ],
