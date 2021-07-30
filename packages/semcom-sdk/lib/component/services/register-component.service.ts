@@ -1,4 +1,5 @@
 /* eslint-disable no-eval -- webpack can't handle dynamic imports */
+import jsSHA from 'jssha';
 import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
 
 export class RegisterComponentService extends AbstractRegisterComponentService {
@@ -23,31 +24,29 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
     }
 
-    const tag = `semcom-${ componentMetadata.tag }-${ btoa(componentMetadata.uri).replace('=', '').toLowerCase() }`;
+    const shaObj = new jsSHA('SHAKE256', 'TEXT');
+    shaObj.update(componentMetadata.uri);
+    const hash = shaObj.getHash('B64', { outputLen: 64 }).replace(/[+=/]/g, '').toLowerCase();
 
-    let elementComponent;
-
-    try {
-
-      elementComponent = await eval(`import("${componentMetadata.uri}")`);
-
-    } catch (error) {
-
-      throw new Error('Something went wrong during import');
-
-    }
+    const tag = `semcom-${ componentMetadata.tag }-${ hash }`;
 
     try {
 
       if (!customElements.get(tag)) {
 
-        customElements.define(tag, elementComponent.default);
+        const elementComponent = await eval(`import("${componentMetadata.uri}")`);
+
+        if (!customElements.get(tag)) {
+
+          customElements.define(tag, elementComponent.default);
+
+        }
 
       }
 
     } catch (error) {
 
-      throw Error(`Failed to register componentMetadata: ${error}`);
+      throw Error(`Failed to import or register componentMetadata: ${error}`);
 
     }
 

@@ -74,6 +74,7 @@
   "dependencies": {
     "@digita-ai/semcom-core": "0.4.1",
     "buffer": "6.0.3",
+    "jssha": "^3.2.0",
     "n3": "1.10.0"
   },
   "eslintIgnore": [
