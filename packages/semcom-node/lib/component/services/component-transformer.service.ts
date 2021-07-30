@@ -22,10 +22,10 @@ export class ComponentTransformerService {
     }
 
     const shapeQuads = component.shapes.map((shape) =>
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#shape'), new Literal(component.shape)));
+      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#shape'), new Literal(shape)));
 
     const quads = [
-      new Quad(new NamedNode(component.uri), new NamedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), new Literal('http://semcom.digita.ai/voc#component'),),
+      new Quad(new NamedNode(component.uri), new NamedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), new NamedNode('http://semcom.digita.ai/voc#component'),),
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#label'), new Literal(component.label)),
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#description'),  new Literal(component.description)),
       new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#author'), new Literal(component.author)),

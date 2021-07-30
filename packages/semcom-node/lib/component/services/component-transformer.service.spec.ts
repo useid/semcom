@@ -1,5 +1,5 @@
 import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
-import { default as Quad } from 'rdf-quad';
+import { Quad, NamedNode, Literal } from 'n3';
 import { ComponentTransformerService } from './component-transformer.service';
 
 describe('ComponentTransformerService', () => {
@@ -47,10 +47,10 @@ describe('ComponentTransformerService', () => {
 
       componentMetaDatas.forEach((component) => {
 
-        expect(quads).toContainEqual(Quad(
-          component.uri,
-          'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-          'http://semcom.digita.ai/voc#component',
+        expect(quads).toContainEqual(new Quad(
+          new NamedNode(component.uri),
+          new NamedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          new NamedNode('http://semcom.digita.ai/voc#component'),
         ));
 
         // test the metadata keys with singular values
@@ -59,7 +59,11 @@ describe('ComponentTransformerService', () => {
         metaDataKeys.forEach((predicate) => {
 
           expect(quads).toContainEqual(
-            Quad(component.uri, `http://semcom.digita.ai/voc#${predicate}`, component[predicate])
+            new Quad(
+              new NamedNode(component.uri),
+              new NamedNode(`http://semcom.digita.ai/voc#${predicate}`),
+              new Literal(component[predicate].toString())
+            ),
           );
 
         });
@@ -68,7 +72,11 @@ describe('ComponentTransformerService', () => {
         component.shapes.forEach((shape) => {
 
           expect(quads).toContainEqual(
-            Quad(component.uri, `http://semcom.digita.ai/voc#shape`, shape)
+            new Quad(
+              new NamedNode(component.uri),
+              new NamedNode(`http://semcom.digita.ai/voc#shape`),
+              new NamedNode(shape)
+            )
           );
 
         });
