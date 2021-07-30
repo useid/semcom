@@ -40,6 +40,17 @@
           "ComponentMetadata:_tag": "payslip",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
+        },
+        {
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Digita SemCom component for displaying a type of gender.",
+          "ComponentMetadata:_label": "SemCom Gender Component",
+          "ComponentMetadata:_uri": "https://components.semcom.digita.ai/components/gender.component.js",
+          "ComponentMetadata:_shapes": "http://digita.ai/voc/gender#gender",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "gender",
+          "ComponentMetadata:_version": "0.1.0",
+          "ComponentMetadata:_latest": true
         }
       ]
     }
