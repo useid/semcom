@@ -150,7 +150,7 @@ export class DemoComponent extends RxLitElement {
       .demo-content {
         display:flex;
         flex-direction: column;
-        height: 100%;
+        min-height: 100%;
         margin: 0 auto;
         width: var(--site-max-width);
         background-color: var(--color-background-root);
@@ -184,11 +184,11 @@ export class DemoComponent extends RxLitElement {
         display:flex;
         flex-direction: column;
         justify-content: space-around;
-        height: 100%;
+        min-height: 100%;
       }
 
       .content > * {
-        margin: 100px;
+        margin: 60px 100px 100px 100px;
       }
       `,
     ];
