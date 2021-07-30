@@ -9,21 +9,21 @@ export class InputComponent extends BaseComponent {
    * The input field.
    */
   @query('#content')
-  content: HTMLInputElement;
+  content?: HTMLInputElement;
   @query('#fileName')
-  fileName: HTMLInputElement;
+  fileName?: HTMLInputElement;
 
   @state()
   showAlert = false;
 
   @state()
-  success: boolean;
+  success?: boolean;
 
   /**
    * The slot element which contains the input field.
    */
   @query('button')
-  button: HTMLButtonElement;
+  button?: HTMLButtonElement;
 
   /**
    * Handles a response event. Can be used to update the component's properties based on the data in the response.
@@ -38,22 +38,27 @@ export class InputComponent extends BaseComponent {
 
     }
 
-    this.content.disabled = false;
-    this.fileName.disabled = false;
-    this.button.disabled = false;
-    this.showAlert = true;
+    if(this.content && this.fileName && this.button) {
 
-    if (event.detail.success) {
+      this.content.disabled = false;
+      this.fileName.disabled = false;
+      this.button.disabled = false;
 
-      this.content.value = '';
-      this.fileName.value = '';
-      this.success = true;
+      if (event.detail.success) {
 
-    } else {
+        this.content.value = '';
+        this.fileName.value = '';
+        this.success = true;
 
-      this.success = false;
+      } else {
+
+        this.success = false;
+
+      }
 
     }
+
+    this.showAlert = true;
 
   }
 
@@ -153,9 +158,14 @@ export class InputComponent extends BaseComponent {
 
     }
 
-    this.button.disabled = true;
-    this.content.disabled = true;
-    this.fileName.disabled = true;
+    if(this.content && this.fileName && this.button) {
+
+      this.button.disabled = true;
+      this.content.disabled = true;
+      this.fileName.disabled = true;
+
+    }
+
     this.showAlert = false;
 
     const data = [ new Quad(new NamedNode(this.fileName.value), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];

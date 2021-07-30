@@ -6,11 +6,8 @@
     "emitDeclarationOnly": true,
     "module": "es2020",
     // Recommended by Lit Element
-    "target": "es2015",
-    // Strict should actually be true
-    "strict": false,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "target": "es2017",
+    "strict": true,
   },
   "files": [ "node_modules/vite/client.d.ts" ],
   "include": [ "lib" ],
