@@ -34,7 +34,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
       if (!customElements.get(tag)) {
 
-        const elementComponent = await eval(`import("${componentMetadata.uri}")`);
+        const elementComponent = await eval(`import("${encodeURI(componentMetadata.uri)}")`);
 
         if (!customElements.get(tag)) {
 
