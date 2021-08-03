@@ -3,6 +3,13 @@ import { RegisterComponentService } from './register-component.service';
 
 describe('RegisterComponentService', () => {
 
+  const testComponent = {
+    uri: 'https://www.google.com/test.js',
+    tag: 'component',
+  } as ComponentMetadata;
+
+  let testComponent2: ComponentMetadata;
+
   let service: RegisterComponentService;
 
   const addedUris = new Set();
@@ -10,6 +17,11 @@ describe('RegisterComponentService', () => {
   beforeEach(() => {
 
     service = new RegisterComponentService();
+
+    testComponent2 = {
+      uri: 'https://www.google.com/test2.js',
+      tag: 'component2',
+    } as ComponentMetadata;
 
   });
 
@@ -117,12 +129,7 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    const tag = await service.register(mockComponent);
+    const tag = await service.register(testComponent);
     expect(tag.startsWith('semcom-component-')).toBe(true);
 
   });
@@ -131,14 +138,9 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    await service.register(mockComponent);
+    await service.register(testComponent);
     expect(global.eval).toBeCalledTimes(1);
-    expect(service.isRegistered(mockComponent)).toBeTruthy();
+    expect(service.isRegistered(testComponent)).toBeTruthy();
 
   });
 
@@ -146,13 +148,8 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    await service.register(mockComponent);
-    await service.register(mockComponent);
+    await service.register(testComponent);
+    await service.register(testComponent);
 
     expect(global.eval).toBeCalledTimes(1);
     expect(customElements.define).toBeCalledTimes(1);
@@ -163,12 +160,7 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    await Promise.all([ service.register(mockComponent), service.register(mockComponent) ]);
+    await Promise.all([ service.register(testComponent), service.register(testComponent) ]);
     expect(customElements.define).toBeCalledTimes(1);
 
   });
@@ -177,18 +169,8 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    const mockComponent2 = {
-      uri: 'https://www.google.com/test2.js',
-      tag: 'component2',
-    } as ComponentMetadata;
-
-    const tag = await service.register(mockComponent);
-    await expect(service.register(mockComponent2)).resolves.not.toBe(tag);
+    const tag = await service.register(testComponent);
+    await expect(service.register(testComponent2)).resolves.not.toBe(tag);
 
   });
 
@@ -196,18 +178,10 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
+    testComponent2.tag = 'component';
 
-    const mockComponent2 = {
-      uri: 'https://www.google.com/test2.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    const tag = await service.register(mockComponent);
-    await expect(service.register(mockComponent2)).resolves.not.toBe(tag);
+    const tag = await service.register(testComponent);
+    await expect(service.register(testComponent2)).resolves.not.toBe(tag);
 
   });
 
@@ -215,13 +189,8 @@ describe('RegisterComponentService', () => {
 
     mockEvalAndDefine();
 
-    const mockComponent = {
-      uri: 'https://www.google.com/test.js',
-      tag: 'component',
-    } as ComponentMetadata;
-
-    const tag = await service.register(mockComponent);
-    await expect(service.register(mockComponent)).resolves.toBe(tag);
+    const tag = await service.register(testComponent);
+    await expect(service.register(testComponent)).resolves.toBe(tag);
 
   });
 
