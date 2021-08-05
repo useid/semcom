@@ -39,38 +39,32 @@
         "NodeHttpRequestResponseHandler:_httpHandler": {
           "@type": "HttpCorsRequestHandler",
           "HttpCorsRequestHandler:_handler": {
-            "@id": "urn:semcom-node:default:PipeThroughHandler"
+            "@id": "urn:semcom-node:default:RoutedHttpRequestHandler",
+            "@type": "RoutedHttpRequestHandler",
+            "RoutedHttpRequestHandler:_handlerControllerList": [
+              {
+                "@id": "urn:semcom-node:default:HttpHandlerController",
+                "@type": "HttpHandlerController",
+                "HttpHandlerController:_label": "ControllerList",
+                "HttpHandlerController:_routes": [
+                  {
+                    "@id": "urn:semcom-node:default:ComponentsRoute"
+                  },
+                  {
+                    "@id": "urn:semcom-node:default:QueryComponentsRoute"
+                  },
+                  {
+                    "@id": "urn:semcom-node:default:peersStorageRoute"
+                  },
+                  {
+                    "@id": "urn:semcom-node:default:storeStorageRoute"
+                  }
+                ]
+              }
+            ]
           }
         }
       }
-    },
-    {
-      "@id": "urn:semcom-node:default:PipeThroughHandler",
-      "@type": "SequenceHandler",
-      "SequenceHandler:_handlers": [
-        {
-          "@id": "urn:semcom-node:default:RoutedHttpRequestHandler",
-          "@type": "RoutedHttpRequestHandler",
-          "RoutedHttpRequestHandler:_handlerControllerList": [
-            {
-              "@id": "urn:semcom-node:default:HttpHandlerController",
-              "@type": "HttpHandlerController",
-              "HttpHandlerController:_label": "ControllerList",
-              "HttpHandlerController:_routes": [
-                {
-                  "@id": "urn:semcom-node:default:ComponentsRoute"
-                },
-                {
-                  "@id": "urn:semcom-node:default:QueryComponentsRoute"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
-        }
-      ]
     },
     {
       "@id": "urn:semcom-node:default:ComponentsRoute",
@@ -88,8 +82,17 @@
         }
       ],
       "HttpHandlerRoute:_handler": {
-        "@id": "urn:semcom-node:default:ComponentHttpHandler"
+        "@type": "SequenceHandler",
+        "SequenceHandler:_handlers": [
+          {
+            "@id": "urn:semcom-node:default:ComponentHttpHandler"
+          },
+          {
+            "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
+          }
+        ]
       },
+    
       "HttpHandlerRoute:_path": "/component"
     },
     {
@@ -108,9 +111,47 @@
         }
       ],
       "HttpHandlerRoute:_handler": {
-        "@id": "urn:semcom-node:default:QueryComponentHttpHandler"
+        "@type": "SequenceHandler",
+        "SequenceHandler:_handlers": [
+          {
+            "@id": "urn:semcom-node:default:QueryComponentHttpHandler"
+          },
+          {
+            "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
+          }
+        ]
       },
       "HttpHandlerRoute:_path": "/component/query"
+    },
+    {
+      "@id": "urn:semcom-node:default:peersStorageRoute",
+      "@type": "HttpHandlerRoute",
+      "HttpHandlerRoute:_operations": [
+        {
+          "@type": "HttpHandlerOperation",
+          "HttpHandlerOperation:_method": "GET",
+          "HttpHandlerOperation:_publish": true
+        }
+      ],
+      "HttpHandlerRoute:_handler": {
+        "@id": "urn:semcom-node:default:PeersJsonStoreHandler"
+      },
+      "HttpHandlerRoute:_path": "/peers"
+    },
+    {
+      "@id": "urn:semcom-node:default:storeStorageRoute",
+      "@type": "HttpHandlerRoute",
+      "HttpHandlerRoute:_operations": [
+        {
+          "@type": "HttpHandlerOperation",
+          "HttpHandlerOperation:_method": "GET",
+          "HttpHandlerOperation:_publish": true
+        }
+      ],
+      "HttpHandlerRoute:_handler": {
+        "@id": "urn:semcom-node:default:StorageJsonStoreHandler"
+      },
+      "HttpHandlerRoute:_path": "/storage"
     }
   ]
 }

@@ -1,0 +1,72 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-http/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-core/^0.0.0/components/context.jsonld"
+  ],
+  "@graph": [
+    {
+      "@id": "urn:semcom-node:default:MemoryStore",
+      "@type": "MemoryStore",
+      "initialData": ["peers", []],
+      "initialData": ["storage", []]
+    },
+
+    {
+      "@id": "urn:semcom-node:default:PeersJsonStoreHandler",
+      "@type": "JsonStoreHandler",
+      "JsonStoreHandler:_data": "peers",
+      "JsonStoreHandler:_store": {
+        "@id": "urn:semcom-node:default:MemoryStore"
+      }
+    },
+    {
+      "@id": "urn:semcom-node:default:StorageJsonStoreHandler",
+      "@type": "JsonStoreHandler",
+      "JsonStoreHandler:_data": "storage",
+      "JsonStoreHandler:_store": {
+        "@id": "urn:semcom-node:default:MemoryStore"
+      }
+    },
+
+
+    {
+      "@id": "urn:semcom-node:default:PeerSyncService",
+      "@type": "SyncService",
+      "SyncService:_storage": "storage",
+      "SyncService:_peers": "peers",
+      "SyncService:_store": {
+        "@id": "urn:semcom-node:default:MemoryStore"
+      },
+      "SyncService:_endpoint": "storage"
+    },
+    {
+      "@id": "urn:semcom-node:default:StorageSyncService",
+      "@type": "SyncService",
+      "SyncService:_storage": "peers",
+      "SyncService:_peers": "peers",
+      "SyncService:_store": {
+        "@id": "urn:semcom-node:default:MemoryStore"
+      },
+      "SyncService:_endpoint": "peers"
+    },
+
+    {
+      "@id": "urn:semcom-node:default:PeerSyncScheduler",
+      "@type": "Scheduler",
+      "Scheduler:_interval": 10000,
+      "Scheduler:_task": {
+        "@id": "urn:semcom-node:default:PeerSyncService"
+      }
+    },
+    {
+      "@id": "urn:semcom-node:default:StorageSyncScheduler",
+      "@type": "Scheduler",
+      "Scheduler:_interval": 10000,
+      "Scheduler:_task": {
+        "@id": "urn:semcom-node:default:StorageSyncService"
+      }
+    }
+  ]
+}
