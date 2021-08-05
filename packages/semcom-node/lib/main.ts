@@ -3,6 +3,7 @@ import { ComponentsManager } from 'componentsjs';
 import { NodeHttpServer } from '@digita-ai/handlersjs-http';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { Scheduler } from '@digita-ai/handlersjs-core';
 
 /**
  * Instantiates a server from the passed configuration and starts it.
@@ -27,7 +28,12 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
   await manager.configRegistry.register(configPath);
 
   const server: NodeHttpServer = await manager.instantiate('urn:semcom-node:default:NodeHttpServer', { variables });
+  const peerSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PeerSyncScheduler', { variables });
+  const storageSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:StorageSyncScheduler', { variables });
+
   server.start();
+  peerSyncScheduler.start();
+  storageSyncScheduler.start();
 
 };
 
