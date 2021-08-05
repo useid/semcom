@@ -30,7 +30,6 @@
       }
     },
 
-
     {
       "@id": "urn:semcom-node:default:PeerSyncService",
       "@type": "SyncService",

@@ -54,10 +54,10 @@
                     "@id": "urn:semcom-node:default:QueryComponentsRoute"
                   },
                   {
-                    "@id": "urn:semcom-node:default:peersStorageRoute"
+                    "@id": "urn:semcom-node:default:PeersStorageRoute"
                   },
                   {
-                    "@id": "urn:semcom-node:default:storeStorageRoute"
+                    "@id": "urn:semcom-node:default:StoreStorageRoute"
                   }
                 ]
               }
@@ -124,7 +124,7 @@
       "HttpHandlerRoute:_path": "/component/query"
     },
     {
-      "@id": "urn:semcom-node:default:peersStorageRoute",
+      "@id": "urn:semcom-node:default:PeersStorageRoute",
       "@type": "HttpHandlerRoute",
       "HttpHandlerRoute:_operations": [
         {
@@ -139,7 +139,7 @@
       "HttpHandlerRoute:_path": "/peers"
     },
     {
-      "@id": "urn:semcom-node:default:storeStorageRoute",
+      "@id": "urn:semcom-node:default:StoreStorageRoute",
       "@type": "HttpHandlerRoute",
       "HttpHandlerRoute:_operations": [
         {
