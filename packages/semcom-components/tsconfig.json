@@ -11,6 +11,8 @@
     "strict": false,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    // If this is off, building will error due to an N3 type
+    "skipLibCheck": true
   },
   "files": [ "node_modules/vite/client.d.ts" ],
   "include": [ "lib" ],

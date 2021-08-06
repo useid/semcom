@@ -35,9 +35,14 @@
   "dependencies": {
     "@digita-ai/semcom-core": "0.4.1",
     "@digita-ai/semcom-sdk": "0.4.1",
+    "@digita-ai/ui-transfer-components": "^0.7.2",
+    "@digita-ai/ui-transfer-theme": "^0.7.2",
+    "@netwerk-digitaal-erfgoed/solid-crs-components": "^0.7.0",
     "buffer": "6.0.3",
     "lit-element": "^2.4.0",
-    "n3": "1.10.0"
+    "n3": "1.10.0",
+    "rx-lit": "^1.0.1",
+    "xstate": "^4.23.1"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",

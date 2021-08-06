@@ -3,10 +3,12 @@ import { addListener, ComponentEventType, ComponentEventTypes, ComponentReadEven
 import ProfileComponent from './components/profile.component';
 import PayslipComponent from './components/payslip.component';
 import InputComponent from './components/input.component';
+import SemComRegisterComponent from './components/sem-com-register.component';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
 customElements.define('input-component', InputComponent);
+customElements.define('sem-com-register-component', SemComRegisterComponent);
 
 const parser = new Parser();
 
