@@ -3,6 +3,7 @@ import { ComponentsManager } from 'componentsjs';
 import { NodeHttpServer } from '@digita-ai/handlersjs-http';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { Scheduler } from '@digita-ai/handlersjs-core';
 
 /**
  * Instantiates a server from the passed configuration and starts it.
@@ -27,13 +28,18 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
   await manager.configRegistry.register(configPath);
 
   const server: NodeHttpServer = await manager.instantiate('urn:semcom-node:default:NodeHttpServer', { variables });
+  const peerSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PeerSyncScheduler', { variables });
+  const storageSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:StorageSyncScheduler', { variables });
+
   server.start();
+  peerSyncScheduler.start();
+  storageSyncScheduler.start();
 
 };
 
 export const createVariables = (args: string[]): Record<string, any> => {
 
-  const { argv: params } = yargs(hideBin(args))
+  const argv = yargs(hideBin(args))
     .usage('node ./dist/main.js [args]')
     .options({
       config: { type: 'string', alias: 'c' },
@@ -42,14 +48,14 @@ export const createVariables = (args: string[]): Record<string, any> => {
       schema: { type: 'string', alias: 's' },
       mainModulePath: { type: 'string', alias: 'm' },
     })
-    .help();
+    .help().parseSync();
 
   return {
-    'urn:semcom-node:variables:customConfigPath': params.config,
-    'urn:semcom-node:variables:mainModulePath': params.mainModulePath,
-    'urn:semcom-node:variables:schema': params.schema,
-    'urn:semcom-node:variables:host': params.host ?? 'localhost',
-    'urn:semcom-node:variables:port': params.port ?? '3000',
+    'urn:semcom-node:variables:customConfigPath': argv.config,
+    'urn:semcom-node:variables:mainModulePath': argv.mainModulePath,
+    'urn:semcom-node:variables:schema': argv.schema,
+    'urn:semcom-node:variables:host': argv.host ?? 'localhost',
+    'urn:semcom-node:variables:port': argv.port ?? '3000',
   };
 
 };

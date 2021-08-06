@@ -3,7 +3,7 @@ import { ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent } from 
 
 describe('addListener', () => {
 
-  let element: Node;
+  let element: HTMLElement;
   let process: jest.Mock<any, any>;
 
   beforeEach(() => {

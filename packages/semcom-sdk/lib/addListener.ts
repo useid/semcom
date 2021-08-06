@@ -1,14 +1,23 @@
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { ComponentEventTypes, ComponentOperationEvent, ComponentResponseEvent } from './component/models/component-events.model';
+import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from './component/models/component-events.model';
 
-export const addListener = <T extends ComponentOperationEvent, D extends keyof ComponentDataTypes>(
-  eventType: ComponentEventTypes,
-  element: Node,
+declare global {
+  interface GlobalEventHandlersEventMap<D extends keyof ComponentDataTypes> {
+    [ComponentEventTypes.READ]: ComponentReadEvent;
+    [ComponentEventTypes.WRITE]: ComponentWriteEvent<D>;
+    [ComponentEventTypes.APPEND]: ComponentAppendEvent<D>;
+    [ComponentEventTypes.RESPONSE]: ComponentResponseEvent<D>;
+  }
+}
+
+export const addListener = <D extends keyof ComponentDataTypes, T extends ComponentEventTypes>(
+  eventType: T,
+  element: GlobalEventHandlers,
   type: D,
-  process: (event: T) => Promise<ComponentResponseEvent<D>>,
+  process: (event: GlobalEventHandlersEventMap<D>[T]) => Promise<ComponentResponseEvent<D>>
 ): void => {
 
-  element.addEventListener(eventType, async (event: T) => {
+  element.addEventListener<T>(eventType, async (event: GlobalEventHandlersEventMap<D>[T]) => {
 
     const target = event.target;
 

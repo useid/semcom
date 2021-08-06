@@ -4,13 +4,10 @@
     "baseUrl": "lib",
     "outDir": "dist",
     "emitDeclarationOnly": true,
+    "module": "es2020",
     // Recommended by Lit Element
-    "module": "es2015",
     "target": "es2017",
-    // Strict should actually be true
-    "strict": false,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "strict": true,
   },
   "files": [ "node_modules/vite/client.d.ts" ],
   "include": [ "lib" ],

@@ -1,5 +1,7 @@
 export class ComponentMetadata {
 
+  [key: string]: string | number | boolean | string[] | undefined;
+
   constructor(
     public uri: string,
     public label: string,

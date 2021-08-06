@@ -30,7 +30,7 @@
   "scripts": {
     "build": "rimraf ./dist && npm run build:ts && npm run build:components",
     "build:ts": "tsc",
-    "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
+    "build:components": "componentsjs-generator --typeScopedContexts -s lib -c dist/components -i .componentsignore",
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -58,11 +58,11 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.2.3",
-    "@digita-ai/handlersjs-http": "^0.2.3",
+    "@digita-ai/handlersjs-core": "^0.3.2",
+    "@digita-ai/handlersjs-http": "^0.3.2",
     "@digita-ai/semcom-core": "0.4.1",
-    "componentsjs": "4.0.5",
-    "rdf-quad": "^1.5.0",
+    "componentsjs": "4.4.0",
+    "n3": "^1.6.3",
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
     "semver": "^7.3.5",
@@ -72,9 +72,12 @@
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
     "@types/jest": "^26.0.19",
+    "@types/n3": "^1.4.4",
     "@types/node": "^14.14.14",
+    "@types/streamify-array": "^1.0.0",
     "@types/supertest": "^2.0.10",
-    "componentsjs-generator": "2.1.0",
+    "@types/yargs": "^17.0.2",
+    "componentsjs-generator": "2.5.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "jest-coverage-thresholds-bumper": "0.0.4",
@@ -101,10 +104,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 48.98,
-        "functions": 53.85,
-        "lines": 61.15,
-        "statements": 59.06
+        "branches": 55.1,
+        "functions": 64.15,
+        "lines": 66.67,
+        "statements": 65.79
       }
     }
   }
