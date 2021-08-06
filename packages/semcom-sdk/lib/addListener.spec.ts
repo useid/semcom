@@ -25,12 +25,35 @@ describe('addListener', () => {
             uri: 'test',
             data: undefined,
             success: true,
+            type: 'quads',
           },
         }
       )
     );
 
     expect(process).toBeCalledTimes(1);
+
+  });
+
+  it("should throw when type doesn't match", () => {
+
+    addListener(ComponentEventTypes.READ, element, 'quads', process);
+
+    element.dispatchEvent(
+      new CustomEvent(
+        ComponentEventTypes.READ,
+        {
+          detail: {
+            uri: 'test',
+            data: undefined,
+            success: true,
+            type: 'json',
+          },
+        }
+      )
+    );
+
+    expect(process).toBeCalledTimes(0);
 
   });
 
