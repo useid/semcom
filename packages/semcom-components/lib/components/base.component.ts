@@ -2,16 +2,6 @@
 import { Component, ComponentDataTypes } from '@digita-ai/semcom-core';
 import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import { LitElement, property } from 'lit-element';
-import { Quad } from 'rdf-js';
-
-declare global {
-  interface HTMLElementEventMap {
-    [ComponentEventTypes.READ]: ComponentReadEvent;
-    [ComponentEventTypes.WRITE]: ComponentWriteEvent;
-    [ComponentEventTypes.APPEND]: ComponentAppendEvent;
-    [ComponentEventTypes.RESPONSE]: ComponentResponseEvent;
-  }
-}
 
 /**
  * A base component which implements the Semcom-standard by using Lit.
