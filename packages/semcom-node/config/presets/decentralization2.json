@@ -9,8 +9,8 @@
     {
       "@id": "urn:semcom-node:default:MemoryStore",
       "@type": "MemoryStore",
-      "initialData": ["peers", ["http://localhost:3001"]],
-      "initialData": ["storage", ["http://localhost:8080/components/profile.component.js", "http://localhost:8080/components/input.component.js"]]
+      "initialData": ["peers", ["http://localhost:3000"]],
+      "initialData": ["storage", ["http://localhost:8080/components/payslip.component.js", "http://localhost:8080/components/gender.component.js"]]
     },
 
     {
@@ -29,6 +29,7 @@
         "@id": "urn:semcom-node:default:MemoryStore"
       }
     },
+
 
     {
       "@id": "urn:semcom-node:default:PeerSyncService",
@@ -54,7 +55,7 @@
     {
       "@id": "urn:semcom-node:default:PeerSyncScheduler",
       "@type": "Scheduler",
-      "Scheduler:_interval": 100000,
+      "Scheduler:_interval": 10000,
       "Scheduler:_task": {
         "@id": "urn:semcom-node:default:PeerSyncService"
       }
@@ -62,7 +63,7 @@
     {
       "@id": "urn:semcom-node:default:StorageSyncScheduler",
       "@type": "Scheduler",
-      "Scheduler:_interval": 100000,
+      "Scheduler:_interval": 10000,
       "Scheduler:_task": {
         "@id": "urn:semcom-node:default:StorageSyncService"
       }
