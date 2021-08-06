@@ -1,6 +1,6 @@
 import { html, css, CSSResult, TemplateResult, state, PropertyValues, query, unsafeCSS } from 'lit-element';
 import { createMachine, interpret, State } from 'xstate';
-import { from } from 'rxjs';
+import { from, ObservableInput } from 'rxjs';
 import { RxLitElement } from 'rx-lit';
 import { map } from 'rxjs/operators';
 import { AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, Session, SolidSDKService } from '@digita-ai/ui-transfer-components';
@@ -25,16 +25,16 @@ export class DemoComponent extends RxLitElement {
   private actor = interpret(this.machine, { devTools: true }).onTransition((appState) => console.log(appState.value));
 
   @state()
-  state: State<DemoContext>;
+  state?: State<DemoContext>;
 
   @state()
-  tags: string[];
+  tags?: string[];
 
   @state()
-  session: Session;
+  session?: Session;
 
   @query('.components')
-  contentElement: HTMLDivElement;
+  contentElement?: HTMLDivElement;
 
   constructor() {
 
@@ -46,9 +46,9 @@ export class DemoComponent extends RxLitElement {
 
     this.define('provider-list-item', ProviderListItemComponent);
 
-    this.subscribe('state', from(this.actor));
-    this.subscribe('session', from(this.actor).pipe(map((appState) => appState.context.session)));
-    this.subscribe('tags', from(this.actor).pipe(map((appState) => appState.context.tags)));
+    this.subscribe('state', from(this.actor as ObservableInput<any>));
+    this.subscribe('session', from(this.actor as ObservableInput<any>).pipe(map((appState) => appState.context.session)));
+    this.subscribe('tags', from(this.actor as ObservableInput<any>).pipe(map((appState) => appState.context.tags)));
 
     this.actor.start();
 
@@ -60,54 +60,62 @@ export class DemoComponent extends RxLitElement {
 
     if (changed && changed.has('tags') && this.actor) {
 
-      for (const tag of this.tags) {
+      if(this.tags){
 
-        const element = document.createElement(tag);
+        for (const tag of this.tags) {
 
-        const parser = new Parser();
+          const element = document.createElement(tag);
 
-        addListener(ComponentEventTypes.READ, element, async (event: ComponentReadEvent) => {
+          const parser = new Parser();
 
-          const response = await fetch(event.detail.uri);
-          const profileText = await response.text();
-          const quads = parser.parse(profileText);
+          addListener(ComponentEventTypes.READ, element, async (event: ComponentReadEvent) => {
 
-          return new ComponentResponseEvent({
-            detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
-          });
-
-        });
-
-        addListener(ComponentEventTypes.WRITE, element, async (event: ComponentWriteEvent) => {
-
-          try {
-
-            new URL(event.detail.uri);
-
-            const response = new Promise<ComponentResponseEvent>((resolve, reject) => {
-
-              setTimeout(() =>
-                resolve(new ComponentResponseEvent({
-                  detail: { ...event.detail, cause: event, success: true },
-                })), 2000);
-
-            });
-
-            return response;
-
-          } catch(e) {
+            const response = await fetch(event.detail.uri);
+            const profileText = await response.text();
+            const quads = parser.parse(profileText);
 
             return new ComponentResponseEvent({
-              detail: { ...event.detail, cause: event, success: false },
+              detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
             });
+
+          });
+
+          addListener(ComponentEventTypes.WRITE, element, async (event: ComponentWriteEvent) => {
+
+            try {
+
+              new URL(event.detail.uri);
+
+              const response = new Promise<ComponentResponseEvent>((resolve, reject) => {
+
+                setTimeout(() =>
+                  resolve(new ComponentResponseEvent({
+                    detail: { ...event.detail, cause: event, success: true },
+                  })), 2000);
+
+              });
+
+              return response;
+
+            } catch(e) {
+
+              return new ComponentResponseEvent({
+                detail: { ...event.detail, cause: event, success: false },
+              });
+
+            }
+
+          });
+
+          this.contentElement?.appendChild(element);
+
+          if(this.session) {
+
+            element.setAttribute('entry', this.session.webId);
 
           }
 
-        });
-
-        this.contentElement.appendChild(element);
-
-        element.setAttribute('entry', this.session.webId);
+        }
 
       }
 
@@ -134,7 +142,7 @@ export class DemoComponent extends RxLitElement {
         </a>
       </nav>
       <div class="content">
-        ${this.state.matches(DemoStates.AUTHENTICATING) ? html`<auth-flow .solidService="${this.solidService}" @authenticated="${this.onAuthenticated}"></auth-flow>` : html`` ? html`` : html`<loading-component></loading-component>`}
+        ${this.state?.matches(DemoStates.AUTHENTICATING) ? html`<auth-flow .solidService="${this.solidService}" @authenticated="${this.onAuthenticated}"></auth-flow>` : html`` ? html`` : html`<loading-component></loading-component>`}
         ${this.tags ? html`<div class="components"></div>` : html`` ? html`` : html`<loading-component></loading-component>`}
       </div>
     </div>
@@ -150,7 +158,7 @@ export class DemoComponent extends RxLitElement {
       .demo-content {
         display:flex;
         flex-direction: column;
-        height: 100%;
+        min-height: 100%;
         margin: 0 auto;
         width: var(--site-max-width);
         background-color: var(--color-background-root);
@@ -184,11 +192,11 @@ export class DemoComponent extends RxLitElement {
         display:flex;
         flex-direction: column;
         justify-content: space-around;
-        height: 100%;
+        min-height: 100%;
       }
 
       .content > * {
-        margin: 100px;
+        margin: 60px 100px 100px 100px;
       }
       `,
     ];

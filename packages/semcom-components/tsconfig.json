@@ -4,11 +4,11 @@
     "baseUrl": "lib",
     "outDir": "dist",
     "emitDeclarationOnly": true,
+    "module": "es2020",
     // Recommended by Lit Element
-    "module": "es2015",
     "target": "es2017",
     // Strict should actually be true
-    "strict": false,
+    "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     // If this is off, building will error due to an N3 type

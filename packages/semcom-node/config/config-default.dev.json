@@ -8,7 +8,8 @@
     "files-dasn:config/presets/serializer.json",
     "files-dasn:config/presets/component.json",
     "files-dasn:config/presets/handlers.json",
-    "files-dasn:config/presets/server.json"
+    "files-dasn:config/presets/server.json",
+    "files-dasn:config/presets/decentralization.json"
   ],
   "@graph": [
     {
@@ -45,6 +46,17 @@
           "ComponentMetadata:_shapes": "http://digita.ai/voc/payslip#payslip",
           "ComponentMetadata:_author": "https://digita.ai",
           "ComponentMetadata:_tag": "payslip",
+          "ComponentMetadata:_version": "0.1.0",
+          "ComponentMetadata:_latest": true
+        },
+        {
+          "@type": "ComponentMetadata",
+          "ComponentMetadata:_description": "Digita SemCom component for displaying a type of gender.",
+          "ComponentMetadata:_label": "SemCom Gender Component",
+          "ComponentMetadata:_uri": "http://localhost:8080/components/gender.component.js",
+          "ComponentMetadata:_shapes": "http://digita.ai/voc/gender#gender",
+          "ComponentMetadata:_author": "https://digita.ai",
+          "ComponentMetadata:_tag": "gender",
           "ComponentMetadata:_version": "0.1.0",
           "ComponentMetadata:_latest": true
         }
