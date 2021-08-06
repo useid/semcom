@@ -1,9 +1,11 @@
+import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { ComponentEventTypes, ComponentOperationEvent, ComponentResponseEvent } from './component/models/component-events.model';
 
-export const addListener = <T extends ComponentOperationEvent>(
+export const addListener = <T extends ComponentOperationEvent, D extends keyof ComponentDataTypes>(
   eventType: ComponentEventTypes,
   element: Node,
-  process: (event: T) => Promise<ComponentResponseEvent>
+  type: D,
+  process: (event: T) => Promise<ComponentResponseEvent<D>>,
 ): void => {
 
   element.addEventListener(eventType, async (event: T) => {

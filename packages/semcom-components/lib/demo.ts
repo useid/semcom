@@ -10,25 +10,25 @@ customElements.define('input-component', InputComponent);
 
 const parser = new Parser();
 
-addListener(ComponentEventTypes.READ, document, async (event: ComponentReadEvent) => {
+addListener(ComponentEventTypes.READ, document, 'quads', async (event: ComponentReadEvent) => {
 
   const response = await fetch(event.detail.uri);
   const profileText = await response.text();
   const quads = parser.parse(profileText);
 
   return new ComponentResponseEvent({
-    detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
+    detail: { uri: event.detail.uri, cause: event, data: quads, success: true, type: 'quads' },
   });
 
 });
 
-addListener(ComponentEventTypes.WRITE, document, async (event: ComponentWriteEvent) => {
+addListener(ComponentEventTypes.WRITE, document, 'quads', async (event: ComponentWriteEvent<'quads'>) => {
 
   try {
 
     new URL(event.detail.uri);
 
-    const response = new Promise<ComponentResponseEvent>((resolve, reject) => {
+    const response = new Promise<ComponentResponseEvent<'quads'>>((resolve, reject) => {
 
       setTimeout(() =>
         resolve(new ComponentResponseEvent({

@@ -15,7 +15,7 @@ describe('addListener', () => {
 
   it('should be dispatch process', () => {
 
-    addListener(ComponentEventTypes.READ, element, process);
+    addListener(ComponentEventTypes.READ, element, 'quads', process);
 
     element.dispatchEvent(
       new CustomEvent(
@@ -36,7 +36,7 @@ describe('addListener', () => {
 
   it('should throw when event detail is empty', () => {
 
-    addListener(ComponentEventTypes.READ, element, process);
+    addListener(ComponentEventTypes.READ, element, 'quads', process);
 
     element.dispatchEvent(new CustomEvent(ComponentEventTypes.READ));
 
