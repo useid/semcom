@@ -3,22 +3,24 @@ import { Theme } from '@digita-ai/ui-transfer-theme';
 import { RxLitElement } from 'rx-lit';
 import { ActorRef, Interpreter } from 'xstate';
 import { FormActors, FormCleanlinessStates, FormEvent, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents, FormUpdatedEvent } from '@netwerk-digitaal-erfgoed/solid-crs-components';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SemComRegisterContext } from './sem-com-register.machine';
 
 export class SemComStoreSelectionComponent extends RxLitElement {
 
   @property({ type: Array })
-  public semComStoreUrls: string[];
+  public semComStoreUrls?: string[];
 
   /** The actor controlling this component. */
   @property({ type: Object })
-  public actor: Interpreter<SemComRegisterContext>;
+  // Should not be any - due to ts strict mode (any used to be type Interpreter<SemComRegisterContext>;).
+  public actor?: any;
 
   /** The actor responsible for form validation in this component.  */
   @state()
-  formActor: ActorRef<FormEvent>;
+  // Should not be any - due to ts strict mode (any used to be type ActorRef<FormEvent>;).
+  formActor?: any;
 
   /** Indicates if if the form validation passed. */
   @state()
@@ -30,11 +32,11 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
   /** The freeInput element from the DOM */
   @query('#freeInput')
-  freeInput: HTMLInputElement;
+  freeInput?: HTMLInputElement;
 
   /** The dropDown element from the DOM */
   @query('#dropDown')
-  dropDown: HTMLSelectElement;
+  dropDown?: HTMLSelectElement;
 
   /** Hook called on at every update after connection to the DOM. */
   async updated(changed: PropertyValues): Promise<void> {
@@ -44,7 +46,8 @@ export class SemComStoreSelectionComponent extends RxLitElement {
     if (changed && changed.has('actor') && this.actor) {
 
       this.subscribe('formActor', from(this.actor).pipe(
-        map((machineState) => machineState.children[FormActors.FORM_MACHINE]),
+        // Should not be any - due to ts strict mode.
+        map((machineState: any) => machineState.children[FormActors.FORM_MACHINE]),
       ));
 
     }
@@ -52,7 +55,8 @@ export class SemComStoreSelectionComponent extends RxLitElement {
     if(changed?.has('formActor') && this.formActor){
 
       this.subscribe('isValid', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
+        // Should not be any - due to ts strict mode.
+        map((machineState: any) => machineState.matches({
           [FormSubmissionStates.NOT_SUBMITTED]:{
             [FormRootStates.VALIDATION]: FormValidationStates.VALID,
           },
@@ -60,7 +64,8 @@ export class SemComStoreSelectionComponent extends RxLitElement {
       ));
 
       this.subscribe('isDirty', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
+        // Should not be any - due to ts strict mode.
+        map((machineState: any) => machineState.matches({
           [FormSubmissionStates.NOT_SUBMITTED]:{
             [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
           },
@@ -75,15 +80,17 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
     const clearFreeInput = () => {
 
-      this.freeInput.value = '';
-      this.formActor.send(new FormUpdatedEvent('freeInput', ''));
+      if (this.freeInput) { this.freeInput.value = ''; }
+
+      this.formActor?.send(new FormUpdatedEvent('freeInput', ''));
 
     };
 
     const clearDropDown = () => {
 
-      this.dropDown.value = 'empty';
-      this.formActor.send(new FormUpdatedEvent('dropDown', 'empty'));
+      if (this.dropDown) { this.dropDown.value = 'empty'; }
+
+      this.formActor?.send(new FormUpdatedEvent('dropDown', 'empty'));
 
     };
 
@@ -92,7 +99,7 @@ export class SemComStoreSelectionComponent extends RxLitElement {
             <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="dropDown">
                 <select slot="input" name="dropDown" id="dropDown" required @input="${clearFreeInput}">
                     <option id="empty" value="empty" disabled selected hidden>Select a SemCom store ...</option>
-                    ${this.semComStoreUrls.map((store) => html`<option id="${store}" value="${store}">${store}</option>`)}
+                    ${this.semComStoreUrls?.map((store) => html`<option id="${store}" value="${store}">${store}</option>`)}
                 </select>
             </form-element-component>
 
@@ -105,7 +112,7 @@ export class SemComStoreSelectionComponent extends RxLitElement {
               <input type="text" slot="input" placeholder="URI of the store ..." name="freeInput" id="freeInput" @input="${clearDropDown}" />
             </form-element-component>
             <!-- UPGRADE THIS TO new FormSubmittedEvent() WHEN THE TYPE IS FIXED -->
-            <button ?disabled="${(this.isValid && !this.isDirty) || (!this.isValid && this.isDirty) || (!this.isValid && !this.isDirty)}" type="button" @click="${() => this.formActor.send(FormEvents.FORM_SUBMITTED)}">Next</button>
+            <button ?disabled="${(this.isValid && !this.isDirty) || (!this.isValid && this.isDirty) || (!this.isValid && !this.isDirty)}" type="button" @click="${() => this.formActor?.send(FormEvents.FORM_SUBMITTED)}">Next</button>
         </div>
     `;
 

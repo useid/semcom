@@ -9,16 +9,15 @@ import { SemComRegisterContext } from './sem-com-register.machine';
 
 export class SemComUploadFormComponent extends RxLitElement {
 
-  @property({ type: Array })
-  public semComStoreUrls: string[];
-
   /** The actor controlling this component. */
   @property({ type: Object })
-  public actor: Interpreter<SemComRegisterContext>;
+  // Should not be any - due to ts strict mode (any used to be type Interpreter<SemComRegisterContext>;).
+  public actor?: any;
 
   /** The actor responsible for form validation in this component.  */
   @state()
-  formActor: ActorRef<FormEvent>;
+  // Should not be any - due to ts strict mode (any used to be type ActorRef<FormEvent>;).
+  formActor?: any;
 
   /** Indicates if if the form validation passed. */
   @state()
@@ -36,7 +35,8 @@ export class SemComUploadFormComponent extends RxLitElement {
     if (changed && changed.has('actor') && this.actor) {
 
       this.subscribe('formActor', from(this.actor).pipe(
-        map((machineState) => machineState.children[FormActors.FORM_MACHINE]),
+        // Should not be any - due to ts strict mode.
+        map((machineState: any) => machineState.children[FormActors.FORM_MACHINE]),
       ));
 
     }
@@ -44,7 +44,8 @@ export class SemComUploadFormComponent extends RxLitElement {
     if(changed?.has('formActor') && this.formActor){
 
       this.subscribe('isValid', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
+        // Should not be any - due to ts strict mode.
+        map((machineState: any) => machineState.matches({
           [FormSubmissionStates.NOT_SUBMITTED]:{
             [FormRootStates.VALIDATION]: FormValidationStates.VALID,
           },
@@ -52,7 +53,8 @@ export class SemComUploadFormComponent extends RxLitElement {
       ));
 
       this.subscribe('isDirty', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
+        // Should not be any - due to ts strict mode.
+        map((machineState: any) => machineState.matches({
           [FormSubmissionStates.NOT_SUBMITTED]:{
             [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
           },
@@ -132,7 +134,7 @@ export class SemComUploadFormComponent extends RxLitElement {
         </div>
 
         <!-- UPGRADE THIS TO new FormSubmittedEvent() WHEN THE TYPE IS FIXED -->
-        <button ?disabled="${false}" type="button" @click="${() => this.formActor.send(FormEvents.FORM_SUBMITTED)}">Save Data</button>
+        <button ?disabled="${false}" type="button" @click="${() => this.formActor?.send(FormEvents.FORM_SUBMITTED)}">Save Data</button>
       </div>
     `;
 

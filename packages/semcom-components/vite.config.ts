@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 export default ({ command, mode }) => {
   if (command === 'serve') {
     return defineConfig({
-      root: 'dist',
+      root: 'lib',
       build: {
         target: 'es2015',
         outDir: '../dist'

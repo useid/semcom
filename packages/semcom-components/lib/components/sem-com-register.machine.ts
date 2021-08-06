@@ -7,7 +7,14 @@ import { Session } from '@digita-ai/ui-transfer-components';
 
 /* CONTEXT */
 
+export interface StoreSelectionFormContext {
+  [key: string]: string;
+  dropDown: string;
+  freeInput: string;
+
+}
 export interface UploadFormContext {
+  [key: string]: string;
   uri: string;
   labelInput: string;
   description: string;
@@ -25,35 +32,40 @@ export interface SemComRegisterContext {
 }
 
 export const validateStoreSelectionForm =
-async (context: FormContext<{ dropDown: string; freeInput: string }>): Promise<FormValidatorResult[]> => {
+async (context: FormContext<StoreSelectionFormContext>): Promise<FormValidatorResult[]> => {
 
   const res: FormValidatorResult[] = [];
 
-  // only validate dirty fields
-  const dirtyFields = Object.keys(context.data).filter((field) =>
-    context.data[field as keyof { dropDown: string; freeInput: string }]
-    !== context.original[field as keyof { dropDown: string; freeInput: string }]);
+  if (context.data && context.original) {
 
-  for (const field of dirtyFields) {
+    // only validate dirty fields
+    const dirtyFields = Object.keys(context.data).filter((field) => context.data
+      && context.original
+      && context.data[field as keyof StoreSelectionFormContext]
+      !== context.original[field as keyof StoreSelectionFormContext]);
 
-    const value = context.data[field as keyof { dropDown: string; freeInput: string }];
+    for (const field of dirtyFields) {
 
-    if (field === 'freeInput') {
+      const value = context.data[field as keyof { dropDown: string; freeInput: string }];
 
-      if (!value) {
+      if (field === 'freeInput') {
 
-        res.push({ field, message: 'cannot be empty' });
+        if (!value) {
 
-      } else {
+          res.push({ field, message: 'cannot be empty' });
 
-        // the value must be a valid URL
-        try {
+        } else {
 
-          new URL(value);
+          // the value must be a valid URL
+          try {
 
-        } catch {
+            new URL(value);
 
-          res.push({ field, message: 'must be a valid URL of a solid pod' });
+          } catch {
+
+            res.push({ field, message: 'must be a valid URL of a solid pod' });
+
+          }
 
         }
 
@@ -73,43 +85,48 @@ async (context: FormContext<UploadFormContext>): Promise<FormValidatorResult[]> 
 
   const res: FormValidatorResult[] = [];
 
-  // only validate dirty fields
-  const dirtyFields = Object.keys(context.data).filter((field) =>
-    context.data[field as keyof UploadFormContext]
+  if (context.data && context.original) {
+
+    // only validate dirty fields
+    const dirtyFields = Object.keys(context.data).filter((field) => context.data
+    && context.original
+    && context.data[field as keyof UploadFormContext]
     !== context.original[field as keyof UploadFormContext]);
 
-  for (const field of dirtyFields) {
+    for (const field of dirtyFields) {
 
-    const value = context.data[field as keyof UploadFormContext];
+      const value = context.data[field as keyof UploadFormContext];
 
-    if (field === 'uri') {
+      if (field === 'uri') {
 
-      if (!value) {
+        if (!value) {
 
-        res.push({ field, message: 'cannot be empty' });
+          res.push({ field, message: 'cannot be empty' });
 
-      } else {
+        } else {
 
-        // the value must be a valid URL
-        try {
+          // the value must be a valid URL
+          try {
 
-          new URL(value);
+            new URL(value);
 
-        } catch {
+          } catch {
 
-          res.push({ field, message: 'must be a valid URL of a solid pod' });
+            res.push({ field, message: 'must be a valid URL of a solid pod' });
+
+          }
 
         }
 
       }
 
-    }
+      if (field === 'labelInput') {
 
-    if (field === 'labelInput') {
+        if (!value) {
 
-      if (!value) {
+          res.push({ field, message: 'cannot be empty' });
 
-        res.push({ field, message: 'cannot be empty' });
+        }
 
       }
 
@@ -132,7 +149,6 @@ export enum SemComRegisterStates {
   UPLOADING_COMPONENT = '[SemComRegisterState: Uploading_Component]',
   SUCCESSFULLY_SAVED_DATA = '[SemComRegisterState: Successfully_Saved_Data]',
   ERROR_SAVING_DATA = '[SemComRegisterState: Error_Saving_Data]',
-  DONE = '[SemComRegisterState: Done]',
 }
 
 export interface SemComRegisterState {
@@ -142,14 +158,13 @@ export interface SemComRegisterState {
   | SemComRegisterStates.CHECKING_PERMISSION
   | SemComRegisterStates.UPLOAD_COMPONENT_FORM
   | SemComRegisterStates.NOT_PERMITTED
-  | SemComRegisterStates.UPLOADING_COMPONENT
-  | SemComRegisterStates.DONE;
+  | SemComRegisterStates.UPLOADING_COMPONENT;
   context: SemComRegisterContext;
 }
 
 export interface SemComRegisterStateSchema extends StateSchema<SemComRegisterContext> {
   states: {
-    [key in SemComRegisterStates]?: StateSchema<SemComRegisterContext>;
+    [key in SemComRegisterStates]: StateSchema<SemComRegisterContext>;
   };
 }
 
@@ -283,7 +298,9 @@ SemComRegisterEvent> = {
 
     [SemComRegisterStates.CHECKING_PERMISSION]: {
       invoke: {
-        src: (context, event: StoreSelectedEvent) => {
+        src: (context, event) => {
+
+          if (!(event instanceof StoreSelectedEvent)) { return of(new NoPermissionEvent()); }
 
           const url = event.freeInput !== '' ? event.freeInput : (event.dropDown !== 'empty' ? event.dropDown : undefined);
 
@@ -292,12 +309,14 @@ SemComRegisterEvent> = {
           return from(solidFetch(url)).pipe(
             switchMap((response) => {
 
-              if (response.headers.get('link').includes('<http://www.w3.org/ns/pim/space#Storage>; rel="type"')) {
+              const linkHeader = response.headers.get('link');
+
+              if (linkHeader && linkHeader.includes('<http://www.w3.org/ns/pim/space#Storage>; rel="type"')) {
 
                 const wacAllowHeader = response.headers.get('wac-allow');
-                const userRights = wacAllowHeader.replace(/.*user="([^"]*)".*/, '$1');
+                const userRights = wacAllowHeader?.replace(/.*user="([^"]*)".*/, '$1');
 
-                return userRights.includes('append') ? of(new HasPermissionEvent(url)) : of(new NoPermissionEvent());
+                return userRights?.includes('append') ? of(new HasPermissionEvent(url)) : of(new NoPermissionEvent());
 
               }
 
@@ -360,7 +379,9 @@ SemComRegisterEvent> = {
 
     [SemComRegisterStates.UPLOADING_COMPONENT]: {
       invoke: {
-        src: (context, event: UploadFormSubmittedEvent) => {
+        src: (context, event) => {
+
+          if (!(event instanceof UploadFormSubmittedEvent)) { return of(new DataNotSavedEvent()); }
 
           if (!event.uploadFormContext.uri
             || !event.uploadFormContext.labelInput
@@ -390,6 +411,8 @@ SemComRegisterEvent> = {
             <http://semcom.digita.ai/voc#latest> "${event.uploadFormContext.latest}";
             <http://semcom.digita.ai/voc#checksum> "${event.uploadFormContext.checksum}".
           `;
+
+          if (!context.url) { return of(new DataNotSavedEvent()); }
 
           return from(solidFetch(context.url, {
             method: 'POST',
