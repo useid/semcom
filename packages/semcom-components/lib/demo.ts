@@ -12,7 +12,7 @@ customElements.define('gender-component', GenderComponent);
 
 const parser = new Parser();
 
-addListener(ComponentEventTypes.READ, document, 'quads', async (event: ComponentReadEvent) => {
+addListener(ComponentEventTypes.READ, 'quads', document, async (event: ComponentReadEvent<'quads'>) => {
 
   const response = await fetch(event.detail.uri);
   const profileText = await response.text();
@@ -24,7 +24,7 @@ addListener(ComponentEventTypes.READ, document, 'quads', async (event: Component
 
 });
 
-addListener(ComponentEventTypes.WRITE, document, 'quads', async (event: ComponentWriteEvent<'quads'>) => {
+addListener(ComponentEventTypes.WRITE, 'quads', document, async (event: ComponentWriteEvent<'quads'>) => {
 
   try {
 

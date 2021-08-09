@@ -15,7 +15,7 @@ export type ComponentEventType = keyof typeof ComponentEventTypes;
 /**
  * Payload of a `ComponentReadEvent`.
  */
-export interface ComponentReadEventPayload {
+export interface ComponentReadEventPayload<D extends keyof ComponentDataTypes> {
   /**
    * The uri of the resource to which should be read.
    */
@@ -24,7 +24,7 @@ export interface ComponentReadEventPayload {
   /**
    * The type of data.
    */
-  type: keyof ComponentDataTypes;
+  type: D;
 
   /**
    * The mime type of the data.
@@ -35,9 +35,10 @@ export interface ComponentReadEventPayload {
 /**
  * An event dispatched by a component  to read data from a given uri.
  */
-export class ComponentReadEvent extends CustomEvent<ComponentReadEventPayload> {
+export class ComponentReadEvent<D extends keyof ComponentDataTypes>
+  extends CustomEvent<ComponentReadEventPayload<D>> {
 
-  constructor(init: Partial<CustomEventInit<ComponentReadEventPayload>>) {
+  constructor(init: Partial<CustomEventInit<ComponentReadEventPayload<D>>>) {
 
     super(ComponentEventTypes.READ, {
       ...{
@@ -134,7 +135,7 @@ export class ComponentAppendEvent<D extends keyof ComponentDataTypes>
 /**
  * A union type of all atomic operations a component can request.
  */
-export type ComponentOperationEvent = ComponentReadEvent
+export type ComponentOperationEvent = ComponentReadEvent<keyof ComponentDataTypes>
 | ComponentWriteEvent<keyof ComponentDataTypes>
 | ComponentAppendEvent<keyof ComponentDataTypes>;
 

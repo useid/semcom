@@ -3,7 +3,7 @@ import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, Componen
 
 declare global {
   interface GlobalEventHandlersEventMap {
-    [ComponentEventTypes.READ]: ComponentReadEvent;
+    [ComponentEventTypes.READ]: ComponentReadEvent<any>;
     [ComponentEventTypes.WRITE]: ComponentWriteEvent<any>;
     [ComponentEventTypes.APPEND]: ComponentAppendEvent<any>;
     [ComponentEventTypes.RESPONSE]: ComponentResponseEvent<any>;
@@ -12,8 +12,8 @@ declare global {
 
 export const addListener = <D extends keyof ComponentDataTypes, T extends ComponentEventTypes>(
   eventType: T,
-  element: GlobalEventHandlers,
   dataType: D,
+  element: GlobalEventHandlers,
   process: (event: GlobalEventHandlersEventMap[T]) => Promise<ComponentResponseEvent<D>>
 ): void => {
 

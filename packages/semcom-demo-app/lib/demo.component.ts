@@ -66,7 +66,7 @@ export class DemoComponent extends RxLitElement {
 
           const element = document.createElement(tag);
 
-          addListener(ComponentEventTypes.READ, element, 'quads', async (event: ComponentReadEvent) => {
+          addListener(ComponentEventTypes.READ, 'quads', element, async (event: ComponentReadEvent<'quads'>) => {
 
             const parser = new Parser();
 
@@ -80,7 +80,7 @@ export class DemoComponent extends RxLitElement {
 
           });
 
-          addListener(ComponentEventTypes.WRITE, element, 'quads', async (event: ComponentWriteEvent<'quads'>) => {
+          addListener(ComponentEventTypes.WRITE, 'quads', element, async (event: ComponentWriteEvent<'quads'>) => {
 
             try {
 
