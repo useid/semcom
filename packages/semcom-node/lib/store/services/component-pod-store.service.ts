@@ -5,10 +5,6 @@ import { ComponentStore } from './component-store.service';
 
 export class ComponentPodStore extends ComponentStore {
 
-  private latestTimestamp = -1;
-  private currentlyResolving: Promise<Quad[]> | undefined;
-  private latestContents: Quad[] = [];
-
   constructor(
     private readonly uri: string,
     private readonly transformer: ComponentTransformerService
@@ -20,31 +16,9 @@ export class ComponentPodStore extends ComponentStore {
 
   private async fetchQuads(): Promise<Quad[]> {
 
-    if (this.currentlyResolving) {
-
-      return this.currentlyResolving;
-
-    } else if (this.latestTimestamp > Date.now() - 10000) {
-
-      return this.latestContents;
-
-    }
-
-    this.latestTimestamp = Date.now();
-
-    this.currentlyResolving = fetch(this.uri, { headers: { 'Accept': 'text/turtle' } })
+    return fetch(this.uri, { headers: { 'Accept': 'text/turtle' } })
       .then((response) => response.text())
-      .then((body) =>  {
-
-        const quads = new Parser({ format: 'Turtle' }).parse(body);
-        this.latestContents = quads;
-        this.currentlyResolving = undefined;
-
-        return quads;
-
-      });
-
-    return this.currentlyResolving;
+      .then((body) =>   new Parser({ format: 'Turtle' }).parse(body));
 
   }
 
