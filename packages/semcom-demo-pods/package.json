@@ -6,10 +6,13 @@
   "license": "",
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
-    "start": "community-solid-server -p 9000 --rootFilePath /tmp/css -c config/config-file.json",
+    "start": "shx rm -rf rundata && shx cp -r data rundata && community-solid-server -p 9000 -f ./rundata -c config/config-file.json",
     "start:dev": "npm run start"
   },
   "dependencies": {
-    "@solid/community-server": "0.8.1"
+    "@solid/community-server": "1.0.0"
+  },
+  "devDependencies": {
+    "shx": "^0.3.3"
   }
 }
