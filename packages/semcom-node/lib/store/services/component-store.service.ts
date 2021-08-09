@@ -6,40 +6,36 @@ export abstract class ComponentStore implements Store<ComponentMetadata>{
 
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
 
-    {
+    const components = await this.all();
 
-      const components = await this.all();
+    const filtered = components.filter((component) =>
+      Object.keys(filter).every((key) => {
 
-      const filtered = components.filter((component) =>
-        Object.keys(filter).every((key) => {
+        const componentValue = component[key];
+        const filterValue = filter[key];
 
-          const componentValue = component[key];
-          const filterValue = filter[key];
-
-          return (componentValue === filterValue) || (
-            Array.isArray(componentValue) &&
+        return (componentValue === filterValue) || (
+          Array.isArray(componentValue) &&
             Array.isArray(filterValue) &&
             filterValue.every((value) => componentValue.includes(value))
             || (key === 'version')
-          );
+        );
 
-        }));
+      }));
 
-      // seperated version logic for readability
+    // seperated version logic for readability
 
-      let versioned = null;
+    let versioned = null;
 
-      if(filtered && filter.version) {
+    if(filtered && filter.version) {
 
-        const versions = filtered.map((component) => component.version);
-        const maxVersion = semver.maxSatisfying(versions, filter.version);
-        versioned = filtered.filter((component) =>  component.version === maxVersion);
-
-      }
-
-      return versioned ?? filtered;
+      const versions = filtered.map((component) => component.version);
+      const maxVersion = semver.maxSatisfying(versions, filter.version);
+      versioned = filtered.filter((component) =>  component.version === maxVersion);
 
     }
+
+    return versioned ?? filtered;
 
   }
 
