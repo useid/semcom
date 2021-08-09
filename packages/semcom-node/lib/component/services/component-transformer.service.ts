@@ -78,7 +78,8 @@ export class ComponentTransformerService {
   fromQuadsOne(quads: Quad[], uri: string): ComponentMetadata {
 
     // commented this line out because it resulted in a lot of lagg/delay
-    // this.logger.log('debug', 'Transforming quads into component', { quads });
+    this.logger.log('debug', 'Transforming quads into component');
+    this.logger.log('silly', '', quads.map((quad) => `${quad.subject.value} ${quad.predicate.value} ${quad.object.value}`));
 
     // maps all predicates for the given URI to its corresponding object
     const uriTriples = new Map<string, string[]>([ ...requiredPredicates ].map((p) => [ p, [] ]));
@@ -93,7 +94,7 @@ export class ComponentTransformerService {
 
     }
 
-    if ([ ...uriTriples.values() ].some((preds) => preds.length > 1)) {
+    if ([ ...uriTriples.entries() ].some(([ subject, preds ]) => subject !== `${digitaPrefix}shape` && preds.length > 1)) {
 
       throw new Error('Too many ComponentMetadata predicates were provided while parsing quads.');
 
