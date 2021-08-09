@@ -77,7 +77,8 @@ export class ComponentTransformerService {
    */
   fromQuadsOne(quads: Quad[], uri: string): ComponentMetadata {
 
-    this.logger.log('debug', 'Transforming quads into component', { quads });
+    // commented this line out because it resulted in a lot of lagg/delay
+    // this.logger.log('debug', 'Transforming quads into component', { quads });
 
     // maps all predicates for the given URI to its corresponding object
     const uriTriples = new Map<string, string[]>([ ...requiredPredicates ].map((p) => [ p, [] ]));
