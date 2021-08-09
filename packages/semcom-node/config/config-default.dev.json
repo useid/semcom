@@ -14,53 +14,11 @@
   "@graph": [
     {
       "@id": "urn:semcom-node:default:ComponentStore",
-      "@type": "ComponentInMemoryStore",
-      "ComponentInMemoryStore:_components": [
-        {
-          "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Digita SemCom component for profile information.",
-          "ComponentMetadata:_label": "SemCom Profile Component",
-          "ComponentMetadata:_uri": "http://localhost:8080/components/profile.component.js",
-          "ComponentMetadata:_shapes": "http://xmlns.com/foaf/0.1/PersonalProfileDocument",
-          "ComponentMetadata:_author": "https://digita.ai",
-          "ComponentMetadata:_tag": "profile",
-          "ComponentMetadata:_version": "0.1.0",
-          "ComponentMetadata:_latest": true
-        },
-        {
-          "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Digita SemCom component with an input field.",
-          "ComponentMetadata:_label": "SemCom Input Component",
-          "ComponentMetadata:_uri": "http://localhost:8080/components/input.component.js",
-          "ComponentMetadata:_shapes": "http://digita.ai/voc/input#input",
-          "ComponentMetadata:_author": "https://digita.ai",
-          "ComponentMetadata:_tag": "input",
-          "ComponentMetadata:_version": "0.1.0",
-          "ComponentMetadata:_latest": true
-        },
-        {
-          "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Digita SemCom component for payslip information.",
-          "ComponentMetadata:_label": "SemCom Payslip Component",
-          "ComponentMetadata:_uri": "http://localhost:8080/components/payslip.component.js",
-          "ComponentMetadata:_shapes": "http://digita.ai/voc/payslip#payslip",
-          "ComponentMetadata:_author": "https://digita.ai",
-          "ComponentMetadata:_tag": "payslip",
-          "ComponentMetadata:_version": "0.1.0",
-          "ComponentMetadata:_latest": true
-        },
-        {
-          "@type": "ComponentMetadata",
-          "ComponentMetadata:_description": "Digita SemCom component for displaying a type of gender.",
-          "ComponentMetadata:_label": "SemCom Gender Component",
-          "ComponentMetadata:_uri": "http://localhost:8080/components/gender.component.js",
-          "ComponentMetadata:_shapes": "http://digita.ai/voc/gender#gender",
-          "ComponentMetadata:_author": "https://digita.ai",
-          "ComponentMetadata:_tag": "gender",
-          "ComponentMetadata:_version": "0.1.0",
-          "ComponentMetadata:_latest": true
-        }
-      ]
+      "@type": "ComponentPodStore",
+      "ComponentPodStore:_uri": "https://jonbovyn.solidcommunity.net/public/test.ttl",
+      "ComponentPodStore:_transformer": {
+        "@id": "urn:semcom-node:default:ComponentTransformerService"
+      }
     }
   ]
 }

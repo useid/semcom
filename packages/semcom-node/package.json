@@ -63,6 +63,7 @@
     "@digita-ai/semcom-core": "0.4.1",
     "componentsjs": "4.4.0",
     "n3": "^1.6.3",
+    "node-fetch": "^2.6.1",
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
     "semver": "^7.3.5",
