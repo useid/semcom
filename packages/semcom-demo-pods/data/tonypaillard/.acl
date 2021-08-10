@@ -3,7 +3,7 @@
 
 <#owner>
     a             acl:Authorization;
-    acl:agent     <https://pods.actueel-inkomen.digita.ai/tonypaillard/profile/card#me>;
+    acl:agent     <http://localhost:9000/tonypaillard/profile/card#me>;
     acl:accessTo  <./>;
     acl:default	  <./>;
     acl:mode      acl:Read,
