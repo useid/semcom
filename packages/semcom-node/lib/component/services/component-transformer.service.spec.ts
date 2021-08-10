@@ -1,6 +1,7 @@
 import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
 import { DataFactory, Quad } from 'n3';
 import { ComponentTransformerService } from './component-transformer.service';
+
 const { namedNode, literal, quad } = DataFactory;
 
 describe('ComponentTransformerService', () => {

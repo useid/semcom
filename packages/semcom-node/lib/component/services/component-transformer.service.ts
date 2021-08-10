@@ -1,5 +1,6 @@
 import { DataFactory, Quad } from 'n3';
 import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
+
 const { namedNode, literal, quad } = DataFactory;
 
 const digitaPrefix = 'http://semcom.digita.ai/voc#';
