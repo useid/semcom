@@ -23,22 +23,17 @@ describe('RegisterComponentService', () => {
       tag: 'component2',
     } as ComponentMetadata;
 
-  });
-
-  afterEach(() => {
-
-    jest.resetAllMocks();
-    addedUris.clear();
-
-  });
-
-  const mockEvalAndDefine = () => {
-
     global.eval = jest.fn(async (url) => ({ 'default': {} }));
     customElements.define = jest.fn((tag, html) => { addedUris.add(tag); });
     customElements.get = jest.fn((tag) => addedUris.has(tag) ? {} as CustomElementConstructor : undefined);
 
-  };
+  });
+
+  afterEach(() => {
+
+    addedUris.clear();
+
+  });
 
   it('should be correctly instantiated', () => {
 
@@ -95,12 +90,14 @@ describe('RegisterComponentService', () => {
 
   it('should throw error when componentMetadata.uri is not found', async () => {
 
+    global.eval = jest.fn(async (url) => { throw new Error('Not found'); });
+
     const mockComponent = {
       uri: './../../mock/non-working-component.ts',
       tag: 'app-component-4',
     } as ComponentMetadata;
 
-    await expect(service.register(mockComponent)).rejects.toThrow();
+    await expect(service.register(mockComponent)).rejects.toThrow('Failed to import or register componentMetadata: Error: Not found');
 
   });
 
@@ -127,16 +124,12 @@ describe('RegisterComponentService', () => {
 
   it('should generate a correct tag', async () => {
 
-    mockEvalAndDefine();
-
     const tag = await service.register(testComponent);
     expect(tag.startsWith('semcom-component-')).toBe(true);
 
   });
 
   it('should eval and define a component', async () => {
-
-    mockEvalAndDefine();
 
     await service.register(testComponent);
     expect(global.eval).toBeCalledTimes(1);
@@ -145,8 +138,6 @@ describe('RegisterComponentService', () => {
   });
 
   it('should not reimport an existing component if it was already defined', async () => {
-
-    mockEvalAndDefine();
 
     await service.register(testComponent);
     await service.register(testComponent);
@@ -158,8 +149,6 @@ describe('RegisterComponentService', () => {
 
   it('should only define a tag once, if two are imported at the same time', async () => {
 
-    mockEvalAndDefine();
-
     await Promise.all([ service.register(testComponent), service.register(testComponent) ]);
     expect(customElements.define).toBeCalledTimes(1);
 
@@ -167,16 +156,12 @@ describe('RegisterComponentService', () => {
 
   it('should return different html tags for components with different tags', async () => {
 
-    mockEvalAndDefine();
-
     const tag = await service.register(testComponent);
     await expect(service.register(testComponent2)).resolves.not.toBe(tag);
 
   });
 
   it('should return a different html Tag for components with the same tag but a different URI', async () => {
-
-    mockEvalAndDefine();
 
     testComponent2.tag = 'component';
 
@@ -186,8 +171,6 @@ describe('RegisterComponentService', () => {
   });
 
   it('should return the same tag if a component is imported twice', async () => {
-
-    mockEvalAndDefine();
 
     const tag = await service.register(testComponent);
     await expect(service.register(testComponent)).resolves.toBe(tag);
