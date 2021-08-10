@@ -1,4 +1,4 @@
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { ComponentDataTypes } from './component-data-types';
 
 /**
  * Types of component events.

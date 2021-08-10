@@ -1,8 +1,7 @@
 /* eslint-disable no-console -- is a web component */
 import { NamedNode, Store } from 'n3';
 import { css, CSSResult, html, property, PropertyValues } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { ComponentDataTypes, ComponentResponseEvent } from '@digita-ai/semcom-core';
 import { BaseComponent } from './base.component';
 
 export class GenderComponent extends BaseComponent {
