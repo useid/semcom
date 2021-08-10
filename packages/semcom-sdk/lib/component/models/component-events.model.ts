@@ -1,4 +1,4 @@
-import { Quad } from 'rdf-js';
+import { ComponentDataTypes } from '@digita-ai/semcom-core';
 
 /**
  * Types of component events.
@@ -15,19 +15,30 @@ export type ComponentEventType = keyof typeof ComponentEventTypes;
 /**
  * Payload of a `ComponentReadEvent`.
  */
-export interface ComponentReadEventPayload {
+export interface ComponentReadEventPayload<D extends keyof ComponentDataTypes> {
   /**
    * The uri of the resource to which should be read.
    */
   uri: string;
+
+  /**
+   * The type of data.
+   */
+  type: D;
+
+  /**
+   * The mime type of the data.
+   */
+  mime?: string;
 }
 
 /**
  * An event dispatched by a component  to read data from a given uri.
  */
-export class ComponentReadEvent extends CustomEvent<ComponentReadEventPayload> {
+export class ComponentReadEvent<D extends keyof ComponentDataTypes>
+  extends CustomEvent<ComponentReadEventPayload<D>> {
 
-  constructor(init: Partial<CustomEventInit<ComponentReadEventPayload>>) {
+  constructor(init: Partial<CustomEventInit<ComponentReadEventPayload<D>>>) {
 
     super(ComponentEventTypes.READ, {
       ...{
@@ -44,24 +55,30 @@ export class ComponentReadEvent extends CustomEvent<ComponentReadEventPayload> {
 /**
  * Payload of a `ComponentWriteEvent`.
  */
-export interface ComponentWriteEventPayload {
+export interface ComponentWriteEventPayload<D extends keyof ComponentDataTypes> {
   /**
    * The uri of the resource to which should be written.
    */
   uri: string;
 
   /**
+   * The type of the data to be written.
+   */
+  type: D;
+
+  /**
    * The data which should be written to the resource.
    */
-  data: Quad[];
+  data: ComponentDataTypes[D];
 }
 
 /**
- * AAn event dispatched by a component  to write data to a given uri.
+ * An event dispatched by a component  to write data to a given uri.
  */
-export class ComponentWriteEvent extends CustomEvent<ComponentWriteEventPayload> {
+export class ComponentWriteEvent<D extends keyof ComponentDataTypes>
+  extends CustomEvent<ComponentWriteEventPayload<D>> {
 
-  constructor(init: Partial<CustomEventInit<ComponentWriteEventPayload>>) {
+  constructor(init: Partial<CustomEventInit<ComponentWriteEventPayload<D>>>) {
 
     super(ComponentEventTypes.WRITE, {
       ...{
@@ -78,24 +95,30 @@ export class ComponentWriteEvent extends CustomEvent<ComponentWriteEventPayload>
 /**
  * Payload of a `ComponentAppendEvent`.
  */
-export interface ComponentAppendEventPayload {
+export interface ComponentAppendEventPayload<D extends keyof ComponentDataTypes> {
   /**
    * The uri of the resource to which should be appended.
    */
   uri: string;
 
   /**
+   * The type of the data to be appended.
+   */
+  type: D;
+
+  /**
    * The data which should be appended to the resource.
    */
-  data: Quad[];
+  data: ComponentDataTypes[D];
 }
 
 /**
  * An event dispatched by a component to append data to a given uri.
  */
-export class ComponentAppendEvent extends CustomEvent<ComponentAppendEventPayload> {
+export class ComponentAppendEvent<D extends keyof ComponentDataTypes>
+  extends CustomEvent<ComponentAppendEventPayload<D>> {
 
-  constructor(init: Partial<CustomEventInit<ComponentAppendEventPayload>>) {
+  constructor(init: Partial<CustomEventInit<ComponentAppendEventPayload<D>>>) {
 
     super(ComponentEventTypes.APPEND, {
       ...{
@@ -112,12 +135,14 @@ export class ComponentAppendEvent extends CustomEvent<ComponentAppendEventPayloa
 /**
  * A union type of all atomic operations a component can request.
  */
-export type ComponentOperationEvent = ComponentReadEvent | ComponentWriteEvent | ComponentAppendEvent;
+export type ComponentOperationEvent = ComponentReadEvent<keyof ComponentDataTypes>
+| ComponentWriteEvent<keyof ComponentDataTypes>
+| ComponentAppendEvent<keyof ComponentDataTypes>;
 
 /**
  * Payload of a `ComponentResponseEvent`.
  */
-export interface ComponentResponseEventPayload {
+export interface ComponentResponseEventPayload<D extends keyof ComponentDataTypes> {
   /**
    * The uri on which the operation was performed.
    */
@@ -129,9 +154,14 @@ export interface ComponentResponseEventPayload {
   cause: ComponentOperationEvent;
 
   /**
+   * The type of the data.
+   */
+  type: D;
+
+  /**
    * The component's data after the operation.
    */
-  data: Quad[];
+  data: ComponentDataTypes[D];
 
   /**
    * Indicates if the operation was successful.
@@ -142,9 +172,10 @@ export interface ComponentResponseEventPayload {
 /**
  * An event dispatched by the component's parent in response to a `ComponentOperationEvent`.
  */
-export class ComponentResponseEvent extends CustomEvent<ComponentResponseEventPayload> {
+export class ComponentResponseEvent<D extends keyof ComponentDataTypes> extends
+  CustomEvent<ComponentResponseEventPayload<D>> {
 
-  constructor(init: Partial<CustomEventInit<ComponentResponseEventPayload>>) {
+  constructor(init: Partial<CustomEventInit<ComponentResponseEventPayload<D>>>) {
 
     super(ComponentEventTypes.RESPONSE, {
       ...{

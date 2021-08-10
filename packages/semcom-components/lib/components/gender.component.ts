@@ -2,6 +2,7 @@
 import { NamedNode, Store } from 'n3';
 import { css, CSSResult, html, property, PropertyValues } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
+import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { BaseComponent } from './base.component';
 
 export class GenderComponent extends BaseComponent {
@@ -15,11 +16,17 @@ export class GenderComponent extends BaseComponent {
    *
    * @param event The response event to handle.
    */
-  handleResponse(event: ComponentResponseEvent): void {
+  handleResponse<D extends keyof ComponentDataTypes>(event: ComponentResponseEvent<D>): void {
 
     if (!event || !event.detail || !event.detail.data) {
 
       throw new Error('Argument event || !event.detail || !event.detail.quads should be set.');
+
+    }
+
+    if (event.detail.type !== 'quads') {
+
+      throw new Error('Unexpected response type.');
 
     }
 
@@ -38,7 +45,7 @@ export class GenderComponent extends BaseComponent {
 
     super.update(changed);
 
-    if (changed.has('entry') && this.entry) this.readData(this.entry);
+    if (changed.has('entry') && this.entry) this.readData(this.entry, 'quads');
 
   }
 
