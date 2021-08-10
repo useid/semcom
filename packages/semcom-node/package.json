@@ -30,7 +30,7 @@
   "scripts": {
     "build": "rimraf ./dist && npm run build:ts && npm run build:components",
     "build:ts": "tsc",
-    "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
+    "build:components": "componentsjs-generator --typeScopedContexts -s lib -c dist/components -i .componentsignore",
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -58,10 +58,10 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.2.3",
-    "@digita-ai/handlersjs-http": "^0.2.3",
+    "@digita-ai/handlersjs-core": "^0.3.2",
+    "@digita-ai/handlersjs-http": "^0.3.2",
     "@digita-ai/semcom-core": "0.4.1",
-    "componentsjs": "4.0.5",
+    "componentsjs": "4.4.0",
     "n3": "^1.6.3",
     "rdf-serialize": "^1.0.1",
     "rxjs": "6.3.3",
@@ -77,7 +77,7 @@
     "@types/streamify-array": "^1.0.0",
     "@types/supertest": "^2.0.10",
     "@types/yargs": "^17.0.2",
-    "componentsjs-generator": "2.1.0",
+    "componentsjs-generator": "2.5.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "jest-coverage-thresholds-bumper": "0.0.4",

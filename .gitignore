@@ -121,3 +121,4 @@ dist
 #*.npmrc
 
 coverage-summary.json
+rundata/
