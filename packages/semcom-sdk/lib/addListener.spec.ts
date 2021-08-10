@@ -1,5 +1,5 @@
-import { ComponentDataTypes, ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-core';
 import { addListener } from './addListener';
+import { ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent } from './component/models/component-events.model';
 
 describe('addListener', () => {
 

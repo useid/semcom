@@ -9,4 +9,3 @@ export * from './logger/services/logger-console.service';
 export * from './component/services/manage.service';
 export * from './component/services/query.service';
 export * from './mock/initial-components';
-export * from './component/models/component-events.model';

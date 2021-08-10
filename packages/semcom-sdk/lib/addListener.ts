@@ -1,4 +1,5 @@
-import { ComponentDataTypes, ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-core';
+import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from './component/models/component-events.model';
 
 declare global {
   interface GlobalEventHandlersEventMap {
