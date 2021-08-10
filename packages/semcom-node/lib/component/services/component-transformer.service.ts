@@ -1,5 +1,6 @@
-import { Quad, NamedNode, Literal } from 'n3';
+import { DataFactory, Quad } from 'n3';
 import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
+const { namedNode, literal, quad } = DataFactory;
 
 /** Service that transforms Components */
 export class ComponentTransformerService {
@@ -22,16 +23,16 @@ export class ComponentTransformerService {
     }
 
     const shapeQuads = component.shapes.map((shape) =>
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#shape'), new Literal(shape)));
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#shape'), namedNode(shape)));
 
     const quads = [
-      new Quad(new NamedNode(component.uri), new NamedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), new NamedNode('http://semcom.digita.ai/voc#component'),),
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#label'), new Literal(component.label)),
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#description'),  new Literal(component.description)),
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#author'), new Literal(component.author)),
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#version'), new Literal(component.version)),
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#latest'), new Literal(String(component.latest))),
-      new Quad(new NamedNode(component.uri), new NamedNode('http://semcom.digita.ai/voc#tag'), new Literal(component.tag)),
+      quad(namedNode(component.uri), namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), namedNode('http://semcom.digita.ai/voc#component'),),
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#label'), literal(component.label)),
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#description'),  literal(component.description)),
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#author'), literal(component.author)),
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#version'), literal(component.version)),
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#latest'), literal(String(component.latest))),
+      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#tag'), literal(component.tag)),
       ...shapeQuads,
     ];
 
