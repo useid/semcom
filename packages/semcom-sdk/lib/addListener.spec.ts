@@ -9,13 +9,13 @@ describe('addListener', () => {
   beforeEach(() => {
 
     element = document.createElement('test');
-    process = jest.fn().mockImplementation((event: ComponentReadEvent) => new ComponentResponseEvent({}));
+    process = jest.fn().mockImplementation((event: ComponentReadEvent<'quads'>) => new ComponentResponseEvent({}));
 
   });
 
   it('should be dispatch process', () => {
 
-    addListener(ComponentEventTypes.READ, element, process);
+    addListener(ComponentEventTypes.READ, 'quads', element, process);
 
     element.dispatchEvent(
       new CustomEvent(
@@ -25,6 +25,7 @@ describe('addListener', () => {
             uri: 'test',
             data: undefined,
             success: true,
+            type: 'quads',
           },
         }
       )
@@ -34,9 +35,31 @@ describe('addListener', () => {
 
   });
 
+  it("should throw when type doesn't match", () => {
+
+    addListener(ComponentEventTypes.READ, 'quads', element, process);
+
+    element.dispatchEvent(
+      new CustomEvent(
+        ComponentEventTypes.READ,
+        {
+          detail: {
+            uri: 'test',
+            data: undefined,
+            success: true,
+            type: 'json',
+          },
+        }
+      )
+    );
+
+    expect(process).toBeCalledTimes(0);
+
+  });
+
   it('should throw when event detail is empty', () => {
 
-    addListener(ComponentEventTypes.READ, element, process);
+    addListener(ComponentEventTypes.READ, 'quads', element, process);
 
     element.dispatchEvent(new CustomEvent(ComponentEventTypes.READ));
 
