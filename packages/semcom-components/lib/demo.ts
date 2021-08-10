@@ -1,5 +1,6 @@
 import { Parser } from 'n3';
-import { addListener, ComponentEventType, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { addListener } from '@digita-ai/semcom-sdk';
+import { ComponentEventType, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-core';
 import ProfileComponent from './components/profile.component';
 import PayslipComponent from './components/payslip.component';
 import InputComponent from './components/input.component';
