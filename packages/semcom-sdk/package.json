@@ -74,6 +74,7 @@
   "dependencies": {
     "@digita-ai/semcom-core": "0.4.1",
     "buffer": "6.0.3",
+    "jssha": "^3.2.0",
     "n3": "1.10.0"
   },
   "eslintIgnore": [
@@ -95,10 +96,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 78.57,
+        "branches": 86.67,
         "functions": 54.55,
-        "lines": 70.21,
-        "statements": 66.67
+        "lines": 82,
+        "statements": 77.78
       }
     }
   }
