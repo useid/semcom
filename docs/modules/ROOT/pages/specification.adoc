@@ -1,0 +1,66 @@
+
+= SemCom Component Specification 1.0: Draft of 16 August 2021
+Wouter Termont <wouter.termont@digita.ai>
+
+:toc:
+:sectnums:
+
+
+[[intro]]
+== Introduction
+
+SemCom aims to provide a decentralized network of registries to support the dynamic binding of semantic components in Solid data browsers. This document specifies the different parts of the SemCom ecosystem, in particular the form and behavior of the semantic components.
+
+This specification builds on definitions of the xref:https://dom.spec.whatwg.org[DOM] and xref:https://html.spec.whatwg.org[HTML] standards.
+
+
+[[metadata]]
+== Component metadata
+
+Each SemCom component is described by a limited set of metadata predicates, prefixed with `http://semcom.digita.ai/voc#`:
+
+- *uri*: the URL of the component itself (see section <<components-distribution>>)
+- *label*: a textual label by which to refer to component
+- *description*: a textual description of the component
+- *author* [*]: an author of the component
+- *tag* [*]: a tag by which to describe and filter the component
+- *version*: the version number of the component
+- *latest*: the boolean value indicating whether this component is the latest of it's versions
+- *shapes* [*]: a URI of a data shape the component can render
+
+Predicates with a **[*]** can have multiple values present within the metadata of the same component.
+
+[[components]]
+== SemCom components 
+
+A SemCom component is a Web Component, i.e. a custom `HTMLElement` encapsulated in a Shadow DOM. In order maintain as much freedom for the component developer, and to increase interoperability with existing and future applications, further restrictions on the form of the element are limited as much as possible. Importantly, this specification does not enforce the use of any framework.
+
+
+[[components-form]]
+=== Component form
+
+As indicated above, restrictions on the form of the element are kept to a minimum: only a single requirement of this specification pertains to the structure of the SemCom component. This requirement is that the component should have an `entry` attribute, which is can be set by the host application to the entry URL of the data resource that needs to be displayed and adheres to one of the data shapes for which the component is defined.
+
+
+[[components-behavior]]
+=== Component behavior
+
+To be as interoperable as possible, the behavior of a SemCom component is fully specified by four `CustomEvent` types, with `detail` payloads defined by this specification.
+
+- *semcom-data-read*: 
+
+- *semcom-data-write*: 
+
+- *semcom-data-append*: 
+
+- *semcom-data-response*: 
+
+
+[[components-distribution]]
+=== Component distribution
+
+Each component must be available as a single JavaScript module, served with the `Content-Type` `text/javascript`, containing all code (logic, markup and styling) necessary to render the data. Again, this specification defines no particular way of achieving this, as multiple methods, such as module bundlers, exist for this purpose.
+
+
+[[node]]
+== SemCom nodes
