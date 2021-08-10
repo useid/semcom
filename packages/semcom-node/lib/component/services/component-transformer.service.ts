@@ -78,7 +78,6 @@ export class ComponentTransformerService {
    */
   fromQuadsOne(quads: Quad[], uri: string): ComponentMetadata {
 
-    // commented this line out because it resulted in a lot of lagg/delay
     this.logger.log('debug', 'Transforming quads into component');
     this.logger.log('silly', '', quads.map((q) => `${q.subject.value} ${q.predicate.value} ${q.object.value}`));
 
@@ -111,7 +110,7 @@ export class ComponentTransformerService {
 
     return {
       uri,
-      label: uriTriples.get(`${digitaPrefix}latest`)?.[0] ?? '',
+      label: uriTriples.get(`${digitaPrefix}label`)?.[0] ?? '',
       description: uriTriples.get(`${digitaPrefix}description`)?.[0] ?? '',
       author: uriTriples.get(`${digitaPrefix}author`)?.[0] ?? '',
       tag: uriTriples.get(`${digitaPrefix}tag`)?.[0] ?? '',
