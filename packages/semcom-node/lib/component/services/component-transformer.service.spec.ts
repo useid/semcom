@@ -1,6 +1,7 @@
 import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
-import { Quad, NamedNode, Literal } from 'n3';
+import { DataFactory } from 'n3';
 import { ComponentTransformerService } from './component-transformer.service';
+const { namedNode, literal, quad } = DataFactory;
 
 describe('ComponentTransformerService', () => {
 
@@ -47,10 +48,10 @@ describe('ComponentTransformerService', () => {
 
       componentMetaDatas.forEach((component) => {
 
-        expect(quads).toContainEqual(new Quad(
-          new NamedNode(component.uri),
-          new NamedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-          new NamedNode('http://semcom.digita.ai/voc#component'),
+        expect(quads).toContainEqual(quad(
+          namedNode(component.uri),
+          namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          namedNode('http://semcom.digita.ai/voc#component'),
         ));
 
         // test the metadata keys with singular values
@@ -59,10 +60,10 @@ describe('ComponentTransformerService', () => {
         metaDataKeys.forEach((predicate) => {
 
           expect(quads).toContainEqual(
-            new Quad(
-              new NamedNode(component.uri),
-              new NamedNode(`http://semcom.digita.ai/voc#${predicate}`),
-              new Literal(component[predicate].toString())
+            quad(
+              namedNode(component.uri),
+              namedNode(`http://semcom.digita.ai/voc#${predicate}`),
+              literal(component[predicate].toString())
             ),
           );
 
@@ -72,10 +73,10 @@ describe('ComponentTransformerService', () => {
         component.shapes.forEach((shape) => {
 
           expect(quads).toContainEqual(
-            new Quad(
-              new NamedNode(component.uri),
-              new NamedNode(`http://semcom.digita.ai/voc#shape`),
-              new NamedNode(shape)
+            quad(
+              namedNode(component.uri),
+              namedNode(`http://semcom.digita.ai/voc#shape`),
+              namedNode(shape)
             )
           );
 
