@@ -4,6 +4,7 @@
   "scripts": {
     "start": "http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
     "start:dev": "vite",
+    "start:sync:dev": "npm run start:dev",
     "build": "rimraf ./dist && vite build --config vite.config.ts && tsc",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
