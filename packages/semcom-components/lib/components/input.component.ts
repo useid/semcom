@@ -1,6 +1,7 @@
-import { css, html, PropertyValues, query, state } from 'lit-element';
+import { css, html, query, state } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
+import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { BaseComponent } from './base.component';
 
 export class InputComponent extends BaseComponent {
@@ -30,7 +31,7 @@ export class InputComponent extends BaseComponent {
    *
    * @param event The response event to handle.
    */
-  handleResponse(event: ComponentResponseEvent): void {
+  handleResponse<D extends keyof ComponentDataTypes>(event: ComponentResponseEvent<D>): void {
 
     if (!event) {
 
@@ -169,7 +170,7 @@ export class InputComponent extends BaseComponent {
     this.showAlert = false;
 
     const data = [ new Quad(new NamedNode(this.fileName.value), new NamedNode('https://digita.ai/voc/foo/bar'), new Literal(this.content.value)) ];
-    this.writeData(this.fileName.value, data);
+    this.writeData(this.fileName.value, data, 'quads');
 
   }
 
