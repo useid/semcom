@@ -1,0 +1,65 @@
+
+= SemCom Software Development Kit
+Wouter Termont <wouter.termont@digita.ai>
+
+:toc:
+
+
+[[intro]]
+== Introduction
+
+This document describes a Software Development Kit for JavaScript to easily write applications that use the SemCom ecosystem of decentralized component registries to support the dynamic binding of semantic components. This SDK can be imported as `@digita-ai/semcom-sdk`.
+
+[[core]]
+== Core interfaces
+
+The package `@digita-ai/semcom-core` provides a number of core interfaces that adhere to the SemCom specification and are used by this SDK. In particular, these comprise of the `Component`, `ComponentMetadata`, `ComponentDataTypes` and `ComponentEventTypes` as described in the the specification.
+
+[[discovering]]
+== Discovering shapes
+
+While SemCom only specifies the relation between data shapes and components, and allows querying of such components based on the shapes they support, detection of the shape of a resource is purposefully left to the application developer. To lift some of this weight from the developer's shoulders, the SDK provides the `resourceShape` function.
+
+The function has the signature `resourceShape(uri: string, customFetch?: ((input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>) | undefined) => Promise<string[]>`. It takes the URL of the data of which the shape(s) needs to be discovered, as well as a function that adheres to the built-in `fetch` function. This `customFetch` function enables the host application to perform the necessary steps to add authentication to the request. The asynchronous return value is a list of the URIs of the shapes detected in the data.
+
+It its version at this time of writing, this shape discovery mechanism of the SDK is limited to the detection of RDF classes as an indication of the data present in a resource. In later versions, however, the SDK will be expanded to include support for shapes (e.g. ShaCL, ShEx) and shape trees (e.g. ShapeTrees, TREE).
+
+[[querying]]
+== Querying for components
+
+When the shape(s) of a data resource have been detected, the host application can query one or more SemCom registry nodes to find the component best fit to render the data. While this remote API call is not at all difficult, the SDK provides some syntactic sugar in the form of the `query` function.
+
+The signature of this function is `query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]>`. It takes an object with partial metadata, to query for components limited to the values in the specified fields. As an asynchronous return value, the function gives back a list of the full metadata objects of all components passing that partial filter.
+
+While it is easy for a function call to receive far too many results, the metadata interface defined in the SemCom specification allows developers to easily reduce these numbers by filtering the components by semantic version numbers and tags.
+
+[[registering]]
+== Registering a component
+
+After having received the metadata of the suggested components from the query, it is up to the host application to select the most suited one from the results. No help for this is foreseen in this SDK, since this will rely almost completely on application-specific logic based on the metadata.
+
+However, for when the host application has selected the desired component, the SDK provides the `register` function, which takes care of retrieving the actual component code, and registering it in the local browser.
+
+This function has the following simple signature: `register(component: ComponentMetadata): Promise<string>`. It takes the metadata of the selected component and, when finished asynchronously, returns the HTML tag with which the host application can add instances of the component to the DOM.
+
+[[using]]
+== Using a component
+
+As soon as the host application has an HTML tag, it can add the component to the DOM, in order to render the data. It does this by creating an element form the tag, setting the `entry` attribute to the URL of the data adhering to the shape, and adding listeners for the SemCom events. Since this last step can be quite code intensive because of the flexibility of the different data types, the SDK further provides an `addListener`.
+
+The signature of this function is `addListener: <D extends "text" | "blob" | "json" | "quads" | "uint8array", T extends ComponentEventTypes>(eventType: T, dataType: D, element: GlobalEventHandlers, process: (event: GlobalEventHandlersEventMap[T]) => Promise<ComponentResponseEvent<D>>) => void`. While complex, it simply takes the data type and event type for which to listen, as well as a function with which to process events of that type to a response event.
+
+For each instance of its SemCom components, the host application has to define such a processing function for every combination of data type and event type. Of course, in code, this will in fact need to be implemented only once for every such combination.
+
+[[base]]
+== The base component
+
+Where the functions in the SemCom SDK provide welcome help for the application developer, another package called `@digita-ai/semcom-components` provides some syntactic sugar for the component developer. This sugar comes in the form of the abstract `BaseComponent` class: a LitElement Web Component providing the following helper functions.
+
+- `readData<D extends keyof ComponentDataTypes>(uri: string, type: D, mime?: string): void`: takes a URL and type of the resource to read, and sends a `ComponentReadEvent` to the host application.
+ 
+- `writeData<D extends keyof ComponentDataTypes>(uri: string, data: ComponentDataTypes[D], type: D): void`: takes a URL, data and type of the resource to write, and send a `ComponentWriteEvent` to the host application.
+
+- `appendData<D extends keyof ComponentDataTypes>(uri: string, data: ComponentDataTypes[D], type: D): void`: takes a URL, data and type of the resource to append, and send a `ComponentAppendEvent` to the host application. 
+
+The abstract class further mandates the following function to be implemented to handle response events, for which it already adds the necessary listener: `handleResponse<D extends keyof ComponentDataTypes>(event: ComponentResponseEvent<D>): void`.

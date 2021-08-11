@@ -45,15 +45,17 @@ As indicated above, restrictions on the form of the element are kept to a minimu
 [[components-behavior]]
 === Component behavior
 
-To be as interoperable as possible, the behavior of a SemCom component is fully specified by four `CustomEvent` types, with `detail` payloads defined by this specification.
+To be as interoperable as possible, the behavior of a SemCom component is fully specified by four `CustomEvent` types: `semcom-data-read`, `semcom-data-write`, `semcom-data-append` and `semcom-data-response`. The host application should listen on the first three of these, and fire the fourth as a response.
 
-- *semcom-data-read*: 
+The `detail` payloads of each of these event types are defined by this specification. All four of them must have a `uri` field containing the URL of the data resource, and a `type` field indicating the datatype in which the resource is passed. This type can be any of the following: `quads`, `text`, `json`, `blob` or `uint8array`. The event types are then specified further individually:
 
-- *semcom-data-write*: 
+- *semcom-data-read*: Optionally containing a `mime` field, this event asks the host application to read data from the URI, with the given MIME type if specified, then parse the data in the correct datatype, and pass the data with a response event.
 
-- *semcom-data-append*: 
+- *semcom-data-write*: Containing an extra field `data` with data in the specified type, this event asks the host application to write the passed data to the given URI.
 
-- *semcom-data-response*: 
+- *semcom-data-append*: Containing an extra field `data` with data in the specified type, this event asks the host application to append the passed data to the given URI.
+
+- *semcom-data-response*: Containing an extra field `data` with data in the specified type, this event responds to any of the events above, passing the data that is actually read, written or appended back from the host application to the component. This event additionally contains a boolean `success` field, and a `cause` field containing the event on which it response.
 
 
 [[components-distribution]]
@@ -64,3 +66,21 @@ Each component must be available as a single JavaScript module, served with the 
 
 [[node]]
 == SemCom nodes
+
+Since the choice of SemCom components depends on the shape of the data, the host application must be able to decide dynamically (i.e. at runtime) which component to use. For this purpose, SemCom provides a registry API, where host applications can query for available components. This API allows for the following requests.
+
+- `GET /component`: retrieves the metadata of all components.
+
+- `POST /component`: adds the body of the request as new metadata. This endpoint is optional, i.e. read-only registries are a possibility.
+
+- `POST /component/query`: performs a query for metadata of components, based on the metadata constraints in the body. the body of the request as new metadata.
+
+To keep the registry servers lightweight, only metadata about the components are stored (see the section on <<metadata>>). This metadata is stored in Solid pods. Each registry server keeps a list of such metadata storage pods of which it trusts the contents.
+
+The registry servers behave as decentralized networks of nodes that can sync their peers, storage pods and metadata with servers they trust. For this purpose, the API also contains the following endpoints.
+
+- `GET /peers`: retrieves a JSON list of URLs of the other SemCom nodes the server trusts and syncs with.
+
+- `GET /storage`: retrieves a JSON list of URLs of the Solid storage pods the server knows.
+
+These endpoints can be called on a regular basis by a node's peers, in order to propagate metadata across the decentralized network.
