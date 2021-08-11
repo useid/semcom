@@ -1,4 +1,4 @@
-import { Quad } from 'rdf-js';
+import { ComponentDataTypes } from './component-data-types';
 
 /**
  * Definition of a web component which complies to the Semcom-standard.
@@ -14,7 +14,7 @@ export interface Component extends HTMLElement {
    *
    * @param uri The uri of the resource to read.
    */
-  readData(uri: string): void;
+  readData<D extends keyof ComponentDataTypes>(uri: string, type: D): void;
 
   /**
    * Should send a `ComponentWriteEvent` to the component's parent to write data to a given resource.
@@ -22,7 +22,7 @@ export interface Component extends HTMLElement {
    * @param uri The uri of the resource to read.
    * @param data The data which should be written to the resource.
    */
-  writeData(uri: string, data: Quad[]): void;
+  writeData<D extends keyof ComponentDataTypes>(uri: string, data: ComponentDataTypes[D], type: D): void;
 
   /**
    * Should send a `ComponentAppendEvent` to the component's parent to append data to a given resource.
@@ -30,5 +30,5 @@ export interface Component extends HTMLElement {
    * @param uri The uri of the resource to read.
    * @param data The data which should be appended to the resource.
    */
-  appendData(uri: string, data: Quad[]): void;
+  appendData<D extends keyof ComponentDataTypes>(uri: string, data: ComponentDataTypes[D], type: D): void;
 }
