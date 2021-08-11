@@ -137,7 +137,7 @@ const handleStoreSelectedEvent = (event: StoreSelectedEvent) => {
 
   if (!url) { return of(new NoPermissionEvent()); }
 
-  return from(solidFetch(url)).pipe(
+  return from(solidFetch(url, { method: 'HEAD' })).pipe(
     switchMap((response) => {
 
       if (response.headers.get('link').includes('<http://www.w3.org/ns/pim/space#Storage>; rel="type"')) {
