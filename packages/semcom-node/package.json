@@ -62,6 +62,7 @@
     "@digita-ai/handlersjs-http": "^0.3.2",
     "@digita-ai/semcom-core": "0.4.1",
     "componentsjs": "4.4.0",
+    "jssha": "^3.2.0",
     "n3": "^1.6.3",
     "node-fetch": "^2.6.1",
     "rdf-serialize": "^1.0.1",
