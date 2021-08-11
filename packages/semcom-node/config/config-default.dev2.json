@@ -16,8 +16,8 @@
     {
       "@id": "urn:semcom-node:default:MemoryStore",
       "@type": "MemoryStore",
-      "initialData": ["peers", ["http://localhost:3001"]],
-      "initialData": ["storage", ["http://localhost:8080/components/profile.component.js", "http://localhost:8080/components/input.component.js"]]
+      "initialData": ["peers", ["http://localhost:3000"]],
+      "initialData": ["storage", ["http://localhost:8080/components/payslip.component.js", "http://localhost:8080/components/gender.component.js"]]
     },
     {
       "@id": "urn:semcom-node:default:ComponentStore",
