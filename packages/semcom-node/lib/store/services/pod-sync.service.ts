@@ -24,15 +24,26 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
   private async componentsInPod(uri: string): Promise<Set<string>> {
 
-    const body = await fetch(uri, { headers: { 'Accept': 'text/turtle' } })
-      .then((response) => response.text());
+    return new Promise((resolve) => {
 
-    const components = new Parser({ format: 'Turtle' }).parse(body)
-      .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
-      .filter((quad) => quad.subject.value !== '')
-      .map((quad) => quad.object.value);
+      // return an empty set if the pod is offline
+      fetch(uri, { headers: { 'Accept': 'text/turtle' } })
+        .then((response) => response.text()
+          .then((body) => {
 
-    return new Set(components);
+            resolve(new Set(
+              response.status === 200
+                ? new Parser({ format: 'Turtle' }).parse(body)
+                  .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
+                  .filter((quad) => quad.subject.value !== '')
+                  .map((quad) => quad.subject.value)
+                : undefined
+            ));
+
+          }))
+        .catch(() => resolve(new Set()));
+
+    });
 
   }
 
