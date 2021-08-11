@@ -28,14 +28,18 @@
   },
   "dependencies": {
     "@digita-ai/semcom-core": "0.3.4",
+    "@digita-ai/ui-transfer-components": "0.7.2",
     "@digita-ai/ui-transfer-solid-client": "0.7.2",
     "@digita-ai/ui-transfer-theme": "0.7.2",
-    "@digita-ai/ui-transfer-components": "0.7.2",
     "@netwerk-digitaal-erfgoed/solid-crs-components": "^0.7.0",
+    "@types/semver": "^7.3.8",
     "@xstate/inspect": "^0.4.1",
+    "jssha": "^3.2.0",
     "lit-element": "^2.5.1",
+    "n3": "^1.11.1",
     "rx-lit": "1.0.1",
     "rxjs": "^6.6.7",
+    "semver": "^7.3.5",
     "xstate": "^4.17.1"
   },
   "devDependencies": {

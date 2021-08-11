@@ -1,32 +1,30 @@
-import { html, unsafeCSS, css, CSSResult, TemplateResult, property, PropertyValues, state, query } from 'lit-element';
+import { html, unsafeCSS, css, CSSResult, TemplateResult, property, state, query } from 'lit-element';
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { RxLitElement } from 'rx-lit';
-import { ActorRef, Interpreter } from 'xstate';
-import { FormActors, FormCleanlinessStates, FormEvent, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents, FormUpdatedEvent } from '@netwerk-digitaal-erfgoed/solid-crs-components';
+import { DoneEvent, interpret } from 'xstate';
+import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents, FormUpdatedEvent, formMachine, FormContext, FormValidatorResult } from '@netwerk-digitaal-erfgoed/solid-crs-components';
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SemComRegisterContext } from './sem-com-register.machine';
 
 export class SemComStoreSelectionComponent extends RxLitElement {
 
   @property({ type: Array })
   public semComStoreUrls: string[];
 
-  /** The actor controlling this component. */
-  @property({ type: Object })
-  public actor: Interpreter<SemComRegisterContext>;
+  formMachine = formMachine<{ dropDown: string; freeInput: string }> (
+    (context) => this.validateStoreSelectionForm(context)
+  ).withContext({ data: { dropDown: 'empty', freeInput: '' }, original: { dropDown: 'empty', freeInput: '' } });
 
   /** The actor responsible for form validation in this component.  */
-  @state()
-  formActor: ActorRef<FormEvent>;
+  formActor = interpret(this.formMachine, { devTools: true });
 
   /** Indicates if if the form validation passed. */
   @state()
-  isValid? = false;
+  isValid = false;
 
   /** Indicates if one of the form fields has changed. */
   @state()
-  isDirty? = false;
+  isDirty = false;
 
   /** The freeInput element from the DOM */
   @query('#freeInput')
@@ -36,40 +34,74 @@ export class SemComStoreSelectionComponent extends RxLitElement {
   @query('#dropDown')
   dropDown: HTMLSelectElement;
 
-  /** Hook called on at every update after connection to the DOM. */
-  async updated(changed: PropertyValues): Promise<void> {
+  constructor() {
 
-    super.updated(changed);
+    super();
 
-    if (changed && changed.has('actor') && this.actor) {
+    this.subscribe('isValid', from(this.formActor).pipe(
+      map((machineState) => machineState.matches({
+        [FormSubmissionStates.NOT_SUBMITTED]:{
+          [FormRootStates.VALIDATION]: FormValidationStates.VALID,
+        },
+      })),
+    ));
 
-      this.subscribe('formActor', from(this.actor).pipe(
-        map((machineState) => machineState.children[FormActors.FORM_MACHINE]),
-      ));
+    this.subscribe('isDirty', from(this.formActor).pipe(
+      map((machineState) => machineState.matches({
+        [FormSubmissionStates.NOT_SUBMITTED]:{
+          [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
+        },
+      })),
+    ));
 
-    }
+    this.formActor.onDone((event: DoneEvent) => { this.dispatchEvent(new CustomEvent('formSubmitted', { detail: { dropDown: event.data.data.dropDown, freeInput: event.data.data.freeInput } })); });
 
-    if(changed?.has('formActor') && this.formActor){
-
-      this.subscribe('isValid', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
-          [FormSubmissionStates.NOT_SUBMITTED]:{
-            [FormRootStates.VALIDATION]: FormValidationStates.VALID,
-          },
-        })),
-      ));
-
-      this.subscribe('isDirty', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
-          [FormSubmissionStates.NOT_SUBMITTED]:{
-            [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
-          },
-        })),
-      ));
-
-    }
+    this.formActor.start();
 
   }
+
+  validateStoreSelectionForm =
+  async (context: FormContext<{ dropDown: string; freeInput: string }>): Promise<FormValidatorResult[]> => {
+
+    const res: FormValidatorResult[] = [];
+
+    // only validate dirty fields
+    const dirtyFields = Object.keys(context.data).filter((field) =>
+      context.data[field as keyof { dropDown: string; freeInput: string }]
+    !== context.original[field as keyof { dropDown: string; freeInput: string }]);
+
+    for (const field of dirtyFields) {
+
+      const value = context.data[field as keyof { dropDown: string; freeInput: string }];
+
+      if (field === 'freeInput') {
+
+        if (!value) {
+
+          res.push({ field, message: 'cannot be empty' });
+
+        } else {
+
+          // the value must be a valid URL
+          try {
+
+            new URL(value);
+
+          } catch {
+
+            res.push({ field, message: 'must be a valid URL of a solid pod' });
+
+          }
+
+        }
+
+      }
+
+    }
+
+    return res;
+
+  };
 
   render(): TemplateResult {
 

@@ -1,24 +1,36 @@
-import { html, unsafeCSS, css, CSSResult, TemplateResult, property, PropertyValues, state } from 'lit-element';
+import { html, unsafeCSS, css, CSSResult, TemplateResult, property, state, query } from 'lit-element';
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { RxLitElement } from 'rx-lit';
-import { ActorRef, Interpreter } from 'xstate';
-import { FormActors, FormCleanlinessStates, FormEvent, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents } from '@netwerk-digitaal-erfgoed/solid-crs-components';
+import { DoneEvent, interpret } from 'xstate';
+import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents, formMachine, FormValidatorResult, FormContext } from '@netwerk-digitaal-erfgoed/solid-crs-components';
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SemComRegisterContext } from './sem-com-register.machine';
+import valid from 'semver/functions/valid';
 
+export interface UploadFormContext {
+  uri: string;
+  labelInput: string;
+  description: string;
+  author: string;
+  tag: string;
+  shapes: string;
+  version: string;
+  latest: string;
+  checksum: string;
+}
 export class SemComUploadFormComponent extends RxLitElement {
 
   @property({ type: Array })
   public semComStoreUrls: string[];
 
-  /** The actor controlling this component. */
-  @property({ type: Object })
-  public actor: Interpreter<SemComRegisterContext>;
+  formMachine = formMachine<UploadFormContext> ((context, event) => this.validateUploadForm(context)).withContext({
+    data: { uri: '', labelInput: '', description: '', author: '', tag:'', shapes: '', version: '', latest: 'false', checksum: '' },
+    original: { uri: '', labelInput: '', description: '', author: '', tag:'', shapes: '', version: '', latest: 'false', checksum: '' },
+  });
 
   /** The actor responsible for form validation in this component.  */
-  @state()
-  formActor: ActorRef<FormEvent>;
+  // eslint-disable-next-line no-console -- this is a state logger
+  formActor = interpret(this.formMachine, { devTools: true }).onTransition((appState) => console.log(appState.value));
 
   /** Indicates if if the form validation passed. */
   @state()
@@ -28,45 +40,177 @@ export class SemComUploadFormComponent extends RxLitElement {
   @state()
   isDirty? = false;
 
-  /** Hook called on at every update after connection to the DOM. */
-  async updated(changed: PropertyValues): Promise<void> {
+  /** All fields from the form, used for validation */
+  @query('#uri')
+  uri: HTMLInputElement;
 
-    super.updated(changed);
+  @query('#labelInput')
+  labelInput: HTMLInputElement;
 
-    if (changed && changed.has('actor') && this.actor) {
+  @query('#description')
+  description: HTMLInputElement;
 
-      this.subscribe('formActor', from(this.actor).pipe(
-        map((machineState) => machineState.children[FormActors.FORM_MACHINE]),
-      ));
+  @query('#author')
+  author: HTMLInputElement;
 
-    }
+  @query('#tag')
+  tag: HTMLInputElement;
 
-    if(changed?.has('formActor') && this.formActor){
+  @query('#shapes')
+  shapes: HTMLTextAreaElement;
 
-      this.subscribe('isValid', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
-          [FormSubmissionStates.NOT_SUBMITTED]:{
-            [FormRootStates.VALIDATION]: FormValidationStates.VALID,
-          },
-        })),
-      ));
+  @query('#version')
+  version: HTMLInputElement;
 
-      this.subscribe('isDirty', from(this.formActor).pipe(
-        map((machineState) => machineState.matches({
-          [FormSubmissionStates.NOT_SUBMITTED]:{
-            [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
-          },
-        })),
-      ));
+  @query('#latest')
+  latest: HTMLSelectElement;
 
-    }
+  @query('#checksum')
+  checksum: HTMLTextAreaElement;
+
+  constructor() {
+
+    super();
+
+    this.subscribe('isValid', from(this.formActor).pipe(
+      map((machineState) => machineState.matches({
+        [FormSubmissionStates.NOT_SUBMITTED]:{
+          [FormRootStates.VALIDATION]: FormValidationStates.VALID,
+        },
+      })),
+    ));
+
+    this.subscribe('isDirty', from(this.formActor).pipe(
+      map((machineState) => machineState.matches({
+        [FormSubmissionStates.NOT_SUBMITTED]:{
+          [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
+        },
+      })),
+    ));
+
+    this.formActor.onDone((event: DoneEvent) => {
+
+      this.dispatchEvent(new CustomEvent('formSubmitted', { detail: {
+        uri: event.data.data.uri,
+        labelInput: event.data.data.labelInput,
+        description: event.data.data.description,
+        author: event.data.data.author,
+        tag:event.data.data.tag,
+        shapes: event.data.data.shapes,
+        version: event.data.data.version,
+        latest: event.data.data.latest,
+        checksum: event.data.data.checksum,
+      } }));
+
+    });
+
+    this.formActor.start();
 
   }
 
+  validateUploadForm = async (context: FormContext<UploadFormContext>): Promise<FormValidatorResult[]> => {
+
+    const res: FormValidatorResult[] = [];
+
+    // only validate dirty fields
+    const dirtyFields = Object.keys(context.data).filter((field) =>
+      context.data[field as keyof UploadFormContext]
+    !== context.original[field as keyof UploadFormContext]);
+
+    for (const field of dirtyFields) {
+
+      const value = context.data[field as keyof UploadFormContext];
+
+      if (field === 'uri') {
+
+        // the value must be a valid URL
+        try {
+
+          new URL(value);
+
+        } catch {
+
+          res.push({ field, message: 'must be a valid URI' });
+
+        }
+
+      }
+
+      if (field === 'shapes') {
+
+        const urls = value.split(',');
+        let validShapes = true;
+
+        for (const url of urls) {
+
+          try {
+
+            new URL(url);
+
+          } catch {
+
+            validShapes = false;
+
+          }
+
+        }
+
+        if (!validShapes) { res.push({ field, message: 'Must a be a comma-separated list of valid URLs' }); }
+
+      }
+
+      if (field === 'version') {
+
+        if (!valid(value)) { res.push({ field, message: 'Must a valid Semantic Version of pattern "x.x.x"' }); }
+
+      }
+
+    }
+
+    return res;
+
+  };
+
   render(): TemplateResult {
+
+    const hasEmptyFields = () => this.uri?.value.trim() === ''
+      || this.labelInput?.value.trim() === ''
+      || this.description?.value.trim() === ''
+      || this.author?.value.trim() === ''
+      || this.tag?.value.trim() === ''
+      || this.shapes?.value.trim() === ''
+      || this.version?.value.trim() === ''
+      || this.checksum?.value.trim() === '';
+
+    const validateOnSubmission = () => {
+
+      const errorDiv = this.shadowRoot.querySelector('#error');
+      errorDiv.innerHTML = '';
+      const errorP = document.createElement('p');
+
+      if (hasEmptyFields()) {
+
+        errorP.innerText = 'No fields can be empty';
+
+        errorDiv.appendChild(errorP);
+
+      } else if (!this.isValid) {
+
+        errorP.innerText = 'All fields must be valid';
+        errorDiv.appendChild(errorP);
+
+      } else {
+
+        this.formActor.send(FormEvents.FORM_SUBMITTED);
+
+      }
+
+    };
 
     return html`
       <div id="content">
+        <div id="error"></div>
+
         <div id="first">
           <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="uri">
             <label slot="label" for="uri">Uri</label>
@@ -132,7 +276,7 @@ export class SemComUploadFormComponent extends RxLitElement {
         </div>
 
         <!-- UPGRADE THIS TO new FormSubmittedEvent() WHEN THE TYPE IS FIXED -->
-        <button ?disabled="${false}" type="button" @click="${() => this.formActor.send(FormEvents.FORM_SUBMITTED)}">Save Data</button>
+        <button ?disabled="${false}" type="button" @click="${validateOnSubmission}">Save Data</button>
       </div>
     `;
 
@@ -206,6 +350,14 @@ export class SemComUploadFormComponent extends RxLitElement {
         input:focus,
         select:focus {
           outline: none;
+        }
+
+        #error {
+          background-color: var(--colors-status-warning)
+        }
+
+        #error p {
+          padding: var(--gap-small) var(--gap-normal)
         }
 
       `,

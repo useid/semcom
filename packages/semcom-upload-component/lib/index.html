@@ -13,20 +13,5 @@
     <script type="module" src="./demo.ts"></script>
 
     <sem-com-register-component></sem-com-register-component>
-    <demo-auth-flow></demo-auth-flow>
-    <demo-source-list></demo-source-list>
-    <demo-consent-result></demo-consent-result>
-    <demo-consent-request></demo-consent-request>
-    <demo-provider-list></demo-provider-list>
-    <loading-component message="Checking permissions..."></loading-component>
-    <feedback-component id="fc1" title="An error occurred!" message="You do not have permission to edit this store! Please choose another store or log in with a user account that has access to this store." buttonText="Go back to the store selection screen"></feedback-component>
-    <feedback-component id="fc2" title="Data saved successfully!" buttonText="Add another component" success></feedback-component>
-    
-    <script>
-      const fc1 = document.getElementById("fc1");
-      fc1.addEventListener("feedback-component-click-event", () => alert('Clicked the error feedback component.'))
-      const fc2 = document.getElementById("fc2");
-      fc2.addEventListener("feedback-component-click-event", () => alert('Clicked the success feedback component.'))
-    </script>
   </body>
 </html>

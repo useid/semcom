@@ -4,7 +4,7 @@ import { from } from 'rxjs';
 import { createMachine, interpret, State } from 'xstate';
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { SolidSDKService } from '../services/solid-sdk.service';
-import { semComRegisterMachine, SemComRegisterContext, SemComRegisterEvent, SemComRegisterState, SemComRegisterStates, AuthenticatedEvent, BackToStoreSelectionEvent, BackToUploadFormEvent } from './sem-com-register.machine';
+import { semComRegisterMachine, SemComRegisterContext, SemComRegisterEvent, SemComRegisterState, SemComRegisterStates, AuthenticatedEvent, BackToStoreSelectionEvent, BackToUploadFormEvent, StoreSelectedEvent, UploadFormSubmittedEvent } from './sem-com-register.machine';
 
 export class SemComRegisterComponent extends RxLitElement {
 
@@ -14,8 +14,7 @@ export class SemComRegisterComponent extends RxLitElement {
     semComRegisterMachine
   );
 
-  // eslint-disable-next-line no-console -- this is a state logger
-  private actor = interpret(this.machine, { devTools: true }).onTransition((appState) => console.log(appState.value));
+  private actor = interpret(this.machine, { devTools: true });
 
   @state()
   state: State<SemComRegisterContext>;
@@ -45,7 +44,7 @@ export class SemComRegisterComponent extends RxLitElement {
 
     } else if (this.state.matches(SemComRegisterStates.STORE_SELECTION)) {
 
-      componentToRender = html`<sem-com-store-selection .actor="${this.actor}" .semComStoreUrls="${[ 'http://localhost:3002/testpod1/', 'http://localhost:3002/testpod2/' ]}"></sem-com-store-selection>`;
+      componentToRender = html`<sem-com-store-selection @formSubmitted="${this.storeSelected}" .semComStoreUrls="${[ 'http://localhost:3002/testpod1/', 'http://localhost:3002/testpod2/' ]}"></sem-com-store-selection>`;
 
     } else if (this.state.matches(SemComRegisterStates.CHECKING_PERMISSION)) {
 
@@ -53,12 +52,11 @@ export class SemComRegisterComponent extends RxLitElement {
 
     } else if (this.state.matches(SemComRegisterStates.UPLOAD_COMPONENT_FORM)) {
 
-      componentToRender = html`<sem-com-upload-form .actor="${this.actor}"></sem-com-upload-form>`;
+      componentToRender = html`<sem-com-upload-form @formSubmitted="${this.formUploaded}"></sem-com-upload-form>`;
 
     } else if (this.state.matches(SemComRegisterStates.NOT_PERMITTED)) {
 
-      componentToRender = html`<feedback-component id="fc-store-selection-error" title="An error occured!" message="You do not have permission to edit this store! Please choose another store or log in with a user account that has access to this store." buttonText="Go back to the store selection screen"></feedback-component>`;
-      this.addEventListenerAfterUpdate('fc-store-selection-error', () => this.actor.send(new BackToStoreSelectionEvent()));
+      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToStoreSelectionEvent())}" title="An error occured!" message="You do not have permission to edit this store! Please choose another store or log in with a user account that has access to this store." buttonText="Go back to the store selection screen"></feedback-component>`;
 
     } else if (this.state.matches(SemComRegisterStates.UPLOADING_COMPONENT)) {
 
@@ -66,31 +64,45 @@ export class SemComRegisterComponent extends RxLitElement {
 
     } else if (this.state.matches(SemComRegisterStates.SUCCESSFULLY_SAVED_DATA)) {
 
-      componentToRender = html`<feedback-component id="fc-upload-successful" success title="Data saved successfully!" buttonText="Add another component"></feedback-component>`;
-      this.addEventListenerAfterUpdate('fc-upload-successful', () => this.actor.send(new BackToUploadFormEvent()));
+      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToUploadFormEvent())}" success title="Data saved successfully!" buttonText="Add another component"></feedback-component>`;
 
     } else if (this.state.matches(SemComRegisterStates.ERROR_SAVING_DATA)) {
 
-      componentToRender = html`<feedback-component id="fc-error-saving-data" title="An error occurred!" message="Something went wrong while trying to save the data to the desired store. Please try again." buttonText="Go back to the store selection screen"></feedback-component>`;
-      this.addEventListenerAfterUpdate('fc-error-saving-data', () => this.actor.send(new BackToStoreSelectionEvent()));
+      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToStoreSelectionEvent())}" title="An error occurred!" message="Something went wrong while trying to save the data to the desired store. Please try again." buttonText="Go back to the store selection screen"></feedback-component>`;
 
     }
 
     return html`
-        <div class="root-content">
-          <nav>
-            <a class="link-item">
-              <img class="logo" src="logo-here.png">
-              <span class="title">title</span>
-            </a>
-          </nav>
-          <div class="content" id="test">
-            ${componentToRender} 
-          </div>
+        <div class="content">
+          ${componentToRender}
         </div>
         `;
 
   }
+
+  storeSelected = (event: CustomEvent): void => {
+
+    this.actor.send(new StoreSelectedEvent(event.detail.dropDown, event.detail.freeInput));
+
+  };
+
+  formUploaded = (event: CustomEvent): void => {
+
+    this.actor.send(new UploadFormSubmittedEvent(
+      {
+        uri: event.detail.uri,
+        labelInput: event.detail.labelInput,
+        description: event.detail.description,
+        author: event.detail.author,
+        tag:event.detail.tag,
+        shapes: event.detail.shapes,
+        version: event.detail.version,
+        latest: event.detail.latest,
+        checksum: event.detail.checksum,
+      }
+    ));
+
+  };
 
   addEventListenerAfterUpdate = async (id: string, callback: () => void): Promise<void> => {
 
