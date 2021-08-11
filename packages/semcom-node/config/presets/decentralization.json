@@ -7,13 +7,6 @@
   ],
   "@graph": [
     {
-      "@id": "urn:semcom-node:default:MemoryStore",
-      "@type": "MemoryStore",
-      "initialData": ["peers", []],
-      "initialData": ["storage", []]
-    },
-
-    {
       "@id": "urn:semcom-node:default:PeersJsonStoreHandler",
       "@type": "JsonStoreHandler",
       "JsonStoreHandler:_data": "peers",
@@ -54,7 +47,7 @@
     {
       "@id": "urn:semcom-node:default:PeerSyncScheduler",
       "@type": "Scheduler",
-      "Scheduler:_interval": 100000,
+      "Scheduler:_interval": 50000,
       "Scheduler:_task": {
         "@id": "urn:semcom-node:default:PeerSyncService"
       }
@@ -62,7 +55,7 @@
     {
       "@id": "urn:semcom-node:default:StorageSyncScheduler",
       "@type": "Scheduler",
-      "Scheduler:_interval": 100000,
+      "Scheduler:_interval": 50000,
       "Scheduler:_task": {
         "@id": "urn:semcom-node:default:StorageSyncService"
       }
