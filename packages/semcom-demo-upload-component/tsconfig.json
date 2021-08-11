@@ -1,0 +1,24 @@
+{
+    "extends": "@digita-ai/typescript-config/tsconfig.json",
+    "compilerOptions": {
+      "baseUrl": "lib",
+      "outDir": "dist",
+      "emitDeclarationOnly": true,
+      "module": "es2020",
+      // Recommended by Lit Element
+      "target": "es2017",
+      // Strict should actually be true
+      "strict": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      // If this is off, building will error due to an N3 type
+      "skipLibCheck": true
+    },
+    "files": [ "node_modules/vite/client.d.ts" ],
+    "include": [ "lib" ],
+    "exclude": [
+      "**/*.spec.ts",
+      "node_modules",
+      "dist"
+    ]
+  }
