@@ -30,10 +30,12 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
   const server: NodeHttpServer = await manager.instantiate('urn:semcom-node:default:NodeHttpServer', { variables });
   const peerSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PeerSyncScheduler', { variables });
   const storageSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:StorageSyncScheduler', { variables });
+  const podSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PodSyncScheduler', { variables });
 
   server.start();
   peerSyncScheduler.start();
   storageSyncScheduler.start();
+  podSyncScheduler.start();
 
 };
 
