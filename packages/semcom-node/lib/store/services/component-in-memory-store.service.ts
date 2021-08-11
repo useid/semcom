@@ -14,11 +14,7 @@ export class ComponentInMemoryStore extends ComponentStore {
     return this.components;
 
   }
-  async get(uri: string): Promise<ComponentMetadata[]> {
 
-    return this.components.filter((component) => uri === component.uri);
-
-  }
   async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
 
     if (!components) {

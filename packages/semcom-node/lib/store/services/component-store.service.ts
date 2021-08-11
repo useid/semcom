@@ -40,7 +40,6 @@ export abstract class ComponentStore implements Store<ComponentMetadata>{
   }
 
   abstract all(): Promise<ComponentMetadata[]>;
-  abstract get(uri: string): Promise<ComponentMetadata[]>;
   abstract save(components: ComponentMetadata[]): Promise<ComponentMetadata[]>;
 
 }
