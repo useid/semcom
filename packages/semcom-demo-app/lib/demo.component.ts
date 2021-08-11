@@ -66,27 +66,27 @@ export class DemoComponent extends RxLitElement {
 
           const element = document.createElement(tag);
 
-          const parser = new Parser();
+          addListener(ComponentEventTypes.READ, 'quads', element, async (event: ComponentReadEvent<'quads'>) => {
 
-          addListener(ComponentEventTypes.READ, element, async (event: ComponentReadEvent) => {
+            const parser = new Parser();
 
             const response = await fetch(event.detail.uri);
             const profileText = await response.text();
             const quads = parser.parse(profileText);
 
             return new ComponentResponseEvent({
-              detail: { uri: event.detail.uri, cause: event, data: quads, success: true },
+              detail: { uri: event.detail.uri, cause: event, data: quads, success: true, type: 'quads' },
             });
 
           });
 
-          addListener(ComponentEventTypes.WRITE, element, async (event: ComponentWriteEvent) => {
+          addListener(ComponentEventTypes.WRITE, 'quads', element, async (event: ComponentWriteEvent<'quads'>) => {
 
             try {
 
               new URL(event.detail.uri);
 
-              const response = new Promise<ComponentResponseEvent>((resolve, reject) => {
+              const response = new Promise<ComponentResponseEvent<'quads'>>((resolve, reject) => {
 
                 setTimeout(() =>
                   resolve(new ComponentResponseEvent({
