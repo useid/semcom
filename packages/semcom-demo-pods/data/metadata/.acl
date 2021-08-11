@@ -13,3 +13,9 @@
     acl:accessTo    <./>;
     acl:default     <./>;
     acl:mode        acl:Read.
+
+<#public>
+    a               acl:Authorization;
+    acl:agentClass  foaf:Agent;
+    acl:accessTo    <./>;
+    acl:mode        acl:Append.
