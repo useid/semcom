@@ -15,7 +15,7 @@
     {
       "@id": "urn:semcom-node:default:ComponentStore",
       "@type": "ComponentPodStore",
-      "ComponentPodStore:_uri": "http://localhost:9000/metadata/components.ttl",
+      "ComponentPodStore:_uri": "http://localhost:9000/metadata/",
       "ComponentPodStore:_transformer": {
         "@id": "urn:semcom-node:default:ComponentTransformerService"
       }
