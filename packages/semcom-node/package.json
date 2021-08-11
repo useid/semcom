@@ -36,8 +36,9 @@
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
     "start": "node bin/server.js",
-    "start:dev": "node bin/server.js -c config/config-default.dev.json",
-    "start:dev-sync": "node bin/synchronizing-servers.js",
+    "start:dev": "node bin/server.js -p 3000 -c config/config-default.dev.json",
+    "start:dev2": "node bin/server.js -p 3001 -c config/config-default.dev2.json",
+    "start:sync:dev": "node bin/synchronizing-servers.js",
     "test": "jest",
     "test:ci": "jest --runInBand --silent",
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"

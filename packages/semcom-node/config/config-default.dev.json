@@ -1,7 +1,8 @@
 {
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-core/^0.0.0/components/context.jsonld"
   ],
   "import": [
     "files-dasn:config/presets/logger.json",
@@ -12,6 +13,12 @@
     "files-dasn:config/presets/decentralization.json"
   ],
   "@graph": [
+    {
+      "@id": "urn:semcom-node:default:MemoryStore",
+      "@type": "MemoryStore",
+      "initialData": ["peers", ["http://localhost:3001"]],
+      "initialData": ["storage", ["http://localhost:8080/components/profile.component.js", "http://localhost:8080/components/input.component.js"]]
+    },
     {
       "@id": "urn:semcom-node:default:ComponentStore",
       "@type": "ComponentInMemoryStore",
