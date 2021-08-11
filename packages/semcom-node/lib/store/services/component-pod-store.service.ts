@@ -1,5 +1,4 @@
 import { ComponentMetadata } from '@digita-ai/semcom-core';
-import jsSHA from 'jssha';
 import { Parser, Quad } from 'n3';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { ComponentStore } from './component-store.service';
