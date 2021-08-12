@@ -121,7 +121,7 @@ describe('ComponentTransformerService', () => {
 
   describe('fromQuadsOne()', () => {
 
-    it('should throw an error if 1 required predicate are not found', () => {
+    it('should throw an error if 1 required predicate is not found', () => {
 
       const quads = quadsTest1.filter((q) => q.predicate.value !== `${digitaPrefix}label`);
       expect(() => transformer.fromQuadsOne(quads, componentMetaDatas[0].uri)).toThrow('Some ComponentMetadata predicates were missing while parsing quads.');

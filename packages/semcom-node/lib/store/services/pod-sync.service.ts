@@ -7,8 +7,9 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
   /**
    *
-   * @param storage key in which the storage is located
-   * @param store the given store
+   * @param storage - key in which the storage is located
+   * @param store - the given store
+   * @param localPod - the URI of the local pod
    */
   constructor(
     private readonly storage: S,
@@ -24,26 +25,25 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
   private async componentsInPod(uri: string): Promise<Set<string>> {
 
-    return new Promise((resolve) => {
+    try {
 
-      // return an empty set if the pod is offline
-      fetch(uri, { headers: { 'Accept': 'text/turtle' } })
-        .then((response) => response.text()
-          .then((body) => {
+      const response = await fetch(uri, { headers: { 'Accept': 'text/turtle' } });
+      const body = await response.text();
 
-            resolve(new Set(
-              response.status === 200
-                ? new Parser({ format: 'Turtle' }).parse(body)
-                  .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
-                  .filter((quad) => quad.subject.value !== '')
-                  .map((quad) => quad.subject.value)
-                : undefined
-            ));
+      return new Set(
+        response.status === 200
+          ? new Parser({ format: 'Turtle' }).parse(body)
+            .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
+            .filter((quad) => quad.subject.value !== '')
+            .map((quad) => quad.subject.value)
+          : undefined
+      );
 
-          }))
-        .catch(() => resolve(new Set()));
+    } catch (error) {
 
-    });
+      return new Set();
+
+    }
 
   }
 
@@ -53,7 +53,7 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
     const pods: string[] = await this.store.get(this.storage) ?? [];
 
-    // map of components to be fatched, mapped to a node which has the component metadata
+    // map of components to be fetched, mapped to a node which has the component metadata
     const componentToFetch: Map<string, string> = new Map();
 
     await Promise.all(pods.map(async (pod) => {

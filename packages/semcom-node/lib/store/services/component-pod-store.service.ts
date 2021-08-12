@@ -12,15 +12,15 @@ export class ComponentPodStore extends ComponentStore {
 
   private async fetchAllQuads(): Promise<Quad[]> {
 
-    const body = await fetch(this.uri, { headers: { 'Accept': 'text/turtle' } })
-      .then((response) => response.text());
+    const response = await fetch(this.uri, { headers: { 'Accept': 'text/turtle' } });
+    const body = await response.text();
 
     const components = new Parser({ format: 'Turtle' }).parse(body)
-      .filter((q) => q.object.value === 'http://www.w3.org/ns/ldp#Resource')
-      .filter((q) => q.subject.value !== '')
-      .map((q) => q.subject.value);
+      .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
+      .filter((quad) => quad.subject.value !== '')
+      .map((quad) => quad.subject.value);
 
-    const allQuads: Quad[][] = await Promise.all(([ ... components ]).map((component) => this.fetchQuads(component)));
+    const allQuads: Quad[][] = await Promise.all(components.map((component) => this.fetchQuads(component)));
 
     return allQuads.flat();
 
@@ -28,9 +28,10 @@ export class ComponentPodStore extends ComponentStore {
 
   private async fetchQuads(metadataName: string): Promise<Quad[]> {
 
-    return fetch(`${this.uri}${metadataName}`, { headers: { 'Accept': 'text/turtle' } })
-      .then((response) => response.text())
-      .then((text) =>  new Parser({ format: 'Turtle' }).parse(text));
+    const response = await fetch(`${this.uri}${metadataName}`, { headers: { 'Accept': 'text/turtle' } });
+    const text = await response.text();
+
+    return new Parser({ format: 'Turtle' }).parse(text);
 
   }
 

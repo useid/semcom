@@ -72,10 +72,12 @@ export class ComponentTransformerService {
   }
 
   /**
-   * Transforms quads to a Components
+   * Retrieves the metadata of a component from an array of quads.
    *
-   * @param quads The quads to transform
-   * @param subject The URI of the componentMetadata
+   * Transforms quads to a Component
+   *
+   * @param quads - The quads to transform
+   * @param subject - The URI of the componentMetadata
    */
   fromQuadsOne(quads: Quad[], uri: string): ComponentMetadata {
 
@@ -125,9 +127,8 @@ export class ComponentTransformerService {
   /**
    * Transforms quads to Components
    *
-   * @param quads The quads to transform
+   * @param quads - The quads to transform
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fromQuads(quads: Quad[]): ComponentMetadata[] {
 
     const typePredicate = namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
