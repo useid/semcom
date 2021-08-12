@@ -31,6 +31,7 @@ describe('PodSyncService', () => {
     uri: string;
     components: ComponentMetadataMock[];
     isOnline: boolean;
+    httpStatus: number;
   }
 
   interface ComponentMetadataMock {
@@ -65,9 +66,16 @@ describe('PodSyncService', () => {
 
           // PodSyncService is requesting all available components in a pod
 
-          const components = url === localPodUri
-            ? localComponentFiles
-            : otherPods.find((podMock) => podMock.uri === url).components.map((component) => component.filename);
+          let components = localComponentFiles;
+          let httpStatusCode = 200;
+
+          if (url !== localPodUri) {
+
+            const pod = otherPods.find((podMock) => podMock.uri === url);
+            components = pod.components.map((component) => component.filename);
+            httpStatusCode = pod.httpStatus;
+
+          }
 
           const quads: Quad[] = components.map((component) =>
             createQuad(namedNode(component),
@@ -77,10 +85,7 @@ describe('PodSyncService', () => {
           const bodyStream = serialize.serialize(streamify(quads), { contentType: 'text/turtle' });
           const body = await streamToBuffer(bodyStream);
 
-          return new Response(
-            body,
-            { status: 200, headers: { 'Content-Type': 'text/turtle' } }
-          );
+          return new Response(body, { status: httpStatusCode, headers: { 'Content-Type': 'text/turtle' } });
 
         } else {
 
@@ -99,6 +104,8 @@ describe('PodSyncService', () => {
 
           } else {
 
+            // eslint-disable-next-line no-console
+            console.log('hi');
             throw Error('pod is offline or non existent');
 
           }
@@ -170,11 +177,13 @@ describe('PodSyncService', () => {
           uri: 'test.com/',
           components: [],
           isOnline: true,
+          httpStatus: 200,
         },
         {
           uri: 'test2.com/',
           components: [],
           isOnline: true,
+          httpStatus: 200,
         },
       ];
 
@@ -207,6 +216,7 @@ describe('PodSyncService', () => {
             filename: 'metadata2.ttl',
           } ],
           isOnline: true,
+          httpStatus: 200,
         },
         {
           uri: 'test2.com/',
@@ -216,6 +226,7 @@ describe('PodSyncService', () => {
             filename: 'metadata3.ttl',
           } ],
           isOnline: true,
+          httpStatus: 200,
         },
       ];
 
@@ -245,6 +256,7 @@ describe('PodSyncService', () => {
             filename: 'metadata2.ttl',
           } ],
           isOnline: true,
+          httpStatus: 200,
         },
       ];
 
@@ -274,6 +286,7 @@ describe('PodSyncService', () => {
             filename: 'metadata2.ttl',
           } ],
           isOnline: true,
+          httpStatus: 200,
         },
       ];
 
@@ -294,12 +307,41 @@ describe('PodSyncService', () => {
           uri: 'test.com/',
           components: [],
           isOnline: false,
+          httpStatus: 200,
         },
       ];
 
       mockPods([], ... otherPods);
 
-      expect(() => podSyncService.handle().toPromise()).not.toThrowError();
+      // https://stackoverflow.com/questions/54525147/expect-a-jest-test-to-resolve-but-dont-care-about-the-value
+      return podSyncService.handle().toPromise();
+
+    });
+
+    it("doesn't throw any error if one of the remote pods doesn't return status 200", async () => {
+
+      const otherPods = [
+        {
+          uri: 'test.com/',
+          components: [],
+          isOnline: true,
+          httpStatus: 500,
+        },
+      ];
+
+      mockPods([], ... otherPods);
+
+      return podSyncService.handle().toPromise();
+
+    });
+
+    it("doesn't throw any error if storage has no pods", async () => {
+
+      mockPods([]);
+
+      await store.delete('storage');
+
+      return podSyncService.handle().toPromise();
 
     });
 
