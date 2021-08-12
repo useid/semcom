@@ -4,8 +4,10 @@ import { catchError, switchMap, map } from 'rxjs/operators';
 import { fetch as solidFetch } from '@digita-ai/ui-transfer-solid-client';
 import { Session } from '@digita-ai/ui-transfer-components';
 import jsSHA from 'jssha';
-import { Parser } from 'n3';
+import { Parser, DataFactory, Quad, Writer } from 'n3';
 import { UploadFormContext } from './sem-com-upload-form.component';
+
+const { namedNode, literal, quad } = DataFactory;
 
 /* CONTEXT */
 
@@ -189,30 +191,25 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
 
   }
 
-  // create the quad of the component
-  let data = `<#semcom-component>
-  a <http://semcom.digita.ai/voc#component>;
-  <http://semcom.digita.ai/voc#uri> <${event.uploadFormContext.uri}>;
-  <http://semcom.digita.ai/voc#label> "${event.uploadFormContext.labelInput}";
-  <http://semcom.digita.ai/voc#description> "${event.uploadFormContext.description}";
-  <http://semcom.digita.ai/voc#author> "${event.uploadFormContext.author}";
-  <http://semcom.digita.ai/voc#tag> "${event.uploadFormContext.tag}";
-  <http://semcom.digita.ai/voc#shape> `;
+  // shapes can be multiple comma separated urls, so split them, then create a quad for each.
+  const shapeQuads = event.uploadFormContext.shapes.split(',').map((shape) =>
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#shape'), namedNode(shape)));
 
-  // shapes can contain multiple strings, so add each of them separated by a comma
-  for (const url of event.uploadFormContext.shapes.split(',')) {
+  // create quads for all of the component metadata
+  const quads = [
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), namedNode('http://semcom.digita.ai/voc#component'),),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#label'), literal(event.uploadFormContext.labelInput)),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#description'),  literal(event.uploadFormContext.description)),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#author'), literal(event.uploadFormContext.author)),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#version'), literal(event.uploadFormContext.version)),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#latest'), literal(String(event.uploadFormContext.latest))),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#tag'), literal(event.uploadFormContext.tag)),
+    ...shapeQuads,
+  ];
 
-    data += `<${url}>,`;
+  const writer = new Writer();
 
-  }
-
-  // replace the last comma from the shapes with a ';'
-  data = data.substr(0, data.length-1);
-
-  data += `;
-  <http://semcom.digita.ai/voc#version> "${event.uploadFormContext.version}";
-  <http://semcom.digita.ai/voc#latest> "${event.uploadFormContext.latest}";
-  <http://semcom.digita.ai/voc#checksum> "${event.uploadFormContext.checksum}".`;
+  writer.addQuads(quads);
 
   // Hash the component's uri to serve as the file name
   const shaObj = new jsSHA('SHAKE256', 'TEXT');
@@ -226,17 +223,33 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
     map(([ response, responseText ]) => new Set(
       response.status === 200
         ? new Parser({ format: 'Turtle' }).parse(responseText)
-          .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
-          .filter((quad) => quad.subject.value !== '')
-          .map((quad) => quad.subject.value)
+          .filter((quadFromResponse) => quadFromResponse.object.value === 'http://www.w3.org/ns/ldp#Resource')
+          .filter((quadFromResponse) => quadFromResponse.subject.value !== '')
+          .map((quadFromResponse) => quadFromResponse.subject.value)
         : undefined
     )),
     // if the pod is offline, return an empty set
     catchError(() => of(new Set<string>())),
-    switchMap((components) => {
+    switchMap((components) => zip(of(components), of(writer))),
+    switchMap(([ components, quadWriter ]) => {
 
       // if the component already contains a component with the same name, dont save the data
       if (components.has(hash)) { return throwError(new Error('Component already exists.')); } else {
+
+        let data = '';
+
+        quadWriter.end((error, result) => {
+
+          if (error) {
+
+            throw error;
+
+          }
+
+          data = result;
+
+        })
+        ;
 
         // save the metadata of the component to the pod, with the hashed url as the filename
         return from(solidFetch(context.url, {

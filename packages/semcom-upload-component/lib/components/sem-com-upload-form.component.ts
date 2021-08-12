@@ -31,9 +31,7 @@ export class SemComUploadFormComponent extends RxLitElement {
   });
 
   /** The actor responsible for form validation in this component.  */
-  // eslint-disable-next-line no-console -- this is a state logger
-  formActor = interpret(this.formMachine, { devTools: true }).onTransition((appState) => console.log(appState.value));
-
+  formActor = interpret(this.formMachine, { devTools: true });
   /** Indicates if if the form validation passed. */
   @state()
   isValid? = false;
@@ -230,7 +228,7 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   generateTextAreaFormElement = (field: string, placeholder?: string): TemplateResult => html`
       <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="${field}">
-        <label slot="label" for="${field}">${field.charAt(0).toUpperCase() + field.substr(1)}</label>
+        <label slot="label" for="${field}">${field === 'labelInput' ? 'Label' : field.charAt(0).toUpperCase() + field.substr(1)}</label>
         <textarea type="text" slot="input" placeholder="${placeholder ? placeholder : ''}" name="${field}" id="${field}"></textarea>
       </form-element-component>
     `;
