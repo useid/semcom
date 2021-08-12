@@ -1,10 +1,14 @@
-import { html, css, CSSResult, TemplateResult, state, unsafeCSS, query, property } from 'lit-element';
+import { html, css, CSSResult, TemplateResult, state, unsafeCSS, property } from 'lit-element';
 import { RxLitElement } from 'rx-lit';
 import { from } from 'rxjs';
 import { createMachine, interpret, State } from 'xstate';
 import { Theme } from '@digita-ai/ui-transfer-theme';
+import { AuthenticateComponent, FeedbackComponent, LoadingComponent, ProviderListComponent } from '@digita-ai/ui-transfer-components';
+import { FormElementComponent } from '@netwerk-digitaal-erfgoed/solid-crs-components';
 import { SolidSDKService } from '../services/solid-sdk.service';
-import { semComRegisterMachine, SemComRegisterContext, SemComRegisterEvent, SemComRegisterState, SemComRegisterStates, AuthenticatedEvent, BackToStoreSelectionEvent, BackToUploadFormEvent, StoreSelectedEvent, UploadFormSubmittedEvent } from './sem-com-register.machine';
+import { semComRegisterMachine, SemComRegisterContext, SemComRegisterEvent, SemComRegisterState, SemComRegisterStates, AuthenticatedEvent, BackToStoreSelectionEvent, BackToUploadFormEvent, StoreSelectedEvent, UploadFormSubmittedEvent, NoPermissionEvent, DataNotSavedEvent } from './sem-com-register.machine';
+import { SemComStoreSelectionComponent } from './sem-com-store-selection.component';
+import { SemComUploadFormComponent } from './sem-com-upload-form.component';
 
 export class SemComRegisterComponent extends RxLitElement {
 
@@ -23,12 +27,18 @@ export class SemComRegisterComponent extends RxLitElement {
   @state()
   state: State<SemComRegisterContext>;
 
-  @query('#test')
-  test: HTMLElement;
-
   constructor() {
 
     super();
+
+    this.defineComponent('auth-flow', AuthenticateComponent);
+    this.defineComponent('provider-list', ProviderListComponent);
+    this.defineComponent('loading-component', LoadingComponent);
+    this.defineComponent('feedback-component', FeedbackComponent);
+    this.defineComponent('sem-com-register-component', SemComRegisterComponent);
+    this.defineComponent('sem-com-store-selection', SemComStoreSelectionComponent);
+    this.defineComponent('sem-com-upload-form', SemComUploadFormComponent);
+    this.defineComponent('form-element-component', FormElementComponent);
 
     this.subscribe('state', from(this.actor));
 
@@ -36,7 +46,26 @@ export class SemComRegisterComponent extends RxLitElement {
 
   }
 
+  // What type is module?
+  defineComponent = (tag: string, module: CustomElementConstructor): void => {
+
+    if (!customElements.get(tag)) { customElements.define(tag, module); }
+
+  };
+
   onAuthenticated = (event: CustomEvent): void => { this.actor.send(new AuthenticatedEvent(event.detail)); };
+
+  storeSelected = (event: CustomEvent): void => {
+
+    this.actor.send(new StoreSelectedEvent(event.detail.input));
+
+  };
+
+  formUploaded = (event: CustomEvent): void => {
+
+    this.actor.send(new UploadFormSubmittedEvent(event.detail));
+
+  };
 
   render(): TemplateResult {
 
@@ -60,7 +89,9 @@ export class SemComRegisterComponent extends RxLitElement {
 
     } else if (this.state.matches(SemComRegisterStates.NOT_PERMITTED)) {
 
-      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToStoreSelectionEvent())}" title="An error occured!" message="You do not have permission to edit this store! Please choose another store or log in with a user account that has access to this store." buttonText="Go back to the store selection screen"></feedback-component>`;
+      const defaultError = 'You do not have permission to edit this store! Please choose another store or log in with a user account that has access to this store.';
+
+      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToStoreSelectionEvent())}" title="An error occured!" message="${this.state.event instanceof NoPermissionEvent ? this.state.event.errorMessage : defaultError}" buttonText="Go back to the store selection screen"></feedback-component>`;
 
     } else if (this.state.matches(SemComRegisterStates.UPLOADING_COMPONENT)) {
 
@@ -72,49 +103,19 @@ export class SemComRegisterComponent extends RxLitElement {
 
     } else if (this.state.matches(SemComRegisterStates.ERROR_SAVING_DATA)) {
 
-      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToStoreSelectionEvent())}" title="An error occurred!" message="Something went wrong while trying to save the data to the desired store. Please try again." buttonText="Go back to the store selection screen"></feedback-component>`;
+      const defaultError = 'Something went wrong while trying to save the data to the desired store. Please try again.';
+
+      componentToRender = html`<feedback-component @feedback-component-click-event="${() => this.actor.send(new BackToStoreSelectionEvent())}" title="An error occurred!" message="${this.state.event instanceof DataNotSavedEvent ? this.state.event.errorMessage : defaultError}" buttonText="Go back to the store selection screen"></feedback-component>`;
 
     }
 
     return html`
-        <div class="content">
-          ${componentToRender}
-        </div>
-        `;
+      <div class="content">
+        ${componentToRender}
+      </div>
+      `;
 
   }
-
-  storeSelected = (event: CustomEvent): void => {
-
-    this.actor.send(new StoreSelectedEvent(event.detail.dropDown, event.detail.freeInput));
-
-  };
-
-  formUploaded = (event: CustomEvent): void => {
-
-    this.actor.send(new UploadFormSubmittedEvent(
-      {
-        uri: event.detail.uri,
-        labelInput: event.detail.labelInput,
-        description: event.detail.description,
-        author: event.detail.author,
-        tag:event.detail.tag,
-        shapes: event.detail.shapes,
-        version: event.detail.version,
-        latest: event.detail.latest,
-        checksum: event.detail.checksum,
-      }
-    ));
-
-  };
-
-  addEventListenerAfterUpdate = async (id: string, callback: () => void): Promise<void> => {
-
-    await this.updateComplete;
-    const element = this.shadowRoot.querySelector('#' + id);
-    element.addEventListener('feedback-component-click-event', callback);
-
-  };
 
   static get styles(): CSSResult[] {
 

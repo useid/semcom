@@ -1,6 +1,6 @@
 import { EventObject, MachineConfig, StateSchema, assign } from 'xstate';
-import { of, from, zip } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { of, from, zip, throwError } from 'rxjs';
+import { catchError, switchMap, map } from 'rxjs/operators';
 import { fetch as solidFetch } from '@digita-ai/ui-transfer-solid-client';
 import { Session } from '@digita-ai/ui-transfer-components';
 import jsSHA from 'jssha';
@@ -14,31 +14,44 @@ export interface SemComRegisterContext {
   url?: string;
 }
 
+export interface SemComRegisterContextWithSession extends SemComRegisterContext {
+  session: Session;
+}
+
+export interface SemComRegisterContextWithUrl extends SemComRegisterContext {
+  url: string;
+}
+
 /* STATES */
 
 export enum SemComRegisterStates {
   AUTHENTICATING = '[SemComRegisterState: Authenticating]',
-  STORE_SELECTION = '[SemComRegisterState: Store_Selection]',
-  CHECKING_PERMISSION = '[SemComRegisterState: Checking_Permission]',
-  UPLOAD_COMPONENT_FORM = '[SemComRegisterState: Upload_Component_Form]',
-  NOT_PERMITTED = '[SemComRegisterState: Not_Permitted]',
-  UPLOADING_COMPONENT = '[SemComRegisterState: Uploading_Component]',
-  SUCCESSFULLY_SAVED_DATA = '[SemComRegisterState: Successfully_Saved_Data]',
-  ERROR_SAVING_DATA = '[SemComRegisterState: Error_Saving_Data]',
+  STORE_SELECTION = '[SemComRegisterState: Store Selection]',
+  CHECKING_PERMISSION = '[SemComRegisterState: Checking Permission]',
+  UPLOAD_COMPONENT_FORM = '[SemComRegisterState: Upload Component_Form]',
+  NOT_PERMITTED = '[SemComRegisterState: Not Permitted]',
+  UPLOADING_COMPONENT = '[SemComRegisterState: Uploading Component]',
+  SUCCESSFULLY_SAVED_DATA = '[SemComRegisterState: Successfully Saved Data]',
+  ERROR_SAVING_DATA = '[SemComRegisterState: Error Saving Data]',
 }
 
-export interface SemComRegisterState {
+export type SemComRegisterState = {
+  value: SemComRegisterStates.AUTHENTICATING;
+  context: SemComRegisterContext;
+} | {
   value:
-  | SemComRegisterStates.AUTHENTICATING
   | SemComRegisterStates.STORE_SELECTION
-  | SemComRegisterStates.CHECKING_PERMISSION
+  | SemComRegisterStates.CHECKING_PERMISSION;
+  context: SemComRegisterContextWithSession;
+} | {
+  value:
   | SemComRegisterStates.UPLOAD_COMPONENT_FORM
   | SemComRegisterStates.NOT_PERMITTED
   | SemComRegisterStates.UPLOADING_COMPONENT
   | SemComRegisterStates.SUCCESSFULLY_SAVED_DATA
   | SemComRegisterStates.ERROR_SAVING_DATA;
-  context: SemComRegisterContext;
-}
+  context: SemComRegisterContextWithUrl;
+};
 
 export interface SemComRegisterStateSchema extends StateSchema<SemComRegisterContext> {
   states: {
@@ -50,14 +63,14 @@ export interface SemComRegisterStateSchema extends StateSchema<SemComRegisterCon
 
 export enum SemComRegisterEvents {
   AUTHENTICATED = '[SemComRegisterEvent: Authenticated]',
-  STORE_SELECTED = '[SemComRegisterEvent: Store_Selected]',
-  HAS_PERMISSION = '[SemComRegisterEvent: Has_Permission]',
-  NO_PERMISSION = '[SemComRegisterEvent: No_Permission]',
-  BACK_TO_STORE_SELECTION = '[SemComRegisterEvent: Back_To_Store_Selection]',
-  BACK_TO_UPLOAD_FORM = 'SemComRegisterEvent: Back_To_Upload_Form',
-  UPLOAD_FORM_SUBMITTED = '[SemComRegisterEvent: Upload_form_Submitted]',
-  DATA_SAVED = '[SemComRegisterEvent: Data_Saved]',
-  DATA_NOT_SAVED = '[SemComRegisterEvent: Data_Not_Saved]',
+  STORE_SELECTED = '[SemComRegisterEvent: Store Selected]',
+  HAS_PERMISSION = '[SemComRegisterEvent: Has Permission]',
+  NO_PERMISSION = '[SemComRegisterEvent: No Permission]',
+  BACK_TO_STORE_SELECTION = '[SemComRegisterEvent: Back To Store Selection]',
+  BACK_TO_UPLOAD_FORM = 'SemComRegisterEvent: Back To Upload Form',
+  UPLOAD_FORM_SUBMITTED = '[SemComRegisterEvent: Upload form Submitted]',
+  DATA_SAVED = '[SemComRegisterEvent: Data Saved]',
+  DATA_NOT_SAVED = '[SemComRegisterEvent: Data Not Saved]',
 }
 
 export class AuthenticatedEvent implements EventObject {
@@ -70,7 +83,7 @@ export class AuthenticatedEvent implements EventObject {
 export class StoreSelectedEvent implements EventObject {
 
   public type: SemComRegisterEvents.STORE_SELECTED = SemComRegisterEvents.STORE_SELECTED;
-  constructor(public dropDown: string, public freeInput: string) {}
+  constructor(public input: string) {}
 
 }
 
@@ -84,6 +97,7 @@ export class HasPermissionEvent implements EventObject {
 export class NoPermissionEvent implements EventObject {
 
   public type: SemComRegisterEvents.NO_PERMISSION = SemComRegisterEvents.NO_PERMISSION;
+  constructor(public errorMessage: string) {}
 
 }
 
@@ -115,6 +129,7 @@ export class DataSavedEvent implements EventObject {
 export class DataNotSavedEvent implements EventObject {
 
   public type: SemComRegisterEvents.DATA_NOT_SAVED = SemComRegisterEvents.DATA_NOT_SAVED;
+  constructor(public errorMessage: string) {}
 
 }
 
@@ -133,26 +148,26 @@ export type SemComRegisterEvent =
 
 const handleStoreSelectedEvent = (event: StoreSelectedEvent) => {
 
-  const url = event.freeInput !== '' ? event.freeInput : (event.dropDown !== 'empty' ? event.dropDown : undefined);
+  const url = event.input;
 
-  if (!url) { return of(new NoPermissionEvent()); }
+  if (!url) { return of(new NoPermissionEvent('Error retrieving the selected store. Please try again, or choose another store.')); }
 
   return from(solidFetch(url, { method: 'HEAD' })).pipe(
     switchMap((response) => {
 
-      if (response.headers.get('link').includes('<http://www.w3.org/ns/pim/space#Storage>; rel="type"')) {
+      if (response.headers.get('link') && response.headers.get('link').includes('<http://www.w3.org/ns/pim/space#Storage>; rel="type"')) {
 
         const wacAllowHeader = response.headers.get('wac-allow');
         const userRights = wacAllowHeader.replace(/.*user="([^"]*)".*/, '$1');
 
-        return userRights.includes('append') ? of(new HasPermissionEvent(url)) : of(new NoPermissionEvent());
+        return userRights.includes('append') ? of(new HasPermissionEvent(url)) : of(new NoPermissionEvent('You do not have permission to edit this store. Please choose another store or log in with a user account that has access to this store.'));
 
       }
 
-      return of(new NoPermissionEvent());
+      return of(new NoPermissionEvent('The selected url did not lead to a valid store. Please choose another store.'));
 
     }),
-    catchError((error) => of(new NoPermissionEvent()))
+    catchError((error) => of(new NoPermissionEvent(`Encountered an error retrieving the store, please try again, or choose a different store: "${error.message}"`)))
   );
 
 };
@@ -170,7 +185,7 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
     || event.uploadFormContext.latest === undefined
     || !event.uploadFormContext.checksum) {
 
-    return of(new DataNotSavedEvent());
+    return of(new DataNotSavedEvent('Received invalid component metadata.'));
 
   }
 
@@ -208,20 +223,20 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
   return from(solidFetch(context.url, { headers: { 'Accept': 'text/turtle' } })).pipe(
     switchMap((response) => zip(of(response), from(response.text()))),
     // return a set of all filenames within the pod
-    switchMap(([ response, responseText ]) => of(new Set(
+    map(([ response, responseText ]) => new Set(
       response.status === 200
         ? new Parser({ format: 'Turtle' }).parse(responseText)
           .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
           .filter((quad) => quad.subject.value !== '')
           .map((quad) => quad.subject.value)
         : undefined
-    ))),
+    )),
     // if the pod is offline, return an empty set
     catchError(() => of(new Set<string>())),
     switchMap((components) => {
 
       // if the component already contains a component with the same name, dont save the data
-      if (components.has(hash)) { return of(new DataNotSavedEvent()); } else {
+      if (components.has(hash)) { return throwError(new Error('Component already exists.')); } else {
 
         // save the metadata of the component to the pod, with the hashed url as the filename
         return from(solidFetch(context.url, {
@@ -231,18 +246,15 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
             'content-type': 'text/turtle',
           },
           body: data,
-        })).pipe(
-          // if succesful, send success event, otherwise send data not saved event.
-          switchMap((response) => response.status === 201
-            ? of(new DataSavedEvent())
-            : of(new DataNotSavedEvent())),
-          // if there was an error fetching the pod, don't save the data.
-          catchError(() => of(new DataNotSavedEvent()))
-        );
+        }));
 
       }
 
-    })
+    }),
+    switchMap((response) => response.status === 201
+      ? of(new DataSavedEvent())
+      : of(new DataNotSavedEvent('Data was not saved succesfully. Please try again.'))),
+    catchError((error) => of(new DataNotSavedEvent(`Encountered an error while trying to save the data: "${error.message}"`)))
   );
 
 };
@@ -259,6 +271,7 @@ SemComRegisterEvent> = {
     [SemComRegisterStates.AUTHENTICATING]: {
       on: {
         [SemComRegisterEvents.AUTHENTICATED]: {
+          actions: assign({ session: (_, event) => event.session }),
           target: SemComRegisterStates.STORE_SELECTION,
         },
       },

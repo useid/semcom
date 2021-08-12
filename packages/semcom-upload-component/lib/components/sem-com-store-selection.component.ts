@@ -2,9 +2,15 @@ import { html, unsafeCSS, css, CSSResult, TemplateResult, property, state, query
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { RxLitElement } from 'rx-lit';
 import { DoneEvent, interpret } from 'xstate';
-import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents, FormUpdatedEvent, formMachine, FormContext, FormValidatorResult } from '@netwerk-digitaal-erfgoed/solid-crs-components';
+import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, FormUpdatedEvent, formMachine, FormContext, FormValidatorResult, FormElementComponent, FormSubmittedEvent } from '@netwerk-digitaal-erfgoed/solid-crs-components';
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+export interface StoreSelectionContext {
+  dropDown: string;
+  freeInput: string;
+  [key: string]: string;
+}
 
 export class SemComStoreSelectionComponent extends RxLitElement {
 
@@ -39,6 +45,8 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
     super();
 
+    this.defineComponent('form-element-component', FormElementComponent);
+
     this.subscribe('isValid', from(this.formActor).pipe(
       map((machineState) => machineState.matches({
         [FormSubmissionStates.NOT_SUBMITTED]:{
@@ -55,75 +63,83 @@ export class SemComStoreSelectionComponent extends RxLitElement {
       })),
     ));
 
-    this.formActor.onDone((event: DoneEvent) => { this.dispatchEvent(new CustomEvent('formSubmitted', { detail: { dropDown: event.data.data.dropDown, freeInput: event.data.data.freeInput } })); });
+    this.formActor.onDone((event: DoneEvent) => {
+
+      this.dispatchEvent(new CustomEvent('formSubmitted', {
+        detail: {
+          input: event.data.data.freeInput !== '' ? event.data.data.freeInput : (event.data.data.dropDown !== 'empty' ? event.data.data.dropDown : undefined),
+        },
+      }));
+
+    });
 
     this.formActor.start();
 
   }
 
-  validateStoreSelectionForm =
-  async (context: FormContext<{ dropDown: string; freeInput: string }>): Promise<FormValidatorResult[]> => {
+  defineComponent = (tag: string, module: CustomElementConstructor): void => {
 
-    const res: FormValidatorResult[] = [];
+    if (!customElements.get(tag)) { customElements.define(tag, module); }
+
+  };
+
+  validateStoreSelectionForm =
+  async (context: FormContext<StoreSelectionContext>): Promise<FormValidatorResult[]> => {
 
     // only validate dirty fields
     const dirtyFields = Object.keys(context.data).filter((field) =>
-      context.data[field as keyof { dropDown: string; freeInput: string }]
-    !== context.original[field as keyof { dropDown: string; freeInput: string }]);
+      context.data[field]
+    !== context.original[field]);
 
-    for (const field of dirtyFields) {
+    const errors: FormValidatorResult[] = dirtyFields.map((field) => {
 
-      const value = context.data[field as keyof { dropDown: string; freeInput: string }];
+      const value = context.data[field];
 
       if (field === 'freeInput') {
 
-        if (!value) {
+        // the value must be a valid URL
+        try {
 
-          res.push({ field, message: 'cannot be empty' });
+          new URL(value);
 
-        } else {
+        } catch {
 
-          // the value must be a valid URL
-          try {
-
-            new URL(value);
-
-          } catch {
-
-            res.push({ field, message: 'must be a valid URL of a solid pod' });
-
-          }
+          return { field, message: 'must be a valid URL of a solid pod' };
 
         }
 
       }
 
-    }
+      return undefined;
 
-    return res;
+    });
+
+    return errors.filter((error) => error !== undefined);
 
   };
 
+  clearFreeInput = (): void => {
+
+    this.freeInput.value = '';
+    this.formActor.send(new FormUpdatedEvent('freeInput', ''));
+
+  };
+
+  clearDropDown = (): void => {
+
+    this.dropDown.value = 'empty';
+    this.formActor.send(new FormUpdatedEvent('dropDown', 'empty'));
+
+  };
+
+  translator = { translate: (value: string): string => value };
+
   render(): TemplateResult {
-
-    const clearFreeInput = () => {
-
-      this.freeInput.value = '';
-      this.formActor.send(new FormUpdatedEvent('freeInput', ''));
-
-    };
-
-    const clearDropDown = () => {
-
-      this.dropDown.value = 'empty';
-      this.formActor.send(new FormUpdatedEvent('dropDown', 'empty'));
-
-    };
 
     return html`
         <div id="content">
-            <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="dropDown">
-                <select slot="input" name="dropDown" id="dropDown" required @input="${clearFreeInput}">
+            <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="dropDown">
+                <select slot="input" name="dropDown" id="dropDown" required @input="${this.clearFreeInput}">
                     <option id="empty" value="empty" disabled selected hidden>Select a SemCom store ...</option>
                     ${this.semComStoreUrls.split(' ').map((store) => html`<option id="${store}" value="${store}">${store}</option>`)}
                 </select>
@@ -133,12 +149,12 @@ export class SemComStoreSelectionComponent extends RxLitElement {
                 <hr><p> or </p><hr>
             </div>
 
-            <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="freeInput">
+            <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="freeInput">
               <label slot="label" for="freeInput">Manually provide a store</label>
-              <input type="text" slot="input" placeholder="URI of the store ..." name="freeInput" id="freeInput" @input="${clearDropDown}" />
+              <input type="text" slot="input" placeholder="URI of the store ..." name="freeInput" id="freeInput" @input="${this.clearDropDown}" />
             </form-element-component>
-            <!-- UPGRADE THIS TO new FormSubmittedEvent() WHEN THE TYPE IS FIXED -->
-            <button ?disabled="${(this.isValid && !this.isDirty) || (!this.isValid && this.isDirty) || (!this.isValid && !this.isDirty)}" type="button" @click="${() => this.formActor.send(FormEvents.FORM_SUBMITTED)}">Next</button>
+            
+            <button ?disabled="${(this.isValid && !this.isDirty) || (!this.isValid && this.isDirty) || (!this.isValid && !this.isDirty)}" type="button" @click="${() => this.formActor.send(new FormSubmittedEvent())}">Next</button>
         </div>
     `;
 

@@ -2,7 +2,7 @@ import { html, unsafeCSS, css, CSSResult, TemplateResult, property, state, query
 import { Theme } from '@digita-ai/ui-transfer-theme';
 import { RxLitElement } from 'rx-lit';
 import { DoneEvent, interpret } from 'xstate';
-import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, FormEvents, formMachine, FormValidatorResult, FormContext } from '@netwerk-digitaal-erfgoed/solid-crs-components';
+import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, formMachine, FormValidatorResult, FormContext, FormElementComponent, FormSubmittedEvent } from '@netwerk-digitaal-erfgoed/solid-crs-components';
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import valid from 'semver/functions/valid';
@@ -17,7 +17,9 @@ export interface UploadFormContext {
   version: string;
   latest: string;
   checksum: string;
+  [key: string]: string;
 }
+
 export class SemComUploadFormComponent extends RxLitElement {
 
   @property({ type: Array })
@@ -39,6 +41,10 @@ export class SemComUploadFormComponent extends RxLitElement {
   /** Indicates if one of the form fields has changed. */
   @state()
   isDirty? = false;
+
+  /** Div to push validation error messages. */
+  @query('#error')
+  errorDiv: HTMLDivElement;
 
   /** All fields from the form, used for validation */
   @query('#uri')
@@ -71,6 +77,8 @@ export class SemComUploadFormComponent extends RxLitElement {
   constructor() {
 
     super();
+
+    this.defineComponent('form-element-component', FormElementComponent);
 
     this.subscribe('isValid', from(this.formActor).pipe(
       map((machineState) => machineState.matches({
@@ -108,18 +116,23 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   }
 
-  validateUploadForm = async (context: FormContext<UploadFormContext>): Promise<FormValidatorResult[]> => {
+  // What type is module?
+  defineComponent = (tag: string, module: CustomElementConstructor): void => {
 
-    const res: FormValidatorResult[] = [];
+    if (!customElements.get(tag)) { customElements.define(tag, module); }
+
+  };
+
+  validateUploadForm = async (context: FormContext<UploadFormContext>): Promise<FormValidatorResult[]> => {
 
     // only validate dirty fields
     const dirtyFields = Object.keys(context.data).filter((field) =>
-      context.data[field as keyof UploadFormContext]
-    !== context.original[field as keyof UploadFormContext]);
+      context.data[field]
+    !== context.original[field]);
 
-    for (const field of dirtyFields) {
+    const errors: FormValidatorResult[] = dirtyFields.map((field) => {
 
-      const value = context.data[field as keyof UploadFormContext];
+      const value = context.data[field];
 
       if (field === 'uri') {
 
@@ -130,7 +143,7 @@ export class SemComUploadFormComponent extends RxLitElement {
 
         } catch {
 
-          res.push({ field, message: 'must be a valid URI' });
+          return { field, message: 'must be a valid URI' };
 
         }
 
@@ -155,25 +168,25 @@ export class SemComUploadFormComponent extends RxLitElement {
 
         }
 
-        if (!validShapes) { res.push({ field, message: 'Must a be a comma-separated list of valid URLs' }); }
+        if (!validShapes) { return { field, message: 'Must a be a comma-separated list of valid URLs' }; }
 
       }
 
       if (field === 'version') {
 
-        if (!valid(value)) { res.push({ field, message: 'Must a valid Semantic Version of pattern "x.x.x"' }); }
+        if (!valid(value)) { return { field, message: 'Must a valid Semantic Version of pattern "x.x.x"' }; }
 
       }
 
-    }
+      return undefined;
 
-    return res;
+    });
+
+    return errors.filter((error) => error !== undefined);
 
   };
 
-  render(): TemplateResult {
-
-    const hasEmptyFields = () => this.uri?.value.trim() === ''
+  hasEmptyFields = (): boolean => this.uri?.value.trim() === ''
       || this.labelInput?.value.trim() === ''
       || this.description?.value.trim() === ''
       || this.author?.value.trim() === ''
@@ -182,101 +195,98 @@ export class SemComUploadFormComponent extends RxLitElement {
       || this.version?.value.trim() === ''
       || this.checksum?.value.trim() === '';
 
-    const validateOnSubmission = () => {
+  validateOnSubmission = (): void => {
 
-      const errorDiv = this.shadowRoot.querySelector('#error');
-      errorDiv.innerHTML = '';
-      const errorP = document.createElement('p');
+    this.errorDiv.innerHTML = '';
+    const errorP = document.createElement('p');
 
-      if (hasEmptyFields()) {
+    if (this.hasEmptyFields()) {
 
-        errorP.innerText = 'No fields can be empty';
+      errorP.innerText = 'No fields can be empty';
 
-        errorDiv.appendChild(errorP);
+      this.errorDiv.appendChild(errorP);
 
-      } else if (!this.isValid) {
+    } else if (!this.isValid) {
 
-        errorP.innerText = 'All fields must be valid';
-        errorDiv.appendChild(errorP);
+      errorP.innerText = 'All fields must be valid';
+      this.errorDiv.appendChild(errorP);
 
-      } else {
+    } else {
 
-        this.formActor.send(FormEvents.FORM_SUBMITTED);
+      this.formActor.send(new FormSubmittedEvent());
 
-      }
+    }
 
-    };
+  };
+
+  translator = { translate: (value: string): string => value };
+
+  generateInputFormElement = (field: string, placeholder?: string): TemplateResult => html`
+      <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="${field}">
+        <label slot="label" for="${field}">${field.charAt(0).toUpperCase() + field.substr(1)}</label>
+        <input type="text" slot="input" placeholder="${placeholder ? placeholder : ''}" name="${field}" id="${field}"/>
+      </form-element-component>
+    `;
+
+  generateTextAreaFormElement = (field: string, placeholder?: string): TemplateResult => html`
+      <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="${field}">
+        <label slot="label" for="${field}">${field.charAt(0).toUpperCase() + field.substr(1)}</label>
+        <textarea type="text" slot="input" placeholder="${placeholder ? placeholder : ''}" name="${field}" id="${field}"></textarea>
+      </form-element-component>
+    `;
+
+  render(): TemplateResult {
 
     return html`
       <div id="content">
         <div id="error"></div>
 
         <div id="first">
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="uri">
-            <label slot="label" for="uri">Uri</label>
-            <input type="text" slot="input" placeholder="https:// ..." name="uri" id="uri"/>
-          </form-element-component>
+          ${this.generateInputFormElement('uri', 'https:// ...')}
         </div>
 
         <div>
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="labelInput">
-            <label slot="label" for="labelInput">Label</label>
-            <input type="text" slot="input" name="labelInput" id="labelInput"/>
-          </form-element-component>
+          ${this.generateInputFormElement('labelInput')}
         </div>
 
         <div>
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="description">
-            <label slot="label" for="description">Description</label>
-            <input type="text" slot="input" name="description" id="description"/>
-          </form-element-component>
+          ${this.generateInputFormElement('description')}
         </div>
 
         <div>
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="author">
-            <label slot="label" for="author">Author</label>
-            <input type="text" slot="input" name="author" id="author"/>
-          </form-element-component>
+          ${this.generateInputFormElement('author')}
         </div>
 
         <div>
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="tag">
-            <label slot="label" for="tag">Tag</label>
-            <input type="text" slot="input" name="tag" id="tag"/>
-          </form-element-component>
+          ${this.generateInputFormElement('tag')}
         </div>
 
         <div>
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="shapes">
-            <label slot="label" for="shapes">Shapes</label>
-            <textarea type="text" slot="input" name="shapes" id="shapes" placeholder="https:// ..., https:// ..."></textarea>
-          </form-element-component>
+          ${this.generateTextAreaFormElement('shapes', 'https:// ..., https:// ...')}
         </div>
 
         <div id="flexRow">
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="version" id="versionDiv">
-            <label slot="label" for="version">Version</label>
-            <input type="text" slot="input" name="version" id="version" placeholder="0.2.0"/>
-          </form-element-component>
+          
+          <div id="versionDiv">
+            ${this.generateInputFormElement('version', '0.2.0')}
+          </div>
 
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="latest" id="latestDiv">
-            <label slot="label" for="latest">Latest</label>
-            <select slot="input" name="latest" id="latest">
-              <option id="false" value="false" selected>false</option>
-              <option id="true" value="true">true</option>
-            </select>
-          </form-element-component>
+          <div id="latestDiv">
+            <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="latest">
+              <label slot="label" for="latest">Latest</label>
+              <select slot="input" name="latest" id="latest">
+                <option id="false" value="false" selected>false</option>
+                <option id="true" value="true">true</option>
+              </select>
+            </form-element-component>
+          </div>
         </div>
 
         <div id="last">
-          <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="checksum">
-            <label slot="label" for="checksum">Checksum</label>
-            <textarea type="text" slot="input" name="checksum" id="checksum"></textarea>
-          </form-element-component>
+          ${this.generateTextAreaFormElement('checksum')}
         </div>
 
-        <!-- UPGRADE THIS TO new FormSubmittedEvent() WHEN THE TYPE IS FIXED -->
-        <button ?disabled="${false}" type="button" @click="${validateOnSubmission}">Save Data</button>
+        <button type="button" @click="${this.validateOnSubmission}">Save Data</button>
       </div>
     `;
 
