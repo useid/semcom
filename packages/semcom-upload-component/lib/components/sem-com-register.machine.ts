@@ -182,7 +182,7 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
   <http://semcom.digita.ai/voc#description> "${event.uploadFormContext.description}";
   <http://semcom.digita.ai/voc#author> "${event.uploadFormContext.author}";
   <http://semcom.digita.ai/voc#tag> "${event.uploadFormContext.tag}";
-  <http://semcom.digita.ai/voc#shapes> `;
+  <http://semcom.digita.ai/voc#shape> `;
 
   // shapes can contain multiple strings, so add each of them separated by a comma
   for (const url of event.uploadFormContext.shapes.split(',')) {
