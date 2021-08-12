@@ -1,5 +1,6 @@
 import { Handler, TypedKeyValueStore } from '@digita-ai/handlersjs-core';
 import { Parser } from 'n3';
+import fetch from 'node-fetch';
 import { from, Observable, of } from 'rxjs';
 
 export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
