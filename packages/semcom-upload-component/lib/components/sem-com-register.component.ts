@@ -1,4 +1,4 @@
-import { html, css, CSSResult, TemplateResult, state, unsafeCSS, query } from 'lit-element';
+import { html, css, CSSResult, TemplateResult, state, unsafeCSS, query, property } from 'lit-element';
 import { RxLitElement } from 'rx-lit';
 import { from } from 'rxjs';
 import { createMachine, interpret, State } from 'xstate';
@@ -15,6 +15,10 @@ export class SemComRegisterComponent extends RxLitElement {
   );
 
   private actor = interpret(this.machine, { devTools: true });
+
+  /** A space separated list of urls, each of which points to a SemCom store */
+  @property({ type: String })
+  public semComStoreUrls: string;
 
   @state()
   state: State<SemComRegisterContext>;
@@ -44,7 +48,7 @@ export class SemComRegisterComponent extends RxLitElement {
 
     } else if (this.state.matches(SemComRegisterStates.STORE_SELECTION)) {
 
-      componentToRender = html`<sem-com-store-selection @formSubmitted="${this.storeSelected}" .semComStoreUrls="${[ 'http://localhost:3002/testpod1/', 'http://localhost:3002/testpod2/' ]}"></sem-com-store-selection>`;
+      componentToRender = html`<sem-com-store-selection @formSubmitted="${this.storeSelected}" semComStoreUrls="${this.semComStoreUrls}"></sem-com-store-selection>`;
 
     } else if (this.state.matches(SemComRegisterStates.CHECKING_PERMISSION)) {
 

@@ -8,8 +8,9 @@ import { map } from 'rxjs/operators';
 
 export class SemComStoreSelectionComponent extends RxLitElement {
 
-  @property({ type: Array })
-  public semComStoreUrls: string[];
+  /** A space separated list of urls, each of which points to a SemCom store */
+  @property({ type: String })
+  public semComStoreUrls: string;
 
   formMachine = formMachine<{ dropDown: string; freeInput: string }> (
     (context) => this.validateStoreSelectionForm(context)
@@ -124,7 +125,7 @@ export class SemComStoreSelectionComponent extends RxLitElement {
             <form-element-component .actor="${this.formActor}" .translator=${{ translate: (value: string) => value }} field="dropDown">
                 <select slot="input" name="dropDown" id="dropDown" required @input="${clearFreeInput}">
                     <option id="empty" value="empty" disabled selected hidden>Select a SemCom store ...</option>
-                    ${this.semComStoreUrls.map((store) => html`<option id="${store}" value="${store}">${store}</option>`)}
+                    ${this.semComStoreUrls.split(' ').map((store) => html`<option id="${store}" value="${store}">${store}</option>`)}
                 </select>
             </form-element-component>
 
