@@ -104,8 +104,6 @@ describe('PodSyncService', () => {
 
           } else {
 
-            // eslint-disable-next-line no-console
-            console.log('hi');
             throw Error('pod is offline or non existent');
 
           }
@@ -113,7 +111,7 @@ describe('PodSyncService', () => {
         }
 
       } else if (options.method === 'post' && url === localPodUri
-         && options.headers['Content-Type'] === 'text/turtle' && options.headers['Slug']) {
+         && options.headers?.['Content-Type'] === 'text/turtle' && options.headers['Slug']) {
 
         // already tests if headers are correct
 
