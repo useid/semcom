@@ -1,7 +1,7 @@
 import { DataFactory, Quad } from 'n3';
 import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 
-const { namedNode, literal, quad } = DataFactory;
+const { namedNode, literal, quad: createQuad } = DataFactory;
 
 const digitaPrefix = 'http://semcom.digita.ai/voc#';
 
@@ -37,16 +37,16 @@ export class ComponentTransformerService {
     }
 
     const shapeQuads = component.shapes.map((shape) =>
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#shape'), namedNode(shape)));
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#shape'), namedNode(shape)));
 
     const quads = [
-      quad(namedNode(component.uri), namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), namedNode('http://semcom.digita.ai/voc#component'),),
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#label'), literal(component.label)),
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#description'),  literal(component.description)),
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#author'), literal(component.author)),
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#version'), literal(component.version)),
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#latest'), literal(String(component.latest))),
-      quad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#tag'), literal(component.tag)),
+      createQuad(namedNode(component.uri), namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), namedNode('http://semcom.digita.ai/voc#component'),),
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#label'), literal(component.label)),
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#description'),  literal(component.description)),
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#author'), literal(component.author)),
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#version'), literal(component.version)),
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#latest'), literal(String(component.latest))),
+      createQuad(namedNode(component.uri), namedNode('http://semcom.digita.ai/voc#tag'), literal(component.tag)),
       ...shapeQuads,
     ];
 
@@ -74,21 +74,19 @@ export class ComponentTransformerService {
   /**
    * Retrieves the metadata of a component from an array of quads.
    *
-   * Transforms quads to a Component
-   *
    * @param quads - The quads to transform
    * @param subject - The URI of the componentMetadata
    */
   fromQuadsOne(quads: Quad[], uri: string): ComponentMetadata {
 
     this.logger.log('debug', 'Transforming quads into component');
-    this.logger.log('silly', '', quads.map((q) => `${q.subject.value} ${q.predicate.value} ${q.object.value}`));
+    this.logger.log('silly', '', quads.map((quad) => `${quad.subject.value} ${quad.predicate.value} ${quad.object.value}`));
 
     // maps all predicates for the given URI to its corresponding object
-    const uriTriples = new Map<string, string[]>([ ...requiredPredicates ].map((p) => [ p, [] ]));
+    const uriTriples = new Map<string, string[]>([ ...requiredPredicates ].map((predicate) => [ predicate, [] ]));
 
     quads
-      .filter((q) => q.subject.value === uri)
+      .filter((quad) => quad.subject.value === uri)
       .forEach((element) => uriTriples.get(element.predicate.value)?.push(element.object.value));
 
     if ([ ...uriTriples.values() ].some((preds) => preds.length === 0)) {
@@ -135,8 +133,8 @@ export class ComponentTransformerService {
     const componentObject = namedNode('http://semcom.digita.ai/voc#component');
 
     return quads
-      .filter((q) => q.predicate.equals(typePredicate) && q.object.equals(componentObject))
-      .map((q) => q.subject.value)
+      .filter((quad) => quad.predicate.equals(typePredicate) && quad.object.equals(componentObject))
+      .map((quad) => quad.subject.value)
       .map((uri) => this.fromQuadsOne(quads, uri));
 
   }

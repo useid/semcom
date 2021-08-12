@@ -2,7 +2,7 @@ import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core'
 import { DataFactory, Quad } from 'n3';
 import { ComponentTransformerService } from './component-transformer.service';
 
-const { namedNode, literal, quad } = DataFactory;
+const { namedNode, literal, quad: createQuad } = DataFactory;
 
 describe('ComponentTransformerService', () => {
 
@@ -59,7 +59,7 @@ describe('ComponentTransformerService', () => {
 
       componentMetaDatas.forEach((component) => {
 
-        expect(quads).toContainEqual(quad(
+        expect(quads).toContainEqual(createQuad(
           namedNode(component.uri),
           namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
           namedNode('http://semcom.digita.ai/voc#component'),
@@ -71,7 +71,7 @@ describe('ComponentTransformerService', () => {
         metaDataKeys.forEach((predicate) => {
 
           expect(quads).toContainEqual(
-            quad(
+            createQuad(
               namedNode(component.uri),
               namedNode(`http://semcom.digita.ai/voc#${predicate}`),
               literal(component[predicate].toString())
@@ -84,7 +84,7 @@ describe('ComponentTransformerService', () => {
         component.shapes.forEach((shape) => {
 
           expect(quads).toContainEqual(
-            quad(
+            createQuad(
               namedNode(component.uri),
               namedNode(`http://semcom.digita.ai/voc#shape`),
               namedNode(shape)
@@ -123,15 +123,15 @@ describe('ComponentTransformerService', () => {
 
     it('should throw an error if 1 required predicate is not found', () => {
 
-      const quads = quadsTest1.filter((q) => q.predicate.value !== `${digitaPrefix}label`);
+      const quads = quadsTest1.filter((quad) => quad.predicate.value !== `${digitaPrefix}label`);
       expect(() => transformer.fromQuadsOne(quads, componentMetaDatas[0].uri)).toThrow('Some ComponentMetadata predicates were missing while parsing quads.');
 
     });
 
     it('should throw an error if more than 1 required predicates are not found', () => {
 
-      const quads = quadsTest1.filter((q) =>
-        q.predicate.value !== `${digitaPrefix}label` && q.predicate.value !== `${digitaPrefix}version`);
+      const quads = quadsTest1.filter((quad) =>
+        quad.predicate.value !== `${digitaPrefix}label` && quad.predicate.value !== `${digitaPrefix}version`);
 
       expect(() => transformer.fromQuadsOne(quads, componentMetaDatas[0].uri)).toThrow('Some ComponentMetadata predicates were missing while parsing quads.');
 
@@ -139,7 +139,7 @@ describe('ComponentTransformerService', () => {
 
     it('should throw an error if too many predicates are found', () => {
 
-      quadsTest1.push(quad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
 
       expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).toThrow('Too many ComponentMetadata predicates were provided while parsing quads.');
 
@@ -147,7 +147,7 @@ describe('ComponentTransformerService', () => {
 
     it('should not throw an error if multiple shapes are found', () => {
 
-      quadsTest1.push(quad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}shape`), literal('test')));
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}shape`), literal('test')));
 
       expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).not.toThrow();
 
@@ -155,8 +155,8 @@ describe('ComponentTransformerService', () => {
 
     it('should throw if "latest" predicate is not boolean', () => {
 
-      const index = quadsTest1.findIndex((q) => q.predicate.value === `${digitaPrefix}latest`);
-      quadsTest1[index] = quad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}latest`), literal('notboolean'));
+      const index = quadsTest1.findIndex((quad) => quad.predicate.value === `${digitaPrefix}latest`);
+      quadsTest1[index] = createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}latest`), literal('notboolean'));
 
       expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).toThrow(`'${digitaPrefix}latest' should be 'true' or 'false'`);
 
@@ -164,7 +164,7 @@ describe('ComponentTransformerService', () => {
 
     it('should not throw if other non-required predicates are included', () => {
 
-      quadsTest1.push(quad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}123`), literal('456')));
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}123`), literal('456')));
 
       expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).not.toThrow();
 
@@ -172,7 +172,7 @@ describe('ComponentTransformerService', () => {
 
     it('should not throw if other predicates from a different subject are included', () => {
 
-      quadsTest1.push(quad(namedNode(componentMetaDatas[1].uri), namedNode(`${digitaPrefix}label`), literal('test')));
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[1].uri), namedNode(`${digitaPrefix}label`), literal('test')));
 
       expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).not.toThrow();
 
@@ -198,7 +198,7 @@ describe('ComponentTransformerService', () => {
 
     it('should throw if at least one metadata throws an error', () => {
 
-      quadsAll.push(quad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
+      quadsAll.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
       expect(() => transformer.fromQuads(quadsAll)).toThrow('Too many ComponentMetadata predicates were provided while parsing quads.');
 
     });
