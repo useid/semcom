@@ -29,11 +29,10 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
     try {
 
       const response = await fetch(uri, { headers: { 'Accept': 'text/turtle' } });
-      const body = await response.text();
 
       return new Set(
         response.status === 200
-          ? new Parser({ format: 'Turtle' }).parse(body)
+          ? new Parser({ format: 'Turtle' }).parse(await response.text())
             .filter((quad) => quad.object.value === 'http://www.w3.org/ns/ldp#Resource')
             .filter((quad) => quad.subject.value !== '')
             .map((quad) => quad.subject.value)
