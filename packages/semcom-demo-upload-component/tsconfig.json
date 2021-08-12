@@ -9,8 +9,6 @@
       "target": "es2017",
       // Strict should actually be true
       "strict": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
       // If this is off, building will error due to an N3 type
       "skipLibCheck": true
     },

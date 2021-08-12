@@ -7,7 +7,6 @@
     },
     "files": [ 
       "node_modules/vite/client.d.ts",
-      "tests/setup.ts"
     ],
     "include": [ "lib" ],
     "exclude": [
