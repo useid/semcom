@@ -5,7 +5,7 @@ import { Issuer } from '../models/issuer.model';
 import { SolidService } from './solid.service';
 
 // Taken from UI-transfer. Included here because importing fetch from ui-transfer (which is imported from inrupt)
-// does not work for an unknown reason.
+// does not work without these models and services for an unknown reason.
 
 /**
  * An implementation of the Solid service which uses Solid Client.

@@ -3,7 +3,7 @@ import { Profile } from '../models/profile.model';
 import { Issuer } from '../models/issuer.model';
 
 // Taken from UI-transfer. Included here because importing fetch from ui-transfer (which is imported from inrupt)
-// does not work for an unknown reason.
+// does not work without these models and services for an unknown reason.
 
 /**
  * Service for interacting with Solid pods
