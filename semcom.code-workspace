@@ -29,9 +29,17 @@
       "path": "packages/semcom-demo-pods"
     },
     {
+      "name": "demo-upload-component",
+      "path": "packages/semcom-demo-upload-component"
+    },
+    {
       "name": "components",
       "path": "packages/semcom-components"
-    }
+    },
+    {
+      "name": "upload-component",
+      "path": "packages/semcom-upload-component"
+    },
   ],
   "settings": {
     "eslint.format.enable": true,
