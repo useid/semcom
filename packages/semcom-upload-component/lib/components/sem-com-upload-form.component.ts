@@ -9,7 +9,7 @@ import valid from 'semver/functions/valid';
 
 export interface UploadFormContext {
   uri: string;
-  labelInput: string;
+  label: string;
   description: string;
   author: string;
   tag: string;
@@ -26,12 +26,13 @@ export class SemComUploadFormComponent extends RxLitElement {
   public semComStoreUrls: string[];
 
   formMachine = formMachine<UploadFormContext> ((context, event) => this.validateUploadForm(context)).withContext({
-    data: { uri: '', labelInput: '', description: '', author: '', tag:'', shapes: '', version: '', latest: 'false', checksum: '' },
-    original: { uri: '', labelInput: '', description: '', author: '', tag:'', shapes: '', version: '', latest: 'false', checksum: '' },
+    data: { uri: '', label: '', description: '', author: '', tag:'', shapes: '', version: '', latest: 'false', checksum: '' },
+    original: { uri: '', label: '', description: '', author: '', tag:'', shapes: '', version: '', latest: 'false', checksum: '' },
   });
 
   /** The actor responsible for form validation in this component.  */
   formActor = interpret(this.formMachine, { devTools: true });
+
   /** Indicates if if the form validation passed. */
   @state()
   isValid? = false;
@@ -48,8 +49,8 @@ export class SemComUploadFormComponent extends RxLitElement {
   @query('#uri')
   uri: HTMLInputElement;
 
-  @query('#labelInput')
-  labelInput: HTMLInputElement;
+  @query('#label')
+  label: HTMLInputElement;
 
   @query('#description')
   description: HTMLInputElement;
@@ -98,7 +99,7 @@ export class SemComUploadFormComponent extends RxLitElement {
 
       this.dispatchEvent(new CustomEvent('formSubmitted', { detail: {
         uri: event.data.data.uri,
-        labelInput: event.data.data.labelInput,
+        label: event.data.data.label,
         description: event.data.data.description,
         author: event.data.data.author,
         tag:event.data.data.tag,
@@ -185,7 +186,7 @@ export class SemComUploadFormComponent extends RxLitElement {
   };
 
   hasEmptyFields = (): boolean => this.uri?.value.trim() === ''
-      || this.labelInput?.value.trim() === ''
+      || this.label?.value.trim() === ''
       || this.description?.value.trim() === ''
       || this.author?.value.trim() === ''
       || this.tag?.value.trim() === ''
@@ -219,17 +220,17 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   translator = { translate: (value: string): string => value };
 
-  generateInputFormElement = (field: string, placeholder?: string): TemplateResult => html`
-      <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="${field}">
+  generateInputFormElement = (field: string, options?: { placeholder?: string; debounceTimeout?: string }): TemplateResult => html`
+      <form-element-component debounceTimeout="${options?.debounceTimeout ? options.debounceTimeout : '0'}" .actor="${this.formActor}" .translator=${this.translator} field="${field}">
         <label slot="label" for="${field}">${field.charAt(0).toUpperCase() + field.substr(1)}</label>
-        <input type="text" slot="input" placeholder="${placeholder ? placeholder : ''}" name="${field}" id="${field}"/>
+        <input type="text" slot="input" placeholder="${options?.placeholder ? options.placeholder : ''}" name="${field}" id="${field}"/>
       </form-element-component>
     `;
 
-  generateTextAreaFormElement = (field: string, placeholder?: string): TemplateResult => html`
-      <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="${field}">
-        <label slot="label" for="${field}">${field === 'labelInput' ? 'Label' : field.charAt(0).toUpperCase() + field.substr(1)}</label>
-        <textarea type="text" slot="input" placeholder="${placeholder ? placeholder : ''}" name="${field}" id="${field}"></textarea>
+  generateTextAreaFormElement = (field: string, options?: { placeholder?: string; debounceTimeout?: string }): TemplateResult => html`
+      <form-element-component debounceTimeout="${options?.debounceTimeout ? options.debounceTimeout : '0'}" .actor="${this.formActor}" .translator=${this.translator} field="${field}">
+        <label slot="label" for="${field}">${field.charAt(0).toUpperCase() + field.substr(1)}</label>
+        <textarea type="text" slot="input" placeholder="${options?.placeholder ? options.placeholder : ''}" name="${field}" id="${field}"></textarea>
       </form-element-component>
     `;
 
@@ -240,11 +241,11 @@ export class SemComUploadFormComponent extends RxLitElement {
         <div id="error"></div>
 
         <div id="first">
-          ${this.generateInputFormElement('uri', 'https:// ...')}
+          ${this.generateInputFormElement('uri', { debounceTimeout: '250', placeholder: 'https:// ...' })}
         </div>
 
         <div>
-          ${this.generateInputFormElement('labelInput')}
+          ${this.generateInputFormElement('label')}
         </div>
 
         <div>
@@ -260,17 +261,17 @@ export class SemComUploadFormComponent extends RxLitElement {
         </div>
 
         <div>
-          ${this.generateTextAreaFormElement('shapes', 'https:// ..., https:// ...')}
+          ${this.generateTextAreaFormElement('shapes', { debounceTimeout: '250', placeholder: 'https:// ..., https:// ...' })}
         </div>
 
         <div id="flexRow">
           
           <div id="versionDiv">
-            ${this.generateInputFormElement('version', '0.2.0')}
+            ${this.generateInputFormElement('version', { debounceTimeout: '250', placeholder: '0.2.0' })}
           </div>
 
           <div id="latestDiv">
-            <form-element-component .actor="${this.formActor}" .translator=${this.translator} field="latest">
+            <form-element-component debounceTimeout="0" .actor="${this.formActor}" .translator=${this.translator} field="latest">
               <label slot="label" for="latest">Latest</label>
               <select slot="input" name="latest" id="latest">
                 <option id="false" value="false" selected>false</option>
@@ -315,11 +316,6 @@ export class SemComUploadFormComponent extends RxLitElement {
           margin-bottom: 0px;
         }
 
-        textarea {
-          resize: none;
-          height: calc(3 * var(--gap-large))
-        }
-
         #flexRow {
           display: grid;
           grid-template-columns: 1fr 1fr
@@ -355,8 +351,15 @@ export class SemComUploadFormComponent extends RxLitElement {
           height: var(--gap-large)
         }
 
+        textarea {
+          border:none;
+          resize: none;
+          height: calc(3 * var(--gap-large))
+        }
+
         input:focus,
-        select:focus {
+        select:focus,
+        textarea:focus {
           outline: none;
         }
 

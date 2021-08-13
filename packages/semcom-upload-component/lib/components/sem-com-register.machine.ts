@@ -4,7 +4,7 @@ import { catchError, switchMap, map } from 'rxjs/operators';
 import { fetch as solidFetch } from '@digita-ai/ui-transfer-solid-client';
 import { Session } from '@digita-ai/ui-transfer-components';
 import jsSHA from 'jssha';
-import { Parser, DataFactory, Quad, Writer } from 'n3';
+import { Parser, DataFactory, Writer } from 'n3';
 import { UploadFormContext } from './sem-com-upload-form.component';
 
 const { namedNode, literal, quad } = DataFactory;
@@ -178,7 +178,7 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
 
   // If somehow all previous checks failed and a field is still empty, don't save the data.
   if (!event.uploadFormContext.uri
-    || !event.uploadFormContext.labelInput
+    || !event.uploadFormContext.label
     || !event.uploadFormContext.description
     || !event.uploadFormContext.author
     || !event.uploadFormContext.tag
@@ -198,7 +198,7 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
   // create quads for all of the component metadata
   const quads = [
     quad(namedNode(event.uploadFormContext.uri), namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), namedNode('http://semcom.digita.ai/voc#component'),),
-    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#label'), literal(event.uploadFormContext.labelInput)),
+    quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#label'), literal(event.uploadFormContext.label)),
     quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#description'),  literal(event.uploadFormContext.description)),
     quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#author'), literal(event.uploadFormContext.author)),
     quad(namedNode(event.uploadFormContext.uri), namedNode('http://semcom.digita.ai/voc#version'), literal(event.uploadFormContext.version)),
