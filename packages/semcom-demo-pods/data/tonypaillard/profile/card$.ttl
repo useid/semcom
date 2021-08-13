@@ -5,9 +5,23 @@
 @prefix       : <#> .
 
 <>
-a foaf:PersonalProfileDocument;
-foaf:primaryTopic :me;
-foaf:maker :me.
+    a foaf:PersonalProfileDocument;
+    foaf:maker :me;
+    foaf:primaryTopic :me.
+
+:me
+    solid:oidcIssuer <http://localhost:9000/>;
+    a schema:Person, foaf:Person;
+    vcard:hasPhoto <https://thispersondoesnotexist.com/image>;
+    vcard:note "I enjoy nettle soup!";
+    vcard:organization-name "Cynalco Medics";
+    vcard:role "Janitor & Maintenance";
+    solid:privateTypeIndex </settings/privateTypeIndex.ttl>;
+    solid:publicTypeIndex </settings/publicTypeIndex.ttl>;
+    vcard:hasEmail :id1589374025993, :id1589374027282;
+    vcard:hasAddress :id1601909945358;
+    vcard:hasTelephone :id1601214413622, :id1601214413645;
+    foaf:name "Tony Paillard".
 
 :id1601909945358
     vcard:country-name "Belgium";
@@ -21,16 +35,3 @@ foaf:maker :me.
 
 :id1601214413622 a vcard:Work; vcard:value <tel:+32479315191>.
 :id1601214413645 a vcard:Home; vcard:value <tel:+3216438543>.
-
-:me
-    a schema:Person, foaf:Person;
-    vcard:hasPhoto <https://thispersondoesnotexist.com/image>;
-    vcard:note "I enjoy nettle soup!";
-    vcard:organization-name "Cynalco Medics";
-    vcard:role "Janitor & Maintenance";
-    solid:privateTypeIndex </settings/privateTypeIndex.ttl>;
-    solid:publicTypeIndex </settings/publicTypeIndex.ttl>;
-    vcard:hasEmail :id1589374025993, :id1589374027282;
-    vcard:hasAddress :id1601909945358;
-    vcard:hasTelephone :id1601214413622, :id1601214413645;
-    foaf:name "Tony Paillard".
