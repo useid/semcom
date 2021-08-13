@@ -52,7 +52,7 @@ export type SemComRegisterState = {
   | SemComRegisterStates.UPLOADING_COMPONENT
   | SemComRegisterStates.SUCCESSFULLY_SAVED_DATA
   | SemComRegisterStates.ERROR_SAVING_DATA;
-  context: SemComRegisterContextWithUrl;
+  context: SemComRegisterContextWithSession & SemComRegisterContextWithUrl;
 };
 
 export interface SemComRegisterStateSchema extends StateSchema<SemComRegisterContext> {
@@ -230,15 +230,14 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
     )),
     // if the pod is offline, return an empty set
     catchError(() => of(new Set<string>())),
-    switchMap((components) => zip(of(components), of(writer))),
-    switchMap(([ components, quadWriter ]) => {
+    switchMap((components) => {
 
       // if the component already contains a component with the same name, dont save the data
       if (components.has(hash)) { return throwError(new Error('Component already exists.')); } else {
 
         let data = '';
 
-        quadWriter.end((error, result) => {
+        writer.end((error, result) => {
 
           if (error) {
 
