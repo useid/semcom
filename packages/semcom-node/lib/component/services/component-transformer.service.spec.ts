@@ -196,7 +196,7 @@ describe('ComponentTransformerService', () => {
 
     });
 
-    it("should return only the metadata's that were correctly parsed", () => {
+    it('should return only the metadata that was correctly parsed', () => {
 
       // the first componentMetadata will be invalid now, because there are too many predicates of "label"
       quadsAll.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));

@@ -27,11 +27,14 @@ describe('ComponentPodStore', () => {
     filename: string;
   }
 
-  const streamToBuffer = (stream: NodeJS.ReadableStream): Promise<string> => new Promise((resolve) => {
+  let componentInfoA: ComponentMetadataMock;
+  let componentInfoB: ComponentMetadataMock;
 
-    const bufs = [];
-    stream.on('data', (chunk) => bufs.push(chunk));
-    stream.on('end', () => resolve(bufs.join('')));
+  const streamToString = (stream: NodeJS.ReadableStream): Promise<string> => new Promise((resolve) => {
+
+    const subStrings = [];
+    stream.on('data', (chunk) => subStrings.push(chunk));
+    stream.on('end', () => resolve(subStrings.join('')));
 
   });
 
@@ -54,7 +57,7 @@ describe('ComponentPodStore', () => {
               namedNode('http://www.w3.org/ns/ldp#Resource')));
 
           const bodyStream = serialize.serialize(streamify(quads), { contentType: 'text/turtle' });
-          const body = await streamToBuffer(bodyStream);
+          const body = await streamToString(bodyStream);
 
           return new Response(body, { status: 200, headers: { 'Content-Type': 'text/turtle' } });
 
@@ -68,7 +71,7 @@ describe('ComponentPodStore', () => {
 
             const quads: Quad[] = quadTransformer.toQuads([ componentMock.component ]);
             const bodyStream = serialize.serialize(streamify(quads), { contentType: 'text/turtle' });
-            const body = await streamToBuffer(bodyStream);
+            const body = await streamToString(bodyStream);
 
             return new Response(body, { status: 200, headers: { 'Content-Type': 'text/turtle' } });
 
@@ -87,6 +90,34 @@ describe('ComponentPodStore', () => {
   beforeEach(() => {
 
     jest.resetAllMocks();
+
+    componentInfoA = {
+      component: {
+        uri: 'https://components.semcom.digita.ai/components/test.component.js',
+        label: 'test component',
+        description: 'abc',
+        author: '',
+        tag: 'test',
+        version: '0.123',
+        latest: true,
+        shapes: [ 'http://digita.ai/voc/test#test' ],
+      },
+      filename: 'test1.ttl',
+    };
+
+    componentInfoB = {
+      component: {
+        uri: 'https://components.semcom.digita.ai/components/test2.component.js',
+        label: 'test2',
+        description: 'defg',
+        author: '',
+        tag: 'test2',
+        version: '0.123',
+        latest: true,
+        shapes: [ 'http://digita.ai/voc/test#test2' ],
+      },
+      filename: 'test2.ttl',
+    };
 
   });
 
@@ -108,54 +139,15 @@ describe('ComponentPodStore', () => {
 
     it('works if there is 1 component', async () => {
 
-      const componentInfo = {
-        component: {
-          uri: 'https://components.semcom.digita.ai/components/test.component.js',
-          label: 'test component',
-          description: 'abc',
-          author: '',
-          tag: 'test',
-          version: '0.123',
-          latest: true,
-          shapes: [ 'http://digita.ai/voc/test#test' ],
-        },
-        filename: 'test1.ttl',
-      };
+      mockComponents([ componentInfoA ]);
 
-      mockComponents([ componentInfo ]);
-
-      await expect(componentPodStore.all()).resolves.toEqual([ componentInfo.component ]);
+      await expect(componentPodStore.all()).resolves.toEqual([ componentInfoA.component ]);
 
     });
 
     it('works if there are multiple components', async () => {
 
-      const componentInfos = [ {
-        component: {
-          uri: 'https://components.semcom.digita.ai/components/test.component.js',
-          label: 'test component',
-          description: 'abc',
-          author: '',
-          tag: 'test',
-          version: '0.123',
-          latest: true,
-          shapes: [ 'http://digita.ai/voc/test#test' ],
-        },
-        filename: 'test1.ttl',
-      },
-      {
-        component: {
-          uri: 'https://components.semcom.digita.ai/components/test2.component.js',
-          label: 'test2',
-          description: 'defg',
-          author: '',
-          tag: 'test2',
-          version: '0.123',
-          latest: true,
-          shapes: [ 'http://digita.ai/voc/test#test2' ],
-        },
-        filename: 'test2.ttl',
-      } ];
+      const componentInfos = [ componentInfoA, componentInfoB ];
 
       mockComponents(componentInfos);
 
@@ -167,36 +159,11 @@ describe('ComponentPodStore', () => {
 
     it('should only return components that are valid', async () => {
 
-      const componentInfos: ComponentMetadataMock[] = [ {
-        component: {
-          uri: 'https://components.semcom.digita.ai/components/test.component.js',
-          label: 'test component',
-          description: 'abc',
-          author: '',
-          tag: 'test',
-          version: '0.123',
-          latest: 'not a boolean' as unknown as boolean, // obviously incorrect!
-          shapes: [ 'http://digita.ai/voc/test#test' ],
-        },
-        filename: 'test1.ttl',
-      },
-      {
-        component: {
-          uri: 'https://components.semcom.digita.ai/components/test2.component.js',
-          label: 'test2',
-          description: 'defg',
-          author: '',
-          tag: 'test2',
-          version: '0.123',
-          latest: true,
-          shapes: [ 'http://digita.ai/voc/test#test2' ],
-        },
-        filename: 'test2.ttl',
-      } ];
+      componentInfoA.component.latest = 'not a boolean' as unknown as boolean; // obviously incorrect!
 
-      mockComponents(componentInfos);
+      mockComponents([ componentInfoA, componentInfoB ]);
 
-      await expect(componentPodStore.all()).resolves.toEqual([ componentInfos[1].component ]);
+      await expect(componentPodStore.all()).resolves.toEqual([ componentInfoB.component ]);
 
     });
 

@@ -27,6 +27,12 @@ describe('PodSyncService', () => {
 
   let localComponents: Set<string>;
 
+  let podMockA: RemotePodMock;
+  let podMockB: RemotePodMock;
+  let componentMock1: ComponentMetadataMock;
+  let componentMock2: ComponentMetadataMock;
+  let componentMock3: ComponentMetadataMock;
+
   interface RemotePodMock {
     uri: string;
     components: ComponentMetadataMock[];
@@ -40,11 +46,11 @@ describe('PodSyncService', () => {
     filename: string;
   }
 
-  const streamToBuffer = (stream: NodeJS.ReadableStream): Promise<string> => new Promise((resolve) => {
+  const streamToString = (stream: NodeJS.ReadableStream): Promise<string> => new Promise((resolve) => {
 
-    const bufs = [];
-    stream.on('data', (chunk) => bufs.push(chunk));
-    stream.on('end', () => resolve(bufs.join('')));
+    const subStrings = [];
+    stream.on('data', (chunk) => subStrings.push(chunk));
+    stream.on('end', () => resolve(subStrings.join('')));
 
   });
 
@@ -83,7 +89,7 @@ describe('PodSyncService', () => {
               namedNode('http://www.w3.org/ns/ldp#Resource')));
 
           const bodyStream = serialize.serialize(streamify(quads), { contentType: 'text/turtle' });
-          const body = await streamToBuffer(bodyStream);
+          const body = await streamToString(bodyStream);
 
           return new Response(body, { status: httpStatusCode, headers: { 'Content-Type': 'text/turtle' } });
 
@@ -137,6 +143,38 @@ describe('PodSyncService', () => {
     store = new MemoryStore([ [ 'storage', [] ] ]);
     podSyncService = new PodSyncService('storage', store, localPodUri);
 
+    podMockA = {
+      uri: 'test.com/',
+      components: [],
+      isOnline: true,
+      httpStatus: 200,
+    };
+
+    podMockB = {
+      uri: 'test2.com/',
+      components: [],
+      isOnline: true,
+      httpStatus: 200,
+    };
+
+    componentMock1 = {
+      httpStatus: 200,
+      contents: '1',
+      filename: 'metadata1.ttl',
+    };
+
+    componentMock2 = {
+      httpStatus: 200,
+      contents: '2',
+      filename: 'metadata2.ttl',
+    };
+
+    componentMock3 = {
+      httpStatus: 200,
+      contents: '3',
+      filename: 'metadata3.ttl',
+    };
+
   });
 
   it('should be correctly instantiated', () => {
@@ -170,22 +208,7 @@ describe('PodSyncService', () => {
 
     it('fetches other pods', async () => {
 
-      const otherPods = [
-        {
-          uri: 'test.com/',
-          components: [],
-          isOnline: true,
-          httpStatus: 200,
-        },
-        {
-          uri: 'test2.com/',
-          components: [],
-          isOnline: true,
-          httpStatus: 200,
-        },
-      ];
-
-      mockPods([], ... otherPods);
+      mockPods([], podMockA, podMockB);
 
       await podSyncService.handle().toPromise();
 
@@ -200,35 +223,10 @@ describe('PodSyncService', () => {
 
     it('adds fetched components in local pod', async () => {
 
-      const otherPods = [
-        {
-          uri: 'test.com/',
-          components: [ {
-            httpStatus: 200,
-            contents: '1',
-            filename: 'metadata1.ttl',
-          },
-          {
-            httpStatus: 200,
-            contents: '2',
-            filename: 'metadata2.ttl',
-          } ],
-          isOnline: true,
-          httpStatus: 200,
-        },
-        {
-          uri: 'test2.com/',
-          components: [ {
-            httpStatus: 200,
-            contents: '3',
-            filename: 'metadata3.ttl',
-          } ],
-          isOnline: true,
-          httpStatus: 200,
-        },
-      ];
+      podMockA.components = [ componentMock1, componentMock2 ];
+      podMockB.components = [ componentMock3 ];
 
-      mockPods([ 'localmetadata1.ttl' ], ... otherPods);
+      mockPods([ 'localmetadata1.ttl' ], podMockA, podMockB);
 
       await podSyncService.handle().toPromise();
 
@@ -240,25 +238,10 @@ describe('PodSyncService', () => {
 
     it("does not add component to local storage if http status wasn't 200", async () => {
 
-      const otherPods = [
-        {
-          uri: 'test.com/',
-          components: [ {
-            httpStatus: 200,
-            contents: '1',
-            filename: 'metadata1.ttl',
-          },
-          {
-            httpStatus: 404,
-            contents: '2',
-            filename: 'metadata2.ttl',
-          } ],
-          isOnline: true,
-          httpStatus: 200,
-        },
-      ];
+      podMockA.components = [ componentMock1, componentMock2 ];
+      componentMock2.httpStatus = 404;
 
-      mockPods([], ... otherPods);
+      mockPods([], podMockA);
 
       await podSyncService.handle().toPromise();
 
@@ -270,25 +253,9 @@ describe('PodSyncService', () => {
 
     it("fetches only the components it doesn't have locally", async () => {
 
-      const otherPods = [
-        {
-          uri: 'test.com/',
-          components: [ {
-            httpStatus: 200,
-            contents: '1',
-            filename: 'metadata1.ttl',
-          },
-          {
-            httpStatus: 200,
-            contents: '2',
-            filename: 'metadata2.ttl',
-          } ],
-          isOnline: true,
-          httpStatus: 200,
-        },
-      ];
+      podMockA.components = [ componentMock1, componentMock2 ];
 
-      mockPods([ 'metadata1.ttl' ], ... otherPods);
+      mockPods([ 'metadata1.ttl' ], podMockA);
 
       await podSyncService.handle().toPromise();
 
@@ -300,16 +267,9 @@ describe('PodSyncService', () => {
 
     it("doesn't throw any error if one of the remote pods is offline", async () => {
 
-      const otherPods = [
-        {
-          uri: 'test.com/',
-          components: [],
-          isOnline: false,
-          httpStatus: 200,
-        },
-      ];
+      podMockA.isOnline = false;
 
-      mockPods([], ... otherPods);
+      mockPods([], podMockA);
 
       // https://stackoverflow.com/questions/54525147/expect-a-jest-test-to-resolve-but-dont-care-about-the-value
       return podSyncService.handle().toPromise();
@@ -318,16 +278,9 @@ describe('PodSyncService', () => {
 
     it("doesn't throw any error if one of the remote pods doesn't return status 200", async () => {
 
-      const otherPods = [
-        {
-          uri: 'test.com/',
-          components: [],
-          isOnline: true,
-          httpStatus: 500,
-        },
-      ];
+      podMockA.httpStatus = 500;
 
-      mockPods([], ... otherPods);
+      mockPods([], podMockA);
 
       return podSyncService.handle().toPromise();
 
