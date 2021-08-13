@@ -135,7 +135,20 @@ export class ComponentTransformerService {
     return quads
       .filter((quad) => quad.predicate.equals(typePredicate) && quad.object.equals(componentObject))
       .map((quad) => quad.subject.value)
-      .map((uri) => this.fromQuadsOne(quads, uri));
+      .map((uri) => {
+
+        try {
+
+          return this.fromQuadsOne(quads, uri);
+
+        } catch (error) {
+
+          return undefined;
+
+        }
+
+      })
+      .filter((metadata): metadata is ComponentMetadata => metadata !== undefined);
 
   }
 

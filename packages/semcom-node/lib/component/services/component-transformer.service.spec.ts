@@ -196,10 +196,13 @@ describe('ComponentTransformerService', () => {
 
     });
 
-    it('should throw if at least one metadata throws an error', () => {
+    it('should return only the metadata that was correctly parsed', () => {
 
+      // the first componentMetadata will be invalid now, because there are too many predicates of "label"
       quadsAll.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
-      expect(() => transformer.fromQuads(quadsAll)).toThrow('Too many ComponentMetadata predicates were provided while parsing quads.');
+
+      // only expect the second metadata
+      expect(transformer.fromQuads(quadsAll)).toEqual([ componentMetaDatas[1] ]);
 
     });
 
