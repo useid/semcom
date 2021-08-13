@@ -1,9 +1,12 @@
 import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
-import { DataFactory } from 'n3';
+import { DataFactory, Quad } from 'n3';
 import { ComponentTransformerService } from './component-transformer.service';
-const { namedNode, literal, quad } = DataFactory;
+
+const { namedNode, literal, quad: createQuad } = DataFactory;
 
 describe('ComponentTransformerService', () => {
+
+  const digitaPrefix = 'http://semcom.digita.ai/voc#';
 
   const componentMetaDatas: ComponentMetadata[] = [
     { uri: 'https://components.semcom.digita.ai/components/test.component.js',
@@ -26,11 +29,19 @@ describe('ComponentTransformerService', () => {
     },
   ];
 
+  // use to test fromQuadsOne
+  let quadsTest1: Quad[];
+
+  // use to test fromQuads
+  let quadsAll: Quad[];
+
   let transformer: ComponentTransformerService = null;
 
   beforeEach(() => {
 
     transformer = new ComponentTransformerService(new LoggerConsoleService());
+    quadsTest1 = transformer.toQuads([ componentMetaDatas[0] ]);
+    quadsAll = transformer.toQuads(componentMetaDatas);
 
   });
 
@@ -48,7 +59,7 @@ describe('ComponentTransformerService', () => {
 
       componentMetaDatas.forEach((component) => {
 
-        expect(quads).toContainEqual(quad(
+        expect(quads).toContainEqual(createQuad(
           namedNode(component.uri),
           namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
           namedNode('http://semcom.digita.ai/voc#component'),
@@ -60,7 +71,7 @@ describe('ComponentTransformerService', () => {
         metaDataKeys.forEach((predicate) => {
 
           expect(quads).toContainEqual(
-            quad(
+            createQuad(
               namedNode(component.uri),
               namedNode(`http://semcom.digita.ai/voc#${predicate}`),
               literal(component[predicate].toString())
@@ -73,7 +84,7 @@ describe('ComponentTransformerService', () => {
         component.shapes.forEach((shape) => {
 
           expect(quads).toContainEqual(
-            quad(
+            createQuad(
               namedNode(component.uri),
               namedNode(`http://semcom.digita.ai/voc#shape`),
               namedNode(shape)
@@ -108,9 +119,89 @@ describe('ComponentTransformerService', () => {
 
   });
 
+  describe('fromQuadsOne()', () => {
+
+    it('should throw an error if 1 required predicate is not found', () => {
+
+      const quads = quadsTest1.filter((quad) => quad.predicate.value !== `${digitaPrefix}label`);
+      expect(() => transformer.fromQuadsOne(quads, componentMetaDatas[0].uri)).toThrow('Some ComponentMetadata predicates were missing while parsing quads.');
+
+    });
+
+    it('should throw an error if more than 1 required predicates are not found', () => {
+
+      const quads = quadsTest1.filter((quad) =>
+        quad.predicate.value !== `${digitaPrefix}label` && quad.predicate.value !== `${digitaPrefix}version`);
+
+      expect(() => transformer.fromQuadsOne(quads, componentMetaDatas[0].uri)).toThrow('Some ComponentMetadata predicates were missing while parsing quads.');
+
+    });
+
+    it('should throw an error if too many predicates are found', () => {
+
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
+
+      expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).toThrow('Too many ComponentMetadata predicates were provided while parsing quads.');
+
+    });
+
+    it('should not throw an error if multiple shapes are found', () => {
+
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}shape`), literal('test')));
+
+      expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).not.toThrow();
+
+    });
+
+    it('should throw if "latest" predicate is not boolean', () => {
+
+      const index = quadsTest1.findIndex((quad) => quad.predicate.value === `${digitaPrefix}latest`);
+      quadsTest1[index] = createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}latest`), literal('notboolean'));
+
+      expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).toThrow(`'${digitaPrefix}latest' should be 'true' or 'false'`);
+
+    });
+
+    it('should not throw if other non-required predicates are included', () => {
+
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}123`), literal('456')));
+
+      expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).not.toThrow();
+
+    });
+
+    it('should not throw if other predicates from a different subject are included', () => {
+
+      quadsTest1.push(createQuad(namedNode(componentMetaDatas[1].uri), namedNode(`${digitaPrefix}label`), literal('test')));
+
+      expect(() => transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).not.toThrow();
+
+    });
+
+    it('should produce the correct metadata', () => {
+
+      expect(transformer.fromQuadsOne(quadsTest1, componentMetaDatas[0].uri)).toEqual(componentMetaDatas[0]);
+
+    });
+
+  });
+
   describe('fromQuads()', () => {
 
-    // not implemented yet
+    it('should produce the correct metadata', () => {
+
+      const metadatas = transformer.fromQuads(quadsAll);
+      expect(metadatas).toContainEqual(componentMetaDatas[0]);
+      expect(metadatas).toContainEqual(componentMetaDatas[1]);
+
+    });
+
+    it('should throw if at least one metadata throws an error', () => {
+
+      quadsAll.push(createQuad(namedNode(componentMetaDatas[0].uri), namedNode(`${digitaPrefix}label`), literal('test')));
+      expect(() => transformer.fromQuads(quadsAll)).toThrow('Too many ComponentMetadata predicates were provided while parsing quads.');
+
+    });
 
   });
 

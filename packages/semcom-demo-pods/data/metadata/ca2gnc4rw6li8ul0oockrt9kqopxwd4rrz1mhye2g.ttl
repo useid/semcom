@@ -1,0 +1,8 @@
+<http://localhost:8080/components/gender.component.js> a <http://semcom.digita.ai/voc#component>;
+    <http://semcom.digita.ai/voc#label> "SemCom Gender Component";
+    <http://semcom.digita.ai/voc#description> "Digita SemCom component for displaying a type of gender.";
+    <http://semcom.digita.ai/voc#author> "https://digita.ai";
+    <http://semcom.digita.ai/voc#version> "0.1.0";
+    <http://semcom.digita.ai/voc#latest> "true";
+    <http://semcom.digita.ai/voc#tag> "gender";
+    <http://semcom.digita.ai/voc#shape> <http://digita.ai/voc/gender#gender>.

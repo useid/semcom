@@ -1,0 +1,8 @@
+<http://localhost:8080/components/profile.component.js> a <http://semcom.digita.ai/voc#component>;
+    <http://semcom.digita.ai/voc#label> "SemCom Profile Component";
+    <http://semcom.digita.ai/voc#description> "Digita SemCom component for profile information.";
+    <http://semcom.digita.ai/voc#author> "https://digita.ai";
+    <http://semcom.digita.ai/voc#version> "0.1.0";
+    <http://semcom.digita.ai/voc#latest> "true";
+    <http://semcom.digita.ai/voc#tag> "profile";
+    <http://semcom.digita.ai/voc#shape> <http://xmlns.com/foaf/0.1/PersonalProfileDocument>.
