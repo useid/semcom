@@ -155,18 +155,18 @@ const handleStoreSelectedEvent = (event: StoreSelectedEvent) => {
   if (!url) { return of(new NoPermissionEvent('Error retrieving the selected store. Please try again, or choose another store.')); }
 
   return from(solidFetch(url, { method: 'HEAD' })).pipe(
-    switchMap((response) => {
+    map((response) => {
 
       if (response.headers.get('link') && response.headers.get('link').includes('<http://www.w3.org/ns/pim/space#Storage>; rel="type"')) {
 
         const wacAllowHeader = response.headers.get('wac-allow');
         const userRights = wacAllowHeader.replace(/.*user="([^"]*)".*/, '$1');
 
-        return userRights.includes('append') ? of(new HasPermissionEvent(url)) : of(new NoPermissionEvent('You do not have permission to edit this store. Please choose another store or log in with a user account that has access to this store.'));
+        return userRights.includes('append') ? new HasPermissionEvent(url) : new NoPermissionEvent('You do not have permission to edit this store. Please choose another store or log in with a user account that has access to this store.');
 
       }
 
-      return of(new NoPermissionEvent('The selected url did not lead to a valid store. Please choose another store.'));
+      return new NoPermissionEvent('The selected url did not lead to a valid store. Please choose another store.');
 
     }),
     catchError((error) => of(new NoPermissionEvent(`Encountered an error retrieving the store, please try again, or choose a different store: "${error.message}"`)))
@@ -263,9 +263,9 @@ const handleUploadFormSubmittedEvent = (context: SemComRegisterContext, event: U
       }
 
     }),
-    switchMap((response) => response.status === 201
-      ? of(new DataSavedEvent())
-      : of(new DataNotSavedEvent('Data was not saved succesfully. Please try again.'))),
+    map((response) => response.status === 201
+      ? new DataSavedEvent()
+      : new DataNotSavedEvent('Data was not saved succesfully. Please try again.')),
     catchError((error) => of(new DataNotSavedEvent(`Encountered an error while trying to save the data: "${error.message}"`)))
   );
 
