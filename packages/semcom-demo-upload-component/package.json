@@ -5,6 +5,8 @@
   "main": "demo.js",
   "scripts": {
     "start": "vite",
+    "start:dev": "npm run start",
+    "start:sync:dev": "npm run start:dev",
     "build": "rimraf ./dist && vite build && tsc"
   },
   "author": "",
