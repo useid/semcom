@@ -7,7 +7,7 @@
         {
             "@id": "urn:semcom-node:default:QuadSerializationService",
             "@type": "QuadSerializationService",
-            "QuadSerializationService:_logger": {
+            "logger": {
                 "@id": "urn:semcom-node:default:LoggerService"
             }
         }
