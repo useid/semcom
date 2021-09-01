@@ -1,4 +1,4 @@
-= SemCom Software Development Kit
+= Introduction
 Wouter Termont <wouter.termont@digita.ai>
 :description: A description of the software development kit.
 :sectanchors:
@@ -6,10 +6,6 @@ Wouter Termont <wouter.termont@digita.ai>
 :page-tags: semcom
 
 :toc:
-
-
-[[intro]]
-== Introduction
 
 This document describes a Software Development Kit for JavaScript to easily write applications that use the SemCom ecosystem of decentralized component registries to support the dynamic binding of semantic components. This SDK can be imported as `@digita-ai/semcom-sdk`.
 
