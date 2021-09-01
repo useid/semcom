@@ -60,8 +60,8 @@
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.3.3",
-    "@digita-ai/handlersjs-http": "^0.3.3",
+    "@digita-ai/handlersjs-core": "^0.3.4",
+    "@digita-ai/handlersjs-http": "^0.3.4",
     "@digita-ai/semcom-core": "0.4.1",
     "componentsjs": "4.5.0",
     "n3": "^1.6.3",
