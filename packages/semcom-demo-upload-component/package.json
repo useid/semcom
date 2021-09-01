@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-demo-upload-components",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Demo for the component to upload semcom-components",
   "main": "demo.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@digita-ai/semcom-upload-component": "0.8.0",
+    "@digita-ai/semcom-upload-component": "0.9.0",
     "@digita-ai/ui-transfer-components": "^0.7.2",
     "@digita-ai/ui-transfer-theme": "^0.7.2",
     "@netwerk-digitaal-erfgoed/solid-crs-components": "^0.7.0"

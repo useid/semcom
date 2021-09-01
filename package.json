@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "release": "lerna version",
-    "release:docs": "echo \"$(yaml set docs/antora.yml version $(dot-json package.json version))\" > docs/antora.yml",
+    "release:docs": "echo \"$(yaml set docs/antora.yml version $(dot-json lerna.json version))\" > docs/antora.yml",
     "postinstall": "husky install",
     "bootstrap": "npm ci && lerna bootstrap",
     "bootstrap:no-ci": "npm i && lerna bootstrap --no-ci",
