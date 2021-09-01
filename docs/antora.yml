@@ -4,3 +4,4 @@ version: 0.0.12
 nav:
   - modules/ROOT/nav.adoc
   - modules/sdk/nav.adoc
+  - modules/node/nav.adoc
