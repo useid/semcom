@@ -2,7 +2,7 @@
 :description: A description of the data model.
 :sectanchors:
 :url-repo: https://github.com/digita-ai/semcom
-:page-tags: engineering
+:page-tags: semcom
 
 == Specification and ecosystem
 
