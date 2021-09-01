@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/digita-ai/semcom/compare/v0.4.1...v0.8.0) (2021-09-01)
+
+
+### **Bug Fixes**
+
+* components/query request already json parsed ([#142](https://github.com/digita-ai/semcom/issues/142)) ([ff277b4](https://github.com/digita-ai/semcom/commit/ff277b471eebf476b6f46522b64ab207fd94bfdf))
+* correct creation of n3 quads ([#162](https://github.com/digita-ai/semcom/issues/162)) ([8a0aa8e](https://github.com/digita-ai/semcom/commit/8a0aa8ed8eecd5074eb63db8f7c34dd915d6d052))
+* don't parse already parsed json ([#136](https://github.com/digita-ai/semcom/issues/136)) ([d2dc152](https://github.com/digita-ai/semcom/commit/d2dc152ed580d58bbd78d1b699f9ff4ebceeae5b))
+* transform shapes to quads ([#135](https://github.com/digita-ai/semcom/issues/135)) ([8efe764](https://github.com/digita-ai/semcom/commit/8efe7648613ea1b664384403cabf09b3c1aff5df))
+
+
+### **Features**
+
+* component demonstrating relative asset paths  ([#140](https://github.com/digita-ai/semcom/issues/140)) ([06c1b12](https://github.com/digita-ai/semcom/commit/06c1b12586a30842f4f663e904f59494fc43ad7c))
+* decentralization setup ([#146](https://github.com/digita-ai/semcom/issues/146)) ([73c2d2f](https://github.com/digita-ai/semcom/commit/73c2d2fde6a2ea90bc60063d831b10f344fce687))
+* make urls dynamic ([#116](https://github.com/digita-ai/semcom/issues/116)) ([486aff6](https://github.com/digita-ai/semcom/commit/486aff64a703d9e1c7d7a6b5aa9281f89a1e4575))
+* move base component to core package ([#118](https://github.com/digita-ai/semcom/issues/118)) ([04da689](https://github.com/digita-ai/semcom/commit/04da6894bb669f103db27136ad4b008664d8a9be))
+* option to start 2 synchronizing nodes ([#149](https://github.com/digita-ai/semcom/issues/149)) ([02e7357](https://github.com/digita-ai/semcom/commit/02e7357cc36d6b3153a6b9cc989618d5cc7e2b26))
+* pod store for component metadata ([#161](https://github.com/digita-ai/semcom/issues/161)) ([84052c7](https://github.com/digita-ai/semcom/commit/84052c750fa324075867530f981662d6427f7642))
+* revert move of base component to core package ([148c42a](https://github.com/digita-ai/semcom/commit/148c42a3b89c8221ca2ea7eae786488ccdfb7cd7))
+* switch strict mode to true ([#127](https://github.com/digita-ai/semcom/issues/127)) ([85a2c2d](https://github.com/digita-ai/semcom/commit/85a2c2dc625136b35136939d21a52d1be31bd048))
+
+
+### **Documentation**
+
+* move docs to root ([#180](https://github.com/digita-ai/semcom/issues/180)) ([f8d20b1](https://github.com/digita-ai/semcom/commit/f8d20b1d7a6959cf1f6ca2a13688c00d1019ca1f))
+
+
+
 ### [0.4.1](https://github.com/digita-ai/semcom/compare/v0.4.0...v0.4.1) (2021-06-07)
 
 **Note:** Version bump only for package @digita-ai/semcom-node

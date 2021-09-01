@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/digita-ai/semcom/compare/v0.4.1...v0.8.0) (2021-09-01)
+
+
+### **Documentation**
+
+* first version of spec complete ([#174](https://github.com/digita-ai/semcom/issues/174)) ([b3c97ad](https://github.com/digita-ai/semcom/commit/b3c97ad184b43ad5be9480b4291433ceb2b6c925))
+
+
+### **Features**
+
+* move base component to core package ([#118](https://github.com/digita-ai/semcom/issues/118)) ([04da689](https://github.com/digita-ai/semcom/commit/04da6894bb669f103db27136ad4b008664d8a9be))
+* pod store for component metadata ([#161](https://github.com/digita-ai/semcom/issues/161)) ([84052c7](https://github.com/digita-ai/semcom/commit/84052c750fa324075867530f981662d6427f7642))
+* revert move of base component to core package ([148c42a](https://github.com/digita-ai/semcom/commit/148c42a3b89c8221ca2ea7eae786488ccdfb7cd7))
+* support multiple datatypes ([#150](https://github.com/digita-ai/semcom/issues/150)) ([b2b5bed](https://github.com/digita-ai/semcom/commit/b2b5bed7cce3aa6794ad191d38d1c1e5657a116e)), closes [#171](https://github.com/digita-ai/semcom/issues/171) [#171](https://github.com/digita-ai/semcom/issues/171)
+* switch strict mode to true ([#127](https://github.com/digita-ai/semcom/issues/127)) ([85a2c2d](https://github.com/digita-ai/semcom/commit/85a2c2dc625136b35136939d21a52d1be31bd048))
+
+
+
 ### [0.4.1](https://github.com/digita-ai/semcom/compare/v0.4.0...v0.4.1) (2021-06-07)
 
 **Note:** Version bump only for package @digita-ai/semcom-core

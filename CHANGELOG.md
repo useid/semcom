@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/digita-ai/semcom/compare/v0.4.1...v0.8.0) (2021-09-01)
+
+
+### **Features**
+
+* add sdk functions to abstract adding listeners ([#123](https://github.com/digita-ai/semcom/issues/123)) ([37703fd](https://github.com/digita-ai/semcom/commit/37703fd6ebcfac18b46e28b16d2d08911290d514))
+* component demonstrating relative asset paths  ([#140](https://github.com/digita-ai/semcom/issues/140)) ([06c1b12](https://github.com/digita-ai/semcom/commit/06c1b12586a30842f4f663e904f59494fc43ad7c))
+* decentralization setup ([#146](https://github.com/digita-ai/semcom/issues/146)) ([73c2d2f](https://github.com/digita-ai/semcom/commit/73c2d2fde6a2ea90bc60063d831b10f344fce687))
+* filename for input component ([#102](https://github.com/digita-ai/semcom/issues/102)) ([a7f49ff](https://github.com/digita-ai/semcom/commit/a7f49ffc4269005750652ba3797e87ed22f39093))
+* make urls dynamic ([#116](https://github.com/digita-ai/semcom/issues/116)) ([486aff6](https://github.com/digita-ai/semcom/commit/486aff64a703d9e1c7d7a6b5aa9281f89a1e4575))
+* move base component to core package ([#118](https://github.com/digita-ai/semcom/issues/118)) ([04da689](https://github.com/digita-ai/semcom/commit/04da6894bb669f103db27136ad4b008664d8a9be))
+* option to start 2 synchronizing nodes ([#149](https://github.com/digita-ai/semcom/issues/149)) ([02e7357](https://github.com/digita-ai/semcom/commit/02e7357cc36d6b3153a6b9cc989618d5cc7e2b26))
+* pod store for component metadata ([#161](https://github.com/digita-ai/semcom/issues/161)) ([84052c7](https://github.com/digita-ai/semcom/commit/84052c750fa324075867530f981662d6427f7642))
+* render information from pod ([#114](https://github.com/digita-ai/semcom/issues/114)) ([79626f1](https://github.com/digita-ai/semcom/commit/79626f19ff4703e0f42d0dfe3638830e483fe944))
+* revert move of base component to core package ([148c42a](https://github.com/digita-ai/semcom/commit/148c42a3b89c8221ca2ea7eae786488ccdfb7cd7))
+* semcom component upload component (separate package) ([#175](https://github.com/digita-ai/semcom/issues/175)) ([1f8b710](https://github.com/digita-ai/semcom/commit/1f8b7106ed64d4727e36ce2acc5969e9a6f4b07f))
+* support multiple datatypes ([#150](https://github.com/digita-ai/semcom/issues/150)) ([b2b5bed](https://github.com/digita-ai/semcom/commit/b2b5bed7cce3aa6794ad191d38d1c1e5657a116e)), closes [#171](https://github.com/digita-ai/semcom/issues/171) [#171](https://github.com/digita-ai/semcom/issues/171)
+* switch strict mode to true ([#127](https://github.com/digita-ai/semcom/issues/127)) ([85a2c2d](https://github.com/digita-ai/semcom/commit/85a2c2dc625136b35136939d21a52d1be31bd048))
+* use new registration method ([#121](https://github.com/digita-ai/semcom/issues/121)) ([05b26a0](https://github.com/digita-ai/semcom/commit/05b26a0039b25f10df9a2e7bff7df93ac20751c4))
+
+
+### **Bug Fixes**
+
+* Await unhandled promises in sdk tests ([#101](https://github.com/digita-ai/semcom/issues/101)) ([d590a3b](https://github.com/digita-ai/semcom/commit/d590a3b7db59336ca1da9055f16a542daf68ac79))
+* changed root to lib when serving ([#134](https://github.com/digita-ai/semcom/issues/134)) ([04e0951](https://github.com/digita-ai/semcom/commit/04e095176a74a8a1d9d27746b6c6a15273475762))
+* components/query request already json parsed ([#142](https://github.com/digita-ai/semcom/issues/142)) ([ff277b4](https://github.com/digita-ai/semcom/commit/ff277b471eebf476b6f46522b64ab207fd94bfdf))
+* correct creation of n3 quads ([#162](https://github.com/digita-ai/semcom/issues/162)) ([8a0aa8e](https://github.com/digita-ai/semcom/commit/8a0aa8ed8eecd5074eb63db8f7c34dd915d6d052))
+* demo pod fixes ([#177](https://github.com/digita-ai/semcom/issues/177)) ([700cf73](https://github.com/digita-ai/semcom/commit/700cf7322ea62b6fc92cd8a6b4dbab169f3b8857))
+* don't parse already parsed json ([#136](https://github.com/digita-ai/semcom/issues/136)) ([d2dc152](https://github.com/digita-ai/semcom/commit/d2dc152ed580d58bbd78d1b699f9ff4ebceeae5b))
+* layout min-height ([#144](https://github.com/digita-ai/semcom/issues/144)) ([ef01f4b](https://github.com/digita-ai/semcom/commit/ef01f4b087d0a9817c8a282554f6af2ec9bf0b0a))
+* make sure tags with same URI are the same ([#141](https://github.com/digita-ai/semcom/issues/141)) ([23ae680](https://github.com/digita-ai/semcom/commit/23ae680b24be767f2e864d9ec05e996d2e76d711))
+* remove redundant operators ([#113](https://github.com/digita-ai/semcom/issues/113)) ([a61dc14](https://github.com/digita-ai/semcom/commit/a61dc147eeebd62b4867b30754cb6b884a6b018a))
+* serve dist instead of lib ([#137](https://github.com/digita-ai/semcom/issues/137)) ([67254b3](https://github.com/digita-ai/semcom/commit/67254b360b1e28802662e7eba72ad78ad9453d22))
+* transform shapes to quads ([#135](https://github.com/digita-ai/semcom/issues/135)) ([8efe764](https://github.com/digita-ai/semcom/commit/8efe7648613ea1b664384403cabf09b3c1aff5df))
+
+
+### **Documentation**
+
+* add component events to sequence diagram ([#178](https://github.com/digita-ai/semcom/issues/178)) ([7ce4edc](https://github.com/digita-ai/semcom/commit/7ce4edc325b45cb3dbbfae4e7e62dceac4de6bfa))
+* add components to upload analysis ([74add8c](https://github.com/digita-ai/semcom/commit/74add8c63cae032deeb2d5bad42874b8188ae88c))
+* clarification sync service ([04ed85b](https://github.com/digita-ai/semcom/commit/04ed85bf9b26b345667ba090ffc0448f8ea1e69d))
+* decentralization analysis ([#125](https://github.com/digita-ai/semcom/issues/125)) ([8ad5e86](https://github.com/digita-ai/semcom/commit/8ad5e86cc270125878713ee63c25019b90ec4cf3))
+* first version of spec complete ([#174](https://github.com/digita-ai/semcom/issues/174)) ([b3c97ad](https://github.com/digita-ai/semcom/commit/b3c97ad184b43ad5be9480b4291433ceb2b6c925))
+* move docs to root ([#180](https://github.com/digita-ai/semcom/issues/180)) ([f8d20b1](https://github.com/digita-ai/semcom/commit/f8d20b1d7a6959cf1f6ca2a13688c00d1019ca1f))
+* refactor filenames ([0ee4ece](https://github.com/digita-ai/semcom/commit/0ee4eced9c2ca91c5f43cc3b52537adf55292978))
+* upload component analysis ([293a767](https://github.com/digita-ai/semcom/commit/293a767ded2ec07eea795a547131049454762945))
+
+
+
 ### [0.4.1](https://github.com/digita-ai/semcom/compare/v0.4.0...v0.4.1) (2021-06-07)
 
 
