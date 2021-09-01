@@ -1,0 +1,139 @@
+= Technical Specification: Replace lists with Component store
+
+== Author(s)
+
+* Stijn Taelemans
+
+== References
+
+* Functional analysis: see semcom-core docs
+
+* Branch: `643973993-replace-lists-with-store`
+* Projects:
+** https://github.com/digita-ai/semcom[semcom]
+
+== Introduction
+
+=== Overview
+
+This specification is about the replacement of the `ComponentMetadata` lists in the query and manage services with a basic store implementation.
+
+== Solution
+
+=== semcom-node
+
+==== Services
+
+===== Store<T>
+
+Create 'store.service.ts' in 'lib/store/services'.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+===== ComponentStore
+
+Create 'abstract-component-store.service.ts' in 'lib/store/services'
+
+Implements `Store<ComponentMetadata>`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+===== ComponentInMemoryStore
+
+Create 'component-in-memory-store.service.ts' in 'lib/store/services'.
+
+Extends `ComponentStore`.
+
+The attributes and functions of this model can be found in the class diagram. 
+
+===== QueryComponentStoreService
+
+Exists in semcom-core's 'lib/component/services'
+
+This service is the old `QueryComponentInMemoryService`. Since the 'InMemory' part has now moved to a different service, rename this service to `QueryComponentStoreService`. Move this service to the semcom-node repo.
+
+`this.components` should be refactored to be an `ComponentStore`.
+
+===== ManageComponentStoreService
+
+Exists in semcom-core's 'lib/component/services'
+
+This service is the old `ManageComponentInMemoryService`. Since the 'InMemory' part has now moved to a different service, rename this service to `ManageComponentStoreService`. Move this service to the semcom-node repo.
+
+`this.components` should be refactored to be an `ComponentStore`.
+
+===== ComponentService
+
+Exists in semcom-core's 'lib/component/services'. Remove this interface as we won't need it anymore. 
+
+===== BaseComponentService
+
+Exists in semcom-core's 'lib/component/services'. Remove this service as we won't need it anymore. Controllers that used this service should now directly call the appropriate methods in `QueryComponentStoreService` or `ManageComponentStoreService`.
+
+==== Configuration
+
+You'll need to define `ComponentStore` in the config (`"@id": "urn:semcom-node:default:ComponentStore", "@type": "ComponentInMemoryStore", ...`). Create a new file `store.json` for this. Import it in `config-default.json`.
+
+The components.js config will have to be updated to make use of the new store service. The `(Base)ComponentService` no longer exists, so remove its entries. The `QueryComponentStoreService` and `ManageComponentStoreService` need a `ComponentStore`, instead of the list of `ComponentMetadata` we have now.
+
+The `ComponentControllerService` will now use the query and manage service directly, replacing `ComponentService`.
+
+==== Test cases
+
+These test cases are for the `ComponentInMemoryStore`. Feel free to add more tests than listed here.
+
+[options="header"]
+
+|======================================
+| Test case 	| Test data 	| Expected
+| `all()` should return all `ComponentMetadata` in `this.components`.
+| None
+| The method returns all `ComponentMetadata`.
+
+| `query(filter)` should return `ComponentMetadata` that matches the `filter` and nothing else.
+| `filter` is a valid `Partial<ComponentMetadata>` object. (`{}` is valid and should return everything?)
+| The returned `ComponentMetadata` matches the `filter`.
+
+| `query(filter)` should return an empty list when no `ComponentMetadata` was found.
+| `filter` is a valid `Partial<ComponentMetadata>` object, but does not match any `ComponentMetadata` in `this.components`.
+| The method returns `[]`.
+
+| `query(filter)` should error when `filter` is null or undefined.
+| `filter` is `null` or `undefined`.
+| An error is thrown.
+
+| `get(uri)` should return `ComponentMetadata` that matches the `filter` and nothing else.
+| `uri` equals a `uri` of a `ComponentMetadata.uri` in `this.components`.
+| The returned `ComponentMetadata` matches the `filter`
+
+| `get(uri)` should error when `uri` is null or undefined.
+| `uri` is `null` or `undefined`.
+| An error is thrown.
+
+| `get(uri)` should error when `uri` is empty .
+| `uri` is '' (or contains only whitespaces: '    ').
+| An error is thrown.
+
+| `get(uri)` should return null when no `ComponentMetadata` was found.
+| `uri` does not match any `ComponentMetadata.uri` in `this.components`.
+| The method returns null.
+
+| `save(componentMetadata)` should add `componentMetadata` to `this.repository`.
+| `componentMetadata` is a list of valid `ComponentMetadata`.
+| The method returns the saved `ComponentMetadata[]`. `this.all()` returns the saved `ComponentMetadata[]`.
+
+| `save(componentMetadata)` should error when `componentMetadata` is null or undefined.
+| `componentMetadata` is `null` or `undefined`.
+| An error is thrown.
+
+| `save(componentMetadata)` should error when `componentMetadata` is an empty list.
+| `componentMetadata` is `[]`.
+| An error is thrown.
+
+|======================================
+
+=== semcom-core
+
+==== Services
+
+Make sure `Manage-/QueryComponentStoreService` references are removed from semcom-core. Remove the `Abstract-` prefix from `AbstractQueryComponentService` and `AbstractManageComponentService`.

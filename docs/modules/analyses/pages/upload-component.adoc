@@ -1,0 +1,78 @@
+
+= SemCom upload component
+Wouter Termont
+
+This specification describes a SemCom component providing a graphical interface enabling developers to upload SemCom components to a SemCom node.
+
+
+== Functional requirements
+
+- The component should take a list of SemCom store URLs as attributes.
+
+- The component should present the user with an authentication flow, which uses Solid-OIDC to log in.
+
+- The component should then present the user with the choice between the SemCom stores of the list, as well as an input box for free input of SemCom store URLs.
+
+- After the user selects or enters a store, the component should check whether or not the user has permission to write to the store.
+
+- If that is the case, the component should present the user with a metadata form.
+
+- The metadata form should also contain a field for a checksum.
+
+- The metadata should then be saved to the SemCom store.
+
+- Success and error results should be displayed to the user.
+
+//- When the metadata is entered, the user should be able to upload the JS file via an upload field.
+
+//- The uploaded module should not be saved, but it's checksum should be checked. 
+
+
+== Technical requirements 
+
+- The component should be fully responsive to display size.
+
+- Size and other layout choices (color, borders, radius ...) should be changeable by the parent application with CSS variables.
+
+- The component should contain an XState machine to manage state.
+
+- For the authentication flow we use the authentication component of the Reuse Kit (UI Transfer).
+
+- The component will need a stateless card-type subcomponent to display the SemCom stores.
+
+- SemCom stores are Solid pod servers.
+
+- The free input of SemCom store URLS should be checked thoroughly (checks to be decided).
+
+- Checking whether the user has permission to upload can be done by checking the ACL file pointed to in the response headers of a HEAD request.
+
+- The metadata form should contain all fields of the metadata interface in the core package.
+
+- The checksum field should be added to the metadata interface.
+
+
+== Components
+
+=== Loading
+
+Extend the loading component in the Data Reuse Kit (UI-Transfer), so that it can take text as an attribute to show under the circle.
+
+=== Error & success 
+
+Create a single LitElement `FeedbackComponent` in the Data Reuse Kit (UI-Transfer) to present the user with visual and textual feedback and the option to click on a button. All text should be changeable via attributes. 
+
+=== SemComRegisterComponent
+
+Now first try and write the base of the root component. Take a look at other root components, e.g. the one of the SemCom or UI-Transfer demo packages.
+
+Start by designing the body component in LitElement code. Then, create a machine containing two states (e.g. `Authenticating` and `Done`, the latter being a final state), a single event (e.g. `Authenticated`) and a context containing a session object which is optional during the `Authenticating` state and mandatory in the `Done` state; have the machine start in `Authenticating` and transition to `Done` on the `Authenticated` event.
+
+Finally, create an instance of the machine in the LitElement component, subscribe to the state (you will need RxLitElement for this), and conditionally render the UI Transfer authentication component during the `Authenticating` state, and the new `FeedbackComponent` in the `Done` state.
+
+=== Store selection
+
+Create a LitElement component containing the form, using the form and input components created for Solid-CRS (NDE). Ask Stijn if something is not clear about the use of those components. The component should take a list of SemCom store URLs, and validate user input (check valid URL and pod server).
+
+=== Metadata form
+
+Similar to the store selection, create a form component like in Solid-CRS (NDE). The form should validate the presence of a component URL, a shape list with at least one shape URI, and a checksum.

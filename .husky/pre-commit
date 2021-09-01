@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. "$(dirname $0)/_/husky.sh"
+
+## Run specified linters on staged files, automatically adding fixes
+npm run lint:staged

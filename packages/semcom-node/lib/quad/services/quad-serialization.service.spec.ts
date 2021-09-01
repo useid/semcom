@@ -1,14 +1,20 @@
 import { LoggerConsoleService } from '@digita-ai/semcom-core';
 import { QuadSerializationService } from './quad-serialization.service';
 
-describe('ComponentControllerService', () => {
-    let quads: QuadSerializationService = null;
+describe('QuadSerializationService', () => {
 
-    beforeEach(() => {
-        quads = new QuadSerializationService(new LoggerConsoleService());
-    });
+  let quads: QuadSerializationService = null;
 
-    it('should be correctly instantiated', (() => {
-        expect(quads).toBeTruthy();
-    }));
+  beforeEach(() => {
+
+    quads = new QuadSerializationService(new LoggerConsoleService());
+
+  });
+
+  it('should be correctly instantiated', (() => {
+
+    expect(quads).toBeTruthy();
+
+  }));
+
 });

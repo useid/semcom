@@ -1,0 +1,70 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "docs",
+      "path": "docs"
+    },
+    {
+      "name": "core",
+      "path": "packages/semcom-core"
+    },
+    {
+      "name": "node",
+      "path": "packages/semcom-node"
+    },
+    {
+      "name": "sdk",
+      "path": "packages/semcom-sdk"
+    },
+    {
+      "name": "demo-app",
+      "path": "packages/semcom-demo-app"
+    },
+    {
+      "name": "demo-pods",
+      "path": "packages/semcom-demo-pods"
+    },
+    {
+      "name": "demo-upload-component",
+      "path": "packages/semcom-demo-upload-component"
+    },
+    {
+      "name": "components",
+      "path": "packages/semcom-components"
+    },
+    {
+      "name": "upload-component",
+      "path": "packages/semcom-upload-component"
+    },
+  ],
+  "settings": {
+    "eslint.format.enable": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "files.eol": "\n",
+    "cSpell.words": [
+      "semcom",
+      "vite"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "editorconfig.editorconfig",
+      "dbaeumer.vscode-eslint",
+      "folke.vscode-monorepo-workspace",
+      "humao.rest-client",
+      "bierner.lit-html",
+      "runem.lit-plugin",
+      "zjcompt.es6-string-javascript",
+      "bashmish.es6-string-css",
+      "runem.lit-plugin",
+      "bierner.lit-html",
+    ]
+  }
+}

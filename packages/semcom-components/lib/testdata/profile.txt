@@ -1,0 +1,42 @@
+@prefix : <#>.
+@prefix solid: <http://www.w3.org/ns/solid/terms#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix pim: <http://www.w3.org/ns/pim/space#>.
+@prefix schema: <http://schema.org/>.
+@prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix c0: <https://wouteraj.inrupt.net/profile/card#>.
+@prefix c1: <https://belgiannoise.inrupt.net/profile/card#>.
+@prefix prof: <./>.
+@prefix n3: <http://www.w3.org/ns/auth/acl#>.
+@prefix in: </solid-chat/public/>.
+@prefix n4: </>.
+@prefix c: <https://stijntaelemans.inrupt.net/profile/card#>.
+@prefix n: <http://www.w3.org/2006/vcard/ns#>.
+
+prof:card a foaf:PersonalProfileDocument; foaf:maker :me; foaf:primaryTopic :me.
+
+:id1601909945358
+    n:country-name "Belgium";
+    n:locality "Brussels";
+    n:postal-code "1000";
+    n:region "Brusssels";
+    n:street-address "Country Road 69".
+
+:id1589374025993 a n:Work; n:value <mailto:tony.paillard@cynalco.com>.
+:id1589374027282 a n:Home; n:value <mailto:den.tony@gmail.com>.
+
+:id1601214413622 a n:Work; n:value <tel:+32479315191>.
+:id1601214413645 a n:Home; n:value <tel:+3216438543>.
+
+:me
+    a schema:Person, foaf:Person;
+    n:hasPhoto <https://thispersondoesnotexist.com/image>;
+    n:note "I enjoy nettle soup!";
+    n:organization-name "Cynalco Medics";
+    n:role "Janitor & Maintenance";
+    solid:privateTypeIndex </settings/privateTypeIndex.ttl>;
+    solid:publicTypeIndex </settings/publicTypeIndex.ttl>;
+    n:hasEmail :id1589374025993, :id1589374027282;
+    n:hasAddress :id1601909945358;
+    n:hasTelephone :id1601214413622, :id1601214413645;
+    foaf:name "Tony Paillard".

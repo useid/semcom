@@ -34,3 +34,70 @@ Accept: bla
 # @name GetAllComponentsAsJSON
 GET {{baseUrl}}/component HTTP/1.1
 Accept: application/json
+
+########
+
+# @name QueryComponentsWithUri
+POST {{baseUrl}}/component/query HTTP/1.1
+Accept: text/turtle
+Content-Type: application/json
+
+{
+    "uri": "https://components.semcom.digita.ai/components/profile.js"
+}
+
+########
+
+# @name QueryComponentsWithShape
+POST {{baseUrl}}/component/query HTTP/1.1
+Accept: text/turtle
+Content-Type: application/json
+
+{
+    "shapes": ["http://xmlns.com/foaf/0.1/PersonalProfileDocument"]
+}
+
+########
+
+# @name QueryComponentsWithShapeAndVersion
+POST {{baseUrl}}/component/query HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "shapes":["http://xmlns.com/foaf/0.1/PersonalProfileDocument"],
+    "version":"^0.1.0"
+}
+
+########
+
+# @name SaveComponent
+POST {{baseUrl}}/component HTTP/1.1
+Accept: text/turtle
+Content-Type: application/json
+
+{
+    "uri": "https://node.semcom.digita.ai/c/003",
+    "label": "test5",
+    "description": "test5",
+    "author": "test5",
+    "tag": "component-3",
+    "version": "test5",
+    "latest": "true"
+}
+
+########
+
+# @name SaveComponentWithoutContentType
+POST {{baseUrl}}/component HTTP/1.1
+Accept: application/json
+
+{
+    "uri": "https://node.semcom.digita.ai/c/003",
+    "label": "test5",
+    "description": "test5",
+    "author": "test5",
+    "tag": "component-3",
+    "version": "test5",
+    "latest": "true"
+}

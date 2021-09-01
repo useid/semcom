@@ -1,0 +1,10 @@
+@import '../node_modules/@digita-ai/ui-transfer-theme/dist/style.css';
+
+html {
+  height: 100%
+}
+
+body {
+  max-width: var(--form-large);
+  background-color: var(--colors-background-normal);
+}

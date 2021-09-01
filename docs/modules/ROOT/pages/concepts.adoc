@@ -1,0 +1,42 @@
+= Concepts
+:description: A description of the data model.
+:sectanchors:
+:url-repo: https://github.com/digita-ai/semcom
+:page-tags: semcom
+
+== Specification and ecosystem
+
+. Semcom is a specification
+. We built a reference implementation of an SDK and repository
+. Repositories contains metadata, but do not host code
+. The SDK can be used by an app to query and render components
+. Code can be downloaded from a host; like a cdn
+
+image::ecosystem.svg[Ecosystem]
+
+== Semantic Components, code and metadata
+
+. Component consists of code and metadata
+. Code can be executed at runtime to render data
+. Metadata describes the nature of a component
+. Metadata can include inputs, outputs, purposes, runtime, license, version
+
+image::component.svg[Component]
+
+== Repositories and hosts
+
+. Repositories must expose metadata from one or all components through http get requests.
+. Repositories must expose metadata of multiple components though Sparql requests.
+. Repositories may return metadata in multiple RDF-serialization formats, but they must support JSON-LD.
+. Repositories may download metadata from other (trusted) repositories.
+
+== Example
+
+. Apps render a user's data
+. Data is retrieved from the user's Solid pod
+. The app queries the Semcom repository for components
+. The app decides which component to use, and fetches the component's code
+. The app initializes the component and renders the data
+
+image::sequence.svg[Example]
+

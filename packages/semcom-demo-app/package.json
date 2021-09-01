@@ -1,0 +1,68 @@
+{
+  "name": "@digita-ai/semcom-demo-app",
+  "version": "0.9.0",
+  "scripts": {
+    "start": "http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
+    "start:dev": "vite",
+    "start:sync:dev": "npm run start:dev",
+    "build": "rimraf ./dist && vite build --config vite.config.ts && tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:staged": "lint-staged",
+    "test": "jest --passWithNoTests",
+    "test:ci": "jest --silent --runInBand --passWithNoTests",
+    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@digita-ai/inrupt-solid-client": "0.3.0",
+    "@digita-ai/semcom-core": "0.9.0",
+    "@digita-ai/semcom-sdk": "0.9.0",
+    "@digita-ai/ui-transfer-components": "0.6.1",
+    "@digita-ai/ui-transfer-theme": "0.6.1",
+    "@xstate/inspect": "^0.4.1",
+    "lit-element": "^2.5.1",
+    "rx-lit": "^1.0.1",
+    "rxjs": "^6.0.0",
+    "xstate": "^4.22.0"
+  },
+  "devDependencies": {
+    "@digita-ai/typescript-config": "^0.3.3",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.44",
+    "eslint": "^7.16.0",
+    "http-server": "^0.12.3",
+    "jest": "^26.6.3",
+    "jest-coverage-thresholds-bumper": "^0.0.4",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-fetch-mock": "^3.0.3",
+    "rimraf": "^3.0.2",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4",
+    "vite": "2.2.3"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digita-ai/semcom.git",
+    "directory": "packages/semcom-demo-app"
+  },
+  "jest": {
+    "preset": "@digita-ai/jest-config",
+    "displayName": "demo-app",
+    "testEnvironment": "jsdom",
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
+  }
+}

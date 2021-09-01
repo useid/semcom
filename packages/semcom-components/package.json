@@ -1,0 +1,69 @@
+{
+  "name": "@digita-ai/semcom-components",
+  "version": "0.9.0",
+  "description": "Collection of Semantic Components",
+  "author": "Wouter Termont <wouter.termont@digita.ai>",
+  "main": "./dist/semcom-components.umd.js",
+  "module": "./dist/semcom-components.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/semcom-components.es.js",
+      "require": "./dist/semcom-components.umd.js"
+    }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
+    "start": "npm run start:dev",
+    "start:dev": "vite",
+    "start:sync:dev": "npm run start:dev",
+    "build": "rimraf ./dist && npm run build:bundle && npm run build:ts",
+    "build:bundle": "vite build",
+    "build:ts": "tsc",
+    "build:dev": "npm run build",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:staged": "lint-staged",
+    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
+  },
+  "dependencies": {
+    "@digita-ai/semcom-core": "0.9.0",
+    "@digita-ai/semcom-sdk": "0.9.0",
+    "buffer": "6.0.3",
+    "lit-element": "^2.4.0",
+    "n3": "1.10.0"
+  },
+  "devDependencies": {
+    "@digita-ai/typescript-config": "^0.3.4",
+    "@types/jest": "^26.0.22",
+    "@types/n3": "^1.8.0",
+    "@types/node": "^14.14.14",
+    "@types/rdf-js": "^4.0.1",
+    "eslint": "^7.16.0",
+    "http-server": "^0.12.3",
+    "jest": "^26.6.3",
+    "jest-coverage-thresholds-bumper": "0.0.4",
+    "lint-staged": "^10.5.4",
+    "path": "^0.12.7",
+    "typescript": "4.1.5",
+    "vite": "2.2.3"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digita-ai/semcom.git",
+    "directory": "packages/semcom-components"
+  },
+  "bugs": {
+    "url": "https://github.com/digita-ai/semcom/issues"
+  }
+}

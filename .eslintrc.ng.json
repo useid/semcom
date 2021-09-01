@@ -1,0 +1,46 @@
+{
+  "extends": [
+    "@digita-ai/eslint-config"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.js"],
+      "extends": [
+        "@digita-ai/eslint-config",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@typescript-eslint/ban-types": "off", // should be remedied
+        "@typescript-eslint/no-var-requires": "off", // should be remedied
+        "@typescript-eslint/no-empty-function": "off", // should be remedied
+        "@typescript-eslint/no-empty-interface": "off", // should be remedied
+        "@angular-eslint/no-empty-lifecycle-method": "off", // should be remedied
+        "@angular-eslint/no-output-native": "off", // should be remedied
+        "@angular-eslint/component-class-suffix": "error",
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "dgt",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-class-suffix": "error",
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "dgt",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/no-input-rename": "error",
+        "@angular-eslint/no-output-rename": "error",
+        "@angular-eslint/use-pipe-transform-interface": "error"
+      }
+    }
+
+  ]
+
+}

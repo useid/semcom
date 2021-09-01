@@ -1,0 +1,31 @@
+@import '../node_modules/@digita-ai/ui-transfer-theme/dist/style.css';
+
+:root {
+  --color-primary-light: #F7F9FA;
+  --color-primary-normal: #2b4c7f;
+  --color-primary-dark: #001029;
+  --color-background-body: #EEEEEE;
+  --color-background-root: #F7F9FA;
+  --color-accent-normal: #91c200;
+
+  --site-max-width: 800px;
+
+  --size-sidebar: 300px;
+
+  --family-sans-serif: "Roboto", "Fira Sans", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  display:flex;
+  justify-content: center;
+  min-height: 100%;
+  background-color: var(--colors-background-normal);
+}
+
+body > * {
+  flex: 1 1;
+}

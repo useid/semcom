@@ -1,22 +1,63 @@
 import * as path from 'path';
 import { ComponentsManager } from 'componentsjs';
-import { LauncherService } from './launcher/services/launcher.service';
+import { NodeHttpServer } from '@digita-ai/handlersjs-http';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { Scheduler } from '@digita-ai/handlersjs-core';
 
-const start = async () => {
-  const mainModulePath = path.join(__dirname, '../');
-  const configPath = path.join(__dirname, '../config/config-default.json');
+/**
+ * Instantiates a server from the passed configuration and starts it.
+ *
+ * @param {Record<string, any>} variables - a record of values for the variables left open in the configuration.
+ */
+export const launch: (variables: Record<string, any>) => Promise<void> = async (variables: Record<string, any>) => {
+
+  const mainModulePath = variables['urn:semcom-node:variables:mainModulePath']
+    ? path.join(process.cwd(), variables['urn:semcom-node:variables:mainModulePath'])
+    : path.join(__dirname, '../');
+
+  const configPath = variables['urn:semcom-node:variables:customConfigPath']
+    ? path.join(process.cwd(), variables['urn:semcom-node:variables:customConfigPath'])
+    : path.join(__dirname, '../config/config-default.json');
 
   const manager = await ComponentsManager.build({
     mainModulePath,
+    logLevel: 'silly',
   });
-  
+
   await manager.configRegistry.register(configPath);
 
-  const launcher: LauncherService = await manager.instantiate(
-    'urn:semcom-node:default:LauncherService',
-  );
+  const server: NodeHttpServer = await manager.instantiate('urn:semcom-node:default:NodeHttpServer', { variables });
+  const peerSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PeerSyncScheduler', { variables });
+  const storageSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:StorageSyncScheduler', { variables });
+  const podSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PodSyncScheduler', { variables });
 
-  launcher.launch();
+  server.start();
+  peerSyncScheduler.start();
+  storageSyncScheduler.start();
+  podSyncScheduler.start();
+
 };
 
-start();
+export const createVariables = (args: string[]): Record<string, any> => {
+
+  const argv = yargs(hideBin(args))
+    .usage('node ./dist/main.js [args]')
+    .options({
+      config: { type: 'string', alias: 'c' },
+      port: { type: 'number', alias: 'p' },
+      host: { type: 'string', alias: 'h' },
+      schema: { type: 'string', alias: 's' },
+      mainModulePath: { type: 'string', alias: 'm' },
+    })
+    .help().parseSync();
+
+  return {
+    'urn:semcom-node:variables:customConfigPath': argv.config,
+    'urn:semcom-node:variables:mainModulePath': argv.mainModulePath,
+    'urn:semcom-node:variables:schema': argv.schema,
+    'urn:semcom-node:variables:host': argv.host ?? 'localhost',
+    'urn:semcom-node:variables:port': argv.port ?? '3000',
+  };
+
+};

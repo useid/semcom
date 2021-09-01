@@ -1,0 +1,59 @@
+
+= SemCom Node decentralization
+Wouter Termont
+
+This specification describes the steps to take in order to render the SemCom Node decentralized.
+
+Don't forget to write unit tests for all new or changed code. In fact, after reading each paragraph, the unit tests for that part should already come naturally, before even writing the code. Try to write them first.
+
+Each paragraph also aims to be as much as possible a standalone code change or addition, so be sure to use at least as many commits, and preferably at least a separate branch for each section.
+
+
+== HandlersJS extensions
+
+
+=== Storage
+
+We often use the same types of storage classes and abstractions, so we should centralize these in our **HandlersJS** repository. Create a directory called `storage` in the `handlersjs-core` library. Take a look at the `KeyValueStore` and its `(In)MemoryStore` implementation (leave out the 'In') in the `dgt-id-proxy` package of the **ID Broker** repository. Copy those classes to the new directory in **HandlersJS**, and export them as part of the public API.
+
+Code a `TypedKeyValueStore<M>` interface that extends from `KeyValueStore<keyof M, M[keyof M]>`. It should contain the same methods, but make them generic with a parameter `<T extends keyof M>`, and replace all key types `K` by `T` and value types `V` by `M[T]`. 
+
+Also code a `TimedKeyValueStore<K,V>` interface that extends from `KeyValueStore<K,V>`, and provides a function `latestUpdate(key: K)` returning a timestamp of when the value of that key has been updated, as well as a function `hasUpdate(key: K, time: number)` that returns a boolean depending on whether `time` is before or after the time when the value of that key has been updated last.
+
+Combine both interfaces in a `TimedTypedKeyValueStore<M>` interface.
+
+Make the `MemoryStore` implementation extend from the combined interface, implementing the new methods of the `TimedKeyValueStore`, and make it take an `initialData` parameter in it's construction, so we can add data via the ComponentsJS configuration (n.b. the initial data simply take the current time as latest update).
+
+
+=== Scheduler daemon
+
+We'll need to check peer nodes of a SemCom Node server repeatedly, but we want to abstract the repetition pattern from the task that needs to be repeated. Start by moving the `Daemon` class from `handlersjs-http` to a `models` directory in the `handlersjs-core` library, and make the necessary changes to imports and exports. 
+
+Then add a `daemons` directory, and implement a `Scheduler` that extends `Daemon`. This class can take an `interval` (in milliseconds) and an any function as `task`. When started, this daemon will set a timeout to wait for the given interval and then execute the task and set a new timeout. It should track the running timeout, so that when stopped it can cancel it.
+
+
+=== Synchronization service
+
+Code a `SyncService<T>` class, which takes a `TypedKeyValueStore` called `store`, two strings called `storage` and `peers`, which are keys to a `Set<T>` of data and a `Set<string>` of peer URLs. This service tracks the time of the last synchronization in a variable, and should contain an asynchronous `sync` function which runs through all peer URLs with the following steps:
+
+- Perform a GET request to the peer URL with an `If-Modified-Since` header containing the time of the last sync.
+- If the response is a 304, simply stores the current time as last sync.
+- If the response is a 200, parse the response data as an JSON array of `T`, and add those to the storage set.
+
+
+=== JSON store handler
+
+Code a `JsonStoreHandler` extending `HttpHandler`, taking a `TimedTypedKeyValueStore` as well as a `data` key to access the data set therein. This handler's `handle` method should get the data from the store and return it as a stringified JSON response body. If the request contains an `If-Modified-Since` header, however, and the timestamp it contains is newer than the last update of the value in the store, it should instead send a 304 response without a body (see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since[MDN]).
+
+
+== Tracking peers and stores
+
+Add a `TimedTypedKeyValueStore` to the ComponentsJS configuration with an empty list of SemCom Node peer URLs and an empty list of SemCom Node store URLs. 
+
+Add two endpoints to the SemCom Node router in the ComponentsJS configuration, each pointing to a different `JsonStoreHandler`: one serve the peers, one the list of stores.
+
+Add two scheduler daemons to the ComponentsJS configuration, each with a different synchronization service: one to sync the peers, one to sync the stores. Start both in `main.ts`.
+
+
+
+// - Optional: separate list and endpoint for approval; keeping tabs on failures; enable deletion and list to remember it; …

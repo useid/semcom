@@ -1,0 +1,48 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-core/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-core/^0.0.0/components/context.jsonld"
+  ],
+  "import": [
+    "files-dasn:config/presets/logger.json",
+    "files-dasn:config/presets/serializer.json",
+    "files-dasn:config/presets/component.json",
+    "files-dasn:config/presets/handlers.json",
+    "files-dasn:config/presets/server.json",
+    "files-dasn:config/presets/decentralization.json"
+  ],
+  "@graph": [
+    {
+      "@id": "urn:semcom-node:default:MemoryStore",
+      "@type": "MemoryStore",
+      "initialData": ["peers", ["http://localhost:3001"]],
+      "initialData": ["storage", ["http://localhost:9000/metadata/"]]
+    },
+    {
+      "@id": "urn:semcom-node:default:ComponentStore",
+      "@type": "ComponentPodStore",
+      "ComponentPodStore:_uri": "http://localhost:9000/metadata/",
+      "ComponentPodStore:_transformer": {
+        "@id": "urn:semcom-node:default:ComponentTransformerService"
+      }
+    },
+    {
+      "@id": "urn:semcom-node:default:PodSyncService",
+      "@type": "PodSyncService",
+      "PodSyncService:_storage": "storage",
+      "PodSyncService:_store": {
+        "@id": "urn:semcom-node:default:MemoryStore"
+      },
+      "PodSyncService:_localPod": "http://localhost:9000/metadata/"
+    },
+    {
+      "@id": "urn:semcom-node:default:PodSyncScheduler",
+      "@type": "Scheduler",
+      "Scheduler:_interval": 20000,
+      "Scheduler:_task": {
+        "@id": "urn:semcom-node:default:PodSyncService"
+      }
+    }
+  ]
+}

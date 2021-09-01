@@ -1,0 +1,106 @@
+{
+  "name": "@digita-ai/semcom-sdk",
+  "version": "0.9.0",
+  "description": "> TODO: description",
+  "author": "Wouter Janssens <wouter@digita.ai>",
+  "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-sdk#readme",
+  "main": "./dist/semcom-sdk.umd.js",
+  "module": "./dist/semcom-sdk.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/semcom-sdk.es.js",
+      "require": "./dist/semcom-sdk.umd.js"
+    }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digita-ai/semcom.git",
+    "directory": "packages/semcom-sdk"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
+    "build": "rimraf ./dist && npm run build:bundle && npm run build:ts && npm run build:components",
+    "build:bundle": "vite build --mode development",
+    "build:ts": "tsc",
+    "build:components": "componentsjs-generator -s lib -c dist/components -i .componentsignore",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:staged": "lint-staged",
+    "test": "jest",
+    "test:ci": "jest --runInBand",
+    "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
+  },
+  "bugs": {
+    "url": "https://github.com/digita-ai/semcom/issues"
+  },
+  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk",
+  "lsd:components": "dist/components/components.jsonld",
+  "lsd:contexts": {
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
+  },
+  "lsd:importPaths": {
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-sdk/^0.0.0/dist/": "dist/"
+  },
+  "devDependencies": {
+    "@digita-ai/typescript-config": "^0.3.4",
+    "@types/jest": "^26.0.19",
+    "@types/n3": "^1.4.5",
+    "@types/node": "^14.14.14",
+    "@types/rdf-js": "^4.0.1",
+    "componentsjs": "4.0.5",
+    "componentsjs-generator": "2.1.0",
+    "eslint": "^7.16.0",
+    "jest": "^26.6.3",
+    "jest-coverage-thresholds-bumper": "0.0.4",
+    "lint-staged": "^10.5.4",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typescript": "4.1.5",
+    "vite": "2.2.3"
+  },
+  "dependencies": {
+    "@digita-ai/semcom-core": "0.9.0",
+    "buffer": "6.0.3",
+    "jssha": "^3.2.0",
+    "n3": "1.10.0"
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "dist",
+    "vite.config.ts",
+    "tests"
+  ],
+  "jest": {
+    "preset": "@digita-ai/jest-config",
+    "displayName": "sdk",
+    "testEnvironment": "jsdom",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/.*\\.conf(ig)?.ts",
+      "<rootDir>/lib/index.ts",
+      "<rootDir>/tests/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 87.5,
+        "functions": 50,
+        "lines": 80.95,
+        "statements": 77.61
+      }
+    }
+  }
+}

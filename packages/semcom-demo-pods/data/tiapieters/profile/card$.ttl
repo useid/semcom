@@ -1,0 +1,75 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix solid: <http://www.w3.org/ns/solid/terms#>.
+@prefix   pay: <http://digita.ai/voc/payslip#> .
+@prefix  vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix      : <#> .
+
+<>
+    a foaf:PersonalProfileDocument;
+    foaf:maker :me;
+    foaf:primaryTopic :me.
+
+:me
+    solid:oidcIssuer <http://localhost:9000/>;
+    a foaf:Person ;
+    foaf:name "Tia Pieters" ;
+    vcard:note "I like pizza!";
+    vcard:organization-name "Digita";
+    vcard:role "HR manager";
+    vcard:hasEmail :id1589374025993, :id1589374027282;
+    vcard:hasAddress :id1601909945358;
+    vcard:hasTelephone :id1601214413622, :id1601214413645.
+
+:id1601909945358
+    vcard:country-name "Belgium";
+    vcard:locality "Brussels";
+    vcard:postal-code "1000";
+    vcard:region "Brusssels";
+    vcard:street-address "Country Road 32".
+
+:id1589374025993 a vcard:Work; vcard:value <mailto:tia.pieters@cynalco.com>.
+:id1589374027282 a vcard:Home; vcard:value <mailto:tia@gmail.com>.
+
+:id1601214413622 a vcard:Work; vcard:value <tel:+32479315191>.
+:id1601214413645 a vcard:Home; vcard:value <tel:+3216438543>.
+
+:payslip-jan-2021-w1
+    a pay:payslip ;
+    pay:employer <https://lidl.be> ;
+    pay:employee :me ;
+    pay:from "1609459200" ;
+    pay:until "1612051200" ;
+    pay:stature "White Collar" ;
+    pay:dependent "1" ;
+    pay:wageUnit pay:month ;
+    pay:grossAmount "2600" ;
+    pay:taxableAmount "2200" ;
+    pay:netAmount "1500" .
+
+
+:payslip-feb-2021-w1
+    a pay:payslip ;
+    pay:employer <https://lidl.be> ;
+    pay:employee :me ;
+    pay:from "1612137600" ;
+    pay:until "1614470400" ;
+    pay:stature "White Collar" ;
+    pay:dependent "1" ;
+    pay:wageUnit pay:month ;
+    pay:grossAmount "2600" ;
+    pay:taxableAmount "2200" ;
+    pay:netAmount "1500" .
+
+
+:payslip-mar-2021-w1
+    a pay:payslip;
+    pay:employer <https://lidl.be>;
+    pay:employee :me;
+    pay:from "1614556800";
+    pay:until "1617148800";
+    pay:stature "White Collar";
+    pay:dependent "1";
+    pay:wageUnit <http://digita.ai/voc/payslip#month>;
+    pay:grossAmount "2600";
+    pay:taxableAmount "2200";
+    pay:netAmount "1500".

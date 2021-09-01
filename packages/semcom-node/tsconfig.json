@@ -1,20 +1,17 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "sourceMap": true,
-        "declaration": true,
-        "outDir": "dist",
-        "typeRoots": [
-            "node_modules/@types",
-        ]
-    },
-    "include": [
-        "lib"
-    ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts",
-        "dist"
-    ]
+  "extends": "@digita-ai/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./lib",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "strict": true
+  },
+  "include": [ 
+      "lib" 
+  ],
+  "exclude": [
+      "dist",
+      "node_modules",
+      "**/*.spec.ts"
+  ]
 }
