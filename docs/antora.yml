@@ -3,5 +3,4 @@ title: Semantic Components
 version: 0.0.12
 nav:
   - modules/ROOT/nav.adoc
-  - modules/getting-started/nav.adoc
-  - modules/api/nav.adoc
+  - modules/sdk/nav.adoc

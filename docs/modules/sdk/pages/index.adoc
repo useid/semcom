@@ -1,6 +1,9 @@
-
 = SemCom Software Development Kit
 Wouter Termont <wouter.termont@digita.ai>
+:description: A description of the software development kit.
+:sectanchors:
+:url-repo: https://github.com/digita-ai/semcom
+:page-tags: semcom
 
 :toc:
 
