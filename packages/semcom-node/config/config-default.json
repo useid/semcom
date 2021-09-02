@@ -16,8 +16,10 @@
     {
       "@id": "urn:semcom-node:default:MemoryStore",
       "@type": "MemoryStore",
-      "initialData": ["peers", []],
-      "initialData": ["storage", ["http://localhost:9000/metadata/"]]
+      "initialData": [
+        ["peers", []], 
+        ["storage", ["http://localhost:9000/metadata/"]]
+      ]
     },
     {
       "@id": "urn:semcom-node:default:PodSyncService",

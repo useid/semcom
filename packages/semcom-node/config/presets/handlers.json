@@ -7,28 +7,28 @@
     {
       "@id": "urn:semcom-node:default:ComponentHttpHandler",
       "@type": "ComponentHttpHandler",
-      "ComponentHttpHandler:_components": {
+      "components": {
         "@id": "urn:semcom-node:default:ComponentService"
       }
     },
     {
       "@id": "urn:semcom-node:default:QueryComponentHttpHandler",
       "@type": "QueryComponentHttpHandler",
-      "QueryComponentHttpHandler:_components": {
+      "components": {
         "@id": "urn:semcom-node:default:ComponentService"
       }
     },
     {
       "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler",
       "@type": "ContentNegotiationHttpHandler",
-      "ContentNegotiationHttpHandler:_logger": {
+      "logger": {
         "@id": "urn:semcom-node:default:LoggerService"
       },
-      "ContentNegotiationHttpHandler:_defaultContentType": "application/ld+json",
-      "ContentNegotiationHttpHandler:_transformer": {
+      "defaultContentType": "application/ld+json",
+      "transformer": {
         "@id": "urn:semcom-node:default:ComponentTransformerService"
       },
-      "ContentNegotiationHttpHandler:_serializer": {
+      "serializer": {
         "@id": "urn:semcom-node:default:QuadSerializationService"
       }
     }

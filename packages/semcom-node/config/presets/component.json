@@ -7,34 +7,34 @@
     {
       "@id": "urn:semcom-node:default:QueryComponentService",
       "@type": "QueryComponentStoreService",
-      "QueryComponentStoreService:_components": {
+      "components": {
         "@id": "urn:semcom-node:default:ComponentStore"
       }
     },
     {
       "@id": "urn:semcom-node:default:ManageComponentService",
       "@type": "ManageComponentStoreService",
-      "ManageComponentStoreService:_components": {
+      "components": {
         "@id": "urn:semcom-node:default:ComponentStore"
       }
     },
     {
       "@id": "urn:semcom-node:default:ComponentService",
       "@type": "ComponentService",
-      "ComponentService:_queryService": {
+      "queryService": {
         "@id": "urn:semcom-node:default:QueryComponentService"
       },
-      "ComponentService:_manageService": {
+      "manageService": {
         "@id": "urn:semcom-node:default:ManageComponentService"
       },
-      "ComponentService:_logger": {
+      "logger": {
         "@id": "urn:semcom-node:default:LoggerService"
       }
     },
     {
       "@id": "urn:semcom-node:default:ComponentTransformerService",
       "@type": "ComponentTransformerService",
-      "ComponentTransformerService:_logger": {
+      "logger": {
         "@id": "urn:semcom-node:default:LoggerService"
       }
     }

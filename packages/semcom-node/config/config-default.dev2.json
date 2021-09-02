@@ -22,25 +22,25 @@
     {
       "@id": "urn:semcom-node:default:ComponentStore",
       "@type": "ComponentPodStore",
-      "ComponentPodStore:_uri": "http://localhost:9000/metadata2/",
-      "ComponentPodStore:_transformer": {
+      "uri": "http://localhost:9000/metadata2/",
+      "transformer": {
         "@id": "urn:semcom-node:default:ComponentTransformerService"
       }
     },
     {
       "@id": "urn:semcom-node:default:PodSyncService",
       "@type": "PodSyncService",
-      "PodSyncService:_storage": "storage",
-      "PodSyncService:_store": {
+      "storage": "storage",
+      "store": {
         "@id": "urn:semcom-node:default:MemoryStore"
       },
-      "PodSyncService:_localPod": "http://localhost:9000/metadata2/"
+      "localPod": "http://localhost:9000/metadata2/"
     },
     {
       "@id": "urn:semcom-node:default:PodSyncScheduler",
       "@type": "Scheduler",
-      "Scheduler:_interval": 20000,
-      "Scheduler:_task": {
+      "interval": 20000,
+      "task": {
         "@id": "urn:semcom-node:default:PodSyncService"
       }
     }
