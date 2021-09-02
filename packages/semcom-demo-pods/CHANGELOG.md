@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.0](https://github.com/digita-ai/semcom/compare/v0.8.0...v0.9.0) (2021-09-01)
+
+**Note:** Version bump only for package @digita-ai/semcom-demo-pods
+
+
+
+
+
+## [0.8.0](https://github.com/digita-ai/semcom/compare/v0.4.1...v0.8.0) (2021-09-01)
+
+
+### **Features**
+
+* make urls dynamic ([#116](https://github.com/digita-ai/semcom/issues/116)) ([486aff6](https://github.com/digita-ai/semcom/commit/486aff64a703d9e1c7d7a6b5aa9281f89a1e4575))
+* pod store for component metadata ([#161](https://github.com/digita-ai/semcom/issues/161)) ([84052c7](https://github.com/digita-ai/semcom/commit/84052c750fa324075867530f981662d6427f7642))
+
+
+### **Bug Fixes**
+
+* demo pod fixes ([#177](https://github.com/digita-ai/semcom/issues/177)) ([700cf73](https://github.com/digita-ai/semcom/commit/700cf7322ea62b6fc92cd8a6b4dbab169f3b8857))
+
+
+
 ### [0.4.1](https://github.com/digita-ai/semcom/compare/v0.4.0...v0.4.1) (2021-06-07)
 
 **Note:** Version bump only for package @digita-ai/semcom-demo-pods

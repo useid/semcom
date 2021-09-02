@@ -17,5 +17,6 @@ You can start the server locally by executing the following commands. The server
 
 ```
 npm run bootstrap
-npm run start
+npm run build:all
+npm run start:dev
 ```
