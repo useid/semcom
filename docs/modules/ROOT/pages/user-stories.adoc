@@ -2,7 +2,7 @@
 :description: A description of the user stories.
 :sectanchors:
 :url-repo: https://github.com/digita-ai/semcom
-:page-tags: engineering
+:page-tags: semcom
 
 == Functional requirements
 
@@ -12,10 +12,10 @@
 . As a `App`, I can give my preference to one of the suitable Components , so that I
 . As a `App`, I can download a Shape  which corresponds to the preferred Component , so that I
 . As a `App`, I can validate an instance of a Shape , so I can be certain that the Component  can be rendered.
-. As a `App`, I can download a specific Component from a Repository, so I can use it to Render data.
+. As a `App`, I can download a specific Component from a `Repository`, so I can use it to Render data.
 . As a `App`, I can render a Component based on an instance of a Shape , so that I can show data in the user interface.
-. As a Repository, I can query Components in other Repositories  based on their Metadata , so that I can serve Components I don’t know yet.
-. As a `System Administrator`, I can configure other Repositories which can be queried, so that I can choose which Repositories I trust.
+. As a `Repository`, I can query Components in other `Repositories`  based on their Metadata , so that I can serve Components I don’t know yet.
+. As a `System Administrator`, I can configure other `Repositories` which can be queried, so that I can choose which `Repositories` I trust.
 
 == Out of scope
 
