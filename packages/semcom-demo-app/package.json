@@ -2,7 +2,7 @@
   "name": "@digita-ai/semcom-demo-app",
   "version": "0.9.0",
   "scripts": {
-    "start": "cross-env SEMCOM_NODE_URI=http://localhost:3000 http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
+    "start": "http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
     "start:dev": "vite",
     "start:sync:dev": "npm run start:dev",
     "build": "rimraf ./dist && vite build --config vite.config.ts && tsc",
