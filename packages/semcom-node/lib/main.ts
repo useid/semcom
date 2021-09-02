@@ -28,14 +28,22 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
   await manager.configRegistry.register(configPath);
 
   const server: NodeHttpServer = await manager.instantiate('urn:semcom-node:default:NodeHttpServer', { variables });
-  const peerSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PeerSyncScheduler', { variables });
-  const storageSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:StorageSyncScheduler', { variables });
-  const podSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PodSyncScheduler', { variables });
 
   server.start();
-  peerSyncScheduler.start();
-  storageSyncScheduler.start();
-  podSyncScheduler.start();
+
+  const sync: boolean = variables['urn:semcom-node:variables:sync'];
+
+  if (sync) {
+
+    const peerSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PeerSyncScheduler', { variables });
+    const storageSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:StorageSyncScheduler', { variables });
+    const podSyncScheduler: Scheduler  = await manager.instantiate('urn:semcom-node:default:PodSyncScheduler', { variables });
+
+    peerSyncScheduler.start();
+    storageSyncScheduler.start();
+    podSyncScheduler.start();
+
+  }
 
 };
 
@@ -49,6 +57,7 @@ export const createVariables = (args: string[]): Record<string, any> => {
       host: { type: 'string', alias: 'h' },
       schema: { type: 'string', alias: 's' },
       mainModulePath: { type: 'string', alias: 'm' },
+      sync: { type: 'boolean', alias: 'y' },
     })
     .help().parseSync();
 
@@ -58,6 +67,7 @@ export const createVariables = (args: string[]): Record<string, any> => {
     'urn:semcom-node:variables:schema': argv.schema,
     'urn:semcom-node:variables:host': argv.host ?? 'localhost',
     'urn:semcom-node:variables:port': argv.port ?? '3000',
+    'urn:semcom-node:variables:sync': argv.sync ?? true,
   };
 
 };

@@ -12,7 +12,7 @@ export class SemComService {
   constructor() {
 
     this.registry = new RegisterComponentService();
-    this.repo = new QueryComponentRemoteService(process.env.VITE_SEMCOM_NODE_URI ?? 'http://localhost:3000');
+    this.repo = new QueryComponentRemoteService(process.env.SEMCOM_NODE_URI ?? process.env.VITE_SEMCOM_NODE_URI ?? 'http://localhost:3000');
 
   }
 

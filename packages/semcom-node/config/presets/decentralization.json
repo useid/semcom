@@ -22,7 +22,6 @@
         "@id": "urn:semcom-node:default:MemoryStore"
       }
     },
-
     {
       "@id": "urn:semcom-node:default:PeerSyncService",
       "@type": "SyncService",

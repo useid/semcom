@@ -28,6 +28,10 @@
     "semcom-node": "./bin/server.js"
   },
   "scripts": {
+    "start": "node bin/server.js --no-sync",
+    "start:dev": "node bin/server.js -p 3000 -c config/config-default.dev.json",
+    "start:dev2": "node bin/server.js -p 3001 -c config/config-default.dev2.json",
+    "start:sync:dev": "node bin/synchronizing-servers.js",
     "build": "rimraf ./dist && npm run build:ts && npm run build:components",
     "build:ts": "tsc",
     "build:components": "componentsjs-generator --typeScopedContexts -s lib -c dist/components -i .componentsignore",
@@ -35,10 +39,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
-    "start": "node bin/server.js",
-    "start:dev": "node bin/server.js -p 3000 -c config/config-default.dev.json",
-    "start:dev2": "node bin/server.js -p 3001 -c config/config-default.dev2.json",
-    "start:sync:dev": "node bin/synchronizing-servers.js",
     "test": "jest",
     "test:ci": "jest --runInBand --silent",
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
