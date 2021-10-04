@@ -139,114 +139,48 @@ jobs:
         with:
           context: packages/semcom-node/
           push: true
-          tags: ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
+          tags: |
+            ghcr.io/digita-ai/semcom-node:latest
+            ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
-      - name: Build and push semcom components
-        id: docker_build_semcom_components
-        uses: docker/build-push-action@v2
+      - uses: digitalocean/action-doctl@v2
         with:
-          context: packages/semcom-components/
-          push: true
-          tags: ghcr.io/digita-ai/semcom-components:${{ steps.extract-tag.outputs.tag }}
-          build-args: |
-            NPM_TOKEN=${{secrets.GA_TOKEN}}
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Build and push semcom demo app
-        id: docker_build_semcom_demo
-        uses: docker/build-push-action@v2
-        with:
-          context: packages/semcom-demo-app/
-          push: true
-          tags: ghcr.io/digita-ai/semcom-demo-app:${{ steps.extract-tag.outputs.tag }}
-          build-args: |
-            NPM_TOKEN=${{secrets.GA_TOKEN}}
+      - name: Store DigitalOcean credentials
+        run: doctl kubernetes cluster kubeconfig save dgt-k8s
 
-      - name: Build and push semcom demo pods
-        id: docker_build_semcom_demo_pods
-        uses: docker/build-push-action@v2
-        with:
-          context: packages/semcom-demo-pods/
-          push: true
-          tags: ghcr.io/digita-ai/semcom-demo-pods:${{ steps.extract-tag.outputs.tag }}
-          build-args: |
-            NPM_TOKEN=${{secrets.GA_TOKEN}}
+      # See https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
+      - name: Update deployment
+        run: |
+          kubectl set image deployment/semcom-deployment semcom-node=ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }} --record
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/semcom-deployment
 
-  deploy-develop:
-    name: Deploy to develop
-    needs: publish-docker
+  publish-docs:
+    name: Publish docs
+    needs: test
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/master'
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Extract tag
-        id: extract-tag
-        run: echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
-
-      - name: 'Login via Azure CLI'
-        uses: azure/login@v1
+      - uses: digitalocean/action-doctl@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GA_TOKEN }}
+      - name: Store DigitalOcean credentials
+        run: doctl kubernetes cluster kubeconfig save dgt-k8s
 
-      - name: Deploy semcom node on develop
-        uses: 'azure/aci-deploy@v1'
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: semcom-node-develop
-          image: ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
-          registry-login-server: ghcr.io
-          registry-username: ${{ secrets.GA_USERNAME }}
-          registry-password: ${{ secrets.GA_TOKEN }}
-          name: semcom-node-develop
-          location: 'west europe'
-          ports: 3000
+      # See https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
+      - name: Update deployment
+        run: |
+          kubectl set image deployment/dgt-docs-deployment dgt-docs-public=ghcr.io/digita-ai/dgt-docs-public:latest --record
 
-      - name: Deploy semcom components on develop
-        uses: 'azure/aci-deploy@v1'
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: semcom-components-develop
-          image: ghcr.io/digita-ai/semcom-components:${{ steps.extract-tag.outputs.tag }}
-          registry-login-server: ghcr.io
-          registry-username: ${{ secrets.GA_USERNAME }}
-          registry-password: ${{ secrets.GA_TOKEN }}
-          name: semcom-components-develop
-          location: 'west europe'
-          ports: 8080
-
-      - name: Deploy semcom demo on develop
-        uses: 'azure/aci-deploy@v1'
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: semcom-demo-app-develop
-          image: ghcr.io/digita-ai/semcom-demo-app:${{ steps.extract-tag.outputs.tag }}
-          registry-login-server: ghcr.io
-          registry-username: ${{ secrets.GA_USERNAME }}
-          registry-password: ${{ secrets.GA_TOKEN }}
-          name: semcom-demo-app-develop
-          location: 'west europe'
-          ports: 4200
-
-      - name: Deploy semcom demo pods on develop
-        uses: 'azure/aci-deploy@v1'
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: semcom-demo-pods-develop
-          image: ghcr.io/digita-ai/semcom-demo-pods:${{ steps.extract-tag.outputs.tag }}
-          registry-login-server: ghcr.io
-          registry-username: ${{ secrets.GA_USERNAME }}
-          registry-password: ${{ secrets.GA_TOKEN }}
-          name: semcom-demo-pods-develop
-          location: 'west europe'
-          ports: 9000
-          command-line: ./node_modules/.bin/community-solid-server -b https://pods.semcom.digita.ai -p 9000 --rootFilePath /tmp/css -c config/config-file.json
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/dgt-docs-deployment

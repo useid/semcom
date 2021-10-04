@@ -1,6 +1,5 @@
 {
-  "name": "@digita-ai/semcom",
-  "version": "0.0.12",
+  "name": "root",
   "description": "",
   "main": "index.js",
   "scripts": {

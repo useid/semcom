@@ -1,6 +1,7 @@
 {
   "@context": [
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/handlersjs-core/^0.0.0/components/context.jsonld"
   ],
   "import": [
     "files-dasn:config/presets/logger.json",
@@ -12,5 +13,30 @@
     "files-dasn:config/presets/decentralization.json"
   ],
   "@graph": [
+    {
+      "@id": "urn:semcom-node:default:MemoryStore",
+      "@type": "MemoryStore",
+      "initialData": [
+        ["peers", []], 
+        ["storage", ["http://localhost:9000/metadata/"]]
+      ]
+    },
+    {
+      "@id": "urn:semcom-node:default:PodSyncService",
+      "@type": "PodSyncService",
+      "storage": "storage",
+      "store": {
+        "@id": "urn:semcom-node:default:MemoryStore"
+      },
+      "localPod": "http://localhost:9000/metadata/"
+    },
+    {
+      "@id": "urn:semcom-node:default:PodSyncScheduler",
+      "@type": "Scheduler",
+      "interval": 20000,
+      "task": {
+        "@id": "urn:semcom-node:default:PodSyncService"
+      }
+    }
   ]
 }
