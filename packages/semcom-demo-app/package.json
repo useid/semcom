@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-demo-app",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "scripts": {
     "start": "http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
     "start:dev": "vite",
@@ -18,8 +18,8 @@
   ],
   "dependencies": {
     "@digita-ai/inrupt-solid-client": "0.3.0",
-    "@digita-ai/semcom-core": "0.9.2",
-    "@digita-ai/semcom-sdk": "0.9.2",
+    "@digita-ai/semcom-core": "0.9.3",
+    "@digita-ai/semcom-sdk": "0.9.3",
     "@digita-ai/ui-transfer-components": "0.6.1",
     "@digita-ai/ui-transfer-theme": "0.6.1",
     "@xstate/inspect": "^0.4.1",
