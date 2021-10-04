@@ -139,7 +139,9 @@ jobs:
         with:
           context: packages/semcom-node/
           push: true
-          tags: ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
+          tags: |
+            ghcr.io/digita-ai/semcom-node:latest
+            ghcr.io/digita-ai/semcom-node:${{ steps.extract-tag.outputs.tag }}
           build-args: |
             NPM_TOKEN=${{secrets.GA_TOKEN}}
 
