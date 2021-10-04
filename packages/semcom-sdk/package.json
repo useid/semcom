@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-sdk",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-sdk#readme",
@@ -72,7 +72,7 @@
     "vite": "2.2.3"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.9.0",
+    "@digita-ai/semcom-core": "0.9.1",
     "buffer": "6.0.3",
     "jssha": "^3.2.0",
     "n3": "1.10.0"

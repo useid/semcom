@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.9.1](https://github.com/digita-ai/semcom/compare/v0.9.0...v0.9.1) (2021-10-04)
+
+
+### **Bug Fixes**
+
+* correct asset path for logo ([#184](https://github.com/digita-ai/semcom/issues/184)) ([99c6796](https://github.com/digita-ai/semcom/commit/99c679664e19f77e914af3dc8cca71cba9e16f85))
+
+
+
 ## [0.9.0](https://github.com/digita-ai/semcom/compare/v0.8.0...v0.9.0) (2021-09-01)
 
 **Note:** Version bump only for package @digita-ai/semcom-demo-app
