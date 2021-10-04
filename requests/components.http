@@ -1,4 +1,4 @@
-@baseUrl = https://semcom.digita.ai
+@baseUrl = http://localhost:3000
 
 ########
 
