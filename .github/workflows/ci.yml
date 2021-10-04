@@ -177,9 +177,9 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save dgt-k8s
 
       # See https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-      - name: Update deployment
+      - name: Restart deployment
         run: |
-          kubectl set image deployment/dgt-docs-deployment dgt-docs-public=ghcr.io/digita-ai/dgt-docs-public:latest --record
+          kubectl rollout restart deployment dgt-docs-deployment  
 
       - name: Verify deployment
         run: |

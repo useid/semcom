@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.9.5](https://github.com/digita-ai/semcom/compare/v0.9.4...v0.9.5) (2021-10-04)
+
+
+### **Documentation**
+
+* fix list on introduction page ([#191](https://github.com/digita-ai/semcom/issues/191)) ([a584d66](https://github.com/digita-ai/semcom/commit/a584d6683b2c6f11a75382e6b1d9b3c2db88be9e))
+
+
+
 ### [0.9.4](https://github.com/digita-ai/semcom/compare/v0.9.3...v0.9.4) (2021-10-04)
 
 **Note:** Version bump only for package root
