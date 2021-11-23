@@ -1,3 +1,6 @@
+/**
+ * Class representing the component metadata.
+ */
 export class ComponentMetadata {
 
   [key: string]: string | number | boolean | string[] | undefined;
