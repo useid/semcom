@@ -12,6 +12,10 @@ export interface StoreSelectionContext {
   [key: string]: string;
 }
 
+/**
+ * A { RxLitElement } that represents a SemComStoreSelectionComponent.
+ * Defines components, renders the HTML and retrieves the CSS.
+ */
 export class SemComStoreSelectionComponent extends RxLitElement {
 
   /** A space separated list of urls, each of which points to a SemCom store */
@@ -41,6 +45,9 @@ export class SemComStoreSelectionComponent extends RxLitElement {
   @query('#dropDown')
   dropDown: HTMLSelectElement;
 
+  /**
+   * Creates a { SemComStoreSelectionComponent }.
+   */
   constructor() {
 
     super();
@@ -77,6 +84,12 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
   }
 
+  /**
+   * Defines components by the provided tag and module.
+   *
+   * @param { string } tag - The tag to define the component by.
+   * @param { CustomElementConstructor } module  - The module to define the component by.
+   */
   defineComponent = (tag: string, module: CustomElementConstructor): void => {
 
     if (!customElements.get(tag)) { customElements.define(tag, module); }
@@ -118,6 +131,9 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
   };
 
+  /**
+   * Clears the input of the form.
+   */
   clearFreeInput = (): void => {
 
     this.freeInput.value = '';
@@ -125,6 +141,9 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
   };
 
+  /**
+   * Clears the dropdown values.
+   */
   clearDropDown = (): void => {
 
     this.dropDown.value = 'empty';
@@ -134,6 +153,9 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
   translator = { translate: (value: string): string => value };
 
+  /**
+   * Renders the HTML template.
+   */
   render(): TemplateResult {
 
     return html`
@@ -160,6 +182,9 @@ export class SemComStoreSelectionComponent extends RxLitElement {
 
   }
 
+  /**
+   * Returns the CSS for the components.
+   */
   static get styles(): CSSResult[] {
 
     return [

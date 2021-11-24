@@ -10,6 +10,9 @@ import { semComRegisterMachine, SemComRegisterContext, SemComRegisterEvent, SemC
 import { SemComStoreSelectionComponent } from './sem-com-store-selection.component';
 import { SemComUploadFormComponent } from './sem-com-upload-form.component';
 
+/**
+ * A { RxLitElement } that represents a SemCom register component.
+ */
 export class SemComRegisterComponent extends RxLitElement {
 
   private solidService = new SolidSDKService('SemCom');
@@ -27,6 +30,9 @@ export class SemComRegisterComponent extends RxLitElement {
   @state()
   state: State<SemComRegisterContext>;
 
+  /**
+   * Creates a { SemComRegisterComponent }.
+   */
   constructor() {
 
     super();
@@ -46,27 +52,50 @@ export class SemComRegisterComponent extends RxLitElement {
 
   }
 
-  // What type is module?
+  /**
+   * Defines components by the provided tag and module.
+   *
+   * @param { string } tag - The tag to define the component by.
+   * @param { CustomElementConstructor } module  - The module to define the component by.
+   */
   defineComponent = (tag: string, module: CustomElementConstructor): void => {
 
     if (!customElements.get(tag)) { customElements.define(tag, module); }
 
   };
 
+  /**
+   * Creates a new AuthenticationEvent for the specified event and sends it to the actor.
+   *
+   * @param { CustomEvent } event - The event to create an AuthenticationEvent for.
+   */
   onAuthenticated = (event: CustomEvent): void => { this.actor.send(new AuthenticatedEvent(event.detail)); };
 
+  /**
+   * Creates a StoreSelectedEvent for the specified event and sends it to the actor.
+   *
+   * @param { StoreSelectedEvent } event - The event to create a StoreSelectedEvent for.
+   */
   storeSelected = (event: CustomEvent): void => {
 
     this.actor.send(new StoreSelectedEvent(event.detail.input));
 
   };
 
+  /**
+   * Creates a UploadFormSubmittedEvent for the specified event and sends it to the actor.
+   *
+   * @param { UploadFormSubmittedEvent } event - The event to create an UploadFormSubmittedEvent for.
+   */
   formUploaded = (event: CustomEvent): void => {
 
     this.actor.send(new UploadFormSubmittedEvent(event.detail));
 
   };
 
+  /**
+   * Renders the HTML of components based upon the current state.
+   */
   render(): TemplateResult {
 
     let componentToRender = html``;
@@ -117,6 +146,9 @@ export class SemComRegisterComponent extends RxLitElement {
 
   }
 
+  /**
+   * Returns the CSS for the components.
+   */
   static get styles(): CSSResult[] {
 
     return [
