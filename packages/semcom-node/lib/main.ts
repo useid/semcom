@@ -43,6 +43,7 @@ export const launch: (variables: Record<string, any>) => Promise<void> = async (
  * Creates configuration variables from the passed cli arguments.
  *
  * @param { string[] } args - List of launch arguments passed to the cli.
+ * @returns An object containing
  */
 export const createVariables = (args: string[]): Record<string, any> => {
 

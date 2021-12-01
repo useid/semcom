@@ -21,6 +21,8 @@ export class ComponentPodStore extends ComponentStore {
 
   /**
    * Fetches all quads from the URI of the pod.
+   *
+   * @returns A list of quads retrieved from the webid.
    */
   private async fetchAllQuads(): Promise<Quad[]> {
 
@@ -42,6 +44,8 @@ export class ComponentPodStore extends ComponentStore {
    * Fetch the specified quads from the URI of the pod.
    *
    * @param { string } metadataName - The name of the component to fetch.
+   * @returns List of quads retrieved baesed on the metadata name.
+   * @
    */
   private async fetchQuads(metadataName: string): Promise<Quad[]> {
 
@@ -54,6 +58,8 @@ export class ComponentPodStore extends ComponentStore {
 
   /**
    * Transforms all fetched quads to components.
+   *
+   * @returns List of all transformed components.
    */
   async all(): Promise<ComponentMetadata[]> {
 

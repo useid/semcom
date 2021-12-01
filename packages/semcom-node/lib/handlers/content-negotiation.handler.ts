@@ -34,6 +34,7 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
    * Confirms if the handler can handle the request.
    *
    * @param { HttpHandlerContext } context - The context of the http request.
+   * @returns Boolean confirming if the accept headers is application/json or not.
    */
   canHandle(context: HttpHandlerContext): Observable<boolean> {
 
@@ -122,6 +123,7 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
    * Checks if the given content type is supported.
    *
    * @param  { string } contentType - The content type to check.
+   * @returns Boolean stating if the provided content type is supported.
    */
   private isContentTypeSupported(contentType: string): Observable<boolean> {
 

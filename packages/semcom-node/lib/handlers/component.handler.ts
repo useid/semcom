@@ -93,6 +93,7 @@ export class ComponentHttpHandler extends HttpHandler {
    * Confirms if the handler can handle the request.
    *
    * @param { HttpHandlerContext } context - The context of the http request.
+   * @returns Boolean confirming if the
    */
   canHandle(context: HttpHandlerContext): Observable<boolean> {
 

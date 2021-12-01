@@ -9,7 +9,7 @@ export class LoggerConsoleService extends LoggerService {
   /**
    * Logs console messages.
    *
-   * @param { string } level - The log level.
+   * @param { string } level - The log level (severity).
    * @param { string } message - The message to log.
    * @param { any } payload (optional) - The payload to attach to the log.
    */

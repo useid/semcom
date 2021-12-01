@@ -1,5 +1,5 @@
 /**
- * An interface representing a store to query and save data.
+ * Represents a store to query and save data.
  */
 export interface Store<T> {
   query(filter: Partial<T>): Promise<T[]>;

@@ -20,9 +20,10 @@ export class QueryComponentRemoteService extends QueryComponentService {
   }
 
   /**
-   * Queries the remote component repository for a component based upon the given filter.
+   * Queries the remote component repository for components based upon the given filter.
    *
    * @param { Partial<ComponentMetadata> } filter - The filter to use when querying the remote component repository.
+   * @returns List of components matching the filter.
    */
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
 

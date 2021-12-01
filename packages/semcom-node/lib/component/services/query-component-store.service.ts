@@ -2,7 +2,7 @@ import { ComponentMetadata, QueryComponentService } from '@digita-ai/semcom-core
 import { ComponentStore } from '../../store/services/component-store.service';
 
 /**
- * A service used to query component from the store.
+ * Queries components from the store based on a filter.
  */
 export class QueryComponentStoreService extends QueryComponentService {
 

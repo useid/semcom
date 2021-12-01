@@ -32,6 +32,7 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
    * Fetches all components for the given pod uri and returns them in a set.
    *
    * @param { string } uri - The given pod.
+   * @returns The set of components found in the pod.
    */
   private async componentsInPod(uri: string): Promise<Set<string>> {
 

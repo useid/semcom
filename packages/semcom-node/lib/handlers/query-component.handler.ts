@@ -51,6 +51,7 @@ export class QueryComponentHttpHandler extends HttpHandler {
    * Confirms if the handler can handle the request by checking the HTTP method.
    *
    * @param { HttpHandlerContext } context - The context of the http request.
+   * @returns Boolean confirming if the handler can handle the request based on the HTTP method.
    */
   canHandle(context: HttpHandlerContext): Observable<boolean> {
 

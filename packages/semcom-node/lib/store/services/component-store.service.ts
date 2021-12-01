@@ -10,6 +10,8 @@ export abstract class ComponentStore implements Store<ComponentMetadata>{
 
   /**
    * Queries the components based on a filter of partial metadata.
+   *
+   * @returns List of components that match the filter.
    */
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
 

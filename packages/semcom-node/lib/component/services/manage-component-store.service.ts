@@ -20,7 +20,8 @@ export class ManageComponentStoreService extends ManageComponentService{
   /**
    * Saves components into the store.
    *
-   * @param components - List of components to store.
+   * @param { ComponentMetadata[] } components - List of components to store.
+   * @returns The components saved in the store.
    */
   async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
 

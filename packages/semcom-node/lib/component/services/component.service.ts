@@ -23,6 +23,8 @@ export class ComponentService {
 
   /**
    * Retrieves all components from the  store using the query service and returns its metadata.
+   *
+   * @returns List of all components.
    */
   all(): Observable<ComponentMetadata[]> {
 
@@ -36,6 +38,7 @@ export class ComponentService {
    * Retrieves specific components from the store based on the query argument using the query service and returns its metadata.
    *
    * @param { any } query - The query used to filter components.
+   * @returns List of queried components based upon the provided query.
    */
   query(query: any): Observable<ComponentMetadata[]> {
 
@@ -49,6 +52,7 @@ export class ComponentService {
    * Saves components in the store using the manage service based upon the provided body.
    *
    * @param { any } body - The body containing the components data to save.
+   * @returns The components saved in the store.
    */
   save(body: any): Observable<any[]> {
 

@@ -28,6 +28,7 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
    * Registers the component.
    *
    * @param { ComponentMetadata } componentMetadata - The component metadata to register.
+   * @returns The tag of the registered component.
    */
   async register(componentMetadata: ComponentMetadata): Promise<string> {
 

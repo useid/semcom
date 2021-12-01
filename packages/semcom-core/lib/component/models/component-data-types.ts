@@ -1,7 +1,7 @@
 import { Quad } from 'rdf-js';
 
 /**
- * An interface representing the possible data types for components.
+ * Represents the possible data types for components.
  */
 export interface ComponentDataTypes {
   quads: Quad[];

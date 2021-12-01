@@ -1,5 +1,5 @@
 /**
- * Abstract class representing a logger service.
+ * Represents a logger service.
  */
 export abstract class LoggerService {
 

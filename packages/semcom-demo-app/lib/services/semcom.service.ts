@@ -26,6 +26,7 @@ export class SemComService {
    * Detects shapes from a given uri.
    *
    * @param { string } uri - The uri to detect shapes from.
+   * @returns Observable that emits the uris of the discovered shapes.
    */
   detectShapes(uri: string): Observable<string[]> {
 
@@ -37,6 +38,7 @@ export class SemComService {
    * Queries components from the QueryComponentService using a filter based on the provided shapeId.
    *
    * @param { string } shapeId - The shapeId to filter components by.
+   * @returns list of components based on the filter.
    */
   queryComponents(shapeId: string): Observable<ComponentMetadata[]> {
 

@@ -18,7 +18,7 @@ export class ComponentInMemoryStore extends ComponentStore {
   }
 
   /**
-   * Returns the entire list of components metadata.
+   * @returns the entire list of components metadata.
    */
   async all(): Promise<ComponentMetadata[]> {
 
@@ -30,6 +30,7 @@ export class ComponentInMemoryStore extends ComponentStore {
    * Compares the list of components provided with the current list of components and merges the differences.
    *
    * @param { ComponentMetadata[] } components - List of component metadata.
+   * @returns List of the components saved.
    */
   async save(components: ComponentMetadata[]): Promise<ComponentMetadata[]> {
 
