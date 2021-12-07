@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.9.6](https://github.com/digita-ai/semcom/compare/v0.9.5...v0.9.6) (2021-12-07)
+
+
+### **Documentation**
+
+* remove incorrect slashes from API docs ([04c0040](https://github.com/digita-ai/semcom/commit/04c004006d98048fe3f36e8fb972069458ee5fc8))
+* set antora version to master ([267b12f](https://github.com/digita-ai/semcom/commit/267b12f29fe660615bea8270a3b6504c2f4cd8dc))
+
+
+
 ### [0.9.5](https://github.com/digita-ai/semcom/compare/v0.9.4...v0.9.5) (2021-10-04)
 
 
