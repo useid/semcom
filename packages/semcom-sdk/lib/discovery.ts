@@ -1,4 +1,20 @@
-import { Store, Parser, DataFactory } from 'n3';
+import { Store, Parser, DataFactory, Quad } from 'n3';
+
+/**
+ * Discovers the shape of a resource, given quads.
+ *
+ * @param quads the quads for which to discover shapes.
+ * @returns the uris of the discovered shapes.
+ */
+export const resourceShapeFromQuads = (quads: Quad[]): string[] => {
+
+  const predicates = new Set<string>(quads.map((quad) => quad.predicate.value));
+
+  const classes = new Store(quads).getQuads(null, DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null).map((quad) => quad.object.value);
+
+  return Array.from(predicates).concat(classes);
+
+};
 
 /**
  * Discovers the shape of a resource, given its uri and a (custom) fetch function.
@@ -21,13 +37,7 @@ export const resourceShape = (
 
     const parser = new Parser();
 
-    return response.text().then((body) => {
-
-      const classes = new Store(parser.parse(body)).getQuads(null, DataFactory.namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), null, null).map((quad) => quad.object.value);
-
-      return classes;
-
-    });
+    return response.text().then((body) => resourceShapeFromQuads(parser.parse(body)));
 
   });
 

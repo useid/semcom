@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-node",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
@@ -62,8 +62,8 @@
   "dependencies": {
     "@digita-ai/handlersjs-core": "^0.3.4",
     "@digita-ai/handlersjs-http": "^0.3.4",
-    "@digita-ai/semcom-core": "0.9.5",
-    "componentsjs": "4.5.0",
+    "componentsjs": "^4.5.0",
+    "@digita-ai/semcom-core": "0.9.6",
     "n3": "^1.6.3",
     "node-fetch": "^2.6.1",
     "rdf-serialize": "^1.0.1",
@@ -81,7 +81,7 @@
     "@types/streamify-array": "^1.0.0",
     "@types/supertest": "^2.0.10",
     "@types/yargs": "^17.0.2",
-    "componentsjs-generator": "2.6.0",
+    "componentsjs-generator": "^2.6.0",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "jest-coverage-thresholds-bumper": "0.0.4",
