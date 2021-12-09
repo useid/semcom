@@ -1,4 +1,4 @@
-import { DataFactory, Quad_Object, Quad_Predicate, Quad_Subject } from 'n3';
+import { DataFactory } from 'n3';
 import { resourceShapeFromQuads } from './discovery';
 
 describe('resourceShapeFromQuads', () => {
@@ -6,9 +6,9 @@ describe('resourceShapeFromQuads', () => {
   const quadPredicate = 'http://example.com/predicate';
 
   const quad = DataFactory.quad(
-    DataFactory.namedNode('test') as Quad_Subject,
-    DataFactory.namedNode(quadPredicate) as Quad_Predicate,
-    DataFactory.namedNode('test') as Quad_Object
+    DataFactory.namedNode('test'),
+    DataFactory.namedNode(quadPredicate),
+    DataFactory.namedNode('test')
   );
 
   it('should discover shapes from a quad', () => {
