@@ -6,8 +6,19 @@ import serialize from 'rdf-serialize';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
 import { QuadSerializationService } from '../quad/services/quad-serialization.service';
 
+/**
+ * A { HttpHandler } that performs content negotiation on incoming requests.
+ */
 export class ContentNegotiationHttpHandler extends HttpHandler {
 
+  /**
+   * Creates a { ContentNegotiationHttpHandler}
+   *
+   * @param { LoggerService } loggerService - The logger service used to log messages.
+   * @param { string } defaultContentType - The default content type to use if none is specified.
+   * @param { ComponentTransformerService } transformer - The service that transforms components to quads.
+   * @param { QuadSerializationService } serializer - The service that serializes quads to different forms of linked data.
+   */
   constructor(
     private logger: LoggerService,
     private defaultContentType: string,
@@ -19,6 +30,12 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
 
   }
 
+  /**
+   * Confirms if the handler can handle the request.
+   *
+   * @param { HttpHandlerContext } context - The context of the http request.
+   * @returns Boolean confirming if the accept headers is application/json or not.
+   */
   canHandle(context: HttpHandlerContext): Observable<boolean> {
 
     this.logger.log('debug', 'Checking content negotiation handler', { context });
@@ -27,6 +44,13 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
 
   }
 
+  /**
+   * Checks the content type of the incoming request and if supported serializes the components to a response of that type.
+   * If not returns a 406 Not Acceptable response.
+   *
+   * @param { HttpHandlerContext } context - The context of the http request.
+   * @param { HttpHandlerResponse } response - The response object to be returned.
+   */
   handle(context: HttpHandlerContext, response: HttpHandlerResponse): Observable<HttpHandlerResponse> {
 
     this.logger.log('debug', 'Running content negotiation handler', {
@@ -95,6 +119,12 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
 
   }
 
+  /**
+   * Checks if the given content type is supported.
+   *
+   * @param  { string } contentType - The content type to check.
+   * @returns Boolean stating if the provided content type is supported.
+   */
   private isContentTypeSupported(contentType: string): Observable<boolean> {
 
     if (!contentType) {

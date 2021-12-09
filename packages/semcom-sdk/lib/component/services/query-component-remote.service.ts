@@ -1,9 +1,17 @@
 import { ComponentMetadata, QueryComponentService } from '@digita-ai/semcom-core';
 
+/**
+ * A { QueryComponentService } that queries the remote component repository for a component.
+ */
 export class QueryComponentRemoteService extends QueryComponentService {
 
   private repository: string;
 
+  /**
+   * Creates a { QueryComponentRemoteService }.
+   *
+   * @param { string } repository - The remote component repository to query the components from.
+   */
   constructor(repository: string) {
 
     super();
@@ -11,6 +19,12 @@ export class QueryComponentRemoteService extends QueryComponentService {
 
   }
 
+  /**
+   * Queries the remote component repository for components based upon the given filter.
+   *
+   * @param { Partial<ComponentMetadata> } filter - The filter to use when querying the remote component repository.
+   * @returns List of components matching the filter.
+   */
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
 
     if (!this.repository) {

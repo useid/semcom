@@ -1,5 +1,8 @@
 import { ComponentMetadata } from '../component/models/component-metadata.model';
 
+/**
+ * Mock metadata for initial components
+ */
 export const initialComponents = [
   {
     uri: 'foo1/bar',

@@ -11,7 +11,7 @@ export abstract class BaseComponent extends LitElement implements Component {
   @property({ type: String }) entry?: string;
 
   /**
-   * Instantiates a `BaseComponent`, and add an event listener to handle `ComponentResponseEvent`s.
+   * Instantiates a `BaseComponent`, and adds an event listener to handle `ComponentResponseEvent`s.
    */
   constructor() {
 
