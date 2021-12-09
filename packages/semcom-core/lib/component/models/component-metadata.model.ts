@@ -1,5 +1,5 @@
 /**
- * Class representing the component metadata used to define a component.
+ * The metadata defining a component.
  */
 export class ComponentMetadata {
 

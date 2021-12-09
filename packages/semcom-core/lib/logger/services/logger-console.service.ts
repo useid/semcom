@@ -2,16 +2,12 @@
 import { LoggerService } from './logger.service';
 
 /**
- * Class for logging console messages.
+ * A { LoggerService } for logging console messages.
  */
 export class LoggerConsoleService extends LoggerService {
 
   /**
-   * Logs console messages.
-   *
-   * @param { string } level - The log level (severity).
-   * @param { string } message - The message to log.
-   * @param { any } payload (optional) - The payload to attach to the log.
+   * { @inheritDoc LoggerService }
    */
   log(level: string, message: string, payload?: any) {
 

@@ -1,5 +1,5 @@
 /**
- * Represents a service to manage and safe components.
+ * A service to manage and save components.
  */
 export interface ManageService<T> {
   save(components: T[]): Promise<T[]>;

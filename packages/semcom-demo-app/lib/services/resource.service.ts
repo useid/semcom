@@ -3,7 +3,7 @@ import { SolidDataset, getSolidDataset } from '@inrupt/solid-client';
 import { fetch } from '@digita-ai/inrupt-solid-client';
 
 /**
- * A resource service for fetching the profile of a webid and querying a solid dataset returned in turtle format.
+ * A helper service to fetch the profile of a WebID.
  */
 export class ResourceService {
 

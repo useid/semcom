@@ -4,7 +4,7 @@ import { ComponentTransformerService } from '../../component/services/component-
 import { ComponentStore } from './component-store.service';
 
 /**
- * A { ComponentStore } fetch quads from a pod and retrieves the metadata of a component from an array of quads.
+ * A { ComponentStore } that stores and retrieves component metadata in/from a pod.
  */
 export class ComponentPodStore extends ComponentStore {
 

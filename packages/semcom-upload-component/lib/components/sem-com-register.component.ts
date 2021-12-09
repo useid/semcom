@@ -11,7 +11,7 @@ import { SemComStoreSelectionComponent } from './sem-com-store-selection.compone
 import { SemComUploadFormComponent } from './sem-com-upload-form.component';
 
 /**
- * A { RxLitElement } that represents a SemCom register component.
+ * A LitElement WebComponent for registering SemCom components at a SemCom node.
  */
 export class SemComRegisterComponent extends RxLitElement {
 

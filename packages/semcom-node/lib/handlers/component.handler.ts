@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ComponentService } from '../component/services/component.service';
 
 /**
- * A { HttpHandler } implementation that transforms components into a HTTP response
+ * A { HttpHandler } that retrieves or stores components based on the request.
  */
 export class ComponentHttpHandler extends HttpHandler {
 
@@ -22,7 +22,7 @@ export class ComponentHttpHandler extends HttpHandler {
   }
 
   /**
-   * Returns the components into a HTTPHandlerResponse object based upon the HTTP method.
+   * Returns or saves components based on the request.
    *
    * @param { HttpHandlerContext } context - The context of the http request.
    */

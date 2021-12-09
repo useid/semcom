@@ -5,7 +5,7 @@ import { QueryComponentRemoteService,  RegisterComponentService, resourceShape }
 import { fetch } from '@digita-ai/inrupt-solid-client';
 
 /**
- *
+ * A service providing methods to perform the whole SemCom application flow, from detection over querying to registration.
  */
 export class SemComService {
 

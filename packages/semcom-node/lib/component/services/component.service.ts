@@ -13,7 +13,7 @@ export class ComponentService {
    *
    * @param { QueryComponentStoreService } queryService - The service used to query components from the store.
    * @param { ManageComponentStoreService } manageService - The service used to manage components in the store.
-   * @param { LoggerService } logger - Logger service used to log debug messages.
+   * @param { LoggerService } logger - Logger service used to log messages.
    */
   constructor(
     private queryService: QueryComponentStoreService,

@@ -7,14 +7,14 @@ import { ComponentTransformerService } from '../component/services/component-tra
 import { QuadSerializationService } from '../quad/services/quad-serialization.service';
 
 /**
- * A { HttpHandler } implementation that performs content negotiation on incoming requests.
+ * A { HttpHandler } that performs content negotiation on incoming requests.
  */
 export class ContentNegotiationHttpHandler extends HttpHandler {
 
   /**
    * Creates a { ContentNegotiationHttpHandler}
    *
-   * @param { LoggerService } loggerService - The logger service to used to log debug messages.
+   * @param { LoggerService } loggerService - The logger service used to log messages.
    * @param { string } defaultContentType - The default content type to use if none is specified.
    * @param { ComponentTransformerService } transformer - The service that transforms components to quads.
    * @param { QuadSerializationService } serializer - The service that serializes quads to different forms of linked data.
@@ -45,7 +45,7 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
   }
 
   /**
-   * Checks the content type of the incoming request and if supported parses it to a quad stream.
+   * Checks the content type of the incoming request and if supported serializes the components to a response of that type.
    * If not returns a 406 Not Acceptable response.
    *
    * @param { HttpHandlerContext } context - The context of the http request.

@@ -24,7 +24,7 @@ export interface UploadFormContext {
 }
 
 /**
- * An { RxLitElement } representing an upload form component.
+ * A LitElement WebComponent for entering component metadata.
  */
 export class SemComUploadFormComponent extends RxLitElement {
 

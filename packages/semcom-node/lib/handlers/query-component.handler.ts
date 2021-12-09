@@ -4,8 +4,7 @@ import { map } from 'rxjs/operators';
 import { ComponentService } from '../component/services/component.service';
 
 /**
- * A { HttpHandler } implementation that queries components from the component service
- * and returns them as a HTTPHandlerResponse.
+ * A { HttpHandler } retrieving components based on a query.
  */
 export class QueryComponentHttpHandler extends HttpHandler {
 
@@ -23,7 +22,8 @@ export class QueryComponentHttpHandler extends HttpHandler {
   }
 
   /**
-   * Queries the components specified in the request body and returns them as a JSON type body in a HTTPHandlerResponse.
+   * Retrieves components based on the query specified in the request,
+   * and returns them as a JSON response.
    *
    * @param { HttpHandlerContext } context - The context of the request.
    */

@@ -12,7 +12,7 @@ import { demoMachine, DemoContext, DemoEvent, DemoState, DemoStates, Authenticat
 import { SemComService } from './services/semcom.service';
 
 /**
- * A { RxLitElement } implementation that represents a demo component.
+ * A component to demo SemCom in an application.
  */
 export class DemoComponent extends RxLitElement {
 

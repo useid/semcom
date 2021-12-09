@@ -12,8 +12,8 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
   /**
    * Creates a { PodSyncService }.
    *
-   * @param { S } storage - The key in which the storage is located.
-   * @param { TypedKeyValueStore<M> } store - The given key value store.
+   * @param { S } storage - The key pointing to the list of storage pods.
+   * @param { TypedKeyValueStore<M> } store - The store containing the list of storage pods.
    * @param { string } localPod - The URI of the local pod.
    */
   constructor(
@@ -58,7 +58,7 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
   }
 
   /**
-   * Synchronizes the components of the local pod with the components of the store.
+   * Synchronizes the local components to contain all remote components as well.
    */
   private async synchronizeComponents(): Promise<void> {
 
@@ -103,7 +103,7 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
   }
 
   /**
-   * Calls the synchronizeComponents method to synchronize the components.
+   * Synchronizes the local components to contain all remote components as well.
    */
   handle(): Observable<void> {
 

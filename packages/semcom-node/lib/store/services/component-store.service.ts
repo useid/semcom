@@ -3,8 +3,7 @@ import * as semver from 'semver';
 import { Store } from './store.service';
 
 /**
- * An abstract class representing a { ComponentStore } that stores components in memory.
- * With a default query method implementation.
+ * A { Store } for keeping { ComponentMetadata }, implementing a default query method.
  */
 export abstract class ComponentStore implements Store<ComponentMetadata>{
 

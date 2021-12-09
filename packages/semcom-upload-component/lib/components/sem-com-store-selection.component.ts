@@ -13,8 +13,7 @@ export interface StoreSelectionContext {
 }
 
 /**
- * A { RxLitElement } that represents a SemComStoreSelectionComponent.
- * Defines components, renders the HTML and retrieves the CSS.
+ * A LitElement WebComponent for selecting a SemCom storage pod.
  */
 export class SemComStoreSelectionComponent extends RxLitElement {
 

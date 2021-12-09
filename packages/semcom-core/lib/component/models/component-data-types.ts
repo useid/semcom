@@ -1,7 +1,7 @@
 import { Quad } from 'rdf-js';
 
 /**
- * Represents the possible data types for components.
+ * The possible data types SemCom components can read or write.
  */
 export interface ComponentDataTypes {
   quads: Quad[];
