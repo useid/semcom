@@ -9,7 +9,7 @@ Retrieve all components.
 
 [source,http]
 ----
-GET /component/ HTTP/1.1
+GET /component HTTP/1.1
 Host: [SEMCOM_HOST]
 ----
 
@@ -88,7 +88,7 @@ Retrieve all components as Turtle.
 
 [source,http]
 ----
-GET /component/ HTTP/1.1
+GET /component HTTP/1.1
 Host: [SEMCOM_HOST]
 Accept: text/turtle
 ----
