@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.9.7](https://github.com/digita-ai/semcom/compare/v0.9.6...v0.9.7) (2021-12-09)
+
+
+### **Features**
+
+* add resourceShapeFromQuads to discovery ([#201](https://github.com/digita-ai/semcom/issues/201)) ([e6b863d](https://github.com/digita-ai/semcom/commit/e6b863dcde92e2950d5a516b5e898a8fe6bf68c4))
+
+
+### **Documentation**
+
+* complete-ts-docs ([#194](https://github.com/digita-ai/semcom/issues/194)) ([17a8415](https://github.com/digita-ai/semcom/commit/17a84154a5feaf960b70534a45c98c3bd048b95b))
+
+
+
 ### [0.9.6](https://github.com/digita-ai/semcom/compare/v0.9.5...v0.9.6) (2021-12-07)
 
 **Note:** Version bump only for package @digita-ai/semcom-sdk
