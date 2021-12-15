@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.9.8](https://github.com/digita-ai/semcom/compare/v0.9.7...v0.9.8) (2021-12-15)
+
+**Note:** Version bump only for package @digita-ai/semcom-demo-upload-components
+
+
+
+
+
 ### [0.9.7](https://github.com/digita-ai/semcom/compare/v0.9.6...v0.9.7) (2021-12-09)
 
 **Note:** Version bump only for package @digita-ai/semcom-demo-upload-components

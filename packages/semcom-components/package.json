@@ -1,6 +1,6 @@
 {
   "name": "@digita-ai/semcom-components",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "Collection of Semantic Components",
   "author": "Wouter Termont <wouter.termont@digita.ai>",
   "main": "./dist/semcom-components.umd.js",
@@ -34,8 +34,8 @@
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.9.7",
-    "@digita-ai/semcom-sdk": "0.9.7",
+    "@digita-ai/semcom-core": "0.9.8",
+    "@digita-ai/semcom-sdk": "0.9.8",
     "buffer": "6.0.3",
     "lit-element": "^2.4.0",
     "n3": "1.10.0"
