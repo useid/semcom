@@ -107,6 +107,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+      - run: npm publish packages/semcom-components
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
   publish-docker:
     name: Publish Docker image
     needs: publish-npm
