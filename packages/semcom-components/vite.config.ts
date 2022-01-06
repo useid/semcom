@@ -35,7 +35,7 @@ export default ({ command, mode }) => {
             input: path.resolve(__dirname, 'lib/components/input.component.ts'),
             base: path.resolve(__dirname, 'lib/components/base.component.ts'),
             payslip: path.resolve(__dirname, 'lib/components/payslip.component.ts'),
-            profile: path.resolve(__dirname, 'lib/components/profile.component.ts'),
+            profile: path.resolve(__dirname, 'lib/components/profile/profile.component.ts'),
             gender: path.resolve(__dirname, 'lib/components/gender.component.ts'),
           },
           output: [

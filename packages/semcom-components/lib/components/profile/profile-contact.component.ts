@@ -1,5 +1,5 @@
 import { NamedNode, Store } from 'n3';
-import { css, html, property, PropertyValues, TemplateResult, unsafeCSS } from 'lit-element';
+import { css, CSSResult, html, property, PropertyValues, TemplateResult, unsafeCSS } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 import { Image, Theme } from '@digita-ai/dgt-theme';
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { NotImplementedError } from '@digita-ai/dgt-utils';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { FormCleanlinessStates, FormContext, formMachine, FormRootStates, FormSubmissionStates, FormValidationStates, FormValidatorResult } from '@digita-ai/dgt-components';
-import { BaseComponent } from './base.component';
+import { BaseComponent } from '../base.component';
 
 export interface ProfileContactComponentForm {
   email: string;
@@ -41,8 +41,8 @@ export class ProfileContactComponent extends BaseComponent {
 
     if(changed.has('formActor') && this.formActor){
 
-      this.subscribe('canSave', from(this.formActor).pipe(
-        map((state) => state.matches({
+      this.subscribe('canSave', from(this.formActor as any).pipe(
+        map((state: any) => state.matches({
           [FormSubmissionStates.NOT_SUBMITTED]:{
             [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
             [FormRootStates.VALIDATION]: FormValidationStates.VALID,
@@ -112,13 +112,13 @@ export class ProfileContactComponent extends BaseComponent {
       .withContext({
         data: { phone: phones[0], email: emails[0] },
         original: { phone: phones[0], email: emails[0] },
-      }));
+      }) as any);
 
     this.formActor?.start();
 
   }
 
-  static get styles() {
+  static get styles(): CSSResult[] {
 
     return [
       unsafeCSS(Theme),

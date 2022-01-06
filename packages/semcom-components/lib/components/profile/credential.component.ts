@@ -5,7 +5,7 @@ import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 import { Image, Theme } from '@digita-ai/dgt-theme';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { BaseComponent } from './base.component';
+import { BaseComponent } from '../base.component';
 
 export interface Credential {
   uri: string;

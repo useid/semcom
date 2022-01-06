@@ -1,5 +1,5 @@
 import { NamedNode, Store, DataFactory } from 'n3';
-import { css, html, property, PropertyValues, TemplateResult, unsafeCSS } from 'lit-element';
+import { css, CSSResult, html, property, PropertyValues, TemplateResult, unsafeCSS } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 import { Image, Theme } from '@digita-ai/dgt-theme';
@@ -8,7 +8,7 @@ import { interpret, Interpreter } from 'xstate';
 import { map } from 'rxjs/operators';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { FormCleanlinessStates, FormContext, formMachine, FormRootStates, FormSubmissionStates, FormValidationStates, FormValidatorResult, FormEvents } from '@digita-ai/dgt-components';
-import { BaseComponent } from './base.component';
+import { BaseComponent } from '../base.component';
 
 export interface ProfileNameComponentForm {
   image: string;
@@ -43,8 +43,8 @@ export class ProfileNameComponent extends BaseComponent {
 
     if(changed.has('formActor') && this.formActor){
 
-      this.subscribe('canSave', from(this.formActor).pipe(
-        map((state) => state.matches({
+      this.subscribe('canSave', from(this.formActor as any).pipe(
+        map((state: any) => state.matches({
           [FormSubmissionStates.NOT_SUBMITTED]:{
             [FormRootStates.CLEANLINESS]: FormCleanlinessStates.DIRTY,
             [FormRootStates.VALIDATION]: FormValidationStates.VALID,
@@ -100,13 +100,13 @@ export class ProfileNameComponent extends BaseComponent {
       .withContext({
         data: { image, fullName, nick, honorific },
         original: { image, fullName, nick, honorific },
-      }));
+      })as any);
 
     this.formActor?.start();
 
   }
 
-  static get styles() {
+  static get styles(): CSSResult[] {
 
     return [
       unsafeCSS(Theme),
