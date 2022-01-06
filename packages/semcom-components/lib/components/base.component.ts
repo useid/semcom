@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
 import { Component, ComponentDataTypes } from '@digita-ai/semcom-core';
 import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
-import { LitElement, property } from 'lit-element';
+import { property } from 'lit-element';
+import { RxLitElement } from 'rx-lit';
 
 /**
  * A base component which implements the Semcom-standard by using Lit.
  */
-export abstract class BaseComponent extends LitElement implements Component {
+export abstract class BaseComponent extends RxLitElement implements Component {
 
   @property({ type: String }) entry?: string;
 
