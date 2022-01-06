@@ -122,3 +122,6 @@ dist
 
 coverage-summary.json
 rundata/
+
+# OS file
+.DS_store
