@@ -1,0 +1,10 @@
+{
+    "uri": "",
+    "label": "Gender Component",
+    "description": "A gender component",
+    "author": "Digita",
+    "tag": "gender-component",
+    "version": "0.1.0",
+    "latest": true,
+    "shapes": [ "http://xmlns.com/foaf/0.1/Person" ]
+}

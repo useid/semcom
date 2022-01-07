@@ -8,7 +8,7 @@ import { interpret, Interpreter } from 'xstate';
 import { map } from 'rxjs/operators';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { FormCleanlinessStates, FormContext, formMachine, FormRootStates, FormSubmissionStates, FormValidationStates, FormValidatorResult, FormEvents } from '@digita-ai/dgt-components';
-import { BaseComponent } from '../base.component';
+import { BaseComponent } from '../base/base.component';
 
 export interface ProfileNameComponentForm {
   image: string;

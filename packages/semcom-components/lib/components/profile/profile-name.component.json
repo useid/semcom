@@ -1,0 +1,10 @@
+{
+    "uri": "",
+    "label": "Profile Name Component",
+    "description": "A profile name component",
+    "author": "Digita",
+    "tag": "profile-name-component",
+    "version": "0.1.0",
+    "latest": true,
+    "shapes": [ "http://xmlns.com/foaf/0.1/Person" ]
+}

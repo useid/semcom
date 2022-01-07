@@ -1,0 +1,10 @@
+{
+    "uri": "",
+    "label": "Barcode Component",
+    "description": "A barcode component",
+    "author": "Digita",
+    "tag": "barcode-component",
+    "version": "0.1.0",
+    "latest": true,
+    "shapes": []
+}
