@@ -1,0 +1,10 @@
+{
+    "uri": "",
+    "label": "Profile Payslip Component",
+    "description": "A profile payslip component",
+    "author": "Digita",
+    "tag": "profile-payslip-component",
+    "version": "0.1.0",
+    "latest": true,
+    "shapes": [ "http://xmlns.com/foaf/0.1/Person" ]
+}
