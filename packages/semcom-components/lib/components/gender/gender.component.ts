@@ -3,7 +3,7 @@ import { NamedNode, Store } from 'n3';
 import { css, CSSResult, html, property, PropertyValues } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { BaseComponent } from './base.component';
+import { BaseComponent } from '../base/base.component';
 
 export class GenderComponent extends BaseComponent {
 
