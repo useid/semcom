@@ -1,14 +1,24 @@
 import { Parser } from 'n3';
-import { addListener, ComponentEventType, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
-import ProfileComponent from './components/profile/profile.component';
-import PayslipComponent from './components/payslip.component';
-import InputComponent from './components/input.component';
-import GenderComponent from './components/gender.component';
+import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { ProfileComponent } from './components/profile/profile.component';
+import { PayslipComponent } from './components/payslip/payslip.component';
+import { InputComponent } from './components/input/input.component';
+import { GenderComponent } from './components/gender/gender.component';
+import { BarcodeComponent } from './components/barcode/barcode.component';
+import { CredentialComponent } from './components/profile/credential.component';
+import { ProfileContactComponent } from './components/profile/profile-contact.component';
+import { ProfileNameComponent } from './components/profile/profile-name.component';
+import { ProfilePayslipComponent } from './components/profile/profile-payslip.component';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
 customElements.define('input-component', InputComponent);
 customElements.define('gender-component', GenderComponent);
+customElements.define('barcode-component', BarcodeComponent);
+customElements.define('credential-component', CredentialComponent);
+customElements.define('profile-contact-component', ProfileContactComponent);
+customElements.define('profile-name-component', ProfileNameComponent);
+customElements.define('profile-payslip-component', ProfilePayslipComponent);
 
 const parser = new Parser();
 
