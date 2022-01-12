@@ -8,7 +8,7 @@ import { BaseComponent } from '../base/base.component';
 
 export class DocumentComponent extends BaseComponent {
 
-  @property() documents?: { url: string; fileName: string }[] = [];
+  @property() documents?: { url: string; fileName: string }[] = [ { url: 'http://test.com', fileName: 'test' } ];
   @property() url?: string;
   @property() fileName?: string;
 
