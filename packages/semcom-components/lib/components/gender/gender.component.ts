@@ -53,7 +53,7 @@ export class GenderComponent extends BaseComponent {
 
   render(): TemplateResult{
 
-    const imgUrl = new URL(`../assets/gender/${this.gender}.png`, import.meta.url);
+    const imgUrl = new URL(`../../public/assets/gender/${this.gender}.png`, import.meta.url);
 
     return html`
       <img src='${imgUrl.href}'/>
