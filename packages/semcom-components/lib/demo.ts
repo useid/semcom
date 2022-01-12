@@ -1,6 +1,7 @@
 import { Parser } from 'n3';
 import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DocumentComponent } from './components/document/document.component';
 import { PayslipComponent } from './components/payslip/payslip.component';
 import { InputComponent } from './components/input/input.component';
 import { GenderComponent } from './components/gender/gender.component';
@@ -14,6 +15,7 @@ customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
 customElements.define('input-component', InputComponent);
 customElements.define('gender-component', GenderComponent);
+customElements.define('document-component', DocumentComponent);
 customElements.define('barcode-component', BarcodeComponent);
 customElements.define('credential-component', CredentialComponent);
 customElements.define('profile-contact-component', ProfileContactComponent);
