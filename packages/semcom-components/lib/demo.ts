@@ -1,5 +1,6 @@
 import { Parser } from 'n3';
 import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { CardComponent, ContentHeaderComponent, FormElementComponent, SidebarItemComponent, SidebarListComponent, SidebarListItemComponent } from '@digita-ai/dgt-components';
 import { ProfileComponent } from './components/profile/profile.component';
 import { DocumentComponent } from './components/document/document.component';
 import { PayslipComponent } from './components/payslip/payslip.component';
@@ -21,6 +22,12 @@ customElements.define('credential-component', CredentialComponent);
 customElements.define('profile-contact-component', ProfileContactComponent);
 customElements.define('profile-name-component', ProfileNameComponent);
 customElements.define('profile-payslip-component', ProfilePayslipComponent);
+customElements.define('nde-form-element', FormElementComponent);
+customElements.define('nde-card', CardComponent);
+customElements.define('card-header', ContentHeaderComponent);
+customElements.define('nde-sidebar-list-item', SidebarListItemComponent);
+customElements.define('nde-sidebar-list', SidebarListComponent);
+customElements.define('nde-sidebar-item', SidebarItemComponent);
 
 const parser = new Parser();
 

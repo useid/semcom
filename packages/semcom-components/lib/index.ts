@@ -1,5 +1,6 @@
 export * from './components/profile/profile.component';
 export * from './components/payslip/payslip.component';
+export * from './components/document/document.component';
 export * from './components/input/input.component';
 export * from './components/gender/gender.component';
 export * from './components/base/base.component';
