@@ -1,8 +1,8 @@
 import { NamedNode, Store } from 'n3';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { css, CSSResult, html, property, TemplateResult } from 'lit-element';
+import { css, CSSResult, html, property, TemplateResult, unsafeCSS } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
-import { Document, Arrow } from '@digita-ai/dgt-theme';
+import { Document, Arrow, Theme } from '@digita-ai/dgt-theme';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 import { BaseComponent } from '../base/base.component';
 
@@ -40,6 +40,7 @@ export class DocumentComponent extends BaseComponent {
   static get styles(): CSSResult[]{
 
     return [
+      unsafeCSS(Theme),
       css`
       div[slot="content"] {
         display: flex;
@@ -77,8 +78,6 @@ export class DocumentComponent extends BaseComponent {
         display: flex;
         align-items: center; 
         justify-content: center;
-        width: 50px;
-        height: 50px;
         margin-left: auto;
       }
       `,
