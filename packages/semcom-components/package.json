@@ -71,5 +71,8 @@
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
-  }
+  },
+  "eslintIgnore": [
+    "demo"
+  ]
 }

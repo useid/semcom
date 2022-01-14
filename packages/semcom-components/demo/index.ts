@@ -1,16 +1,16 @@
 import { Parser } from 'n3';
 import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
 import { CardComponent, ContentHeaderComponent, FormElementComponent, SidebarItemComponent, SidebarListComponent, SidebarListItemComponent } from '@digita-ai/dgt-components';
-import { ProfileComponent } from './components/profile/profile.component';
-import { DocumentComponent } from './components/document/document.component';
-import { PayslipComponent } from './components/payslip/payslip.component';
-import { InputComponent } from './components/input/input.component';
-import { GenderComponent } from './components/gender/gender.component';
-import { BarcodeComponent } from './components/barcode/barcode.component';
-import { CredentialComponent } from './components/profile/credential.component';
-import { ProfileContactComponent } from './components/profile/profile-contact.component';
-import { ProfileNameComponent } from './components/profile/profile-name.component';
-import { ProfilePayslipComponent } from './components/profile/profile-payslip.component';
+import { ProfileComponent } from '../lib/components/profile/profile.component';
+import { DocumentComponent } from '../lib/components/document/document.component';
+import { PayslipComponent } from '../lib/components/payslip/payslip.component';
+import { InputComponent } from '../lib/components/input/input.component';
+import { GenderComponent } from '../lib/components/gender/gender.component';
+import { BarcodeComponent } from '../lib/components/barcode/barcode.component';
+import { CredentialComponent } from '../lib/components/profile/credential.component';
+import { ProfileContactComponent } from '../lib/components/profile/profile-contact.component';
+import { ProfileNameComponent } from '../lib/components/profile/profile-name.component';
+import { ProfilePayslipComponent } from '../lib/components/profile/profile-payslip.component';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
