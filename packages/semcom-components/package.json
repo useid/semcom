@@ -34,11 +34,17 @@
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
   "dependencies": {
+    "@digita-ai/dgt-components": "0.11.1",
+    "@digita-ai/dgt-theme": "0.11.1",
+    "@digita-ai/dgt-utils": "0.11.1",
     "@digita-ai/semcom-core": "0.9.8",
     "@digita-ai/semcom-sdk": "0.9.8",
     "buffer": "6.0.3",
+    "jsbarcode": "^3.11.5",
     "lit-element": "^2.4.0",
-    "n3": "1.10.0"
+    "n3": "1.10.0",
+    "rx-lit": "1.0.1",
+    "xstate": "^4.26.0"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
@@ -65,5 +71,8 @@
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
-  }
+  },
+  "eslintIgnore": [
+    "demo"
+  ]
 }

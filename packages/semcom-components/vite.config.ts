@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 export default ({ command, mode }) => {
   if (command === 'serve') {
     return defineConfig({
-      root: 'lib',
+      root: 'demo',
       build: {
         target: 'es2015',
         outDir: '../dist'
@@ -16,7 +16,7 @@ export default ({ command, mode }) => {
         'process.env.NODE_DEBUG': undefined
       },
       server: {
-        port: 8080,
+        port: process.env.PORT ? parseInt(process.env.PORT) : 8080
       }
     })
   } else {
@@ -32,11 +32,17 @@ export default ({ command, mode }) => {
         assetsDir: '../lib/assets',
         rollupOptions: {
           input: {
-            input: path.resolve(__dirname, 'lib/components/input.component.ts'),
-            base: path.resolve(__dirname, 'lib/components/base.component.ts'),
-            payslip: path.resolve(__dirname, 'lib/components/payslip.component.ts'),
-            profile: path.resolve(__dirname, 'lib/components/profile.component.ts'),
-            gender: path.resolve(__dirname, 'lib/components/gender.component.ts'),
+            input: path.resolve(__dirname, 'lib/components/input/input.component.ts'),
+            base: path.resolve(__dirname, 'lib/components/base/base.component.ts'),
+            document: path.resolve(__dirname, 'lib/components/document/document.component.ts'),
+            barcode: path.resolve(__dirname, 'lib/components/barcode/barcode.component.ts'),
+            credential: path.resolve(__dirname, 'lib/components/profile/credential.component.ts'),
+            payslip: path.resolve(__dirname, 'lib/components/payslip/payslip.component.ts'),
+            profile: path.resolve(__dirname, 'lib/components/profile/profile.component.ts'),
+            profileContact: path.resolve(__dirname, 'lib/components/profile/profile-contact.component.ts'),
+            profileName: path.resolve(__dirname, 'lib/components/profile/profile-name.component.ts'),
+            profilePayslip: path.resolve(__dirname, 'lib/components/profile/profile-payslip.component.ts'),
+            gender: path.resolve(__dirname, 'lib/components/gender/gender.component.ts'),
           },
           output: [
             {

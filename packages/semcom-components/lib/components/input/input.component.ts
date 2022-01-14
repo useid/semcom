@@ -1,8 +1,8 @@
-import { css, html, query, state } from 'lit-element';
+import { css, CSSResult, html, query, state, TemplateResult } from 'lit-element';
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Literal, NamedNode, Quad } from 'n3';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { BaseComponent } from './base.component';
+import { BaseComponent } from '../base/base.component';
 
 export class InputComponent extends BaseComponent {
 
@@ -63,7 +63,7 @@ export class InputComponent extends BaseComponent {
 
   }
 
-  static get styles() {
+  static get styles(): CSSResult[] {
 
     return [
       css`
@@ -145,7 +145,7 @@ export class InputComponent extends BaseComponent {
   /**
    * Writes data when the user clicks the submit button.
    */
-  handleClickSubmit() {
+  handleClickSubmit(): void {
 
     if (!this.fileName) {
 
@@ -174,7 +174,7 @@ export class InputComponent extends BaseComponent {
 
   }
 
-  render() {
+  render(): TemplateResult {
 
     return html`
     <div class="container">
