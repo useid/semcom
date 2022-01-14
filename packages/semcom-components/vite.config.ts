@@ -32,17 +32,17 @@ export default ({ command, mode }) => {
         assetsDir: '../lib/assets',
         rollupOptions: {
           input: {
-            input: path.resolve(__dirname, 'lib/components/input/input.component.ts'),
-            base: path.resolve(__dirname, 'lib/components/base/base.component.ts'),
-            document: path.resolve(__dirname, 'lib/components/document/document.component.ts'),
-            barcode: path.resolve(__dirname, 'lib/components/barcode/barcode.component.ts'),
-            credential: path.resolve(__dirname, 'lib/components/profile/credential.component.ts'),
-            payslip: path.resolve(__dirname, 'lib/components/payslip/payslip.component.ts'),
-            profile: path.resolve(__dirname, 'lib/components/profile/profile.component.ts'),
-            profileContact: path.resolve(__dirname, 'lib/components/profile/profile-contact.component.ts'),
-            profileName: path.resolve(__dirname, 'lib/components/profile/profile-name.component.ts'),
-            profilePayslip: path.resolve(__dirname, 'lib/components/profile/profile-payslip.component.ts'),
-            gender: path.resolve(__dirname, 'lib/components/gender/gender.component.ts'),
+            input: path.resolve(__dirname, 'lib/components/input.component.ts'),
+            base: path.resolve(__dirname, 'lib/components/base.component.ts'),
+            document: path.resolve(__dirname, 'lib/components/document.component.ts'),
+            barcode: path.resolve(__dirname, 'lib/components/barcode.component.ts'),
+            credential: path.resolve(__dirname, 'lib/components/credential.component.ts'),
+            payslip: path.resolve(__dirname, 'lib/components/payslip.component.ts'),
+            profile: path.resolve(__dirname, 'lib/components/profile.component.ts'),
+            profileContact: path.resolve(__dirname, 'lib/components/profile-contact.component.ts'),
+            profileName: path.resolve(__dirname, 'lib/components/profile-name.component.ts'),
+            profilePayslip: path.resolve(__dirname, 'lib/components/profile-payslip.component.ts'),
+            gender: path.resolve(__dirname, 'lib/components/gender.component.ts'),
           },
           output: [
             {
