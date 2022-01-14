@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.10.1](https://github.com/digita-ai/semcom/compare/v0.10.0...v0.10.1) (2022-01-14)
+
+**Note:** Version bump only for package @digita-ai/semcom-core
+
+
+
+
+
 ## [0.10.0](https://github.com/digita-ai/semcom/compare/v0.9.8...v0.10.0) (2022-01-14)
 
 **Note:** Version bump only for package @digita-ai/semcom-core
