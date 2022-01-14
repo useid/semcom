@@ -6,7 +6,7 @@ import { Theme, QR, Open } from '@digita-ai/dgt-theme';
 import JsBarcode from 'jsbarcode';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { BaseComponent } from '../base/base.component';
+import { BaseComponent } from './base.component';
 
 export class BarcodeComponent extends BaseComponent {
 

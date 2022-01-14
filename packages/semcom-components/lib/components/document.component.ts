@@ -4,7 +4,7 @@ import { css, CSSResult, html, property, TemplateResult, unsafeCSS } from 'lit-e
 import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
 import { Document, Arrow, Theme } from '@digita-ai/dgt-theme';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
-import { BaseComponent } from '../base/base.component';
+import { BaseComponent } from './base.component';
 
 export class DocumentComponent extends BaseComponent {
 

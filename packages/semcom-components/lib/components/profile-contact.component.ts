@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { NotImplementedError } from '@digita-ai/dgt-utils';
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { FormCleanlinessStates, FormContext, formMachine, FormRootStates, FormSubmissionStates, FormValidationStates, FormValidatorResult } from '@digita-ai/dgt-components';
-import { BaseComponent } from '../base/base.component';
+import { BaseComponent } from '../base.component';
 
 export interface ProfileContactComponentForm {
   email: string;
