@@ -20,7 +20,6 @@
     "dist"
   ],
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "npm run start:dev",
     "start:dev": "vite",
     "start:sync:dev": "npm run start:dev",

@@ -29,7 +29,6 @@
     "directory": "packages/semcom-sdk"
   },
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "build": "rimraf ./dist && npm run build:bundle && npm run build:ts && npm run build:components",
     "build:bundle": "vite build --mode development",
     "build:ts": "tsc",

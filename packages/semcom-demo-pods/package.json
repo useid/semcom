@@ -5,7 +5,6 @@
   "author": "",
   "license": "",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "shx rm -rf rundata && shx cp -r data rundata && community-solid-server -p 9000 -f ./rundata -c config/config-file.json",
     "start:dev": "npm run start",
     "start:sync:dev": "npm run start:dev"

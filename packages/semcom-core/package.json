@@ -33,7 +33,6 @@
     "build:bundle": "vite build",
     "build:ts": "tsc",
     "build:components": "componentsjs-generator --typeScopedContexts -s lib -c dist/components -i .componentsignore",
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:staged": "lint-staged",
