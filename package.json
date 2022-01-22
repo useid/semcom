@@ -3,7 +3,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
+    "clean": "npm run clean:locks && npm run clean:modules",
+    "clean:locks": "npm i --package-locks-only && lerna exec 'npm i --package-locks-only'",
+    "clean:modules": "lerna clean && shx rm -rf ./node_modules/",
     "release": "lerna version",
     "release:docs": "echo \"$(yaml set docs/antora.yml version $(dot-json lerna.json version))\" > docs/antora.yml",
     "postinstall": "husky install",
