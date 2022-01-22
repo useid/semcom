@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.10.2](https://github.com/digita-ai/semcom/compare/v0.10.1...v0.10.2) (2022-01-22)
+
+
+### **Bug Fixes**
+
+* component-shape corrections ([#216](https://github.com/digita-ai/semcom/issues/216)) ([8dff959](https://github.com/digita-ai/semcom/commit/8dff959751e5c67a67903dbec92512a16f2ae7d6))
+
+
+
 ### [0.10.1](https://github.com/digita-ai/semcom/compare/v0.10.0...v0.10.1) (2022-01-14)
 
 **Note:** Version bump only for package @digita-ai/semcom-sdk
