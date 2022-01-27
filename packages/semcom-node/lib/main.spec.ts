@@ -33,7 +33,7 @@ describe('createVariables', () => {
       'urn:semcom-node:variables:schema': undefined,
       'urn:semcom-node:variables:host': 'localhost',
       'urn:semcom-node:variables:port': '3000',
-      'urn:semcom-node:variables:sync': true,
+      'urn:semcom-node:variables:sync': false,
     });
 
   }));
@@ -54,7 +54,7 @@ describe('createVariables', () => {
       'urn:semcom-node:variables:schema': undefined,
       'urn:semcom-node:variables:host': 'localhost',
       'urn:semcom-node:variables:port': '3000',
-      'urn:semcom-node:variables:sync': true,
+      'urn:semcom-node:variables:sync': false,
     });
 
   }));

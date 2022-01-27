@@ -73,7 +73,7 @@ export const createVariables = (args: string[]): Record<string, any> => {
     'urn:semcom-node:variables:schema': argv.schema,
     'urn:semcom-node:variables:host': argv.host ?? 'localhost',
     'urn:semcom-node:variables:port': argv.port ?? '3000',
-    'urn:semcom-node:variables:sync': argv.sync ?? true,
+    'urn:semcom-node:variables:sync': argv.sync ?? false,
   };
 
 };
