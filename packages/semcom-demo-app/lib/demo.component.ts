@@ -11,6 +11,9 @@ import { fetch } from '@digita-ai/inrupt-solid-client';
 import { demoMachine, DemoContext, DemoEvent, DemoState, DemoStates, AuthenticatedEvent } from './demo.machine';
 import { SemComService } from './services/semcom.service';
 
+/**
+ * A component to demo SemCom in an application.
+ */
 export class DemoComponent extends RxLitElement {
 
   private solidService = new SolidSDKService('SemCom');

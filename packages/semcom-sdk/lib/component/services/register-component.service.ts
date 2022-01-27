@@ -2,8 +2,16 @@
 import jsSHA from 'jssha';
 import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
 
+/**
+ * A { AbstractRegisterComponentService } that registers a component.
+ */
 export class RegisterComponentService extends AbstractRegisterComponentService {
 
+  /**
+   * Checks if the component is already registered.
+   *
+   * @param { ComponentMetadata } componentMetadata - The component metadata to check.
+   */
   async isRegistered(componentMetadata: ComponentMetadata): Promise<boolean> {
 
     if (!componentMetadata || !componentMetadata.uri) {
@@ -16,6 +24,12 @@ export class RegisterComponentService extends AbstractRegisterComponentService {
 
   }
 
+  /**
+   * Registers the component.
+   *
+   * @param { ComponentMetadata } componentMetadata - The component metadata to register.
+   * @returns The tag of the registered component.
+   */
   async register(componentMetadata: ComponentMetadata): Promise<string> {
 
     if (!componentMetadata || !componentMetadata.tag || !componentMetadata.uri) {

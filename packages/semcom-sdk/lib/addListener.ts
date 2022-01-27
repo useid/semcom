@@ -1,6 +1,9 @@
 import { ComponentDataTypes } from '@digita-ai/semcom-core';
 import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from './component/models/component-events.model';
 
+/**
+ * Make TypeScript believe in the existence of SemCom event types.
+ */
 declare global {
   interface GlobalEventHandlersEventMap {
     [ComponentEventTypes.READ]: ComponentReadEvent<any>;
@@ -10,6 +13,14 @@ declare global {
   }
 }
 
+/**
+ * Adds listeners to a SemCom component, to listen for SemCom events of a certain event type and data type.
+ *
+ * @param { T } eventType - The type of event to listen to.
+ * @param { D } dataType -The type of data to listen to.
+ * @param { GlobalEventHandlers} element - The element on which the event should occur.
+ * @param { (event: GlobalEventHandlersEventMap[T]) } process - The function to call when the event occurs.
+ */
 export const addListener = <D extends keyof ComponentDataTypes, T extends ComponentEventTypes>(
   eventType: T,
   dataType: D,

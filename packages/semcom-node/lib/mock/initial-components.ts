@@ -1,5 +1,8 @@
 import { ComponentMetadata } from '@digita-ai/semcom-core';
 
+/**
+ * Mock data for initial components
+ */
 export const initialComponents = [
   {
     uri: 'foo1/bar',

@@ -3,8 +3,16 @@ import { Observable, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentService } from '../component/services/component.service';
 
+/**
+ * A { HttpHandler } retrieving components based on a query.
+ */
 export class QueryComponentHttpHandler extends HttpHandler {
 
+  /**
+   * Creates a { QueryComponentHttpHandler }.
+   *
+   * @param { ComponentService } components - The component service used to manage and query components.
+   */
   constructor(
     private components: ComponentService,
   ) {
@@ -13,6 +21,12 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
   }
 
+  /**
+   * Retrieves components based on the query specified in the request,
+   * and returns them as a JSON response.
+   *
+   * @param { HttpHandlerContext } context - The context of the request.
+   */
   handle(context: HttpHandlerContext): Observable<HttpHandlerResponse> {
 
     if (!context.request.body) {
@@ -33,6 +47,12 @@ export class QueryComponentHttpHandler extends HttpHandler {
 
   }
 
+  /**
+   * Confirms if the handler can handle the request by checking the HTTP method.
+   *
+   * @param { HttpHandlerContext } context - The context of the http request.
+   * @returns Boolean confirming if the handler can handle the request based on the HTTP method.
+   */
   canHandle(context: HttpHandlerContext): Observable<boolean> {
 
     if (context.request.method === 'POST') {
