@@ -1,6 +1,6 @@
 import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
-import { HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
-import { Observable, Subject, from, of, throwError } from 'rxjs';
+import { HttpError, HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
+import { Observable, Subject, from, of, throwError, zip } from 'rxjs';
 import { map, switchMap, tap, toArray } from 'rxjs/operators';
 import serialize from 'rdf-serialize';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
@@ -20,6 +20,7 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
    * @param { QuadSerializationService } serializer - The service that serializes quads to different forms of linked data.
    */
   constructor(
+    private contentHandler: HttpHandler,
     private logger: LoggerService,
     private defaultContentType: string,
     private transformer: ComponentTransformerService,
@@ -51,22 +52,13 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
    * @param { HttpHandlerContext } context - The context of the http request.
    * @param { HttpHandlerResponse } response - The response object to be returned.
    */
-  handle(context: HttpHandlerContext, response: HttpHandlerResponse): Observable<HttpHandlerResponse> {
+  handle(context: HttpHandlerContext): Observable<HttpHandlerResponse> {
 
-    this.logger.log('debug', 'Running content negotiation handler', {
-      context,
-      response,
-    });
+    this.logger.log('debug', 'Running content negotiation handler', context);
 
-    if (!context.request) {
+    if (!context?.request) {
 
       return throwError(new Error('Argument request should be set.'));
-
-    }
-
-    if (!response) {
-
-      return throwError(new Error('Argument response should be set.'));
 
     }
 
@@ -78,41 +70,32 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
         : request.headers.accept;
 
     return this.isContentTypeSupported(contentType).pipe(
-      switchMap((isContentTypeSupported) => {
+      switchMap((isContentTypeSupported) => isContentTypeSupported ? this.contentHandler.handle(context) : throwError(() => new HttpError(406, 'Not Acceptable'))),
+      switchMap((response) => {
 
-        if (isContentTypeSupported) {
+        if (!response) { return throwError(() => 'Argument response should be set.'); }
 
-          const components: ComponentMetadata[] = JSON.parse(response.body);
+        const components: ComponentMetadata[] = JSON.parse(response.body);
 
-          const quads = this.transformer.toQuads(components);
+        const quads = this.transformer.toQuads(components);
 
-          const resultStream = this.serializer.serialize(quads, contentType);
+        const resultStream = this.serializer.serialize(quads, contentType);
 
-          this.logger.log('debug', 'Mapped to rdf', { request, response });
+        this.logger.log('debug', 'Mapped to rdf', { request, response });
 
-          const buffer = new Subject<any>();
-          resultStream.on('data', (chunk) => buffer.next(chunk));
-          resultStream.on('end', () => buffer.complete());
+        const buffer = new Subject<any>();
+        resultStream.on('data', (chunk) => buffer.next(chunk));
+        resultStream.on('end', () => buffer.complete());
 
-          return buffer.pipe(
-            toArray(),
-            map((chunks: string[]) => chunks.join('')),
-            map((body) => ({
-              ...response,
-              body,
-              headers: { ...response.headers, 'content-type': contentType },
-            })),
-          );
-
-        } else {
-
-          return of({
+        return buffer.pipe(
+          toArray(),
+          map((chunks: string[]) => chunks.join('')),
+          map((body) => ({
             ...response,
-            status: 406,
-            body: '',
-          });
-
-        }
+            body,
+            headers: { ...response.headers, 'content-type': contentType },
+          })),
+        );
 
       }),
     );

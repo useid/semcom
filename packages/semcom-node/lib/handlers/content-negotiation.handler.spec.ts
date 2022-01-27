@@ -1,20 +1,32 @@
-import { HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
+import { HttpError, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
 import { LoggerConsoleService } from '@digita-ai/semcom-core';
+import { of } from 'rxjs';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
 import { ContentNegotiationHttpHandler } from '../handlers/content-negotiation.handler';
 import { QuadSerializationService } from '../quad/services/quad-serialization.service';
+import { ComponentHttpHandler } from './component.handler';
 
 const logger = new LoggerConsoleService();
 
 describe('ServerHandlerContentNegotiationService', () => {
 
+  let contentHandler: ComponentHttpHandler;
   let handler: ContentNegotiationHttpHandler;
   let mockCTX: HttpHandlerContext;
   let mockResponse: HttpHandlerResponse;
 
   beforeEach(() => {
 
+    contentHandler = ({
+      handle: () => of({
+        body: null,
+        headers: {},
+        status: 200,
+      }),
+    }) as unknown as ComponentHttpHandler;
+
     handler = new ContentNegotiationHttpHandler(
+      contentHandler,
       logger,
       'application/ld+json',
       new ComponentTransformerService(logger),
@@ -74,7 +86,7 @@ describe('ServerHandlerContentNegotiationService', () => {
 
     it('throws when context.request is null', async() => {
 
-      await expect(handler.handle({ ...mockCTX, request: null }, mockResponse).toPromise()).rejects.toThrow(
+      await expect(handler.handle({ ...mockCTX, request: null }).toPromise()).rejects.toThrow(
         'Argument request should be set.',
       );
 
@@ -82,7 +94,9 @@ describe('ServerHandlerContentNegotiationService', () => {
 
     it('throws when response is null', async() => {
 
-      await expect(handler.handle(mockCTX, null).toPromise()).rejects.toThrow(
+      contentHandler.handle = () => of(null);
+
+      await expect(handler.handle(mockCTX).toPromise()).rejects.toThrow(
         'Argument response should be set.',
       );
 
@@ -91,8 +105,7 @@ describe('ServerHandlerContentNegotiationService', () => {
     it('should return 406 for unknown content types', async() => {
 
       mockCTX.request.headers.accept = 'unsupportedContentType';
-      const temp = await handler.handle(mockCTX, mockResponse).toPromise();
-      await expect(temp.status).toBe(406);
+      await expect(handler.handle(mockCTX).toPromise()).rejects.toThrowError(new HttpError(406, 'Not acceptable'));
 
     });
 
