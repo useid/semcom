@@ -95,17 +95,14 @@ describe('ServerHandlerContentNegotiationService', () => {
     it('throws when response is null', async() => {
 
       contentHandler.handle = () => of(null);
-
-      await expect(handler.handle(mockCTX).toPromise()).rejects.toThrow(
-        'Argument response should be set.',
-      );
+      await expect(handler.handle(mockCTX).toPromise()).rejects.toThrow(new Error('Argument response should be set.'));
 
     });
 
     it('should return 406 for unknown content types', async() => {
 
       mockCTX.request.headers.accept = 'unsupportedContentType';
-      await expect(handler.handle(mockCTX).toPromise()).rejects.toThrowError(new HttpError(406, 'Not acceptable'));
+      await expect(handler.handle(mockCTX).toPromise()).rejects.toEqual(new HttpError(406, 'Not acceptable'));
 
     });
 

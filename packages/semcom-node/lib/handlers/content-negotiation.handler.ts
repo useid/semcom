@@ -1,6 +1,6 @@
 import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
 import { HttpError, HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
-import { Observable, Subject, from, of, throwError, zip } from 'rxjs';
+import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { map, switchMap, tap, toArray } from 'rxjs/operators';
 import serialize from 'rdf-serialize';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
@@ -70,10 +70,10 @@ export class ContentNegotiationHttpHandler extends HttpHandler {
         : request.headers.accept;
 
     return this.isContentTypeSupported(contentType).pipe(
-      switchMap((isContentTypeSupported) => isContentTypeSupported ? this.contentHandler.handle(context) : throwError(() => new HttpError(406, 'Not Acceptable'))),
+      switchMap((isContentTypeSupported) => isContentTypeSupported ? this.contentHandler.handle(context) : throwError(new HttpError(406, 'Not Acceptable'))),
       switchMap((response) => {
 
-        if (!response) { return throwError(() => 'Argument response should be set.'); }
+        if (!response) { return throwError(new Error('Argument response should be set.')); }
 
         const components: ComponentMetadata[] = JSON.parse(response.body);
 
