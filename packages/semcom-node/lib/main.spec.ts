@@ -33,6 +33,7 @@ describe('createVariables', () => {
       'urn:semcom-node:variables:schema': undefined,
       'urn:semcom-node:variables:host': 'localhost',
       'urn:semcom-node:variables:port': '3000',
+      'urn:semcom-node:variables:sync': false,
     });
 
   }));
@@ -44,6 +45,7 @@ describe('createVariables', () => {
       'bin',
       '-c',
       'bla',
+      'true',
     ]);
 
     expect(variables).toEqual({
@@ -52,6 +54,7 @@ describe('createVariables', () => {
       'urn:semcom-node:variables:schema': undefined,
       'urn:semcom-node:variables:host': 'localhost',
       'urn:semcom-node:variables:port': '3000',
+      'urn:semcom-node:variables:sync': false,
     });
 
   }));

@@ -23,6 +23,7 @@
     "@digita-ai/ui-transfer-components": "0.6.1",
     "@digita-ai/ui-transfer-theme": "0.6.1",
     "@xstate/inspect": "^0.4.1",
+    "cross-env": "^7.0.3",
     "lit-element": "^2.5.1",
     "rx-lit": "^1.0.1",
     "rxjs": "^6.0.0",
