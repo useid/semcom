@@ -16,7 +16,7 @@
     {
       "@id": "urn:semcom-node:default:MemoryStore",
       "@type": "MemoryStore",
-      "initialData": ["peers", []],
+      "initialData": ["peers", []], 
       "initialData": ["storage", []]
     },
     {

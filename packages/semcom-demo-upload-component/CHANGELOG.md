@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.0](https://github.com/digita-ai/semcom/compare/v0.10.2...v0.11.0) (2022-01-28)
+
+
+### **Bug Fixes**
+
+* start default in memory without sync ([#185](https://github.com/digita-ai/semcom/issues/185)) ([9c6688c](https://github.com/digita-ai/semcom/commit/9c6688c10dd74da05b3dc6669862b960abbe0085))
+
+
+
+### [0.10.2](https://github.com/digita-ai/semcom/compare/v0.10.1...v0.10.2) (2022-01-22)
+
+**Note:** Version bump only for package @digita-ai/semcom-demo-upload-components
+
+
+
+
+
+### [0.10.1](https://github.com/digita-ai/semcom/compare/v0.10.0...v0.10.1) (2022-01-14)
+
+**Note:** Version bump only for package @digita-ai/semcom-demo-upload-components
+
+
+
+
+
 ## [0.10.0](https://github.com/digita-ai/semcom/compare/v0.9.8...v0.10.0) (2022-01-14)
 
 **Note:** Version bump only for package @digita-ai/semcom-demo-upload-components

@@ -21,6 +21,9 @@
     {
       "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler",
       "@type": "ContentNegotiationHttpHandler",
+      "contentHandler": {
+        "@id": "urn:semcom-node:default:ComponentHttpHandler"
+      },
       "logger": {
         "@id": "urn:semcom-node:default:LoggerService"
       },
