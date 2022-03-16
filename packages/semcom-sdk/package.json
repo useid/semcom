@@ -6,6 +6,7 @@
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-sdk#readme",
   "main": "./dist/semcom-sdk.umd.js",
   "module": "./dist/semcom-sdk.es.js",
+  "license": "agpl-3.0",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
