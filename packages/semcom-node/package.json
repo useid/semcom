@@ -4,7 +4,7 @@
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
   "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
-  "license": "ISC",
+  "license": "agpl-3.0",
   "main": "./dist/public-api.js",
   "directories": {
     "lib": "lib",
