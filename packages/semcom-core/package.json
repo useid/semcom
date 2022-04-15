@@ -7,6 +7,7 @@
   "main": "./dist/semcom-core.umd.js",
   "module": "./dist/semcom-core.es.js",
   "types": "./dist/index.d.ts",
+  "license": "agpl-3.0",
   "exports": {
     ".": {
       "import": "./dist/semcom-core.es.js",

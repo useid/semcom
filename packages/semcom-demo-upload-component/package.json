@@ -10,7 +10,7 @@
     "build": "rimraf ./dist && vite build && tsc"
   },
   "author": "",
-  "license": "ISC",
+  "license": "agpl-3.0",
   "dependencies": {
     "@digita-ai/semcom-upload-component": "0.11.0",
     "@digita-ai/ui-transfer-components": "^0.7.2",

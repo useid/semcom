@@ -1,6 +1,7 @@
 {
   "name": "@digita-ai/semcom-demo-app",
   "version": "0.11.0",
+  "license": "agpl-3.0",
   "scripts": {
     "start": "http-server -p 4200 --gzip --brotli --proxy http://localhost:4200? dist/",
     "start:dev": "vite",
