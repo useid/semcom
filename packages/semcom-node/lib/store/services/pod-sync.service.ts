@@ -3,14 +3,18 @@ import { Parser } from 'n3';
 import fetch from 'node-fetch';
 import { from, Observable, of } from 'rxjs';
 
+/**
+ * A { Handler<void, void> } that handles the synchronization of components between a local pod and a store.
+ */
 export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
   extends Handler<void, void> {
 
   /**
+   * Creates a { PodSyncService }.
    *
-   * @param storage - key in which the storage is located
-   * @param store - the given store
-   * @param localPod - the URI of the local pod
+   * @param { S } storage - The key pointing to the list of storage pods.
+   * @param { TypedKeyValueStore<M> } store - The store containing the list of storage pods.
+   * @param { string } localPod - The URI of the local pod.
    */
   constructor(
     private readonly storage: S,
@@ -24,6 +28,12 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
   }
 
+  /**
+   * Fetches all components for the given pod uri and returns them in a set.
+   *
+   * @param { string } uri - The given pod.
+   * @returns The set of components found in the pod.
+   */
   private async componentsInPod(uri: string): Promise<Set<string>> {
 
     try {
@@ -47,6 +57,9 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
   }
 
+  /**
+   * Synchronizes the local components to contain all remote components as well.
+   */
   private async synchronizeComponents(): Promise<void> {
 
     const existingComponents = await this.componentsInPod(this.localPod);
@@ -89,6 +102,9 @@ export class PodSyncService<S extends string, M extends { [s in S]: string[] }>
 
   }
 
+  /**
+   * Synchronizes the local components to contain all remote components as well.
+   */
   handle(): Observable<void> {
 
     return from(this.synchronizeComponents());

@@ -2,8 +2,16 @@ import { ComponentMetadata } from '@digita-ai/semcom-core';
 import * as semver from 'semver';
 import { Store } from './store.service';
 
+/**
+ * A { Store } for keeping { ComponentMetadata }, implementing a default query method.
+ */
 export abstract class ComponentStore implements Store<ComponentMetadata>{
 
+  /**
+   * Queries the components based on a filter of partial metadata.
+   *
+   * @returns List of components that match the filter.
+   */
   async query(filter: Partial<ComponentMetadata>): Promise<ComponentMetadata[]> {
 
     const components = await this.all();

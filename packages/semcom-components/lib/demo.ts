@@ -1,14 +1,33 @@
 import { Parser } from 'n3';
-import { addListener, ComponentEventType, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
-import ProfileComponent from './components/profile.component';
-import PayslipComponent from './components/payslip.component';
-import InputComponent from './components/input.component';
-import GenderComponent from './components/gender.component';
+import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { CardComponent, ContentHeaderComponent, FormElementComponent, SidebarItemComponent, SidebarListComponent, SidebarListItemComponent } from '@digita-ai/dgt-components';
+import { ProfileComponent } from '../lib/components/profile.component';
+import { DocumentComponent } from '../lib/components/document.component';
+import { PayslipComponent } from '../lib/components/payslip.component';
+import { InputComponent } from '../lib/components/input.component';
+import { GenderComponent } from '../lib/components/gender.component';
+import { BarcodeComponent } from '../lib/components/barcode.component';
+import { CredentialComponent } from '../lib/components/credential.component';
+import { ProfileContactComponent } from '../lib/components/profile-contact.component';
+import { ProfileNameComponent } from '../lib/components/profile-name.component';
+import { ProfilePayslipComponent } from '../lib/components/profile-payslip.component';
 
 customElements.define('profile-component', ProfileComponent);
 customElements.define('payslip-component', PayslipComponent);
 customElements.define('input-component', InputComponent);
 customElements.define('gender-component', GenderComponent);
+customElements.define('document-component', DocumentComponent);
+customElements.define('barcode-component', BarcodeComponent);
+customElements.define('credential-component', CredentialComponent);
+customElements.define('profile-contact-component', ProfileContactComponent);
+customElements.define('profile-name-component', ProfileNameComponent);
+customElements.define('profile-payslip-component', ProfilePayslipComponent);
+customElements.define('nde-form-element', FormElementComponent);
+customElements.define('nde-card', CardComponent);
+customElements.define('card-header', ContentHeaderComponent);
+customElements.define('nde-sidebar-list-item', SidebarListItemComponent);
+customElements.define('nde-sidebar-list', SidebarListComponent);
+customElements.define('nde-sidebar-item', SidebarItemComponent);
 
 const parser = new Parser();
 

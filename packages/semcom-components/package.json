@@ -1,11 +1,12 @@
 {
   "name": "@digita-ai/semcom-components",
-  "version": "0.9.6",
+  "version": "0.11.0",
   "description": "Collection of Semantic Components",
   "author": "Wouter Termont <wouter.termont@digita.ai>",
   "main": "./dist/semcom-components.umd.js",
   "module": "./dist/semcom-components.es.js",
   "types": "./dist/index.d.ts",
+  "license": "agpl-3.0",
   "exports": {
     ".": {
       "import": "./dist/semcom-components.es.js",
@@ -20,7 +21,6 @@
     "dist"
   ],
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "npm run start:dev",
     "start:dev": "vite",
     "start:sync:dev": "npm run start:dev",
@@ -34,16 +34,22 @@
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
   "dependencies": {
-    "@digita-ai/semcom-core": "0.9.6",
-    "@digita-ai/semcom-sdk": "0.9.6",
+    "@digita-ai/dgt-components": "0.11.1",
+    "@digita-ai/dgt-theme": "0.11.1",
+    "@digita-ai/dgt-utils": "0.11.1",
+    "@digita-ai/semcom-core": "0.11.0",
+    "@digita-ai/semcom-sdk": "0.11.0",
     "buffer": "6.0.3",
+    "jsbarcode": "^3.11.5",
     "lit-element": "^2.4.0",
-    "n3": "1.10.0"
+    "n3": "1.10.0",
+    "rx-lit": "1.0.1",
+    "xstate": "^4.26.0"
   },
   "devDependencies": {
     "@digita-ai/typescript-config": "^0.3.4",
     "@types/jest": "^26.0.22",
-    "@types/n3": "^1.8.0",
+    "@types/n3": "1.10.0",
     "@types/node": "^14.14.14",
     "@types/rdf-js": "^4.0.1",
     "eslint": "^7.16.0",
@@ -65,5 +71,8 @@
   },
   "bugs": {
     "url": "https://github.com/digita-ai/semcom/issues"
-  }
+  },
+  "eslintIgnore": [
+    "demo"
+  ]
 }

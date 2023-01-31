@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.0](https://github.com/digita-ai/semcom/compare/v0.10.2...v0.11.0) (2022-01-28)
+
+
+### **Bug Fixes**
+
+* start default in memory without sync ([#185](https://github.com/digita-ai/semcom/issues/185)) ([9c6688c](https://github.com/digita-ai/semcom/commit/9c6688c10dd74da05b3dc6669862b960abbe0085))
+
+
+
+### [0.10.2](https://github.com/digita-ai/semcom/compare/v0.10.1...v0.10.2) (2022-01-22)
+
+
+### **Bug Fixes**
+
+* component-shape corrections ([#216](https://github.com/digita-ai/semcom/issues/216)) ([8dff959](https://github.com/digita-ai/semcom/commit/8dff959751e5c67a67903dbec92512a16f2ae7d6))
+
+
+
+### [0.10.1](https://github.com/digita-ai/semcom/compare/v0.10.0...v0.10.1) (2022-01-14)
+
+**Note:** Version bump only for package @digita-ai/semcom-components
+
+
+
+
+
+## [0.10.0](https://github.com/digita-ai/semcom/compare/v0.9.8...v0.10.0) (2022-01-14)
+
+**Note:** Version bump only for package @digita-ai/semcom-components
+
+
+
+
+
+### [0.9.8](https://github.com/digita-ai/semcom/compare/v0.9.7...v0.9.8) (2021-12-15)
+
+**Note:** Version bump only for package @digita-ai/semcom-components
+
+
+
+
+
+### [0.9.7](https://github.com/digita-ai/semcom/compare/v0.9.6...v0.9.7) (2021-12-09)
+
+
+### **Documentation**
+
+* complete-ts-docs ([#194](https://github.com/digita-ai/semcom/issues/194)) ([17a8415](https://github.com/digita-ai/semcom/commit/17a84154a5feaf960b70534a45c98c3bd048b95b))
+
+
+
 ### [0.9.6](https://github.com/digita-ai/semcom/compare/v0.9.5...v0.9.6) (2021-12-07)
 
 **Note:** Version bump only for package @digita-ai/semcom-components

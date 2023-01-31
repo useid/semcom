@@ -17,6 +17,7 @@ export class QuadSerializationService {
    *
    * @param quads The quads to convert
    * @param contentType The content type to convert to
+   * @returns A serialized stream of the quads.
    */
   serialize(quads: Quad[], contentType: string): NodeJS.ReadableStream {
 

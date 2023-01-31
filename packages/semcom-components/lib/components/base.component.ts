@@ -1,17 +1,18 @@
 /* eslint-disable no-console */
 import { Component, ComponentDataTypes } from '@digita-ai/semcom-core';
 import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
-import { LitElement, property } from 'lit-element';
+import { property } from 'lit-element';
+import { RxLitElement } from 'rx-lit';
 
 /**
  * A base component which implements the Semcom-standard by using Lit.
  */
-export abstract class BaseComponent extends LitElement implements Component {
+export abstract class BaseComponent extends RxLitElement implements Component {
 
   @property({ type: String }) entry?: string;
 
   /**
-   * Instantiates a `BaseComponent`, and add an event listener to handle `ComponentResponseEvent`s.
+   * Instantiates a `BaseComponent`, and adds an event listener to handle `ComponentResponseEvent`s.
    */
   constructor() {
 
@@ -106,7 +107,7 @@ export abstract class BaseComponent extends LitElement implements Component {
    */
 
   // Invoked each time the element is appended into a DOM (i.e. when node is added or moved).
-  connectedCallback() {
+  connectedCallback(): void {
 
     super.connectedCallback();
     console.debug(`[${this.tagName}] Element connected`);
@@ -114,7 +115,7 @@ export abstract class BaseComponent extends LitElement implements Component {
   }
 
   // Invoked each time the element is disconnected from a DOM.
-  disconnectedCallback() {
+  disconnectedCallback(): void {
 
     super.disconnectedCallback();
     console.debug(`[${this.tagName}] Element disconnected`);
@@ -122,7 +123,7 @@ export abstract class BaseComponent extends LitElement implements Component {
   }
 
   // Invoked each time the custom element is moved to a new DOM.
-  adoptedCallback() {
+  adoptedCallback(): void {
 
     // super.adoptedCallback();
     console.debug(`[${this.tagName}] Element moved to other DOM`);
@@ -130,7 +131,7 @@ export abstract class BaseComponent extends LitElement implements Component {
   }
 
   // Invoked each time one of the element's attributes specified in observedAttributes is changed.
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
 
     super.attributeChangedCallback(name, oldValue, newValue);
     console.debug(`[${this.tagName}] Changed ${name} attribute from "${oldValue}" to "${newValue}"`);

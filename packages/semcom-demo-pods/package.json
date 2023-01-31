@@ -1,11 +1,10 @@
 {
   "name": "@digita-ai/semcom-demo-pods",
-  "version": "0.9.6",
+  "version": "0.11.0",
   "description": "",
   "author": "",
-  "license": "",
+  "license": "agpl-3.0",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./package-lock.json && rimraf ./node_modules",
     "start": "shx rm -rf rundata && shx cp -r data rundata && community-solid-server -p 9000 -f ./rundata -c config/config-file.json",
     "start:dev": "npm run start",
     "start:sync:dev": "npm run start:dev"

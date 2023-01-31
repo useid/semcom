@@ -16,7 +16,7 @@ export default ({ command, mode }) => {
         'process.env.NODE_DEBUG': undefined
       },
       server: {
-        port: 8080,
+        port: process.env.PORT ? parseInt(process.env.PORT) : 8080
       }
     })
   } else {
@@ -34,8 +34,14 @@ export default ({ command, mode }) => {
           input: {
             input: path.resolve(__dirname, 'lib/components/input.component.ts'),
             base: path.resolve(__dirname, 'lib/components/base.component.ts'),
+            document: path.resolve(__dirname, 'lib/components/document.component.ts'),
+            barcode: path.resolve(__dirname, 'lib/components/barcode.component.ts'),
+            credential: path.resolve(__dirname, 'lib/components/credential.component.ts'),
             payslip: path.resolve(__dirname, 'lib/components/payslip.component.ts'),
             profile: path.resolve(__dirname, 'lib/components/profile.component.ts'),
+            profileContact: path.resolve(__dirname, 'lib/components/profile-contact.component.ts'),
+            profileName: path.resolve(__dirname, 'lib/components/profile-name.component.ts'),
+            profilePayslip: path.resolve(__dirname, 'lib/components/profile-payslip.component.ts'),
             gender: path.resolve(__dirname, 'lib/components/gender.component.ts'),
           },
           output: [

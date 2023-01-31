@@ -7,6 +7,9 @@ import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import valid from 'semver/functions/valid';
 
+/**
+ * Interface representing upload form fields.
+ */
 export interface UploadFormContext {
   uri: string;
   label: string;
@@ -20,6 +23,9 @@ export interface UploadFormContext {
   [key: string]: string;
 }
 
+/**
+ * A LitElement WebComponent for entering component metadata.
+ */
 export class SemComUploadFormComponent extends RxLitElement {
 
   @property({ type: Array })
@@ -73,6 +79,9 @@ export class SemComUploadFormComponent extends RxLitElement {
   @query('#checksum')
   checksum: HTMLTextAreaElement;
 
+  /**
+   * Creates a { SemComUploadFormComponent }.
+   */
   constructor() {
 
     super();
@@ -115,13 +124,23 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   }
 
-  // What type is module?
+  /**
+   * Defines components by the provided tag and module.
+   *
+   * @param { string } tag - The tag to define the component by.
+   * @param { CustomElementConstructor } module  - The module to define the component by.
+   */
   defineComponent = (tag: string, module: CustomElementConstructor): void => {
 
     if (!customElements.get(tag)) { customElements.define(tag, module); }
 
   };
 
+  /**
+   * Validates the upload form by checking the validity of the different fields.
+   *
+   * @param { FormContext<UploadFormContext> } context - The form context to validate.
+   */
   validateUploadForm = async (context: FormContext<UploadFormContext>): Promise<FormValidatorResult[]> => {
 
     // only validate dirty fields
@@ -185,6 +204,9 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   };
 
+  /**
+   * Checks if the form has empty fields.
+   */
   hasEmptyFields = (): boolean => this.uri?.value.trim() === ''
       || this.label?.value.trim() === ''
       || this.description?.value.trim() === ''
@@ -194,6 +216,10 @@ export class SemComUploadFormComponent extends RxLitElement {
       || this.version?.value.trim() === ''
       || this.checksum?.value.trim() === '';
 
+  /**
+   * Validates the form upon submission by checking the validity and content of the fields
+   * and setting error messages accordingly.
+   */
   validateOnSubmission = (): void => {
 
     this.errorDiv.innerHTML = '';
@@ -220,6 +246,12 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   translator = { translate: (value: string): string => value };
 
+  /**
+   * Generates a HTML template for a form input element.
+   *
+   * @param { string } field - The name of the input field.
+   * @param options (optional) - The options for the input field element.
+   */
   generateInputFormElement = (field: string, options?: { placeholder?: string; debounceTimeout?: string }): TemplateResult => html`
       <form-element-component debounceTimeout="${options?.debounceTimeout ? options.debounceTimeout : '0'}" .actor="${this.formActor}" .translator=${this.translator} field="${field}">
         <label slot="label" for="${field}">${field.charAt(0).toUpperCase() + field.substr(1)}</label>
@@ -234,6 +266,9 @@ export class SemComUploadFormComponent extends RxLitElement {
       </form-element-component>
     `;
 
+  /**
+   * Renders a HTML upload form template.
+   */
   render(): TemplateResult {
 
     return html`
@@ -291,6 +326,9 @@ export class SemComUploadFormComponent extends RxLitElement {
 
   }
 
+  /**
+   * Get the CSS for the form element.
+   */
   static get styles(): CSSResult[] {
 
     return [

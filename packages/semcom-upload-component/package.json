@@ -1,11 +1,12 @@
 {
   "name": "@digita-ai/semcom-upload-component",
-  "version": "0.9.6",
+  "version": "0.11.0",
   "description": "Collection of Semantic Components to upload Semantic Components.",
   "author": "Wouter Termont <wouter.termont@digita.ai>",
   "main": "./dist/semcom-upload-component.umd.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/semcom-upload-component.es.js",
+  "license": "agpl-3.0",
   "exports": {
     ".": {
       "import": "./dist/semcom-upload-component.es.js",

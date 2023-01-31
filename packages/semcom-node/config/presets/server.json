@@ -82,15 +82,7 @@
         }
       ],
       "handler": {
-        "@type": "SequenceHandler",
-        "handlers": [
-          {
-            "@id": "urn:semcom-node:default:ComponentHttpHandler"
-          },
-          {
-            "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
-          }
-        ]
+        "@id": "urn:semcom-node:default:ContentNegotiationHttpHandler"
       },
     
       "path": "/component"
