@@ -167,27 +167,29 @@ jobs:
         run: |
           kubectl rollout status deployment/semcom-deployment
 
-  publish-docs:
-    name: Publish docs
-    needs: test
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/master'
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - name: Store DigitalOcean credentials
-        run: doctl kubernetes cluster kubeconfig save dgt-k8s
-
-      # See https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-      - name: Restart deployment
-        run: |
-          kubectl rollout restart deployment dgt-docs-deployment  
-
-      - name: Verify deployment
-        run: |
-          kubectl rollout status deployment/dgt-docs-deployment
+#  DGT Docs server is no longer online
+#
+#  publish-docs:
+#    name: Publish docs
+#    needs: test
+#    runs-on: ubuntu-latest
+#    if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/master'
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - uses: digitalocean/action-doctl@v2
+#        with:
+#          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+#
+#      - name: Store DigitalOcean credentials
+#        run: doctl kubernetes cluster kubeconfig save dgt-k8s
+#
+#      # See https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
+#      - name: Restart deployment
+#        run: |
+#          kubectl rollout restart deployment dgt-docs-deployment  
+#
+#      - name: Verify deployment
+#        run: |
+#          kubectl rollout status deployment/dgt-docs-deployment
