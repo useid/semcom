@@ -8,8 +8,7 @@
     },
     "version": {
       "allowBranch": [
-        "master",
-        "develop"
+        "main"
       ],
       "conventionalCommits": true,
       "exact": true,
