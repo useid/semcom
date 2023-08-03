@@ -2,8 +2,8 @@ import { html, css, CSSResult, TemplateResult, state, unsafeCSS, property } from
 import { RxLitElement } from 'rx-lit';
 import { from } from 'rxjs';
 import { createMachine, interpret, State } from 'xstate';
-import { Theme } from '@digita-ai/ui-transfer-theme';
-import { AuthenticateComponent, FeedbackComponent, LoadingComponent, ProviderListComponent } from '@digita-ai/ui-transfer-components';
+import { Theme } from '@useid/ui-transfer-theme';
+import { AuthenticateComponent, FeedbackComponent, LoadingComponent, ProviderListComponent } from '@useid/ui-transfer-components';
 import { FormElementComponent } from '@netwerk-digitaal-erfgoed/solid-crs-components';
 import { SolidSDKService } from '../services/solid-sdk.service';
 import { semComRegisterMachine, SemComRegisterContext, SemComRegisterEvent, SemComRegisterState, SemComRegisterStates, AuthenticatedEvent, BackToStoreSelectionEvent, BackToUploadFormEvent, StoreSelectedEvent, UploadFormSubmittedEvent, NoPermissionEvent, DataNotSavedEvent } from './sem-com-register.machine';

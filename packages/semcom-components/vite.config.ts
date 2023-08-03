@@ -26,7 +26,7 @@ export default ({ command, mode }) => {
         target: 'es2020',
         lib: {
           entry: path.resolve(__dirname, 'lib/index.ts'),
-          name: '@digita-ai/semcom-components',
+          name: '@useid/semcom-components',
         },
         outDir: '../dist',
         assetsDir: '../lib/assets',

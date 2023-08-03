@@ -1,6 +1,6 @@
 import { Quad } from 'n3';
 import { default as streamify } from 'streamify-array';
-import { LoggerService } from '@digita-ai/semcom-core';
+import { LoggerService } from '@useid/semcom-core';
 import serialize from 'rdf-serialize';
 
 /**

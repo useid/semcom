@@ -2,17 +2,17 @@
 Wouter Termont <wouter.termont@digita.ai>
 :description: A description of the software development kit.
 :sectanchors:
-:url-repo: https://github.com/digita-ai/semcom
+:url-repo: https://github.com/useid/semcom
 :page-tags: semcom
 
 :toc:
 
-This document describes a Software Development Kit for JavaScript to easily write applications that use the SemCom ecosystem of decentralized component registries to support the dynamic binding of semantic components. This SDK can be imported as `@digita-ai/semcom-sdk`.
+This document describes a Software Development Kit for JavaScript to easily write applications that use the SemCom ecosystem of decentralized component registries to support the dynamic binding of semantic components. This SDK can be imported as `@useid/semcom-sdk`.
 
 [[core]]
 == Core interfaces
 
-The package `@digita-ai/semcom-core` provides a number of core interfaces that adhere to the SemCom specification and are used by this SDK. In particular, these comprise of the `Component`, `ComponentMetadata`, `ComponentDataTypes` and `ComponentEventTypes` as described in the the specification.
+The package `@useid/semcom-core` provides a number of core interfaces that adhere to the SemCom specification and are used by this SDK. In particular, these comprise of the `Component`, `ComponentMetadata`, `ComponentDataTypes` and `ComponentEventTypes` as described in the the specification.
 
 [[discovering]]
 == Discovering shapes
@@ -53,7 +53,7 @@ For each instance of its SemCom components, the host application has to define s
 [[base]]
 == The base component
 
-Where the functions in the SemCom SDK provide welcome help for the application developer, another package called `@digita-ai/semcom-components` provides some syntactic sugar for the component developer. This sugar comes in the form of the abstract `BaseComponent` class: a LitElement Web Component providing the following helper functions.
+Where the functions in the SemCom SDK provide welcome help for the application developer, another package called `@useid/semcom-components` provides some syntactic sugar for the component developer. This sugar comes in the form of the abstract `BaseComponent` class: a LitElement Web Component providing the following helper functions.
 
 - `readData<D extends keyof ComponentDataTypes>(uri: string, type: D, mime?: string): void`: takes a URL and type of the resource to read, and sends a `ComponentReadEvent` to the host application.
  

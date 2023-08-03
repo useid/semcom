@@ -11,7 +11,7 @@
 
 * Branch: `feature/639404034-create-login-page`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom-demo-app]
+** https://github.com/useid/semcom[semcom-demo-app]
 
 === Introduction
 
@@ -33,7 +33,7 @@ Some tips:
 
 You can view styling information (font, font-size, colors, margins, ...) when clicking on components in Figma. It should appear on the right.
 
-Margins in Figma are usually multiples of 10px. https://github.com/digita-ai/dgt-browser/blob/develop/client/theme/utilities/_measures.scss[In dgt-browser], these multiples are bound to scss variables, in the same way you assigned `$color-primary-normal` to `#70808F` in the setup. Feel free to assign them to variables in this project as well.
+Margins in Figma are usually multiples of 10px. https://github.com/useid/dgt-browser/blob/develop/client/theme/utilities/_measures.scss[In dgt-browser], these multiples are bound to scss variables, in the same way you assigned `$color-primary-normal` to `#70808F` in the setup. Feel free to assign them to variables in this project as well.
 
 ====== AppComponent
 

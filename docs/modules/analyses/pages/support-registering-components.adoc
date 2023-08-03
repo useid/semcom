@@ -10,7 +10,7 @@
 
 * Branch: `637440573-support-registering-components`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom]
+** https://github.com/useid/semcom[semcom]
 
 == Introduction
 

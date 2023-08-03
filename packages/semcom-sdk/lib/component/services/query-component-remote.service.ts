@@ -1,4 +1,4 @@
-import { ComponentMetadata, QueryComponentService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, QueryComponentService } from '@useid/semcom-core';
 
 /**
  * A { QueryComponentService } that queries the remote component repository for a component.

@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentMetadata } from '@useid/semcom-core';
 
 /**
  * Mock data for initial components

@@ -1,12 +1,12 @@
 {
   "extends": [
-    "@digita-ai/eslint-config"
+    "@useid/eslint-config"
   ],
   "overrides": [
     {
       "files": ["*.ts", "*.js"],
       "extends": [
-        "@digita-ai/eslint-config",
+        "@useid/eslint-config",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],

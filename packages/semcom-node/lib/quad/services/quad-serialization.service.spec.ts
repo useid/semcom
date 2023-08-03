@@ -1,4 +1,4 @@
-import { LoggerConsoleService } from '@digita-ai/semcom-core';
+import { LoggerConsoleService } from '@useid/semcom-core';
 import { QuadSerializationService } from './quad-serialization.service';
 
 describe('QuadSerializationService', () => {

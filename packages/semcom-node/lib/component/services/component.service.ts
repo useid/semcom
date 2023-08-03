@@ -1,4 +1,4 @@
-import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerService } from '@useid/semcom-core';
 import { Observable, from } from 'rxjs';
 import { ManageComponentStoreService } from './manage-component-store.service';
 import { QueryComponentStoreService } from './query-component-store.service';

@@ -1,4 +1,4 @@
 {
-  "@context": [ "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld" ],
+  "@context": [ "https://linkedsoftwaredependencies.org/bundles/npm/@useid/semcom-node/^0.0.0/components/context.jsonld" ],
   "import": [ "./config-memory.json" ]
 }

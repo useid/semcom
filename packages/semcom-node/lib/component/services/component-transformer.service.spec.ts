@@ -1,4 +1,4 @@
-import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerConsoleService } from '@useid/semcom-core';
 import { DataFactory, Quad } from 'n3';
 import { ComponentTransformerService } from './component-transformer.service';
 

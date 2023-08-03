@@ -1,8 +1,8 @@
-import { AbstractRegisterComponentService, QueryComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
+import { AbstractRegisterComponentService, QueryComponentService, ComponentMetadata } from '@useid/semcom-core';
 import { Observable, from } from 'rxjs';
-import { QueryComponentRemoteService,  RegisterComponentService, resourceShape } from '@digita-ai/semcom-sdk';
+import { QueryComponentRemoteService,  RegisterComponentService, resourceShape } from '@useid/semcom-sdk';
 
-import { fetch } from '@digita-ai/inrupt-solid-client';
+import { fetch } from '@useid/inrupt-solid-client';
 
 /**
  * A service providing methods to perform the whole SemCom application flow, from detection over querying to registration.

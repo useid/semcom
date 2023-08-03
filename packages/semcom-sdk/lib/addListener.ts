@@ -1,4 +1,4 @@
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { ComponentDataTypes } from '@useid/semcom-core';
 import { ComponentAppendEvent, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from './component/models/component-events.model';
 
 /**

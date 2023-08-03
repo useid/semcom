@@ -1,5 +1,5 @@
-import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
-import { HttpError, HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
+import { ComponentMetadata, LoggerService } from '@useid/semcom-core';
+import { HttpError, HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@useid/handlersjs-http';
 import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { map, switchMap, tap, toArray } from 'rxjs/operators';
 import serialize from 'rdf-serialize';

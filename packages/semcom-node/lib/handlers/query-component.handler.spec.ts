@@ -1,5 +1,5 @@
-import { HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
-import { LoggerConsoleService } from '@digita-ai/semcom-core';
+import { HttpHandlerContext, HttpHandlerResponse } from '@useid/handlersjs-http';
+import { LoggerConsoleService } from '@useid/semcom-core';
 import { ComponentService } from '../component/services/component.service';
 import { ManageComponentStoreService } from '../component/services/manage-component-store.service';
 import { QueryComponentStoreService } from '../component/services/query-component-store.service';

@@ -1,6 +1,6 @@
 import { Parser } from 'n3';
-import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
-import { CardComponent, ContentHeaderComponent, FormElementComponent, SidebarItemComponent, SidebarListComponent, SidebarListItemComponent } from '@digita-ai/dgt-components';
+import { addListener, ComponentEventTypes, ComponentReadEvent, ComponentResponseEvent, ComponentWriteEvent } from '@useid/semcom-sdk';
+import { CardComponent, ContentHeaderComponent, FormElementComponent, SidebarItemComponent, SidebarListComponent, SidebarListItemComponent } from '@useid/dgt-components';
 import { ProfileComponent } from '../lib/components/profile.component';
 import { DocumentComponent } from '../lib/components/document.component';
 import { PayslipComponent } from '../lib/components/payslip.component';

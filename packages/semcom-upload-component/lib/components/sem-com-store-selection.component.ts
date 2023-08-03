@@ -1,5 +1,5 @@
 import { html, unsafeCSS, css, CSSResult, TemplateResult, property, state, query } from 'lit-element';
-import { Theme } from '@digita-ai/ui-transfer-theme';
+import { Theme } from '@useid/ui-transfer-theme';
 import { RxLitElement } from 'rx-lit';
 import { DoneEvent, interpret } from 'xstate';
 import { FormCleanlinessStates, FormRootStates, FormSubmissionStates, FormValidationStates, FormUpdatedEvent, formMachine, FormContext, FormValidatorResult, FormElementComponent, FormSubmittedEvent } from '@netwerk-digitaal-erfgoed/solid-crs-components';

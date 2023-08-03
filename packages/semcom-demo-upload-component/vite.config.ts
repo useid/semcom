@@ -20,7 +20,7 @@ export default ({ command, mode }) => {
             target: 'es2015',
             lib: {
                 entry: path.resolve(__dirname, 'lib/demo.ts'),
-                name: '@digita-ai/semcom-demo-upload-component'
+                name: '@useid/semcom-demo-upload-component'
             },
             outDir: '../dist'
         }

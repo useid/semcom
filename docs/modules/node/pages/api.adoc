@@ -1,7 +1,7 @@
 = API
 :description: A description of Components on a node's REST API.
 :sectanchors:
-:url-repo: https://github.com/digita-ai/semcom
+:url-repo: https://github.com/useid/semcom
 :page-tags: semcom
 
 == Get all components

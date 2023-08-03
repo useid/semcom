@@ -1,4 +1,4 @@
-import { login, getSolidDataset, handleIncomingRedirect, getThing, getUrlAll, logout, getStringNoLocale, Thing } from '@digita-ai/ui-transfer-solid-client';
+import { login, getSolidDataset, handleIncomingRedirect, getThing, getUrlAll, logout, getStringNoLocale, Thing } from '@useid/ui-transfer-solid-client';
 import { Session } from '../models/session.model';
 import { Profile } from '../models/profile.model';
 import { Issuer } from '../models/issuer.model';

@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentMetadata } from '@useid/semcom-core';
 import * as semver from 'semver';
 import { Store } from './store.service';
 

@@ -1,9 +1,9 @@
 import { NamedNode, Store } from 'n3';
 import { css, CSSResult, html, property, PropertyValues, TemplateResult, unsafeCSS } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
+import { ComponentResponseEvent } from '@useid/semcom-sdk';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
-import { Image, Theme } from '@digita-ai/dgt-theme';
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { Image, Theme } from '@useid/dgt-theme';
+import { ComponentDataTypes } from '@useid/semcom-core';
 import { BaseComponent } from './base.component';
 
 export interface ProfilePayslip {

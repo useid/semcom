@@ -7,7 +7,7 @@ export default defineConfig({
       target: 'es2015',
       lib: {
           entry: path.resolve(__dirname, 'lib/index.ts'),
-          name: '@digita-ai/semcom-upload-component'
+          name: '@useid/semcom-upload-component'
       },
       outDir: '../dist'
   }

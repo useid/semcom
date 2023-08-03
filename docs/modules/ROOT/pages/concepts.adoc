@@ -1,7 +1,7 @@
 = Concepts
 :description: A description of the data model.
 :sectanchors:
-:url-repo: https://github.com/digita-ai/semcom
+:url-repo: https://github.com/useid/semcom
 :page-tags: semcom
 
 == Specification and ecosystem

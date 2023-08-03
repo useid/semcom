@@ -1,9 +1,9 @@
 {
-  "name": "@digita-ai/semcom-node",
+  "name": "@useid/semcom-node",
   "version": "0.11.0",
   "description": "> TODO: description",
   "author": "Wouter Janssens <wouter@digita.ai>",
-  "homepage": "https://github.com/digita-ai/semcom/tree/master/packages/semcom-node#readme",
+  "homepage": "https://github.com/useid/semcom/tree/master/packages/semcom-node#readme",
   "license": "agpl-3.0",
   "main": "./dist/public-api.js",
   "directories": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digita-ai/semcom.git",
+    "url": "git+https://github.com/useid/semcom.git",
     "directory": "packages/semcom-node"
   },
   "types": "./dist/public-api.d.ts",
@@ -42,25 +42,25 @@
     "posttest": "jest-coverage-thresholds-bumper --silent --coverage-summary-path coverage-summary.json"
   },
   "bugs": {
-    "url": "https://github.com/digita-ai/semcom/issues"
+    "url": "https://github.com/useid/semcom/issues"
   },
-  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node",
+  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@useid/semcom-node",
   "lsd:components": "dist/components/components.jsonld",
   "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@useid/semcom-node/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
   },
   "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/config/": "config/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@digita-ai/semcom-node/^0.0.0/dist/": "dist/"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@useid/semcom-node/^0.0.0/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@useid/semcom-node/^0.0.0/config/": "config/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@useid/semcom-node/^0.0.0/dist/": "dist/"
   },
   "engines": {
     "node": ">=12.17 <15"
   },
   "dependencies": {
-    "@digita-ai/handlersjs-core": "^0.3.4",
-    "@digita-ai/handlersjs-http": "^0.3.4",
-    "@digita-ai/semcom-core": "0.11.0",
+    "@useid/handlersjs-core": "^0.3.4",
+    "@useid/handlersjs-http": "^0.3.4",
+    "@useid/semcom-core": "0.11.0",
     "componentsjs": "^4.5.0",
     "n3": "^1.6.3",
     "node-fetch": "^2.6.1",
@@ -71,10 +71,10 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "@digita-ai/typescript-config": "^0.3.4",
+    "@useid/typescript-config": "^0.6.2",
     "@types/jest": "^26.0.19",
     "@types/n3": "1.10.0",
-    "@types/node": "^14.14.14",
+    "@types/node": "^18.0.0",
     "@types/node-fetch": "^2.5.12",
     "@types/streamify-array": "^1.0.0",
     "@types/supertest": "^2.0.10",
@@ -88,13 +88,13 @@
     "supertest": "^6.0.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
-    "typescript": "4.1.5"
+    "typescript": "^4.2.3"
   },
   "eslintIgnore": [
     "bin"
   ],
   "jest": {
-    "preset": "@digita-ai/jest-config",
+    "preset": "@useid/jest-config",
     "displayName": "node",
     "coveragePathIgnorePatterns": [
       "<rootDir>/dist/",

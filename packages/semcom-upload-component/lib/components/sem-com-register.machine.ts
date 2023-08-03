@@ -1,8 +1,8 @@
 import { EventObject, MachineConfig, StateSchema, assign } from 'xstate';
 import { of, from, zip, throwError } from 'rxjs';
 import { catchError, switchMap, map } from 'rxjs/operators';
-import { fetch as solidFetch } from '@digita-ai/ui-transfer-solid-client';
-import { Session } from '@digita-ai/ui-transfer-components';
+import { fetch as solidFetch } from '@useid/ui-transfer-solid-client';
+import { Session } from '@useid/ui-transfer-components';
 import jsSHA from 'jssha';
 import { Parser, DataFactory, Writer } from 'n3';
 import { UploadFormContext } from './sem-com-upload-form.component';
