@@ -13,15 +13,14 @@
   "license": "agpl-3.0",
   "dependencies": {
     "@useid/semcom-upload-component": "0.11.0",
-    "@useid/ui-transfer-components": "^0.7.2",
     "@useid/ui-transfer-theme": "^0.7.2",
     "@netwerk-digitaal-erfgoed/solid-crs-components": "^0.7.0"
   },
   "devDependencies": {
-    "@useid/typescript-config": "^0.6.2",
-    "@types/node": "^18.0.0",
+    "@useid/typescript-config": "^0.8.1",
+    "@types/node": "^18.16.5",
     "rimraf": "^3.0.2",
-    "typescript": "^4.2.3",
-    "vite": "^2.4.4"
+    "typescript": "^5.0.4",
+    "vite": "^4.3.5"
   }
 }
