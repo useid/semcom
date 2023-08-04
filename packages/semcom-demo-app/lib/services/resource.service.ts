@@ -1,6 +1,6 @@
 import { from, Observable } from 'rxjs';
 import { SolidDataset, getSolidDataset } from '@inrupt/solid-client';
-import { fetch } from '@digita-ai/inrupt-solid-client';
+import { fetch } from '@useid/inrupt-solid-client';
 
 /**
  * A helper service to fetch the profile of a WebID.

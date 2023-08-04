@@ -1,5 +1,5 @@
-import { ComponentMetadata } from '@digita-ai/semcom-core';
-import { Session } from '@digita-ai/ui-transfer-components';
+import { ComponentMetadata } from '@useid/semcom-core';
+import { Session } from '@useid/ui-transfer-components';
 import { Observable, of, forkJoin, zip } from 'rxjs';
 import { map, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { EventObject, MachineConfig, assign, StateSchema } from 'xstate';

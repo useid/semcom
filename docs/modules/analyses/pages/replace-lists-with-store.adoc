@@ -10,7 +10,7 @@
 
 * Branch: `643973993-replace-lists-with-store`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom]
+** https://github.com/useid/semcom[semcom]
 
 == Introduction
 

@@ -1,14 +1,14 @@
 import { NamedNode, Store } from 'n3';
 import { css, CSSResult, html, property, PropertyValues, TemplateResult, unsafeCSS } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
+import { ComponentResponseEvent } from '@useid/semcom-sdk';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
-import { Image, Theme } from '@digita-ai/dgt-theme';
+import { Image, Theme } from '@useid/dgt-theme';
 import { from, Observable, of } from 'rxjs';
 import { interpret, Interpreter } from 'xstate';
 import { map } from 'rxjs/operators';
-import { NotImplementedError } from '@digita-ai/dgt-utils';
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
-import { FormCleanlinessStates, FormContext, formMachine, FormRootStates, FormSubmissionStates, FormValidationStates, FormValidatorResult } from '@digita-ai/dgt-components';
+import { NotImplementedError } from '@useid/dgt-utils';
+import { ComponentDataTypes } from '@useid/semcom-core';
+import { FormCleanlinessStates, FormContext, formMachine, FormRootStates, FormSubmissionStates, FormValidationStates, FormValidatorResult } from '@useid/dgt-components';
 import { BaseComponent } from './base.component';
 
 export interface ProfileContactComponentForm {

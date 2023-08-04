@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-LABEL org.opencontainers.image.source https://github.com/digita-ai/semcom
+LABEL org.opencontainers.image.source https://github.com/useid/semcom
 
 ENV BASE_URL=http://localhost
 ENV PORT=9000

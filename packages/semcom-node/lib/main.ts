@@ -1,9 +1,9 @@
 import * as path from 'path';
 import { ComponentsManager } from 'componentsjs';
-import { NodeHttpServer } from '@digita-ai/handlersjs-http';
+import { NodeHttpServer } from '@useid/handlersjs-http';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { Scheduler } from '@digita-ai/handlersjs-core';
+import { Scheduler } from '@useid/handlersjs-core';
 
 /**
  * Instantiates a server from the passed configuration and starts it.

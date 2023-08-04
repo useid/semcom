@@ -1,11 +1,11 @@
-# `@digita-ai/semcom-sdk`
+# `@useid/semcom-sdk`
 
 > TODO: description
 
 ## Usage
 
 ```
-const semcomSDK = require('@digita-ai/semcom-sdk');
+const semcomSDK = require('@useid/semcom-sdk');
 
 // TODO: DEMONSTRATE API
 ```

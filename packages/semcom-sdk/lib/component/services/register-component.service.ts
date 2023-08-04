@@ -1,6 +1,6 @@
 /* eslint-disable no-eval -- webpack can't handle dynamic imports */
 import jsSHA from 'jssha';
-import { AbstractRegisterComponentService, ComponentMetadata } from '@digita-ai/semcom-core';
+import { AbstractRegisterComponentService, ComponentMetadata } from '@useid/semcom-core';
 
 /**
  * A { AbstractRegisterComponentService } that registers a component.

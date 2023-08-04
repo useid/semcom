@@ -11,7 +11,7 @@
 
 * Branch: `feature/637357186-create-models-services`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom]
+** https://github.com/useid/semcom[semcom]
 
 === Introduction
 

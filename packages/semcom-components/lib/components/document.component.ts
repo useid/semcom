@@ -1,8 +1,8 @@
 import { NamedNode, Store } from 'n3';
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { ComponentDataTypes } from '@useid/semcom-core';
 import { css, CSSResult, html, property, TemplateResult, unsafeCSS } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
-import { Document, Arrow, Theme } from '@digita-ai/dgt-theme';
+import { ComponentResponseEvent } from '@useid/semcom-sdk';
+import { Document, Arrow, Theme } from '@useid/dgt-theme';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
 import { BaseComponent } from './base.component';
 

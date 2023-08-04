@@ -1,0 +1,22 @@
+@prefix : <#>.
+@prefix solid: <http://www.w3.org/ns/solid/terms#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix pim: <http://www.w3.org/ns/pim/space#>.
+@prefix schema: <http://schema.org/>.
+
+:barcode-uitpas
+  schema:hostingOrganization <https://uitpas.be/> ;
+  schema:member <http://mijn.web.id/profile/card#me> ;
+  schema:membershipNumber "121345687789" ;
+  schema:programName "UiTPAS" .
+
+:barcode-mock-1
+  schema:member <http://mijn.web.id/profile/card#me> ;
+  schema:membershipNumber "9876543210" ;
+  schema:programName "UiTPAS" .
+
+:barcode-mock-2
+  schema:hostingOrganization <https://uitpas.be/> ;
+  schema:member <http://mijn.web.id/profile/card#me> ;
+  schema:membershipNumber "012345543210" ;
+  schema:programName "UiTPAS" .

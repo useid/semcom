@@ -1,5 +1,5 @@
-import { HttpError, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
-import { LoggerConsoleService } from '@digita-ai/semcom-core';
+import { HttpError, HttpHandlerContext, HttpHandlerResponse } from '@useid/handlersjs-http';
+import { LoggerConsoleService } from '@useid/semcom-core';
 import { of } from 'rxjs';
 import { ComponentTransformerService } from '../component/services/component-transformer.service';
 import { ContentNegotiationHttpHandler } from '../handlers/content-negotiation.handler';

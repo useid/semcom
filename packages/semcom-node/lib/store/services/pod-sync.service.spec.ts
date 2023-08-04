@@ -1,4 +1,4 @@
-import { MemoryStore } from '@digita-ai/handlersjs-core';
+import { MemoryStore } from '@useid/handlersjs-core';
 import fetch from 'node-fetch';
 import { Quad, DataFactory } from 'n3';
 import { default as streamify } from 'streamify-array';

@@ -9,7 +9,7 @@ export default defineConfig({
       target: 'es2015',
       lib: {
           entry: path.resolve(__dirname, 'lib/index.ts'),
-          name: '@digita-ai/semcom-sdk'
+          name: '@useid/semcom-sdk'
       },
       outDir: '../dist',
   },

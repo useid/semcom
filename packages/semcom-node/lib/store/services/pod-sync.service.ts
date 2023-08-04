@@ -1,4 +1,4 @@
-import { Handler, TypedKeyValueStore } from '@digita-ai/handlersjs-core';
+import { Handler, TypedKeyValueStore } from '@useid/handlersjs-core';
 import { Parser } from 'n3';
 import fetch from 'node-fetch';
 import { from, Observable, of } from 'rxjs';

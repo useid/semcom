@@ -1,4 +1,4 @@
-import { ComponentMetadata, QueryComponentService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, QueryComponentService } from '@useid/semcom-core';
 import { ComponentStore } from '../../store/services/component-store.service';
 
 /**

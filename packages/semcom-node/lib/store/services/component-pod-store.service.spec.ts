@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { Quad, DataFactory } from 'n3';
 import { default as streamify } from 'streamify-array';
 import serialize from 'rdf-serialize';
-import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerConsoleService } from '@useid/semcom-core';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { ComponentPodStore } from './component-pod-store.service';
 

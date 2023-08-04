@@ -1,5 +1,5 @@
 {
-  "extends": "@digita-ai/typescript-config/tsconfig.spec.json",
+  "extends": "@useid/typescript-config/tsconfig.spec.json",
   "compilerOptions": {
     "baseUrl": "lib",
     "outDir": "dist",

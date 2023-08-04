@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentMetadata } from '@useid/semcom-core';
 import { RegisterComponentService } from './register-component.service';
 
 describe('RegisterComponentService', () => {

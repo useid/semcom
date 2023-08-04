@@ -12,7 +12,7 @@
 
 == References
 
-* Project: https://github.com/digita-ai/dgt-semcom[@digita-ai/semcom-components]
+* Project: https://github.com/useid/dgt-semcom[@useid/semcom-components]
 * Branch: `feature/641783722-create-example-components`
 
 

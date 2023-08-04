@@ -3,11 +3,11 @@ import { createMachine, interpret, State } from 'xstate';
 import { from, ObservableInput } from 'rxjs';
 import { RxLitElement } from 'rx-lit';
 import { map } from 'rxjs/operators';
-import { AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, Session, SolidSDKService } from '@digita-ai/ui-transfer-components';
-import { Theme } from '@digita-ai/ui-transfer-theme';
-import { ComponentReadEvent, ComponentResponseEvent, addListener, ComponentEventTypes, ComponentWriteEvent } from '@digita-ai/semcom-sdk';
+import { AuthenticateComponent, LoadingComponent, ProviderListComponent, ProviderListItemComponent, Session, SolidSDKService } from '@useid/ui-transfer-components';
+import { Theme } from '@useid/ui-transfer-theme';
+import { ComponentReadEvent, ComponentResponseEvent, addListener, ComponentEventTypes, ComponentWriteEvent } from '@useid/semcom-sdk';
 import { Parser } from 'n3';
-import { fetch } from '@digita-ai/inrupt-solid-client';
+import { fetch } from '@useid/inrupt-solid-client';
 import { demoMachine, DemoContext, DemoEvent, DemoState, DemoStates, AuthenticatedEvent } from './demo.machine';
 import { SemComService } from './services/semcom.service';
 

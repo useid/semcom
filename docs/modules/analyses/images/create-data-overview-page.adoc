@@ -8,7 +8,7 @@
 
 * Branch: `feature/639404111-create-data-overview-page`
 * Projects:
-** https://github.com/digita-ai/semcom[semcom-demo-app]
+** https://github.com/useid/semcom[semcom-demo-app]
 
 === Introduction
 

@@ -1,5 +1,5 @@
 import { DataFactory, Quad } from 'n3';
-import { ComponentMetadata, LoggerService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerService } from '@useid/semcom-core';
 
 const { namedNode, literal, quad: createQuad } = DataFactory;
 

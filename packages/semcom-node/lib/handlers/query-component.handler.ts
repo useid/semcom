@@ -1,4 +1,4 @@
-import { HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@digita-ai/handlersjs-http';
+import { HttpHandler, HttpHandlerContext, HttpHandlerResponse } from '@useid/handlersjs-http';
 import { Observable, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentService } from '../component/services/component.service';

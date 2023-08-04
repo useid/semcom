@@ -1,4 +1,4 @@
-import { ComponentMetadata, LoggerConsoleService } from '@digita-ai/semcom-core';
+import { ComponentMetadata, LoggerConsoleService } from '@useid/semcom-core';
 import { ComponentInMemoryStore } from '../../store/services/component-in-memory-store.service';
 import { initialComponents } from '../../mock/initial-components';
 import { ComponentService } from './component.service';

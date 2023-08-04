@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-LABEL org.opencontainers.image.source https://github.com/digita-ai/semcom
+LABEL org.opencontainers.image.source https://github.com/useid/semcom
 
 # Create app directory
 RUN mkdir -p /usr/src/app

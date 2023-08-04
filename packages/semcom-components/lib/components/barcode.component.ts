@@ -1,11 +1,11 @@
 /* eslint-disable no-console -- is a web component */
 import { Store } from 'n3';
 import { css, CSSResult, html, state, property, PropertyValues, query, TemplateResult, unsafeCSS } from 'lit-element';
-import { ComponentResponseEvent } from '@digita-ai/semcom-sdk';
-import { Theme, QR, Open } from '@digita-ai/dgt-theme';
+import { ComponentResponseEvent } from '@useid/semcom-sdk';
+import { Theme, QR, Open } from '@useid/dgt-theme';
 import JsBarcode from 'jsbarcode';
 import { unsafeSVG } from 'lit-html/directives/unsafe-svg';
-import { ComponentDataTypes } from '@digita-ai/semcom-core';
+import { ComponentDataTypes } from '@useid/semcom-core';
 import { BaseComponent } from './base.component';
 
 export class BarcodeComponent extends BaseComponent {

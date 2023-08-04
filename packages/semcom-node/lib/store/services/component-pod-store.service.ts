@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@digita-ai/semcom-core';
+import { ComponentMetadata } from '@useid/semcom-core';
 import { Parser, Quad } from 'n3';
 import { ComponentTransformerService } from '../../component/services/component-transformer.service';
 import { ComponentStore } from './component-store.service';
