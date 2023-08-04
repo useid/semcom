@@ -1,0 +1,16 @@
+@prefix pay: <http://digita.ai/voc/payslip#>.
+@prefix XML: <http://www.w3.org/2001/XMLSchema#>.
+@prefix : <#>.
+
+:payslip-jan-2021-w1
+    a pay:payslip;
+    pay:employer <https://lidl.be>;
+    pay:employee <https://pods.actueel-inkomen.digita.ai/leapeeters/profile/card#me>;
+    pay:from "1609459200";
+    pay:until "1612051200";
+    pay:stature "White Collar";
+    pay:dependent "1";
+    pay:wageUnit <http://digita.ai/voc/payslip#month>;
+    pay:grossAmount "2600";
+    pay:taxableAmount "2200";
+    pay:netAmount "1500".
